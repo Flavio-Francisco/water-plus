@@ -1,0 +1,33 @@
+.battery-loading {
+  position: relative;
+  width: 100px;
+  height: 200px;
+  cursor: pointer;
+  background-color: #ddd;
+  border: 2px solid #333;
+  border-radius: 5px;
+
+}
+
+.battery {
+  position: absolute;
+  bottom: 5px;
+  left: 5px;
+  width: 100px;
+  height: 200px;
+  background-color: #fff;
+  border: 2px solid #333;
+}
+
+.battery-loading:hover {
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.9);
+}
+
+.battery-indicator {
+  position: absolute;
+  bottom: 1px;
+  left: 1px;
+  width: 93px;
+  background-color: #1114cf;
+  transition: height 0.5s ease-in-out;
+}
