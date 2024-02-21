@@ -53,7 +53,6 @@ const Icon: React.FC<IconProps> = ({ iconName }) => {
   const IconComponent = getIconComponent(iconName);
 
   if (!IconComponent) {
-    // Pode lidar com um ícone desconhecido, ou retornar null, dependendo dos requisitos
     return null;
   }
 
@@ -82,7 +81,7 @@ const NavHeader = () => (
   <header className="sidebar-header">
     <Image
       src={Logo}
-      alt="Minha Foto"
+      alt="Logo"
       width={100}
       height={100}
       style={{ borderRadius: 25, marginLeft: 55, marginTop: 20 }}
@@ -121,7 +120,7 @@ const NavButton: FC<ButtonProps> = ({
       case "Osmose 2º Passo":
         return "/Home/secondstep";
       case "Loop":
-        return "/Home/grafic";
+        return "/Home/loop";
       default:
         break;
     }
