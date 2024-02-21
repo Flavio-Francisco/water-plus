@@ -117,9 +117,9 @@ const NavButton: FC<ButtonProps> = ({
       case "Pré-Tratamento":
         return "/Home/pretreatment";
       case "Osmose 1º Passo":
-        return "/grafic";
+        return "/Home/firststep";
       case "Osmose 2º Passo":
-        return "/Home/grafic";
+        return "/Home/secondstep";
       case "Loop":
         return "/Home/grafic";
       default:
