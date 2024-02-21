@@ -11,6 +11,7 @@ import HouseIcon from "@mui/icons-material/House";
 import AddchartIcon from "@mui/icons-material/Addchart";
 import TimelineIcon from "@mui/icons-material/Timeline";
 import SettingsIcon from "@mui/icons-material/Settings";
+import SummarizeOutlinedIcon from "@mui/icons-material/SummarizeOutlined";
 import Image from "next/image";
 
 import { Thema } from "../../../thema";
@@ -36,6 +37,17 @@ const menuItems = [
       "Osmose 1º Passo",
       "Osmose 2º Passo",
       "Loop",
+    ],
+  },
+  {
+    name: "Relatórios",
+    icon: "SummarizeOutlinedIcon",
+    items: [
+      "Mensal",
+      "Analises",
+      " Diasafe",
+      "Ácido Peracético",
+      "Consumo de Água",
     ],
   },
 
@@ -71,6 +83,8 @@ const getIconComponent = (iconName: string) => {
       return SettingsIcon;
     case "Manuteção":
       return WarningIcon;
+    case "SummarizeOutlinedIcon":
+      return SummarizeOutlinedIcon;
     default:
       // Caso o ícone seja desconhecido
       return null;
