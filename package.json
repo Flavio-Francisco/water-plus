@@ -14,6 +14,7 @@
     "@mui/icons-material": "^5.15.6",
     "@mui/material": "^5.15.6",
     "@popperjs/core": "^2.11.8",
+    "@react-pdf/renderer": "^3.3.8",
     "antd": "^5.12.8",
     "apexcharts": "^3.45.1",
     "bootstrap": "^5.3.2",
@@ -32,7 +33,7 @@
   "devDependencies": {
     "@types/node": "^20",
     "@types/react": "^18",
-    "@types/react-dom": "^18",
+    "@types/react-dom": "^18.2.19",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "@typescript-eslint/parser": "^6.21.0",
     "eslint": "^8.56.0",

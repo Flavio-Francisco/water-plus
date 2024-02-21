@@ -1,16 +1,23 @@
 "use client";
-import React, { useRef } from "react";
-import generatePDF from "react-to-pdf";
+import React from 'react';
+import { Page, Text, View, Document } from '@react-pdf/renderer';
+import { styles } from './styles';
 
 const Pdf = () => {
-  const targetRef = useRef(null); // Inicializando useRef com null
+
   return (
-    <div>
-      <button onClick={() => generatePDF(targetRef, { filename: "page.pdf" })}>
-        Download PDF
-      </button>
-      <div ref={targetRef}>Content to be included in the PDF</div>
-    </div>
+    <Document>
+
+      <Page size="A4" style={styles.page}>
+        <View style={styles.section}>
+          <Text>Section #1</Text>
+        </View>
+        <View style={styles.section}>
+          <Text>Section #2</Text>
+        </View>
+      </Page>
+
+    </Document>
   );
 };
 export default Pdf;
