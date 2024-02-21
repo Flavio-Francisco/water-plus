@@ -1,5 +1,3 @@
-import { ApexOptions } from "apexcharts";
-
 export interface WaterTreatmentParameters {
   WATER_FEED: {
     Color: string;
@@ -48,4 +46,3 @@ export interface WaterTreatmentParameters {
     Conductivity: number;
   };
 }
-

@@ -1,7 +1,9 @@
 import { Props } from "@/components/grafic";
-
+// Alimwntação
 export const dataZeolica: Props = {
-  title: "Dados do zeolita",
+  title: "Pressão do zeolita",
+  subtitle:
+    "Quando a pressão for menor que 20%, da pressão inicial, fazer a troca do meio filtante.",
   data: [
     ["Dias", "zeolita"],
     [1, 35],
@@ -24,7 +26,9 @@ export const dataZeolica: Props = {
 };
 
 export const dataAbrandador: Props = {
-  title: "Dados do Abrandador",
+  title: "Pressão do Abrandador",
+  subtitle:
+    "Quando a pressão for menor que 20%, da pressão inicial, fazer a troca do meio filtante.",
   data: [
     ["Dias", "Abrandador"],
     [1, 35],
@@ -47,7 +51,9 @@ export const dataAbrandador: Props = {
 };
 
 export const dataCarvao: Props = {
-  title: "Dados do Carvão",
+  title: "Pressão do Carvão",
+  subtitle:
+    "Quando a pressão for menor que 20%, da pressão inicial, fazer a troca do meio filtante.",
   data: [
     ["Dias", "Carvão"],
     [1, 35],
@@ -68,8 +74,84 @@ export const dataCarvao: Props = {
     [16, 140],
   ],
 };
-
-export const Datafull = [dataZeolica, dataAbrandador, dataCarvao];
+// pré tratamento
+export const dataCloroLivre: Props = {
+  title: "Cloro Livre",
+  subtitle: "valor maximo 2.5 ppm.",
+  data: [
+    ["Dias", "Cloro Livre"],
+    [1, 2],
+    [2, 2.5],
+    [3, 1.5],
+    [4, 1],
+    [5, 1],
+    [6, 2],
+    [7, 2.5],
+    [8, 2],
+    [9, 2],
+    [10, 2],
+    [11, 2.5],
+    [12, 1],
+    [13, 2],
+    [14, 1.4],
+    [15, 1.5],
+    [16, 1.4],
+  ],
+};
+export const dataCloroTotal: Props = {
+  title: "Cloro Total",
+  subtitle: "valor maximo 2.5 ppm.",
+  data: [
+    ["Dias", "Cloro Total"],
+    [1, 2],
+    [2, 2.5],
+    [3, 1.5],
+    [4, 1],
+    [5, 1],
+    [6, 2],
+    [7, 2.5],
+    [8, 2],
+    [9, 2],
+    [10, 2],
+    [11, 2.5],
+    [12, 1],
+    [13, 2],
+    [14, 1.4],
+    [15, 1.5],
+    [16, 1.4],
+  ],
+};
+export const dataPH: Props = {
+  title: "Cloro PH",
+  subtitle: "valor maximo 2.5 ppm.",
+  data: [
+    ["Dias", "PH"],
+    [1, 2],
+    [2, 2.5],
+    [3, 1.5],
+    [4, 1],
+    [5, 1],
+    [6, 2],
+    [7, 2.5],
+    [8, 2],
+    [9, 2],
+    [10, 2],
+    [11, 2.5],
+    [12, 1],
+    [13, 2],
+    [14, 1.4],
+    [15, 1.5],
+    [16, 1.4],
+  ],
+};
+export const Datafull = [
+  dataZeolica,
+  dataAbrandador,
+  dataCarvao,
+  dataCloroLivre,
+  dataCloroTotal,
+  dataPH,
+];
 
 export function getItemByIndex(index: number, arry: Props[]): Props | null {
   if (index >= 0 && index < arry.length) {
@@ -83,6 +165,7 @@ export function getItemByIndex(index: number, arry: Props[]): Props | null {
 type Prop = {
   data?: object | unknown[] | undefined;
 };
+
 export function getByTitle(data: Prop["data"]): string {
   if (
     Array.isArray(data) &&
@@ -93,6 +176,22 @@ export function getByTitle(data: Prop["data"]): string {
     console.log("esse é o titulo", data[0][1]);
     return data[0][1]; // Retorna o segundo elemento do primeiro array
   } else {
-    return "errou"; // Retorna null se o array de dados estiver vazio, ou se o primeiro array não tiver dois elementos
+    return ""; // Retorna null se o array de dados estiver vazio, ou se o primeiro array não tiver dois elementos
   }
+}
+
+export function formatarDados({ data }: Prop) {
+  const hoje = new Date();
+  const mesAtual = new Date().getMonth() + 1; // "+1" porque os meses são indexados a partir de zero
+  const anoAtual = hoje.getFullYear();
+  if (!Array.isArray(data)) {
+    throw new Error("Os dados fornecidos não são um array.");
+  }
+
+  const dadosFormatados = data.slice(1).map((par, index) => ({
+    valorFormatado: `${par[0]}/${mesAtual + index}/${anoAtual}`,
+    segundoValor: par[1],
+  }));
+
+  return dadosFormatados;
 }
