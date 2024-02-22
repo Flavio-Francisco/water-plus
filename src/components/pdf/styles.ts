@@ -7,16 +7,23 @@ export const styles = StyleSheet.create({
     padding: 10,
     flexGrow: 1,
   },
+  signature: {
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 20,
+    marginBottom: 20,
+  },
   body: {
-    padding: 30,
+    padding: 50,
   },
   title: {
-    fontSize: 16,
+    fontSize: 12,
+    fontWeight: "bold",
     marginBottom: 10,
   },
   subtitle: {
     fontSize: 12,
-    marginBottom: 10,
+    fontWeight: "bold",
   },
   text: {
     fontSize: 12,
@@ -24,16 +31,64 @@ export const styles = StyleSheet.create({
   },
   date: {
     fontSize: 12,
-    marginBottom: 10,
-    marginLeft: "90%",
+    marginBottom: 30,
+    marginLeft: "75%",
+    fontWeight: "bold",
   },
   header: {
     flexDirection: "row",
-    backgroundColor: Thema.Colors.blue1,
   },
   logo: {
     width: 40,
     height: 40,
     marginRight: 10,
+  },
+  h1: {
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 20,
+    marginBottom: 20,
+  },
+
+  line: {
+    width: "70%",
+    height: 1,
+    marginTop: -10,
+    backgroundColor: Thema.Colors.black,
+  },
+  line1: {
+    width: "60%",
+    height: 1,
+    marginTop: -10,
+    backgroundColor: Thema.Colors.black,
+  },
+  lineSignature: {
+    width: "60%",
+    height: 1,
+    marginBottom: 2,
+    marginTop: 50,
+    backgroundColor: Thema.Colors.black,
+  },
+  p: {
+    fontSize: 12,
+    textAlign: "justify",
+    textIndent: 40,
+    marginTop: 20,
+    lineHeight: 1.5,
+  },
+  p1: {
+    fontSize: 12,
+    textAlign: "justify",
+    marginTop: 10,
+    lineHeight: 1.5,
+  },
+  pSignature: {
+    fontSize: 12,
+    textAlign: "justify",
+    lineHeight: 1.5,
+  },
+  space: {
+    marginTop: 30,
+    marginBottom: 30,
   },
 });

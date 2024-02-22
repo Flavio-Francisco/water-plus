@@ -5,5 +5,6 @@ export const Thema = {
     blue3: "#DEEFE7",
     gray: "#B4BEC9",
     white: "#ffffff",
+    black: "#000000",
   },
 };

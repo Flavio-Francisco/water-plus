@@ -195,3 +195,25 @@ export function formatarDados({ data }: Prop) {
 
   return dadosFormatados;
 }
+export function returnMinthly(data: Date) {
+  // Array com os nomes dos meses
+  const meses = [
+    "JANEIRO",
+    "FEVEREIRO",
+    "MARÇO",
+    "ABRIL",
+    "MAIO",
+    "JUNHO",
+    "JULHO",
+    "AGOSTO",
+    "SETEMBRO",
+    "OUTUBRO",
+    "NOVEMBRO",
+    "DEZEMBRO",
+  ];
+
+  // Obtém o número do mês (0 a 11) da data fornecida
+  const numeroMes = data.getMonth();
+  // Retorna o nome do mês correspondente ao número do mês
+  return meses[numeroMes];
+}
