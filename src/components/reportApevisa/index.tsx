@@ -1,17 +1,9 @@
-"use client";
 import React from "react";
-import { Page, Text, View, Document } from "@react-pdf/renderer";
-import { styles } from "./styles";
 
-const Pdf = () => {
-  const date = new Date();
+export default function ReportApevisa() {
   return (
     <Document>
       <Page size="A4" style={styles.body}>
-        <View style={styles.header}>
-        <Text style={styles.date}>Data: {date.toLocaleDateString()}</Text>
-        </View>
-        
         <Text style={styles.title}>
           RELATÓRIO MENSAL - MÊS DE REFERÊNCIA: JANEIRO
         </Text>
@@ -19,6 +11,7 @@ const Pdf = () => {
           Local: HOSPITAL UNIMED CARUARU (CLÍNICA DE HEMODIÁLISE)
         </Text>
         <Text style={styles.subtitle}>Cidade: Caruaru, PE</Text>
+        <Text style={styles.subtitle}>Data: 30 de janeiro de 2024</Text>
 
         <View>
           <Text style={styles.title}>ATIVIDADES EXECUTADAS:</Text>
@@ -93,5 +86,4 @@ const Pdf = () => {
       </Page>
     </Document>
   );
-};
-export default Pdf;
+}
