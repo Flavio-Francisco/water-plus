@@ -75,7 +75,7 @@ const Pdf = () => {
             </Text>
             <Text style={styles.p1}>
               –Preparação e EXECUÇÃO do sistema de tratamento de água para a
-              desinfecção e descontaminação geral DIA 24/12.
+              desinfecção e descontaminação geral DIA {report?.flushing}.
             </Text>
             <Text style={styles.p1}>
               – Acompanhamento coleta microbiológica e endotoxina- LABORATÓRIO
