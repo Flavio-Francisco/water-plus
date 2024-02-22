@@ -1,4 +1,5 @@
 import { Props } from "@/components/grafic";
+import { ReportModel } from "../models/FakeModels";
 // Alimwntação
 export const dataZeolica: Props = {
   title: "Pressão do zeolita",
@@ -217,3 +218,23 @@ export function returnMinthly(data: Date) {
   // Retorna o nome do mês correspondente ao número do mês
   return meses[numeroMes];
 }
+
+export const fackreport: ReportModel = {
+  firstPass: {
+    hardnessReduction: "99",
+    chlorineRejection: "100",
+    rejectionLTS: "25",
+    rejectionSaline: "98",
+  },
+  secondPass: {
+    hardnessReduction: "100",
+    chlorineRejection: "100",
+    rejectionLTS: "0.5",
+    rejectionSaline: "99",
+  },
+  flushing: "12/02/24",
+  loopDisinfection: "12/02/24",
+  finalTime: "08",
+  initialTime: "12",
+  laboratory: "Aqualise",
+};

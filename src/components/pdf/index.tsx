@@ -1,12 +1,19 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Page, Text, View, Document } from "@react-pdf/renderer";
-import { returnMinthly } from "@/utils/models/Data";
+import { returnMinthly, fackreport } from "@/utils/models/Data";
+import { ReportModel } from "../../utils/models/FakeModels";
 import { styles } from "./styles";
 
 const Pdf = () => {
+  const [report, setReport] = useState<ReportModel>();
   const date = new Date();
   const minthly = returnMinthly(date);
+
+  useEffect(() => {
+    setReport(fackreport);
+  }, [fackreport]);
+
   return (
     <Document pageLayout="singlePage">
       <Page size="A4" style={styles.body}>
@@ -23,7 +30,7 @@ const Pdf = () => {
           <Text style={styles.p}>
             Em atendimento a solicitação segue para conhecimento procedimentos
             executados para execução de tratamento de hemodiálise no HOSPITAL
-            UNIMED CARUARU ( CLINICA DE HEMODIALISE) , localizada na cidade de
+            UNIMED CARUARU (CLINICA DE HEMODIALISE) , localizada na cidade de
             Caruaru- Pe.
           </Text>
         </View>
@@ -40,17 +47,21 @@ const Pdf = () => {
             <Text style={styles.subtitle}>Para osmose passo 1</Text>
           </View>
           <Text style={styles.p}>
-            Percentual de rejeito foi em média 25%L/min, com índice de rejeição
-            98%, com redução de dureza total em média de 99% e de cloro livre de
-            100%.
+            Percentual de rejeito foi em média {report?.firstPass.rejectionLTS}
+            %L/min, com índice de rejeição {report?.firstPass.rejectionSaline}%,
+            com redução de dureza total em média de{" "}
+            {report?.firstPass.hardnessReduction}% e de cloro livre de{" "}
+            {report?.firstPass.chlorineRejection}%.
           </Text>
           <View style={styles.h1}>
             <Text style={styles.subtitle}>Para osmose passo 2:</Text>
           </View>
           <Text style={styles.p}>
-            Percentual de rejeito foi em média meio (0,5)L/min, com índice de
-            rejeição 70% (média), com redução de dureza total em média de 99% e
-            de cloro livre de 100%.
+            Percentual de rejeito foi em média meio{" "}
+            {report?.secondPass.rejectionLTS}L/min, com índice de rejeição{" "}
+            {report?.secondPass.rejectionSaline}% (média), com redução de dureza
+            total em média de {report?.secondPass.hardnessReduction}% e de cloro
+            livre de {report?.secondPass.chlorineRejection}%.
           </Text>
         </View>
 
