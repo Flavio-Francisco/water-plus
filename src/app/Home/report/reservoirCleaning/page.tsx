@@ -1,9 +1,9 @@
 "use client";
 import React from "react";
 import { PDFViewer } from "@react-pdf/renderer";
-import { ReservoirClearning } from "@/components/reportReservoirClearning";
+import ReservoirClearning from "@/components/reportReservoirClearning";
 
-const ReservoirCleaning = () => {
+const PageReservoirCleaning = () => {
   return (
     <div style={{ width: "100%", height: "99vh" }}>
       <PDFViewer width={"100%"} height={"100%"}>
@@ -12,4 +12,4 @@ const ReservoirCleaning = () => {
     </div>
   );
 };
-export default ReservoirCleaning;
+export default PageReservoirCleaning;

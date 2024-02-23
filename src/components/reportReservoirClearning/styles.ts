@@ -51,7 +51,7 @@ export const styles = StyleSheet.create({
   },
 
   line: {
-    width: "70%",
+    width: "83%",
     height: 1,
     marginTop: -10,
     backgroundColor: Thema.Colors.black,

@@ -261,5 +261,5 @@ export const fackCredentials: Credentials = {
 
 export const fakeReservoirCleaning: ReservoirCleaning = {
   lastCleaning: "25/02/2024",
-  nextCleaning: "25/07/2024",
+  nextCleaning: "2024-03-12",
 };

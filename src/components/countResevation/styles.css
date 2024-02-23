@@ -1,0 +1,11 @@
+@keyframes blink-animation {
+    0% {
+        background-color: transparent;
+    }
+    50% {
+        background-color: black; /* Cor que piscará */
+    }
+    100% {
+        background-color: transparent;
+    }
+}
