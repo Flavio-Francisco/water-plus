@@ -1,5 +1,6 @@
 import { Props } from "@/components/grafic";
-import { ReportModel } from "../models/FakeModels";
+import { Credentials, ReportModel, ReservoirCleaning } from "../models/report";
+
 // Alimwntação
 export const dataZeolica: Props = {
   title: "Pressão do zeolita",
@@ -237,4 +238,28 @@ export const fackreport: ReportModel = {
   finalTime: "08",
   initialTime: "12",
   laboratory: "Aqualise",
+  comments:
+    "Osmose Reversa é a  separação do solvente do  soluto pela aplicação de  uma alta pressão sobre  uma membrana semipermeável.  No sistema de tratamento  de água, do lado “sujo” da  membrana temos a água  potável e do “lado limpo”  a água tratada para  hemodiálise.",
+};
+
+export const fackCredentials: Credentials = {
+  doctor: {
+    CRM: "00000000000",
+    graduation: "fake graduation",
+    postGraduation: "fake post graduation",
+  },
+  Chemist: {
+    CRQ: "0000000000",
+    graduation: "fake graduation",
+    postGraduation: "fake post graduation",
+    postGraduation2: "fake post graduation",
+  },
+  operator: {
+    registration: "55555555",
+  },
+};
+
+export const fakeReservoirCleaning: ReservoirCleaning = {
+  lastCleaning: "25/02/2024",
+  nextCleaning: "25/07/2024",
 };

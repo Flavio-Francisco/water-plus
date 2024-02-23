@@ -46,7 +46,7 @@ const menuItems = [
       "Mensal",
       "Analises",
       " Diasafe",
-      "Ácido Peracético",
+      "Limpeza Reservatórios",
       "Consumo de Água",
     ],
   },
@@ -135,6 +135,10 @@ const NavButton: FC<ButtonProps> = ({
         return "/Home/secondstep";
       case "Loop":
         return "/Home/loop";
+      case "Mensal":
+        return "/Home/report/monthly";
+      case "Limpeza Reservatórios":
+        return "/Home/report/reservoirCleaning";
       default:
         break;
     }

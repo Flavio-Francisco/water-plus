@@ -1,18 +1,24 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { Page, Text, View, Document } from "@react-pdf/renderer";
-import { returnMinthly, fackreport } from "@/utils/models/Data";
-import { ReportModel } from "../../utils/models/FakeModels";
+import {
+  returnMinthly,
+  fackreport,
+  fackCredentials,
+} from "@/utils/models/Data";
+import { ReportModel, Credentials } from "../../utils/models/report";
 import { styles } from "./styles";
 
 const Pdf = () => {
   const [report, setReport] = useState<ReportModel>();
+  const [credentials, setCredentials] = useState<Credentials>();
   const date = new Date();
   const minthly = returnMinthly(date);
 
   useEffect(() => {
     setReport(fackreport);
-  }, [fackreport]);
+    setCredentials(fackCredentials);
+  }, [fackreport, fackCredentials]);
 
   return (
     <Document pageLayout="singlePage">
@@ -93,7 +99,8 @@ const Pdf = () => {
             </View>
             <Text style={styles.p}>
               TRATAMENTO DE ÁGUA: Executado a desinfeção no tanque e looping,
-              conforme técnica de controle e qualidade e água- DIA 24/12.
+              conforme técnica de controle e qualidade e água- DIA{" "}
+              {report?.loopDisinfection}
             </Text>
 
             <View style={styles.h1}>
@@ -143,9 +150,7 @@ const Pdf = () => {
               ensaio microbiológico (coliforme total e bactérias heterotróficas
               e ENDOTOXINAS).
             </Text>
-            <Text style={styles.p1}>
-              OBS: Parâmetros físico químicos rotinas, conforme RDC vigente;
-            </Text>
+            <Text style={styles.p1}>OBS: {report?.comments}</Text>
           </View>
 
           <View style={styles.space}></View>
@@ -153,21 +158,32 @@ const Pdf = () => {
             <View style={styles.lineSignature} />
             <Text style={styles.pSignature}> Médico/ Responsável Técnico</Text>
             <Text style={styles.pSignature}> Diretor Técnico</Text>
+            <Text style={styles.pSignature}>
+              {" "}
+              CRM: {credentials?.doctor.CRM}
+            </Text>
           </View>
           <View style={styles.signature}>
             <View style={styles.lineSignature} />
-            <Text style={styles.pSignature}> Químico- UEPB</Text>
-            <Text style={styles.pSignature}> CRQ 01.20007.1 Pe.</Text>
             <Text style={styles.pSignature}>
-              Msc. Ciência e Tecnologia em Saúde-UEPB
+              {credentials?.Chemist.graduation}
             </Text>
             <Text style={styles.pSignature}>
-              Doutor em Biotecnologia – UFRPE
+              CRQ: {credentials?.Chemist.CRQ}
+            </Text>
+            <Text style={styles.pSignature}>
+              {credentials?.Chemist.postGraduation}
+            </Text>
+            <Text style={styles.pSignature}>
+              {credentials?.Chemist.postGraduation2}
             </Text>
           </View>
           <View style={styles.signature}>
             <View style={styles.lineSignature} />
             <Text style={styles.pSignature}> Técnico Operacional</Text>
+            <Text style={styles.pSignature}>
+              Matrícula: {credentials?.operator.registration}
+            </Text>
           </View>
         </View>
       </Page>
