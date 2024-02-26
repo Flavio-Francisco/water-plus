@@ -1,7 +1,8 @@
 "use client";
 import React from "react";
 import "bootstrap/dist/css/bootstrap.css";
-import { Formik, Form, Field, FormikHelpers } from "formik";
+import InputMask from "react-input-mask";
+import { Formik, Form, Field, FormikHelpers, FieldProps } from "formik";
 import { Container, Button, FormLabel } from "react-bootstrap";
 import { ReservoirAnalysis } from "@/utils/validation/ReservoirAnalysis";
 import { ReservoirAnalysisResults } from "@/utils/models/analysis";
@@ -71,7 +72,13 @@ const ReservoirAnalysisForm = () => {
           <Form>
             {/* Campos da Descrição da Amostra */}
             <h3>Descrição da Amostra</h3>
-            <div style={{ flex: 1, flexDirection: "column" }}>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                width: "80%",
+              }}
+            >
               <FormLabel>Nome da Amostra</FormLabel>
               <Field
                 name="SampleDescription.sampleName"
@@ -83,43 +90,127 @@ const ReservoirAnalysisForm = () => {
                   <div>{errors.SampleDescription.sampleName}</div>
                 )}
             </div>
-            <FormLabel>Endereço de Coleta</FormLabel>
-            <Field
-              name="SampleDescription.samplingAddress"
-              as="input"
-              placeholder="Endereço de Coleta"
-            />
-            {errors.SampleDescription?.samplingAddress &&
-              touched.SampleDescription?.samplingAddress && (
-                <div>{errors.SampleDescription.samplingAddress}</div>
-              )}
-            <Field
-              name="SampleDescription.city"
-              as="input"
-              placeholder="Cidade"
-            />
-            {errors.SampleDescription?.city &&
-              touched.SampleDescription?.city && (
-                <div>{errors.SampleDescription.city}</div>
-              )}
-            <Field
-              name="SampleDescription.state"
-              as="input"
-              placeholder="Estado"
-            />
-            {errors.SampleDescription?.state &&
-              touched.SampleDescription?.state && (
-                <div>{errors.SampleDescription.state}</div>
-              )}
-            <Field
-              name="SampleDescription.zipCode"
-              as="input"
-              placeholder="CEP"
-            />
-            {errors.SampleDescription?.zipCode &&
-              touched.SampleDescription?.zipCode && (
-                <div>{errors.SampleDescription.zipCode}</div>
-              )}
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                width: "80%",
+                gap: 30,
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  width: "60%",
+                  marginTop: 5,
+                }}
+              >
+                <FormLabel>Endereço de Coleta</FormLabel>
+                <Field
+                  name="SampleDescription.samplingAddress"
+                  as="input"
+                  placeholder="Endereço de Coleta"
+                />
+                {errors.SampleDescription?.samplingAddress &&
+                  touched.SampleDescription?.samplingAddress && (
+                    <div>{errors.SampleDescription.samplingAddress}</div>
+                  )}
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  flex: 1,
+                  flexDirection: "column",
+                  width: "30%",
+                  marginTop: 5,
+                }}
+              >
+                <FormLabel>Cidade</FormLabel>
+                <Field
+                  name="SampleDescription.city"
+                  as="input"
+                  placeholder="Cidade"
+                />
+                {errors.SampleDescription?.city &&
+                  touched.SampleDescription?.city && (
+                    <div>{errors.SampleDescription.city}</div>
+                  )}
+              </div>
+            </div>
+
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                width: "80%",
+                marginTop: 5,
+                gap: 30,
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  width: "30%",
+                }}
+              >
+                <FormLabel>Estado</FormLabel>
+                <Field
+                  name="SampleDescription.state"
+                  as="input"
+                  placeholder="Estado"
+                />
+                {errors.SampleDescription?.state &&
+                  touched.SampleDescription?.state && (
+                    <div>{errors.SampleDescription.state}</div>
+                  )}
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  width: "30%",
+                }}
+              >
+                <FormLabel>CEP</FormLabel>
+                <Field
+                  name="SampleDescription.zipCode"
+                  as="input"
+                  render={({ field }: FieldProps<any>) => (
+                    <InputMask
+                      {...field}
+                      mask="99999-999" // Define a máscara de CEP
+                      placeholder="CEP"
+                    />
+                  )}
+                />
+                {errors.SampleDescription?.zipCode &&
+                  touched.SampleDescription?.zipCode && (
+                    <div>{errors.SampleDescription.zipCode}</div>
+                  )}
+              </div>
+
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  width: "30%",
+                }}
+              >
+                <FormLabel>Data da Coleta</FormLabel>
+                <Field
+                  name="SampleDescription.samplingDate"
+                  as="input"
+                  type="date"
+                  placeholder="Data de Coleta"
+                />
+                {errors.SampleDescription?.samplingDate &&
+                  touched.SampleDescription?.samplingDate && (
+                    <div>{errors.SampleDescription.samplingDate}</div>
+                  )}
+              </div>
+            </div>
             <Field
               name="SampleDescription.sampleMatrixAndOrigin"
               as="input"
@@ -129,15 +220,7 @@ const ReservoirAnalysisForm = () => {
               touched.SampleDescription?.sampleMatrixAndOrigin && (
                 <div>{errors.SampleDescription.sampleMatrixAndOrigin}</div>
               )}
-            <Field
-              name="SampleDescription.samplingDate"
-              as="input"
-              placeholder="Data de Coleta"
-            />
-            {errors.SampleDescription?.samplingDate &&
-              touched.SampleDescription?.samplingDate && (
-                <div>{errors.SampleDescription.samplingDate}</div>
-              )}
+
             <Field
               name="SampleDescription.samplingResponsible"
               as="input"
