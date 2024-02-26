@@ -32,12 +32,12 @@ const CounteResevation = ({ date }: Iprops) => {
     } else {
       interval = setInterval(() => {
         setCor1("gray");
-      }, 1000);
+      }, 2000);
     }
 
     // Limpa o intervalo quando o componente é desmontado
     return () => clearInterval(interval);
-  }, [cor]);
+  }, [cor1]);
 
   useEffect(() => {
     if (diasRestantes <= 10) {

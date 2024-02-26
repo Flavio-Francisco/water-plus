@@ -40,6 +40,11 @@ const menuItems = [
     ],
   },
   {
+    name: "Análises",
+    icon: "SummarizeOutlinedIcon",
+    items: ["Reservatórios", "ETE", "Purificadores"],
+  },
+  {
     name: "Relatórios",
     icon: "SummarizeOutlinedIcon",
     items: [
@@ -139,6 +144,9 @@ const NavButton: FC<ButtonProps> = ({
         return "/Home/report/monthly";
       case "Limpeza Reservatórios":
         return "/Home/report/reservoirCleaning";
+      case "Reservatórios":
+        return "/Home/analysis/resevoir";
+
       default:
         break;
     }
