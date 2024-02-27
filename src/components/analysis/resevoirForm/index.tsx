@@ -1,14 +1,13 @@
 "use client";
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import InputMask from "react-input-mask";
 import { Formik, Field, FormikHelpers, FieldProps } from "formik";
-import { Container, Button, FormLabel, Form } from "react-bootstrap";
+import { Container, Button, Form } from "react-bootstrap";
 import { ReservoirAnalysis } from "@/utils/validation/ReservoirAnalysis";
 import { ReservoirAnalysisResults } from "@/utils/models/analysis";
 
 // Define os valores iniciais do formulário
-const initialValues = {
+const initialValues: ReservoirAnalysisResults = {
   SampleDescription: {
     sampleName: "",
     samplingAddress: "",
@@ -57,8 +56,12 @@ const ReservoirAnalysisForm = () => {
     { resetForm }: FormikHelpers<ReservoirAnalysisResults>,
   ) => {
     // Lógica de submissão do formulário
-    console.log(values);
-    resetForm();
+    try {
+      console.log(values);
+      resetForm();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -72,64 +75,34 @@ const ReservoirAnalysisForm = () => {
           <Form>
             {/* Campos da Descrição da Amostra */}
             <h3>Descrição da Amostra</h3>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                width: "80%",
-              }}
-            >
-              <Field name="SampleDescription.sampleName">
-                {({ field }: FieldProps) => (
-                  <Form.Group className="mt-3 " controlId="Color">
-                    <Form.Label className="text-center">
-                      Nome da Amostra
-                    </Form.Label>
-                    <Form.Control
-                      {...field}
-                      type="text"
-                      placeholder="Nome da Amostra"
-                      isInvalid={errors.SampleDescription?.sampleName === ""}
-                    />
-                    <Form.Control.Feedback type="invalid">
-                      {errors.SampleDescription?.sampleName}
-                    </Form.Control.Feedback>
-                  </Form.Group>
-                )}
-              </Field>
-            </div>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                width: "80%",
-                gap: 30,
-              }}
-            >
+            <div className="shadow rounded p-3">
               <div
                 style={{
                   display: "flex",
                   flexDirection: "column",
-                  width: "60%",
-                  marginTop: 5,
+                  width: "80%",
                 }}
               >
-                <Field name="SampleDescription.samplingAddress">
+                <Field name="SampleDescription.sampleName">
                   {({ field }: FieldProps) => (
-                    <Form.Group className="mt-3 " controlId="Color">
+                    <Form.Group
+                      className="mt-3 "
+                      controlId="SampleDescription.sampleName"
+                    >
                       <Form.Label className="text-center">
-                        Endereço de Coleta
+                        Nome da Amostra
                       </Form.Label>
                       <Form.Control
                         {...field}
                         type="text"
-                        placeholder="Endereço de Coleta"
+                        placeholder="Nome da Amostra"
                         isInvalid={
-                          errors.SampleDescription?.samplingAddress === ""
+                          touched.SampleDescription?.sampleName &&
+                          !!errors.SampleDescription?.sampleName
                         }
                       />
                       <Form.Control.Feedback type="invalid">
-                        {errors.SampleDescription?.samplingAddress}
+                        {errors.SampleDescription?.sampleName}
                       </Form.Control.Feedback>
                     </Form.Group>
                   )}
@@ -138,187 +111,255 @@ const ReservoirAnalysisForm = () => {
               <div
                 style={{
                   display: "flex",
-                  flex: 1,
-                  flexDirection: "column",
-                  width: "30%",
-                  marginTop: 5,
+                  flexDirection: "row",
+                  width: "80%",
+                  gap: 30,
                 }}
               >
-                <Field name="SampleDescription.city">
-                  {({ field }: FieldProps) => (
-                    <Form.Group className="mt-3 " controlId="Color">
-                      <Form.Label className="text-center">Cidade</Form.Label>
-                      <Form.Control
-                        {...field}
-                        type="text"
-                        placeholder="Cidade"
-                        isInvalid={errors.SampleDescription?.city === ""}
-                      />
-                      <Form.Control.Feedback type="invalid">
-                        {errors.SampleDescription?.city}
-                      </Form.Control.Feedback>
-                    </Form.Group>
-                  )}
-                </Field>
-              </div>
-            </div>
-
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                width: "80%",
-                marginTop: 5,
-                gap: 30,
-              }}
-            >
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  width: "30%",
-                }}
-              >
-                <Field name="SampleDescription.state">
-                  {({ field }: FieldProps) => (
-                    <Form.Group className="mt-3 " controlId="Color">
-                      <Form.Label className="text-center">Estado</Form.Label>
-                      <Form.Control
-                        {...field}
-                        type="text"
-                        placeholder="Estado"
-                        isInvalid={errors.SampleDescription?.state === ""}
-                      />
-                      <Form.Control.Feedback type="invalid">
-                        {errors.SampleDescription?.state}
-                      </Form.Control.Feedback>
-                    </Form.Group>
-                  )}
-                </Field>
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  width: "30%",
-                }}
-              >
-                <Field name="SampleDescription.zipCode">
-                  {({ field }: FieldProps) => (
-                    <Form.Group className="mt-3 " controlId="Color">
-                      <Form.Label className="text-center">CEP</Form.Label>
-                      <Form.Control
-                        {...field}
-                        type="text"
-                        placeholder="CEP"
-                        isInvalid={errors.SampleDescription?.zipCode === ""}
-                      />
-                      <Form.Control.Feedback type="invalid">
-                        {errors.SampleDescription?.zipCode}
-                      </Form.Control.Feedback>
-                    </Form.Group>
-                  )}
-                </Field>
-              </div>
-
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  width: "30%",
-                }}
-              >
-                <Field name="SampleDescription.samplingDate">
-                  {({ field }: FieldProps) => (
-                    <Form.Group className="mt-3 " controlId="Color">
-                      <Form.Label className="text-center">
-                        Data da Coleta
-                      </Form.Label>
-                      <Form.Control
-                        {...field}
-                        type="date"
-                        placeholder="Data da Coleta"
-                        isInvalid={
-                          errors.SampleDescription?.samplingDate === ""
-                        }
-                      />
-                      <Form.Control.Feedback type="invalid">
-                        {errors.SampleDescription?.samplingDate}
-                      </Form.Control.Feedback>
-                    </Form.Group>
-                  )}
-                </Field>
-              </div>
-            </div>
-
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                width: "80%",
-                marginTop: 5,
-                gap: 30,
-              }}
-            >
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  width: "30%",
-                }}
-              >
-                <Field
-                  name="SampleDescription.sampleMatrixAndOrigin"
-                  as="input"
-                  placeholder="Matriz e Origem da Amostra"
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    width: "60%",
+                    marginTop: 5,
+                  }}
                 >
-                  {({ field }: FieldProps) => (
-                    <Form.Group className="mt-3 " controlId="Color">
-                      <Form.Label className="text-center">
-                        Matriz e Origem da Amostra
-                      </Form.Label>
-                      <Form.Control
-                        {...field}
-                        type="date"
-                        placeholder="Matriz e Origem da Amostra"
-                        isInvalid={
-                          errors.SampleDescription?.sampleMatrixAndOrigin === ""
-                        }
-                      />
-                      <Form.Control.Feedback type="invalid">
-                        {errors.SampleDescription?.sampleMatrixAndOrigin}
-                      </Form.Control.Feedback>
-                    </Form.Group>
-                  )}
-                </Field>
+                  <Field name="SampleDescription.samplingAddress">
+                    {({ field }: FieldProps) => (
+                      <Form.Group
+                        className="mt-3 "
+                        controlId="SampleDescription.samplingAddress"
+                      >
+                        <Form.Label className="text-center">
+                          Endereço de Coleta
+                        </Form.Label>
+                        <Form.Control
+                          {...field}
+                          type="text"
+                          placeholder="Endereço de Coleta"
+                          isInvalid={
+                            touched.SampleDescription?.samplingAddress &&
+                            !!errors.SampleDescription?.samplingAddress
+                          }
+                        />
+                        <Form.Control.Feedback type="invalid">
+                          {errors.SampleDescription?.samplingAddress}
+                        </Form.Control.Feedback>
+                      </Form.Group>
+                    )}
+                  </Field>
+                </div>
+                <div
+                  style={{
+                    display: "flex",
+                    flex: 1,
+                    flexDirection: "column",
+                    width: "30%",
+                    marginTop: 5,
+                  }}
+                >
+                  <Field name="SampleDescription.city">
+                    {({ field }: FieldProps) => (
+                      <Form.Group
+                        className="mt-3 "
+                        controlId="SampleDescription.city"
+                      >
+                        <Form.Label className="text-center">Cidade</Form.Label>
+                        <Form.Control
+                          {...field}
+                          type="text"
+                          placeholder="Cidade"
+                          isInvalid={
+                            touched.SampleDescription?.city &&
+                            !!errors.SampleDescription?.city
+                          }
+                        />
+                        <Form.Control.Feedback type="invalid">
+                          {errors.SampleDescription?.city}
+                        </Form.Control.Feedback>
+                      </Form.Group>
+                    )}
+                  </Field>
+                </div>
               </div>
+
               <div
                 style={{
                   display: "flex",
-                  flexDirection: "column",
-                  width: "30%",
+                  flexDirection: "row",
+                  width: "80%",
+                  marginTop: 5,
+                  gap: 30,
                 }}
               >
-                <Field name="SampleDescription.samplingResponsible">
-                  {({ field }: FieldProps) => (
-                    <Form.Group className="mt-3 " controlId="Color">
-                      <Form.Label className="text-center">
-                        Responsável pela Coleta
-                      </Form.Label>
-                      <Form.Control
-                        {...field}
-                        type="text"
-                        placeholder="Responsável pela Coleta"
-                        isInvalid={
-                          errors.SampleDescription?.samplingResponsible === ""
-                        }
-                      />
-                      <Form.Control.Feedback type="invalid">
-                        {errors.SampleDescription?.sampleMatrixAndOrigin}
-                      </Form.Control.Feedback>
-                    </Form.Group>
-                  )}
-                </Field>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    width: "30%",
+                  }}
+                >
+                  <Field name="SampleDescription.state">
+                    {({ field }: FieldProps) => (
+                      <Form.Group
+                        className="mt-3 "
+                        controlId="SampleDescription.state"
+                      >
+                        <Form.Label className="text-center">Estado</Form.Label>
+                        <Form.Control
+                          {...field}
+                          type="text"
+                          placeholder="Estado"
+                          isInvalid={
+                            touched.SampleDescription?.state &&
+                            !!errors.SampleDescription?.state
+                          }
+                        />
+                        <Form.Control.Feedback type="invalid">
+                          {errors.SampleDescription?.state}
+                        </Form.Control.Feedback>
+                      </Form.Group>
+                    )}
+                  </Field>
+                </div>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    width: "30%",
+                  }}
+                >
+                  <Field name="SampleDescription.zipCode">
+                    {({ field }: FieldProps) => (
+                      <Form.Group
+                        className="mt-3 "
+                        controlId="SampleDescription.zipCode"
+                      >
+                        <Form.Label className="text-center">CEP</Form.Label>
+                        <Form.Control
+                          {...field}
+                          type="text"
+                          placeholder="CEP"
+                          isInvalid={
+                            touched.SampleDescription?.zipCode &&
+                            !!errors.SampleDescription?.zipCode
+                          }
+                        />
+                        <Form.Control.Feedback type="invalid">
+                          {errors.SampleDescription?.zipCode}
+                        </Form.Control.Feedback>
+                      </Form.Group>
+                    )}
+                  </Field>
+                </div>
+
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    width: "30%",
+                  }}
+                >
+                  <Field name="SampleDescription.samplingDate">
+                    {({ field }: FieldProps) => (
+                      <Form.Group
+                        className="mt-3 "
+                        controlId="SampleDescription.samplingDate"
+                      >
+                        <Form.Label className="text-center">
+                          Data da Coleta
+                        </Form.Label>
+                        <Form.Control
+                          {...field}
+                          type="date"
+                          placeholder="Data da Coleta"
+                          isInvalid={
+                            touched.SampleDescription?.samplingDate &&
+                            !!errors.SampleDescription?.samplingDate
+                          }
+                        />
+                        <Form.Control.Feedback type="invalid">
+                          {errors.SampleDescription?.samplingDate}
+                        </Form.Control.Feedback>
+                      </Form.Group>
+                    )}
+                  </Field>
+                </div>
+              </div>
+
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  width: "80%",
+                  marginTop: 5,
+                  gap: 30,
+                }}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    width: "30%",
+                  }}
+                >
+                  <Field name="SampleDescription.sampleMatrixAndOrigin">
+                    {({ field }: FieldProps) => (
+                      <Form.Group
+                        className="mt-3 "
+                        controlId="SampleDescription.sampleMatrixAndOrigin"
+                      >
+                        <Form.Label className="text-center">
+                          Matriz e Origem da Amostra
+                        </Form.Label>
+                        <Form.Control
+                          {...field}
+                          type="text"
+                          placeholder="Matriz e Origem da Amostra"
+                          isInvalid={
+                            touched.SampleDescription?.sampleMatrixAndOrigin &&
+                            !!errors.SampleDescription?.sampleMatrixAndOrigin
+                          }
+                        />
+                        <Form.Control.Feedback type="invalid">
+                          {errors.SampleDescription?.sampleMatrixAndOrigin}
+                        </Form.Control.Feedback>
+                      </Form.Group>
+                    )}
+                  </Field>
+                </div>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    width: "30%",
+                  }}
+                >
+                  <Field name="SampleDescription.samplingResponsible">
+                    {({ field }: FieldProps) => (
+                      <Form.Group
+                        className="mt-3 "
+                        controlId="SampleDescription.samplingResponsible"
+                      >
+                        <Form.Label className="text-center">
+                          Responsável pela Coleta
+                        </Form.Label>
+                        <Form.Control
+                          {...field}
+                          type="text"
+                          placeholder="Responsável pela Coleta"
+                          isInvalid={
+                            touched.SampleDescription?.samplingResponsible &&
+                            !!errors.SampleDescription?.samplingResponsible
+                          }
+                        />
+                        <Form.Control.Feedback type="invalid">
+                          {errors.SampleDescription?.sampleMatrixAndOrigin}
+                        </Form.Control.Feedback>
+                      </Form.Group>
+                    )}
+                  </Field>
+                </div>
               </div>
             </div>
             {/* Campos de Resultados da Análise */}
@@ -329,28 +370,36 @@ const ReservoirAnalysisForm = () => {
               style={{
                 display: "flex",
                 flexDirection: "row",
-                width: "90%",
+                width: "100%",
                 gap: 20,
               }}
             >
               <div
+                className="shadow rounded "
                 style={{
                   display: "flex",
                   flexDirection: "column",
                   width: "20%",
+                  padding: 20,
                 }}
               >
                 <Field name="bicarbonateAlkalinity">
                   {({ field }: FieldProps) => (
-                    <Form.Group className="mt-3 " controlId="Color">
+                    <Form.Group
+                      className="mt-3 "
+                      controlId="bicarbonateAlkalinity"
+                    >
                       <Form.Label className="text-center">
-                        Alcalinidade de Bicarbonato
+                        A. de Bicarbonato
                       </Form.Label>
                       <Form.Control
                         {...field}
                         type="text"
-                        placeholder="Alcalinidade de Bicarbonato"
-                        isInvalid={errors.bicarbonateAlkalinity === ""}
+                        placeholder="A. de Bicarbonato"
+                        isInvalid={
+                          touched.bicarbonateAlkalinity &&
+                          !!errors.bicarbonateAlkalinity
+                        }
                       />
                       <Form.Control.Feedback type="invalid">
                         {errors.bicarbonateAlkalinity}
@@ -361,7 +410,10 @@ const ReservoirAnalysisForm = () => {
 
                 <Field name="carbonateAlkalinity">
                   {({ field }: FieldProps) => (
-                    <Form.Group className="mt-3 " controlId="Color">
+                    <Form.Group
+                      className="mt-3 "
+                      controlId="carbonateAlkalinity"
+                    >
                       <Form.Label className="text-center">
                         Alcalinidade de Carbonato
                       </Form.Label>
@@ -369,7 +421,10 @@ const ReservoirAnalysisForm = () => {
                         {...field}
                         type="text"
                         placeholder=" Carbonato"
-                        isInvalid={errors.carbonateAlkalinity === ""}
+                        isInvalid={
+                          touched.carbonateAlkalinity &&
+                          !!errors.carbonateAlkalinity
+                        }
                       />
                       <Form.Control.Feedback type="invalid">
                         {errors.carbonateAlkalinity}
@@ -380,7 +435,10 @@ const ReservoirAnalysisForm = () => {
 
                 <Field name="hydroxideAlkalinity">
                   {({ field }: FieldProps) => (
-                    <Form.Group className="mt-3 " controlId="Color">
+                    <Form.Group
+                      className="mt-3 "
+                      controlId="hydroxideAlkalinity"
+                    >
                       <Form.Label className="text-center">
                         Alcalinidade deHidróxido
                       </Form.Label>
@@ -388,7 +446,10 @@ const ReservoirAnalysisForm = () => {
                         {...field}
                         type="text"
                         placeholder="Hidróxido"
-                        isInvalid={errors.hydroxideAlkalinity === ""}
+                        isInvalid={
+                          touched.hydroxideAlkalinity &&
+                          !!errors.hydroxideAlkalinity
+                        }
                       />
                       <Form.Control.Feedback type="invalid">
                         {errors.hydroxideAlkalinity}
@@ -397,13 +458,9 @@ const ReservoirAnalysisForm = () => {
                   )}
                 </Field>
 
-                <Field
-                  name="totalAlkalinity"
-                  as="input"
-                  placeholder="Alcalinidade Total"
-                >
+                <Field name="totalAlkalinity">
                   {({ field }: FieldProps) => (
-                    <Form.Group className="mt-3 " controlId="Color">
+                    <Form.Group className="mt-3 " controlId="totalAlkalinity">
                       <Form.Label className="text-center">
                         Alcalinidade Total
                       </Form.Label>
@@ -411,7 +468,9 @@ const ReservoirAnalysisForm = () => {
                         {...field}
                         type="text"
                         placeholder="Alcalinidade Total"
-                        isInvalid={errors.totalAlkalinity === ""}
+                        isInvalid={
+                          touched.totalAlkalinity && !!errors.totalAlkalinity
+                        }
                       />
                       <Form.Control.Feedback type="invalid">
                         {errors.totalAlkalinity}
@@ -420,221 +479,561 @@ const ReservoirAnalysisForm = () => {
                   )}
                 </Field>
 
-                <FormLabel>Alumínio</FormLabel>
-                <Field name="aluminum" as="input" placeholder="Alumínio" />
-                {errors.aluminum && touched.aluminum && (
-                  <div>{errors.aluminum}</div>
-                )}
-                <FormLabel>Amônia</FormLabel>
-                <Field name="ammonia" as="input" placeholder="Amônia" />
-                {errors.ammonia && touched.ammonia && (
-                  <div>{errors.ammonia}</div>
-                )}
+                <Field name="aluminum">
+                  {({ field }: FieldProps) => (
+                    <Form.Group className="mt-3 " controlId="aluminum">
+                      <Form.Label className="text-center">Alumínio</Form.Label>
+                      <Form.Control
+                        {...field}
+                        type="text"
+                        placeholder="Alumínio"
+                        isInvalid={touched.aluminum && !!errors.aluminum}
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        {errors.aluminum}
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                  )}
+                </Field>
+
+                <Field name="ammonia">
+                  {({ field }: FieldProps) => (
+                    <Form.Group className="mt-3 " controlId="ammonia">
+                      <Form.Label className="text-center">Amônia</Form.Label>
+                      <Form.Control
+                        {...field}
+                        type="text"
+                        placeholder="Amônia"
+                        isInvalid={touched.ammonia && !!errors.ammonia}
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        {errors.ammonia}
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                  )}
+                </Field>
               </div>
               <div
+                className="shadow rounded "
                 style={{
                   display: "flex",
                   flexDirection: "column",
                   width: "20%",
+                  padding: 20,
                 }}
               >
-                <FormLabel>Cálcio</FormLabel>
-                <Field name="calcium" as="input" placeholder="Cálcio" />
-                {errors.calcium && touched.calcium && (
-                  <div>{errors.calcium}</div>
-                )}
-                <FormLabel>Cloreto</FormLabel>
-                <Field name="chlorides" as="input" placeholder="Cloreto" />
-                {errors.chlorides && touched.chlorides && (
-                  <div>{errors.chlorides}</div>
-                )}
-                <FormLabel>Cloro Residual Livre</FormLabel>
-                <Field
-                  name="freeResidualChlorine"
-                  as="input"
-                  placeholder="Cloro Residual Livre"
-                />
-                {errors.freeResidualChlorine &&
-                  touched.freeResidualChlorine && (
-                    <div>{errors.freeResidualChlorine}</div>
+                <Field name="calcium">
+                  {({ field }: FieldProps) => (
+                    <Form.Group className="mt-3 " controlId="calcium">
+                      <Form.Label className="text-center">Cálcio</Form.Label>
+                      <Form.Control
+                        {...field}
+                        type="text"
+                        placeholder="Cálcio"
+                        isInvalid={touched.calcium && !!errors.calcium}
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        {errors.calcium}
+                      </Form.Control.Feedback>
+                    </Form.Group>
                   )}
-                <FormLabel>Condutividade Elétrica</FormLabel>
-                <Field
-                  name="electricalConductivity"
-                  as="input"
-                  placeholder="Condutividade Elétrica"
-                />
-                {errors.electricalConductivity &&
-                  touched.electricalConductivity && (
-                    <div>{errors.electricalConductivity}</div>
+                </Field>
+
+                <Field name="chlorides">
+                  {({ field }: FieldProps) => (
+                    <Form.Group className="mt-3 " controlId="chlorides">
+                      <Form.Label className="text-center">Cloreto</Form.Label>
+                      <Form.Control
+                        {...field}
+                        type="text"
+                        placeholder="Cloreto"
+                        isInvalid={touched.chlorides && !!errors.chlorides}
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        {errors.chlorides}
+                      </Form.Control.Feedback>
+                    </Form.Group>
                   )}
-                <FormLabel>Cor Aparente</FormLabel>
-                <Field
-                  name="apparentColor"
-                  as="input"
-                  placeholder="Cor Aparente"
-                />
-                {errors.apparentColor && touched.apparentColor && (
-                  <div>{errors.apparentColor}</div>
-                )}
-                <FormLabel>Dureza de Carbonatos</FormLabel>
-                <Field
-                  name="carbonateHardness"
-                  as="input"
-                  placeholder="Dureza de Carbonatos"
-                />
-                {errors.carbonateHardness && touched.carbonateHardness && (
-                  <div>{errors.carbonateHardness}</div>
-                )}
+                </Field>
+
+                <Field name="freeResidualChlorine">
+                  {({ field }: FieldProps) => (
+                    <Form.Group
+                      className="mt-3 "
+                      controlId="freeResidualChlorine"
+                    >
+                      <Form.Label className="text-center">
+                        Cloro Livre
+                      </Form.Label>
+                      <Form.Control
+                        {...field}
+                        type="text"
+                        placeholder="Cloro Livre"
+                        isInvalid={
+                          touched.freeResidualChlorine &&
+                          !!errors.freeResidualChlorine
+                        }
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        {errors.freeResidualChlorine}
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                  )}
+                </Field>
+
+                <Field name="electricalConductivity">
+                  {({ field }: FieldProps) => (
+                    <Form.Group
+                      className="mt-3 "
+                      controlId="electricalConductivity"
+                    >
+                      <Form.Label className="text-center">
+                        Condutividade
+                      </Form.Label>
+                      <Form.Control
+                        {...field}
+                        type="text"
+                        placeholder="Condutividade"
+                        isInvalid={
+                          touched.electricalConductivity &&
+                          !!errors.electricalConductivity
+                        }
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        {errors.electricalConductivity}
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                  )}
+                </Field>
+
+                <Field name="apparentColor">
+                  {({ field }: FieldProps) => (
+                    <Form.Group className="mt-3 " controlId="apparentColor">
+                      <Form.Label className="text-center">
+                        Cor Aparente
+                      </Form.Label>
+                      <Form.Control
+                        {...field}
+                        type="text"
+                        placeholder="Cor Aparente"
+                        isInvalid={
+                          touched.apparentColor && !!errors.apparentColor
+                        }
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        {errors.apparentColor}
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                  )}
+                </Field>
+
+                <Field name="carbonateHardness">
+                  {({ field }: FieldProps) => (
+                    <Form.Group className="mt-3 " controlId="carbonateHardness">
+                      <Form.Label className="text-center">
+                        Dureza de Carbonatos
+                      </Form.Label>
+                      <Form.Control
+                        {...field}
+                        type="text"
+                        placeholder="Carbonatos"
+                        isInvalid={
+                          touched.carbonateHardness &&
+                          !!errors.carbonateHardness
+                        }
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        {errors.carbonateHardness}
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                  )}
+                </Field>
               </div>
 
               <div
+                className="shadow rounded "
                 style={{
                   display: "flex",
                   flexDirection: "column",
                   width: "20%",
+                  padding: 20,
                 }}
               >
-                <FormLabel>Dureza de Carbonatos</FormLabel>
-                <Field
-                  name="nonCarbonateHardness"
-                  as="input"
-                  placeholder="Dureza de Não Carbonatos"
-                />
-                {errors.nonCarbonateHardness &&
-                  touched.nonCarbonateHardness && (
-                    <div>{errors.nonCarbonateHardness}</div>
+                <Field name="nonCarbonateHardness">
+                  {({ field }: FieldProps) => (
+                    <Form.Group
+                      className="mt-3 "
+                      controlId="nonCarbonateHardness"
+                    >
+                      <Form.Label className="text-center ">
+                        Dureza de N C
+                      </Form.Label>
+                      <Form.Control
+                        {...field}
+                        type="text"
+                        placeholder="Dureza de N C"
+                        isInvalid={
+                          touched.nonCarbonateHardness &&
+                          !!errors.nonCarbonateHardness
+                        }
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        {errors.nonCarbonateHardness}
+                      </Form.Control.Feedback>
+                    </Form.Group>
                   )}
-                <FormLabel>Dureza Total</FormLabel>
-                <Field
-                  name="totalHardness"
-                  as="input"
-                  placeholder="Dureza Total"
-                />
-                {errors.totalHardness && touched.totalHardness && (
-                  <div>{errors.totalHardness}</div>
-                )}
-                <FormLabel>Ferro Total</FormLabel>
-                <Field name="totalIron" as="input" placeholder="Ferro Total" />
-                {errors.totalIron && touched.totalIron && (
-                  <div>{errors.totalIron}</div>
-                )}
-                <FormLabel>Magnésio</FormLabel>
-                <Field name="magnesium" as="input" placeholder="Magnésio" />
-                {errors.magnesium && touched.magnesium && (
-                  <div>{errors.magnesium}</div>
-                )}
-                <FormLabel>Manganês</FormLabel>
-                <Field name="manganese" as="input" placeholder="Manganês" />
-                {errors.manganese && touched.manganese && (
-                  <div>{errors.manganese}</div>
-                )}
-                <FormLabel>Nitrato</FormLabel>
-                <Field name="nitrate" as="input" placeholder="Nitrato" />
-                {errors.nitrate && touched.nitrate && (
-                  <div>{errors.nitrate}</div>
-                )}
+                </Field>
+
+                <Field name="totalHardness">
+                  {({ field }: FieldProps) => (
+                    <Form.Group className="mt-3 " controlId="totalHardness">
+                      <Form.Label className="text-center">
+                        Dureza Total
+                      </Form.Label>
+                      <Form.Control
+                        {...field}
+                        type="text"
+                        placeholder="Dureza Total"
+                        isInvalid={
+                          touched.totalHardness && !!errors.totalHardness
+                        }
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        {errors.totalHardness}
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                  )}
+                </Field>
+
+                <Field name="totalIron">
+                  {({ field }: FieldProps) => (
+                    <Form.Group className="mt-3 " controlId="totalIron">
+                      <Form.Label className="text-center">
+                        Ferro Total
+                      </Form.Label>
+                      <Form.Control
+                        {...field}
+                        type="text"
+                        placeholder="Ferro Total"
+                        isInvalid={touched.totalIron && !!errors.totalIron}
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        {errors.totalIron}
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                  )}
+                </Field>
+
+                <Field name="magnesium">
+                  {({ field }: FieldProps) => (
+                    <Form.Group className="mt-3 " controlId="magnesium">
+                      <Form.Label className="text-center">Magnésio</Form.Label>
+                      <Form.Control
+                        {...field}
+                        type="text"
+                        placeholder="Magnésio"
+                        isInvalid={touched.magnesium && !!errors.magnesium}
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        {errors.magnesium}
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                  )}
+                </Field>
+
+                <Field name="manganese">
+                  {({ field }: FieldProps) => (
+                    <Form.Group className="mt-3 " controlId="manganese">
+                      <Form.Label className="text-center">Manganês</Form.Label>
+                      <Form.Control
+                        {...field}
+                        type="text"
+                        placeholder="Magnésio"
+                        isInvalid={touched.manganese && !!errors.manganese}
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        {errors.manganese}
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                  )}
+                </Field>
+
+                <Field name="nitrate">
+                  {({ field }: FieldProps) => (
+                    <Form.Group className="mt-3 " controlId="nitrate">
+                      <Form.Label className="text-center">Nitrato</Form.Label>
+                      <Form.Control
+                        {...field}
+                        type="text"
+                        placeholder="Nitrato"
+                        isInvalid={touched.nitrate && !!errors.nitrate}
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        {errors.nitrate}
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                  )}
+                </Field>
               </div>
               <div
+                className="shadow rounded "
                 style={{
                   display: "flex",
                   flexDirection: "column",
                   width: "20%",
+                  padding: 20,
                 }}
               >
-                <FormLabel>Nitrito</FormLabel>
-                <Field name="nitrite" as="input" placeholder="Nitrito" />
-                {errors.nitrite && touched.nitrite && (
-                  <div>{errors.nitrite}</div>
-                )}
-                <FormLabel>Oxigênio Dissolvido</FormLabel>
-                <Field
-                  name="dissolvedOxygen"
-                  as="input"
-                  placeholder="Oxigênio Dissolvido"
-                />
-                {errors.dissolvedOxygen && touched.dissolvedOxygen && (
-                  <div>{errors.dissolvedOxygen}</div>
-                )}
-                <FormLabel>PH</FormLabel>
-                <Field name="pH" as="input" placeholder="pH" />
-                {errors.pH && touched.pH && <div>{errors.pH}</div>}
-                <FormLabel>Potássio</FormLabel>
-                <Field name="potassium" as="input" placeholder="Potássio" />
-                {errors.potassium && touched.potassium && (
-                  <div>{errors.potassium}</div>
-                )}
-                <FormLabel>Sódio</FormLabel>
-                <Field name="sodium" as="input" placeholder="Sódio" />
-                {errors.sodium && touched.sodium && <div>{errors.sodium}</div>}
-                <FormLabel>Sólidos Dissolvidos Totais</FormLabel>
-                <Field
-                  name="totalDissolvedSolids"
-                  as="input"
-                  placeholder="Sólidos Dissolvidos Totais"
-                />
-                {errors.totalDissolvedSolids &&
-                  touched.totalDissolvedSolids && (
-                    <div>{errors.totalDissolvedSolids}</div>
+                <Field name="nitrite">
+                  {({ field }: FieldProps) => (
+                    <Form.Group className="mt-3 " controlId="nitrite">
+                      <Form.Label className="text-center">Nitrito</Form.Label>
+                      <Form.Control
+                        {...field}
+                        type="text"
+                        placeholder="Nitrito"
+                        isInvalid={touched.nitrite && !!errors.nitrite}
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        {errors.nitrite}
+                      </Form.Control.Feedback>
+                    </Form.Group>
                   )}
+                </Field>
+
+                <Field name="dissolvedOxygen">
+                  {({ field }: FieldProps) => (
+                    <Form.Group className="mt-3 " controlId="dissolvedOxygen">
+                      <Form.Label className="text-center">
+                        Oxigênio Dissolvido
+                      </Form.Label>
+                      <Form.Control
+                        {...field}
+                        type="text"
+                        placeholder="Oxigênio Dissolvido"
+                        isInvalid={
+                          touched.dissolvedOxygen && !!errors.dissolvedOxygen
+                        }
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        {errors.dissolvedOxygen}
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                  )}
+                </Field>
+
+                <Field name="pH">
+                  {({ field }: FieldProps) => (
+                    <Form.Group className="mt-3 " controlId="pH">
+                      <Form.Label className="text-center">pH</Form.Label>
+                      <Form.Control
+                        {...field}
+                        type="text"
+                        placeholder="pH"
+                        isInvalid={touched.pH && !!errors.pH}
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        {errors.pH}
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                  )}
+                </Field>
+
+                <Field name="potassium">
+                  {({ field }: FieldProps) => (
+                    <Form.Group className="mt-3 " controlId="potassium">
+                      <Form.Label className="text-center">Potássio</Form.Label>
+                      <Form.Control
+                        {...field}
+                        type="text"
+                        placeholder="Potássio"
+                        isInvalid={touched.potassium && !!errors.potassium}
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        {errors.potassium}
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                  )}
+                </Field>
+
+                <Field name="sodium">
+                  {({ field }: FieldProps) => (
+                    <Form.Group className="mt-3 " controlId="sodium">
+                      <Form.Label className="text-center">Sódio</Form.Label>
+                      <Form.Control
+                        {...field}
+                        type="text"
+                        placeholder="Sódio"
+                        isInvalid={touched.sodium && !!errors.sodium}
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        {errors.sodium}
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                  )}
+                </Field>
+
+                <Field name="totalDissolvedSolids">
+                  {({ field }: FieldProps) => (
+                    <Form.Group
+                      className="mt-3 "
+                      controlId="totalDissolvedSolids"
+                    >
+                      <Form.Label className="text-center">
+                        Sólidos Totais
+                      </Form.Label>
+                      <Form.Control
+                        {...field}
+                        type="text"
+                        placeholder="Sólidos Totais"
+                        isInvalid={
+                          touched.totalDissolvedSolids &&
+                          !!errors.totalDissolvedSolids
+                        }
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        {errors.totalDissolvedSolids}
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                  )}
+                </Field>
               </div>
               <div
+                className="shadow rounded"
                 style={{
                   display: "flex",
                   flexDirection: "column",
                   width: "20%",
+                  padding: 20,
                 }}
               >
-                <FormLabel>Sulfato</FormLabel>
-                <Field name="sulfate" as="input" placeholder="Sulfato" />
-                {errors.sulfate && touched.sulfate && (
-                  <div>{errors.sulfate}</div>
-                )}
-                <FormLabel>Sulfeto de hidrogênio</FormLabel>
-                <Field
-                  name="hydrogenSulfide"
-                  as="input"
-                  placeholder="Sulfeto de hidrogênio"
-                />
-                {errors.hydrogenSulfide && touched.hydrogenSulfide && (
-                  <div>{errors.hydrogenSulfide}</div>
-                )}
-                <FormLabel>Surfactantes</FormLabel>
-                <Field
-                  name="surfactants"
-                  as="input"
-                  placeholder="Surfactantes"
-                />
-                {errors.surfactants && touched.surfactants && (
-                  <div>{errors.surfactants}</div>
-                )}
-                <FormLabel>Coliformes totais</FormLabel>
-                <Field
-                  name="totalColiforms"
-                  as="input"
-                  placeholder="Coliformes totais"
-                />
-                {errors.totalColiforms && touched.totalColiforms && (
-                  <div>{errors.totalColiforms}</div>
-                )}
-                <FormLabel>Bactérias Heterotróficas</FormLabel>
-                <Field
-                  name="heterotrophicBacteriaCount"
-                  as="input"
-                  placeholder=" Bactérias Heterotróficas"
-                />
-                {errors.heterotrophicBacteriaCount &&
-                  touched.heterotrophicBacteriaCount && (
-                    <div>{errors.heterotrophicBacteriaCount}</div>
+                <Field name="sulfate">
+                  {({ field }: FieldProps) => (
+                    <Form.Group className="mt-3 " controlId="sulfate">
+                      <Form.Label className="text-center">Sulfato</Form.Label>
+                      <Form.Control
+                        {...field}
+                        type="text"
+                        placeholder="Sulfato"
+                        isInvalid={touched.sulfate && !!errors.sulfate}
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        {errors.sulfate}
+                      </Form.Control.Feedback>
+                    </Form.Group>
                   )}
-                <FormLabel>Endotoxinas</FormLabel>
-                <Field name="endotoxins" as="input" placeholder="Endotoxinas" />
-                {errors.endotoxins && touched.endotoxins && (
-                  <div>{errors.endotoxins}</div>
-                )}
+                </Field>
+
+                <Field name="hydrogenSulfide">
+                  {({ field }: FieldProps) => (
+                    <Form.Group className="mt-3 " controlId="hydrogenSulfide">
+                      <Form.Label className="text-center">
+                        Sulfeto de hidrogênio
+                      </Form.Label>
+                      <Form.Control
+                        {...field}
+                        type="text"
+                        placeholder="hidrogênio"
+                        isInvalid={
+                          touched.hydrogenSulfide && !!errors.hydrogenSulfide
+                        }
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        {errors.hydrogenSulfide}
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                  )}
+                </Field>
+                <Field name="surfactants">
+                  {({ field }: FieldProps) => (
+                    <Form.Group className="mt-3 " controlId="surfactants">
+                      <Form.Label className="text-center">
+                        Surfactantes
+                      </Form.Label>
+                      <Form.Control
+                        {...field}
+                        type="text"
+                        placeholder="Surfactantes"
+                        isInvalid={touched.surfactants && !!errors.surfactants}
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        {errors.surfactants}
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                  )}
+                </Field>
+
+                <Field name="totalColiforms">
+                  {({ field }: FieldProps) => (
+                    <Form.Group className="mt-3 " controlId="totalColiforms">
+                      <Form.Label className="text-center">
+                        Coliformes totais
+                      </Form.Label>
+                      <Form.Control
+                        {...field}
+                        type="text"
+                        placeholder="Coliformes totais"
+                        isInvalid={
+                          touched.totalColiforms && !!errors.totalColiforms
+                        }
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        {errors.totalColiforms}
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                  )}
+                </Field>
+
+                <Field name="heterotrophicBacteriaCount">
+                  {({ field }: FieldProps) => (
+                    <Form.Group
+                      className="mt-3 "
+                      controlId="heterotrophicBacteriaCount"
+                    >
+                      <Form.Label className="text-center">
+                        Heterotróficas
+                      </Form.Label>
+                      <Form.Control
+                        {...field}
+                        type="text"
+                        placeholder="Heterotróficas"
+                        isInvalid={
+                          touched.heterotrophicBacteriaCount &&
+                          !!errors.heterotrophicBacteriaCount
+                        }
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        {errors.heterotrophicBacteriaCount}
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                  )}
+                </Field>
+
+                <Field name="endotoxins">
+                  {({ field }: FieldProps) => (
+                    <Form.Group className="mt-3 " controlId="endotoxins">
+                      <Form.Label className="text-center">
+                        Endotoxinas
+                      </Form.Label>
+                      <Form.Control
+                        {...field}
+                        type="text"
+                        placeholder="Endotoxinas"
+                        isInvalid={touched.endotoxins && !!errors.endotoxins}
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        {errors.endotoxins}
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                  )}
+                </Field>
               </div>
             </div>
-            <Button type="submit">Enviar</Button>
+            <div className="m-auto  d-flex align-items-center justify-content-center mt-5 mb-5">
+              <Button className="btn btn-primary btn-lg m-auto " type="submit">
+                Salvar
+              </Button>
+            </div>
           </Form>
         )}
       </Formik>

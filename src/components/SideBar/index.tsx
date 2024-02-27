@@ -12,6 +12,7 @@ import AddchartIcon from "@mui/icons-material/Addchart";
 import TimelineIcon from "@mui/icons-material/Timeline";
 import SettingsIcon from "@mui/icons-material/Settings";
 import SummarizeOutlinedIcon from "@mui/icons-material/SummarizeOutlined";
+import ThermostatAutoOutlinedIcon from "@mui/icons-material/ThermostatAutoOutlined";
 import Image from "next/image";
 
 import { Thema } from "../../../thema";
@@ -41,7 +42,7 @@ const menuItems = [
   },
   {
     name: "Análises",
-    icon: "SummarizeOutlinedIcon",
+    icon: "ThermostatAutoOutlinedIcon ",
     items: ["Reservatórios", "ETE", "Purificadores"],
   },
   {
@@ -49,8 +50,8 @@ const menuItems = [
     icon: "SummarizeOutlinedIcon",
     items: [
       "Mensal",
-      "Analises",
-      " Diasafe",
+      "Analise",
+      "Diasafe",
       "Limpeza Reservatórios",
       "Consumo de Água",
     ],
@@ -90,6 +91,8 @@ const getIconComponent = (iconName: string) => {
       return WarningIcon;
     case "SummarizeOutlinedIcon":
       return SummarizeOutlinedIcon;
+    case "ThermostatAutoOutlinedIcon ":
+      return ThermostatAutoOutlinedIcon;
     default:
       // Caso o ícone seja desconhecido
       return null;
@@ -185,21 +188,20 @@ export const Sidebar = () => {
         <nav className="sidebar-nav">
           <NavHeader />
 
-          {menuItems.map((item) => (
-            <>
+          {menuItems.map((item, index) => (
+            <React.Fragment key={index}>
               {!item.items && (
-                <>
-                  <NavButton
-                    onClick={handleClick}
-                    name={item.name}
-                    icon={item.icon}
-                    isActive={activeItem === item.name}
-                    hasSubNav={!!item.items}
-                  />
-                </>
+                <NavButton
+                  key={item.name}
+                  onClick={handleClick}
+                  name={item.name}
+                  icon={item.icon}
+                  isActive={activeItem === item.name}
+                  hasSubNav={!!item.items}
+                />
               )}
               {item.items && (
-                <>
+                <React.Fragment key={item.name}>
                   <NavButton
                     onClick={handleClick}
                     name={item.name}
@@ -211,6 +213,7 @@ export const Sidebar = () => {
                     className={`sub-nav ${
                       isSubNavOpen(item.name, item.items) ? "open" : ""
                     }`}
+                    key={`${item.name}-sub-nav`}
                   >
                     {item.items.map((subItem) => (
                       <NavButton
@@ -221,10 +224,11 @@ export const Sidebar = () => {
                       />
                     ))}
                   </div>
-                </>
+                </React.Fragment>
               )}
-            </>
+            </React.Fragment>
           ))}
+
           <MyModal />
         </nav>
       </aside>
