@@ -41,7 +41,7 @@ export interface ReservoirAnalysisResults {
   endotoxins: string;
 }
 
-export interface PurifierAnalysisResult {
+export interface AnalysisResult {
   SampleDescription: {
     sampleName: string;
     samplingAddress: string;

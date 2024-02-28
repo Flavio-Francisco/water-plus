@@ -1,5 +1,6 @@
 import { Props } from "@/components/grafic";
 import { Credentials, ReportModel, ReservoirCleaning } from "../models/report";
+import { AnalysisResult } from "@/utils/models/analysis";
 
 // Alimwntação
 export const dataZeolica: Props = {
@@ -262,4 +263,21 @@ export const fackCredentials: Credentials = {
 export const fakeReservoirCleaning: ReservoirCleaning = {
   lastCleaning: "25/02/2024",
   nextCleaning: "2024-03-12",
+};
+export const FormInitialValues: AnalysisResult = {
+  SampleDescription: {
+    sampleName: "",
+    samplingAddress: "",
+    city: "",
+    state: "",
+    zipCode: "",
+    sampleMatrixAndOrigin: "",
+    samplingDate: "",
+    samplingResponsible: "",
+  },
+  MicrobiologigoAssays: {
+    eColiPresence: "",
+    totalColiformsPresence: "",
+    heterotrophicBacteriaCount: "",
+  },
 };

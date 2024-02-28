@@ -1,7 +1,6 @@
 "use client";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { FC, useState } from "react";
-import React from "react";
+import React, { FC, useState } from "react";
 import "./styles.css";
 import Logo from "./logo.jpg";
 import WarningIcon from "@mui/icons-material/Warning";
@@ -43,7 +42,7 @@ const menuItems = [
   {
     name: "Análises",
     icon: "ThermostatAutoOutlinedIcon ",
-    items: ["Reservatórios", "ETE", "Purificadores"],
+    items: ["Reservatórios", "ETE", "Purificadores", "Osmoses"],
   },
   {
     name: "Relatórios",
@@ -102,6 +101,7 @@ const getIconComponent = (iconName: string) => {
 const NavHeader = () => (
   <header className="sidebar-header">
     <Image
+      priority={true}
       src={Logo}
       alt="Logo"
       width={100}
@@ -149,6 +149,8 @@ const NavButton: FC<ButtonProps> = ({
         return "/Home/report/reservoirCleaning";
       case "Reservatórios":
         return "/Home/analysis/resevoir";
+      case "Osmoses":
+        return "/Home/analysis/osmosis";
 
       default:
         break;

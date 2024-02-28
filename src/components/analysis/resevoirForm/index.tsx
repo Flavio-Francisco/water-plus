@@ -56,12 +56,9 @@ const ReservoirAnalysisForm = () => {
     { resetForm }: FormikHelpers<ReservoirAnalysisResults>,
   ) => {
     // Lógica de submissão do formulário
-    try {
-      console.log(values);
-      resetForm();
-    } catch (error) {
-      console.log(error);
-    }
+
+    console.log(values);
+    resetForm();
   };
 
   return (
