@@ -47,13 +47,7 @@ const menuItems = [
   {
     name: "Relatórios",
     icon: "SummarizeOutlinedIcon",
-    items: [
-      "Mensal",
-      "Analise",
-      "Diasafe",
-      "Limpeza Reservatórios",
-      "Consumo de Água",
-    ],
+    items: ["Mensal", "Diasafe", "Limpeza Reservatórios", "Consumo de Água"],
   },
 
   {
