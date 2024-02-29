@@ -32,14 +32,14 @@ const FormApvisa: React.FC = () => {
     values: ApvisaModel,
     { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void },
   ) => {
-    setTimeout(() => {
-      alert(JSON.stringify(values, null, 2));
-      setSubmitting(false);
-    }, 400);
+
+    console.log(values);
+    setSubmitting(false);
+   
   };
 
   return (
-    <Container>
+    <Container style={{width:'90%', display :'flex',justifyContent:'center',flexDirection:'column'}}  className="shadow rounded p-5">
       <h1>Coleta Apevisa</h1>
       <Formik
         initialValues={initialValues}
@@ -53,7 +53,7 @@ const FormApvisa: React.FC = () => {
                 Ponto da Coleta:
               </BootstrapForm.Label>
               <Col sm={10}>
-                <Field type="text" name="name" className="form-control" />
+                <Field type="text" name="name" className="form-control w-90" />
                 <ErrorMessage
                   name="name"
                   component="div"
