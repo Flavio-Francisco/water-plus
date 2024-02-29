@@ -30,13 +30,9 @@ const ResultForm = () => {
         {({ errors, touched }) => (
           <Form>
             <Row className="m-5 mb-5 d-flex justify-content-center align-items-center">
-              <h2 className="text-center">
-                Resultados das Amostras das Osmoses
-              </h2>
-              <Row className="m-5 mb-5 d-flex justify-content-center align-items-center">
-                <h3 className="text-center">Dados da Amostras</h3>
-              </Row>
+              <h3 className="text-center">Dados da Amostras</h3>
             </Row>
+
             <Row className="shadow p-3 mb-5 bg-white rounded">
               <Row>
                 <Col>

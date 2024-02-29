@@ -71,7 +71,11 @@ const ReservoirAnalysisForm = () => {
         {({ errors, touched }) => (
           <Form>
             {/* Campos da Descrição da Amostra */}
-            <h3>Descrição da Amostra</h3>
+
+            <div className="m-5 mb-5 d-flex justify-content-center align-items-center">
+              <h3 className="text-center">Descrição da Amostra</h3>
+            </div>
+
             <div className="shadow rounded p-3">
               <div
                 style={{
@@ -360,9 +364,9 @@ const ReservoirAnalysisForm = () => {
               </div>
             </div>
             {/* Campos de Resultados da Análise */}
-            <h3 style={{ marginTop: 20, marginBottom: 20 }}>
-              Resultados da Análise
-            </h3>
+            <div className="m-5 mb-5 d-flex justify-content-center align-items-center">
+              <h3 className="text-center"> Resultados da Análise</h3>
+            </div>
             <div
               style={{
                 display: "flex",

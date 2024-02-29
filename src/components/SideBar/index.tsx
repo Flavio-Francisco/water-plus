@@ -42,7 +42,7 @@ const menuItems = [
   {
     name: "Análises",
     icon: "ThermostatAutoOutlinedIcon ",
-    items: ["Reservatórios", "ETE", "Purificadores", "Osmoses"],
+    items: ["Reservatórios", "ETE", "Purificadores"],
   },
   {
     name: "Relatórios",
@@ -149,8 +149,8 @@ const NavButton: FC<ButtonProps> = ({
         return "/Home/report/reservoirCleaning";
       case "Reservatórios":
         return "/Home/analysis/resevoir";
-      case "Osmoses":
-        return "/Home/analysis/osmosis";
+      case "ETE":
+        return "/Home/analysis/ete";
 
       default:
         break;
