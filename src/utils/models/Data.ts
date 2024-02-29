@@ -3,6 +3,7 @@ import { Credentials, ReportModel, ReservoirCleaning } from "../models/report";
 import { AnalysisResult } from "@/utils/models/analysis";
 
 // Alimwntação
+
 export const dataZeolica: Props = {
   title: "Pressão do zeolita",
   subtitle:
@@ -155,6 +156,43 @@ export const Datafull = [
   dataCloroTotal,
   dataPH,
 ];
+// consumo de agua
+
+export const dataProducao: Props = {
+  title: "Media de produção",
+  subtitle: "os dados são baseados na posetagem de rejeito",
+  data: [
+    ["Dias", "Permeado", "Rejeito"],
+    [1, 12, 3],
+    [2, 14, 3],
+    [3, 13, 2],
+    [4, 13, 3],
+    [5, 12, 3],
+    [6, 12, 3],
+    [7, 15, 3],
+    [8, 12, 1],
+    [9, 12, 3],
+    [10, 12, 3],
+    [11, 12, 2],
+    [12, 14, 3],
+    [13, 12, 3],
+    [14, 12, 3],
+    [15, 12, 3],
+    [16, 12, 3],
+    [17, 11, 1],
+    [18, 14, 1],
+    [19, 17, 5],
+    [20, 12, 3],
+    [21, 16, 3],
+    [22, 12, 3],
+    [23, 15, 3],
+    [24, 16, 3],
+    [25, 14, 3],
+    [26, 14, 3],
+    [27, 14, 3],
+    [28, 14, 3],
+  ],
+};
 
 export function getItemByIndex(index: number, arry: Props[]): Props | null {
   if (index >= 0 && index < arry.length) {
@@ -281,3 +319,35 @@ export const FormInitialValues: AnalysisResult = {
     heterotrophicBacteriaCount: "",
   },
 };
+export function calcularPorcentagem(
+  data: object | unknown[] | undefined,
+): string {
+  if (!data || !data || !Array.isArray(data)) {
+    return "Dados não encontrados";
+  }
+
+  let totalColuna1 = 0;
+  let totalColuna2 = 0;
+
+  for (let i = 1; i < data.length; i++) {
+    const rowData = data[i];
+    if (
+      Array.isArray(rowData) &&
+      rowData.length >= 3 &&
+      typeof rowData[1] === "number" &&
+      typeof rowData[2] === "number"
+    ) {
+      totalColuna1 += Number(rowData[1]);
+      totalColuna2 += Number(rowData[2]);
+    } else {
+      return "Estrutura de dados inválida";
+    }
+  }
+
+  if (totalColuna1 === 0) {
+    return "Divisão por zero";
+  }
+
+  const porcentagem = (totalColuna2 / totalColuna1) * 100;
+  return porcentagem.toFixed(2) + "%";
+}

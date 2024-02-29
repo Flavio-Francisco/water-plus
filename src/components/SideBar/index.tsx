@@ -37,6 +37,7 @@ const menuItems = [
       "Osmose 1º Passo",
       "Osmose 2º Passo",
       "Loop",
+      "Consumo de Água",
     ],
   },
   {
@@ -47,7 +48,7 @@ const menuItems = [
   {
     name: "Relatórios",
     icon: "SummarizeOutlinedIcon",
-    items: ["Mensal", "Diasafe", "Limpeza Reservatórios", "Consumo de Água"],
+    items: ["Mensal", "Diasafe", "Limpeza Reservatórios"],
   },
 
   {
@@ -145,6 +146,8 @@ const NavButton: FC<ButtonProps> = ({
         return "/Home/analysis/resevoir";
       case "ETE":
         return "/Home/analysis/ete";
+      case "Consumo de Água":
+        return "/Home/production";
 
       default:
         break;
