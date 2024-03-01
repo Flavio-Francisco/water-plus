@@ -47,13 +47,13 @@ const FormApvisa: React.FC = () => {
         onSubmit={handleSubmit}
       >
         {({ isSubmitting }) => (
-          <Form>
+          <Form style={{width:"100%"}}>
             <BootstrapForm.Group as={Row} controlId="formName">
-              <BootstrapForm.Label column sm={2}>
+              <BootstrapForm.Label column sm={2} >
                 Ponto da Coleta:
               </BootstrapForm.Label>
               <Col sm={10}>
-                <Field type="text" name="name" className="form-control w-90" />
+                <Field type="text" name="name" className="form-control "style={{width:"50%"}}  />
                 <ErrorMessage
                   name="name"
                   component="div"
@@ -61,12 +61,12 @@ const FormApvisa: React.FC = () => {
                 />
               </Col>
             </BootstrapForm.Group>
-            <BootstrapForm.Group as={Row} controlId="formCianoBacteria">
+            <BootstrapForm.Group as={Row} controlId="formCianoBacteria" style={{width:"50%"}}>
               <BootstrapForm.Label column sm={2}>
                 Ciano Bactérias:
               </BootstrapForm.Label>
               <Col sm={10}>
-                <Field type="radio" name="cianoBacteria" value="Satifatório" />{" "}
+                <Field type="radio" name="cianoBacteria" value="Satifatório" style={{width:"50%"}}/>{" "}
                 Satifatório
                 <Field
                   type="radio"
@@ -87,7 +87,7 @@ const FormApvisa: React.FC = () => {
                 />
               </Col>
             </BootstrapForm.Group>
-            <BootstrapForm.Group as={Row} controlId="formEscherichaColi">
+            <BootstrapForm.Group as={Row} controlId="formEscherichaColi" style={{width:"50%"}}>
               <BootstrapForm.Label column sm={2}>
                 Eschericha Coli:
               </BootstrapForm.Label>
@@ -114,7 +114,7 @@ const FormApvisa: React.FC = () => {
               </Col>
             </BootstrapForm.Group>
             <BootstrapForm.Group as={Row} controlId="formEndotoxin">
-              <BootstrapForm.Label column sm={2}>
+              <BootstrapForm.Label column sm={2} style={{width:"50%"}}>
                 Endotoxina:
               </BootstrapForm.Label>
               <Col sm={10}>
@@ -141,7 +141,7 @@ const FormApvisa: React.FC = () => {
               </Col>
             </BootstrapForm.Group>
             <BootstrapForm.Group as={Row} controlId="formHeterotrophic">
-              <BootstrapForm.Label column sm={2}>
+              <BootstrapForm.Label column sm={2} style={{width:"50%"}}>
                 Heterotróficas:
               </BootstrapForm.Label>
               <Col sm={10}>
@@ -167,7 +167,7 @@ const FormApvisa: React.FC = () => {
                 />
               </Col>
             </BootstrapForm.Group>
-            <BootstrapForm.Group as={Row} controlId="formTotalColiforms">
+            <BootstrapForm.Group as={Row} controlId="formTotalColiforms" style={{width:"50%"}}>
               <BootstrapForm.Label column sm={2}>
                 Coliformes Totais:
               </BootstrapForm.Label>
@@ -198,25 +198,29 @@ const FormApvisa: React.FC = () => {
                 />
               </Col>
             </BootstrapForm.Group>
-            <BootstrapForm.Group as={Row} controlId="formSeedingInDepth">
-              <BootstrapForm.Label column sm={2}>
+            <BootstrapForm.Group as={Row} controlId="formSeedingInDepth" style={{ display:'flex', flexDirection:'row'}} >
+              <BootstrapForm.Label column sm={2} style={{width:"25%", height:40,display:'flex', textAlign:'center',}}>
                 Semeando em profundidade:
               </BootstrapForm.Label>
-              <Col sm={10}>
-                <Field type="radio" name="seedingInDepth" value="Satifatório" />{" "}
+              <Col sm={10} style={{ height:40,width:"40%",display:'flex',justifyContent:'center',textAlign:'center'}}>
+                <Field  type="radio" name="seedingInDepth" value="Satifatório" />{" "}
+                <p style={{ height:40,display:'flex', textAlign:'center',justifyContent: 'center',paddingTop:8, marginLeft:5,marginRight:10}}>
                 Satifatório
+                </p> 
                 <Field
                   type="radio"
                   name="seedingInDepth"
                   value="Não Satifatório"
                 />{" "}
-                Não Satifatório
+               <p style={{ height:40,display:'flex', textAlign:'center',justifyContent: 'center',paddingTop:8, marginLeft:5,marginRight:10}}>Não Satifatório</p> 
                 <Field
                   type="radio"
                   name="tseedingInDepth"
                   value="Não Coletado"
                 />{" "}
+                 <p style={{ height:40,display:'flex', textAlign:'center',justifyContent: 'center',paddingTop:8, marginLeft:5,marginRight:10}}>
                 Não Coletado
+                </p>
                 <ErrorMessage
                   name="seedingInDepth"
                   component="div"
@@ -225,8 +229,8 @@ const FormApvisa: React.FC = () => {
               </Col>
             </BootstrapForm.Group>
 
-            <BootstrapForm.Group as={Row} controlId="formSeedingOnSurface">
-              <BootstrapForm.Label column sm={2}>
+            <BootstrapForm.Group as={Row} controlId="formSeedingOnSurface" style={{ display:'flex', flexDirection:'row'}}>
+              <BootstrapForm.Label column sm={2} style={{width:"25%", height:40,display:'flex', textAlign:'center',}}>
                 Semeadura na superfície:
               </BootstrapForm.Label>
               <Col sm={10}>
@@ -256,8 +260,8 @@ const FormApvisa: React.FC = () => {
               </Col>
             </BootstrapForm.Group>
 
-            <BootstrapForm.Group as={Row} controlId="formConductivity">
-              <BootstrapForm.Label column sm={2}>
+            <BootstrapForm.Group as={Row} controlId="formConductivity" style={{ display:'flex', flexDirection:'row'}}>
+              <BootstrapForm.Label column sm={2} style={{width:"25%", height:40,display:'flex', textAlign:'center',}}>
                 Condutividade:
               </BootstrapForm.Label>
               <Col sm={10}>
@@ -283,8 +287,8 @@ const FormApvisa: React.FC = () => {
               </Col>
             </BootstrapForm.Group>
 
-            <BootstrapForm.Group as={Row} controlId="formFreeChlorine">
-              <BootstrapForm.Label column sm={2}>
+            <BootstrapForm.Group as={Row} controlId="formFreeChlorine" style={{ display:'flex', flexDirection:'row'}}>
+              <BootstrapForm.Label column sm={2} style={{width:"25%", height:40,display:'flex', textAlign:'center',}}>
                 Cloro Livre:
               </BootstrapForm.Label>
               <Col sm={10}>
@@ -310,8 +314,8 @@ const FormApvisa: React.FC = () => {
               </Col>
             </BootstrapForm.Group>
 
-            <BootstrapForm.Group as={Row} controlId="formPH">
-              <BootstrapForm.Label column sm={2}>
+            <BootstrapForm.Group as={Row} controlId="formPH" style={{ display:'flex', flexDirection:'row'}}>
+              <BootstrapForm.Label column sm={2} style={{width:"25%", height:40,display:'flex', textAlign:'center',}}>
                 PH:
               </BootstrapForm.Label>
               <Col sm={10}>
@@ -329,8 +333,8 @@ const FormApvisa: React.FC = () => {
               </Col>
             </BootstrapForm.Group>
 
-            <BootstrapForm.Group as={Row} controlId="formPotentiometry">
-              <BootstrapForm.Label column sm={2}>
+            <BootstrapForm.Group as={Row} controlId="formPotentiometry" style={{ display:'flex', flexDirection:'row'}}>
+              <BootstrapForm.Label column sm={2} style={{width:"25%", height:40,display:'flex', textAlign:'center',}}>
                 Potenciometria:
               </BootstrapForm.Label>
               <Col sm={10}>
