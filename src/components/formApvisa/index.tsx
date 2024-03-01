@@ -11,6 +11,7 @@ import {
   Form as BootstrapForm,
   Row,
 } from "react-bootstrap";
+import Line from "../line";
 
 const initialValues: ApvisaModel = {
   name: "",
@@ -52,72 +53,88 @@ const FormApvisa: React.FC = () => {
               <BootstrapForm.Label column sm={2} >
                 Ponto da Coleta:
               </BootstrapForm.Label>
-              <Col sm={10}>
+              <Col sm={10} style={{marginBottom:10}}>
                 <Field type="text" name="name" className="form-control "style={{width:"50%"}}  />
                 <ErrorMessage
                   name="name"
                   component="div"
-                  className="text-danger"
+                  className="text-danger "
                 />
+               
               </Col>
+              <Line/>
             </BootstrapForm.Group>
-            <BootstrapForm.Group as={Row} controlId="formCianoBacteria" style={{width:"50%"}}>
-              <BootstrapForm.Label column sm={2}>
+            <BootstrapForm.Group as={Row} controlId="formCianoBacteria"style={{ display:'flex', flexDirection:'column'}} >
+              <BootstrapForm.Label column sm={2} style={{width:"25%", height:40,display:'flex', textAlign:'center',  }}>
                 Ciano Bactérias:
               </BootstrapForm.Label>
-              <Col sm={10}>
-                <Field type="radio" name="cianoBacteria" value="Satifatório" style={{width:"50%"}}/>{" "}
+              <Col sm={10} style={{ height:30,width:"40%",display:'flex',justifyContent:'center',textAlign:'center',}}>
+                <Field type="radio" name="cianoBacteria" value="Satifatório" />{" "}
+                <p style={{ height:40,display:'flex', textAlign:'center',justifyContent: 'center',paddingTop:4, marginLeft:5,marginRight:10}}>
                 Satifatório
+                </p>
                 <Field
                   type="radio"
                   name="cianoBacteria"
                   value="Não Satifatório"
                 />{" "}
+                  <p style={{ height:40,display:'flex', textAlign:'center',justifyContent: 'center',paddingTop:4, marginLeft:5,marginRight:10}}>
                 Não Satifatório
+                </p>
                 <Field
                   type="radio"
                   name="cianoBacteria"
                   value="Não Coletado"
                 />{" "}
+                <p style={{ height:40,display:'flex', textAlign:'center',justifyContent: 'center',paddingTop:4, marginLeft:5,marginRight:10}}>
                 Não Coletado
+                </p>
                 <ErrorMessage
                   name="cianoBacteria"
                   component="div"
                   className="text-danger"
                 />
               </Col>
+              <Line/>
             </BootstrapForm.Group>
-            <BootstrapForm.Group as={Row} controlId="formEscherichaColi" style={{width:"50%"}}>
-              <BootstrapForm.Label column sm={2}>
+            <BootstrapForm.Group as={Row} controlId="formEscherichaColi" style={{ display:'flex', flexDirection:'column'}}>
+              <BootstrapForm.Label column sm={2} style={{width:"25%", height:40,display:'flex', textAlign:'center',}}>
                 Eschericha Coli:
               </BootstrapForm.Label>
-              <Col sm={10}>
+              <Col sm={10} style={{ height:30,width:"40%",display:'flex',justifyContent:'center',textAlign:'center'}}>
                 <Field type="radio" name="escherichaColi" value="Satifatório" />{" "}
+                <p style={{ height:30,display:'flex', textAlign:'center',justifyContent: 'center',paddingTop:4, marginLeft:5,marginRight:10}}>
                 Satifatório
+                </p>
                 <Field
                   type="radio"
                   name="escherichaColi"
                   value="Não Satifatório"
                 />{" "}
+                 <p style={{ height:30,display:'flex', textAlign:'center',justifyContent: 'center',paddingTop:4, marginLeft:5,marginRight:10}}>
                 Não Satifatório
+                </p>
                 <Field
                   type="radio"
                   name="escherichaColi"
                   value="Não Coletado"
                 />{" "}
+                  <p style={{ height:30,display:'flex', textAlign:'center',justifyContent: 'center',paddingTop:4, marginLeft:5,marginRight:10}}>
                 Não Coletado
+                </p>
                 <ErrorMessage
                   name="escherichaColi"
                   component="div"
                   className="text-danger"
                 />
               </Col>
+              <Line/>
             </BootstrapForm.Group>
-            <BootstrapForm.Group as={Row} controlId="formEndotoxin">
-              <BootstrapForm.Label column sm={2} style={{width:"50%"}}>
+            <BootstrapForm.Group as={Row} controlId="formEndotoxin" style={{ display:'flex', flexDirection:'row'}}>
+              <BootstrapForm.Label column sm={2} style={{width:"25%", height:40,display:'flex', textAlign:'center',}}>
                 Endotoxina:
               </BootstrapForm.Label>
-              <Col sm={10}>
+              <Col sm={10} style={{ height:40,width:"40%",display:'flex',justifyContent:'center',textAlign:'center'}}>
                 <Field type="radio" name="endotoxin" value="Satifatório" />{" "}
                 Satifatório
                 <Field
@@ -140,11 +157,11 @@ const FormApvisa: React.FC = () => {
                 />
               </Col>
             </BootstrapForm.Group>
-            <BootstrapForm.Group as={Row} controlId="formHeterotrophic">
-              <BootstrapForm.Label column sm={2} style={{width:"50%"}}>
+            <BootstrapForm.Group as={Row} controlId="formHeterotrophic" style={{ display:'flex', flexDirection:'row'}}>
+              <BootstrapForm.Label column sm={2} style={{width:"25%", height:40,display:'flex', textAlign:'center',}}>
                 Heterotróficas:
               </BootstrapForm.Label>
-              <Col sm={10}>
+              <Col sm={10} style={{ height:40,width:"40%",display:'flex',justifyContent:'center',textAlign:'center'}}>
                 <Field type="radio" name="heterotrophic" value="Satifatório" />{" "}
                 Satifatório
                 <Field
@@ -167,11 +184,11 @@ const FormApvisa: React.FC = () => {
                 />
               </Col>
             </BootstrapForm.Group>
-            <BootstrapForm.Group as={Row} controlId="formTotalColiforms" style={{width:"50%"}}>
-              <BootstrapForm.Label column sm={2}>
+            <BootstrapForm.Group as={Row} controlId="formTotalColiforms" style={{ display:'flex', flexDirection:'row'}}>
+              <BootstrapForm.Label column sm={2} style={{width:"25%", height:40,display:'flex', textAlign:'center',}}>
                 Coliformes Totais:
               </BootstrapForm.Label>
-              <Col sm={10}>
+              <Col sm={10} style={{ height:40,width:"40%",display:'flex',justifyContent:'center',textAlign:'center'}}>
                 <Field type="radio" name="totalColiforms" value="Satifatório" />{" "}
                 Satifatório
                 <Field
