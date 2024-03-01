@@ -41,7 +41,10 @@ const FormApvisa: React.FC = () => {
 
   return (
     <Container style={{width:'90%', display :'flex',justifyContent:'center',flexDirection:'column'}}  className="shadow rounded p-5">
-      <h1>Coleta Apevisa</h1>
+       <Row className="m-5 mb-5 d-flex justify-content-center align-items-center">
+       <h1 style={{textAlign:'center'}}>Coleta Apevisa</h1>
+       </Row>
+     
       <Formik
         initialValues={initialValues}
         validationSchema={validationApvisa}

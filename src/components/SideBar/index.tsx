@@ -43,7 +43,7 @@ const menuItems = [
   {
     name: "Análises",
     icon: "ThermostatAutoOutlinedIcon ",
-    items: ["Reservatórios", "ETE", "Purificadores"],
+    items: ["Apevisa","ETE","Reservatórios", "Purificadores"],
   },
   {
     name: "Relatórios",
@@ -148,8 +148,10 @@ const NavButton: FC<ButtonProps> = ({
         return "/Home/analysis/ete";
       case "Consumo de Água":
         return "/Home/production";
+        case "Apevisa":
+          return "/Home/analysis/apevisa";
 
-      default:
+      default: 
         break;
     }
   };
