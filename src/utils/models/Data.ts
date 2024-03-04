@@ -211,6 +211,7 @@ export const fakeDiasafe: { data: string, maquina: string }[] = [
   { data: "2024-02-10", maquina: "890123" },
   { data: "2024-02-11", maquina: "678901" }
 ];
+
 export function extractData({data}:Prop) {
   const hoje = new Date();
   const mesAtual = new Date().getMonth() + 1; // "+1" porque os meses são indexados a partir de zero

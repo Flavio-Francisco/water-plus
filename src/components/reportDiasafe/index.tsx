@@ -1,14 +1,19 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import { Page, Text, View, Document } from "@react-pdf/renderer";
 import { fakeDiasafe } from "@/utils/models/Data";
-import { Table } from 'react-bootstrap';
+
 import { styles } from "./styles";
+import TableData from "../tableData";
+
+
+
 
 const ReportDiasafe = () => {
   const date = new Date();
 
- 
+
+ useEffect(()=>{console.log("esses ",fakeDiasafe);},[fakeDiasafe])
   return (
     <Document>
       <Page size="A4" style={styles.body}>
@@ -20,25 +25,13 @@ const ReportDiasafe = () => {
             Relatorio de Troca de Diasafe
           </Text>
           <View style={styles.line} />
+
+          <Text style={styles.text}>Relação dos Diasafe que foram trocados</Text>
         </View>
-        <div>
-        <Table striped bordered hover style={{width:'60%',height:'30%'}}>
-            <thead>
-                <tr>
-                    <th>Data</th>
-                    <th>Máquina</th>
-                </tr>
-            </thead>
-            <tbody>
-                {fakeDiasafe.map((dados, index) => (
-                    <tr key={index}>
-                        <td>{dados.data}</td>
-                        <td>{dados.maquina}</td>
-                    </tr>
-                ))}
-            </tbody>
-        </Table>
-        </div>
+        <View style={{width:'90%',height:'80%'}}>
+       
+       < TableData fake={fakeDiasafe}/>
+        </View >
       </Page>
     </Document>
   );
