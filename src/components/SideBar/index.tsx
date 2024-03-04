@@ -142,6 +142,8 @@ const NavButton: FC<ButtonProps> = ({
         return "/Home/report/monthly";
       case "Limpeza Reservatórios":
         return "/Home/report/reservoirCleaning";
+        case "Diasafe":
+        return "/Home/report/diasafe";
       case "Reservatórios":
         return "/Home/analysis/resevoir";
       case "ETE":

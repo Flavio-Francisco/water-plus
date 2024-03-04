@@ -3,6 +3,10 @@ import { Credentials, ReportModel, ReservoirCleaning } from "../models/report";
 import { AnalysisResult } from "@/utils/models/analysis";
 
 // Alimwntação
+interface Porcentagens {
+  permeated: string;
+  reject: string;
+}
 
 export const dataZeolica: Props = {
   title: "Pressão do zeolita",
@@ -193,7 +197,36 @@ export const dataProducao: Props = {
     [28, 14, 3],
   ],
 };
+//diasafe
+export const fakeDiasafe: { data: string, maquina: string }[] = [
+  { data: "2024-02-01", maquina: "123456" },
+  { data: "2024-02-02", maquina: "654321" },
+  { data: "2024-02-03", maquina: "234567" },
+  { data: "2024-02-04", maquina: "876543" },
+  { data: "2024-02-05", maquina: "345678" },
+  { data: "2024-02-06", maquina: "987654" },
+  { data: "2024-02-07", maquina: "456789" },
+  { data: "2024-02-08", maquina: "765432" },
+  { data: "2024-02-09", maquina: "567890" },
+  { data: "2024-02-10", maquina: "890123" },
+  { data: "2024-02-11", maquina: "678901" }
+];
+export function extractData({data}:Prop) {
+  const hoje = new Date();
+  const mesAtual = new Date().getMonth() + 1; // "+1" porque os meses são indexados a partir de zero
+  const anoAtual = hoje.getFullYear();
+  if (!Array.isArray(data)) {
+    throw new Error("Os dados fornecidos não são um array.");
+  }
 
+  const dadosFormatados = data.slice(1).map((par, index) => ({
+    date: `${par[0]}/${mesAtual + index}/${anoAtual}`,
+    permeated: par[1],
+    reject:par[2]
+  }));
+
+  return dadosFormatados;
+}
 export function getItemByIndex(index: number, arry: Props[]): Props | null {
   if (index >= 0 && index < arry.length) {
     console.log(arry[index]);
@@ -321,33 +354,41 @@ export const FormInitialValues: AnalysisResult = {
 };
 export function calcularPorcentagem(
   data: object | unknown[] | undefined,
-): string {
-  if (!data || !data || !Array.isArray(data)) {
-    return "Dados não encontrados";
+): Porcentagens {
+  let permeated: string = "";
+  let reject: string = "";
+
+  if (!data || !Array.isArray(data)) {
+      return { permeated: "Dados não encontrados", reject: "" };
   }
 
   let totalColuna1 = 0;
   let totalColuna2 = 0;
 
   for (let i = 1; i < data.length; i++) {
-    const rowData = data[i];
-    if (
-      Array.isArray(rowData) &&
-      rowData.length >= 3 &&
-      typeof rowData[1] === "number" &&
-      typeof rowData[2] === "number"
-    ) {
-      totalColuna1 += Number(rowData[1]);
-      totalColuna2 += Number(rowData[2]);
-    } else {
-      return "Estrutura de dados inválida";
-    }
+      const rowData = data[i];
+      if (
+          Array.isArray(rowData) &&
+          rowData.length >= 3 &&
+          typeof rowData[1] === "number" &&
+          typeof rowData[2] === "number"
+      ) {
+          totalColuna1 += Number(rowData[1]);
+          totalColuna2 += Number(rowData[2]);
+      } else {
+          return {
+              permeated: "Estrutura de dados inválida",
+             reject: "",
+          };
+      }
   }
 
   if (totalColuna1 === 0) {
-    return "Divisão por zero";
+      return {permeated: "Divisão por zero", reject: "" };
   }
 
-  const porcentagem = (totalColuna2 / totalColuna1) * 100;
-  return porcentagem.toFixed(2) + "%";
+  permeated = ((totalColuna1 - totalColuna2) / totalColuna1 * 100).toFixed(2) + "%";
+  reject = (totalColuna2 / totalColuna1 * 100).toFixed(2) + "%";
+
+  return { permeated, reject };
 }
