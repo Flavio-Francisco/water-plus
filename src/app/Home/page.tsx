@@ -7,6 +7,7 @@ import HomeBody from '@/components/homeBody';
 import FilterReplacement from '@/components/filterReplacement';
 import AcidReplacement from '@/components/acidReplacement';
 import Desinfection from '@/components/disinfection';
+import Pizza from '@/components/graficPercentage';
 
 
 
@@ -15,6 +16,9 @@ function Home() {
 
   return (
     <div>
+      <div>
+      <Pizza/>
+      </div>
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', width: '60%', marginLeft: 150, marginTop: 50, marginBottom: 30 }}>
         <h1 style={{ textAlign: 'center' }}>Water   Plus</h1>
         <h6 style={{ textAlign: 'center' }}>Monitoramento de Tratamento de Água</h6>

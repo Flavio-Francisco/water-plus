@@ -48,6 +48,7 @@ export default function Auth() {
 
   return (
     <div className="wrapper">
+      
       <Container>
         <Formik
           initialValues={initialValues}

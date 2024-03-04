@@ -1,10 +1,14 @@
 import React from 'react';
 import CanvasJSReact from '@canvasjs/react-charts';
+import { calcularPorcentagem, dataProducao } from '@/utils/models/Data';
 
 
 const CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
-const CustomerSatisfactionChart = () => {
+const Pizza = () => {
+    const percentage = calcularPorcentagem(dataProducao?.data);
+    const permeado = Number( percentage.permeated)
+    const rejeito = Number( percentage.reject)
     const options = {
         animationEnabled: true,
         title: {
@@ -22,11 +26,10 @@ const CustomerSatisfactionChart = () => {
             indexLabel: "{name}: {y}",
             yValueFormatString: "#,###'%'",
             dataPoints: [
-                { name: "Unsatisfied", y: 5 },
-                { name: "Very Unsatisfied", y: 31 },
-                { name: "Very Satisfied", y: 40 },
-                { name: "Satisfied", y: 17 },
-                { name: "Neutral", y: 7 }
+               
+                { name: "Permeado", y: permeado },
+                { name: "rejeito", y: rejeito },
+               
             ]
         }]
     };
@@ -38,4 +41,4 @@ const CustomerSatisfactionChart = () => {
     );
 };
 
-export default CustomerSatisfactionChart;
+export default Pizza;
