@@ -12,25 +12,25 @@ export const dataZeolica: Props = {
   title: "Pressão do zeolita",
   subtitle:
     "Quando a pressão for menor que 20%, da pressão inicial, fazer a troca do meio filtante.",
-  data: [
-    ["Dias", "zeolita"],
-    [1, 35],
-    [2, 30],
-    [3, 25],
-    [4, 11],
-    [5, 110],
-    [6, 18],
-    [7, 17],
-    [8, 12],
-    [9, 16],
-    [10, 12],
-    [11, 25],
-    [12, 46],
-    [13, 64],
-    [14, 74],
-    [15, 14],
-    [16, 140],
-  ],
+   data : [
+      { x: 1, y: 35 },
+      { x: 2, y: 30 },
+      { x: 3, y: 25 },
+      { x: 4, y: 11 },
+      { x: 5, y: 110 },
+      { x: 6, y: 18 },
+      { x: 7, y: 17 },
+      { x: 8, y: 12 },
+      { x: 9, y: 16 },
+      { x: 10, y: 12 },
+      { x: 11, y: 25 },
+      { x: 12, y: 46 },
+      { x: 13, y: 64 },
+      { x: 14, y: 74 },
+      { x: 15, y: 14 },
+      { x: 16, y: 140 },
+    ],
+    
 };
 
 export const dataAbrandador: Props = {
@@ -38,23 +38,25 @@ export const dataAbrandador: Props = {
   subtitle:
     "Quando a pressão for menor que 20%, da pressão inicial, fazer a troca do meio filtante.",
   data: [
-    ["Dias", "Abrandador"],
-    [1, 35],
-    [2, 30],
-    [3, 25],
-    [4, 11],
-    [5, 14],
-    [6, 52],
-    [7, 17],
-    [8, 25],
-    [9, 47],
-    [10, 140],
-    [11, 135],
-    [12, 130],
-    [13, 138],
-    [14, 129],
-    [15, 121],
-    [16, 110],
+ 
+      { x: 1, y: 35 },
+      { x: 2, y: 30 },
+      { x: 3, y: 25 },
+      { x: 4, y: 11 },
+      { x: 5, y: 14 },
+      { x: 6, y: 52 },
+      { x: 7, y: 17 },
+      { x: 8, y: 25 },
+      { x: 9, y: 47 },
+      { x: 10, y: 140 },
+      { x: 11, y: 135 },
+      { x: 12, y: 130 },
+      { x: 13, y: 138 },
+      { x: 14, y: 129 },
+      { x: 15, y: 121 },
+      { x: 16, y: 110 },
+   
+    
   ],
 };
 
@@ -62,25 +64,25 @@ export const dataCarvao: Props = {
   title: "Pressão do Carvão",
   subtitle:
     "Quando a pressão for menor que 20%, da pressão inicial, fazer a troca do meio filtante.",
-  data: [
-    ["Dias", "Carvão"],
-    [1, 35],
-    [2, 30],
-    [3, 25],
-    [4, 11],
-    [5, 110],
-    [6, 18],
-    [7, 17],
-    [8, 12],
-    [9, 16],
-    [10, 12],
-    [11, 25],
-    [12, 46],
-    [13, 64],
-    [14, 74],
-    [15, 14],
-    [16, 140],
-  ],
+  data : [
+      { x: 1, y: 55 },
+      { x: 2, y: 30 },
+      { x: 3, y: 25 },
+      { x: 4, y: 61 },
+      { x: 5, y: 10 },
+      { x: 6, y: 18 },
+      { x: 7, y: 19 },
+      { x: 8, y: 82 },
+      { x: 9, y: 16 },
+      { x: 10, y: 112 },
+      { x: 11, y: 45 },
+      { x: 12, y: 46 },
+      { x: 13, y: 64 },
+      { x: 14, y: 74 },
+      { x: 15, y: 14 },
+      { x: 16, y: 40 },
+    ],
+    
 };
 // pré tratamento
 export const dataCloroLivre: Props = {
@@ -388,8 +390,8 @@ export function calcularPorcentagem(
       return {permeated: "Divisão por zero", reject: "" };
   }
 
-  permeated = ((totalColuna1 - totalColuna2) / totalColuna1 * 100).toFixed(2) + "%";
-  reject = (totalColuna2 / totalColuna1 * 100).toFixed(2) + "%";
+  permeated = ((totalColuna1 - totalColuna2) / totalColuna1 * 100).toFixed(2) ;
+  reject = (totalColuna2 / totalColuna1 * 100).toFixed(2) ;
 
   return { permeated, reject };
 }

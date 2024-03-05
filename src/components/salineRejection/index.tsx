@@ -1,26 +1,27 @@
+
 import React from 'react';
 import CanvasJSReact from '@canvasjs/react-charts';
-import { calcularPorcentagem, dataProducao } from '@/utils/models/Data';
+
 
 
 const CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
-const Pizza = () => {
-    const percentage = calcularPorcentagem(dataProducao?.data);
-    const permeado = Number( percentage.permeated)
-    const rejeito = Number( percentage.reject)
+const SalineRejection = () => {
+   
+    const salineRejection = 97;
+   const  soluble = 100 - salineRejection;
 
-    console.log(percentage )
     const options = {
         animationEnabled: true,
         title: {
-            text: "Taxa de produção",
+            text: "Taxa de rejeição salina",
             fontFamily:'sans-serif'
         },
+        
         subtitles: [{
             text: "meta acima de 70%",
             verticalAlign: "center",
-            fontSize: 18,
+            fontSize: 20,
             dockInsidePlotArea: true
         }],
         data: [{
@@ -30,18 +31,18 @@ const Pizza = () => {
             yValueFormatString: "#,###'%'",
             dataPoints: [
                
-                { name: "Permeado", y: permeado },
-                { name: "rejeito", y: rejeito },
-               
+                { name: "Permeado", y:   salineRejection },
+                { name: "solúveis", y:   soluble },
+            
             ]
         }]
     };
 
     return (
-        <div style={{width:'40%',}}>
-            <CanvasJSChart options={options} />
+        <div style={{width:'42%', }}>
+            <CanvasJSChart options={options}  />
         </div>
     );
 };
 
-export default Pizza;
+export default SalineRejection;

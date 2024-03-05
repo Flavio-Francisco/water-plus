@@ -4,36 +4,49 @@ import "./styles.css";
 import { Container } from 'react-bootstrap';
 import { Thema } from '../../../thema';
 import Batery from '../batery';
-import GraficFilter from '../grafic';
+import Logo from '@/app/logo.jpg'
 import { dataAbrandador, dataZeolica,dataCarvao } from '@/utils/models/Data';
+import GraficLineAnimed from '../graficLineAnimed';
+import { Props } from '../grafic';
+import Image from 'next/image';
 
 
 interface Iprops {
   nameUser: string;
 }
 
+
 export default function HomeBody(props: Iprops) {
-  const [select,setSelect]=useState("abrandador")
+const clear:Props = {subtitle:'',title:'',data:[]}
+
+
+ const [selectData,setSelectData]=useState<Props>(clear)
  
+console.log(clear);
 
 
-  const selectGrafic = (grafic:string)=>{
+  const dataSelect = (grafic:string)=>{
     
     switch(grafic) {
       case "abrandador":
-        return <GraficFilter title={dataAbrandador.title} data={dataAbrandador.data} />
+      setSelectData(dataAbrandador);
+      break;
       case"zeolita":
-       return <GraficFilter title={dataZeolica.title} data={dataZeolica.data} />
+      setSelectData(dataZeolica);
+      break;
       
       case"carvao":
-       return <GraficFilter title={dataCarvao.title} data={dataCarvao.data} />
+      setSelectData(dataCarvao);
+      break;
+      
       default:
-      return  <GraficFilter title={dataAbrandador.title} data={dataAbrandador.data} />
+      return  <Image src={Logo } alt={'logo'} />
     }
   }
 
   const handleGraficClick = (grafic: string) => {
-    setSelect(grafic);
+  
+    dataSelect(grafic)
     console.log(grafic);
     
   }
@@ -59,7 +72,16 @@ export default function HomeBody(props: Iprops) {
            <Batery chargeLevel={60}/>
         </div>
      <div className='conteineGrafic'>      
-        {selectGrafic(select)}
+     {selectData.title === ''?
+           <div style={{display:'flex',justifyContent:'center',alignItems:'baseline'}}>
+              <Image src={Logo } alt={'logo'} />
+           </div>
+            :
+            <div >
+                <GraficLineAnimed subtitle={selectData.subtitle} title={selectData.title} data={selectData.data} />
+           </div>
+       }
+    
      </div>
       
       </div>

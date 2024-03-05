@@ -40,9 +40,9 @@
   font-size: 0.9em;
 }
 .conteineGrafic{
-  padding: 10px;
+  padding: 5px;
   width: 50%;
-  height: 20%;
+  height:50;
   border-radius: 5px;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
 }
