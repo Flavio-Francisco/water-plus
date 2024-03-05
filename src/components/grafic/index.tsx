@@ -4,8 +4,8 @@ import React from "react";
 import { Chart } from "react-google-charts";
 
 export interface Props {
-  title: string | null;
-  subtitle: string | null;
+  title: string | null | undefined; 
+  subtitle: string | null | undefined;
   data?: object | unknown[] | undefined;
 }
 export interface PropsArry {

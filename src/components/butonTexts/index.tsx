@@ -3,16 +3,16 @@ import './styles.css'
 import { Thema } from '../../../thema';
 
 interface Props {
-    buttonTexts:(string | null)[];
+    buttonTexts:(string | null|undefined)[];
     getBayIndex: (index: number) => void; 
 }
 
 const ButtonList: React.FC<Props> = ({ buttonTexts,getBayIndex }) => {
     return (
         <div 
-        style={{display:'flex', flex:1, justifyContent:'center',alignContent:'center',padding:10,marginTop:30}}>
+        style={{display:'flex', flex:1, justifyContent:'center',alignContent:'center',padding:10,marginTop:30 }}>
             {buttonTexts.map((text, index) => (
-                <div key={index} style={{ background: Thema.Colors.gray }}
+                <div key={index} style={{ background: Thema.Colors.blue3 }}
                     className='custom-button'
                     onClick={()=>getBayIndex(index)}
                 >

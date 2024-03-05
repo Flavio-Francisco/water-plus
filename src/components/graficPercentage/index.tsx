@@ -38,7 +38,7 @@ const Pizza = () => {
     };
 
     return (
-        <div style={{width:'40%',}}>
+        <div style={{width:'40%', }}>
             <CanvasJSChart options={options} />
         </div>
     );

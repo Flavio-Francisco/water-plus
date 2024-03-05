@@ -7,7 +7,7 @@ const { CanvasJSChart } = CanvasJSReact;
 
 
 
-const GraficLineAnimed = ({ title, data }:Props) => {
+const GraficLineAnimedPages = ({ title, data }:Props) => {
   const startTime = new Date();
   const chartRef = useRef<unknown>(null);
 
@@ -25,12 +25,16 @@ const GraficLineAnimed = ({ title, data }:Props) => {
   const options = {
     zoomEnabled: true,
     animationEnabled: true,
-    height:250,
+    height:320,
+    width:1200,
+    marginTop:80,
     title: {
       text: ` ${title}`,
       fontFamily:'sans-serif',
-      fontSize:14,
-      marginBottom:20,
+      fontSize:20,
+      marginBottom:80,
+      fontWeight:'bold',
+     
     },
     data: [{
       type: "spline",
@@ -51,7 +55,7 @@ const GraficLineAnimed = ({ title, data }:Props) => {
   );
 };
 
-export default GraficLineAnimed;
+export default GraficLineAnimedPages;
 
 
 

@@ -22,6 +22,7 @@ const SalineRejection = () => {
             text: "meta acima de 70%",
             verticalAlign: "center",
             fontSize: 20,
+       
             dockInsidePlotArea: true
         }],
         data: [{
@@ -39,7 +40,7 @@ const SalineRejection = () => {
     };
 
     return (
-        <div style={{width:'42%', }}>
+        <div style={{width:'42%', fontFamily:'sans-serif'}}>
             <CanvasJSChart options={options}  />
         </div>
     );
