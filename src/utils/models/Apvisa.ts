@@ -1,4 +1,5 @@
 export interface ApvisaModel {
+  date?:string;
   name?: string;
   cianoBacteria?: string;
   escherichaColi?: string;

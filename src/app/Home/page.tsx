@@ -13,11 +13,13 @@ import SalineRejection from '@/components/salineRejection';
 
 
 
+
 function Home() {
  
-
+  
   return (
     <div>
+      
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', width: '60%', marginLeft: 150, marginTop: 50, marginBottom: 30 }}>
         <h1 style={{ textAlign: 'center' }}>Water   Plus</h1>
         <h6 style={{ textAlign: 'center' }}>Monitoramento de Tratamento de Água</h6>

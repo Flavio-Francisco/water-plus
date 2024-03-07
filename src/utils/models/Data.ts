@@ -1,6 +1,7 @@
 import { Props } from "@/components/grafic";
 import { Credentials, ReportModel, ReservoirCleaning } from "../models/report";
 import { AnalysisResult } from "@/utils/models/analysis";
+import { ApvisaModel } from "./Apvisa";
 
 // Alimwntação
 interface Porcentagens {
@@ -242,6 +243,61 @@ type Prop = {
   data?: object | unknown[] | undefined;
 };
 
+export const fakeReportApevisa: ApvisaModel  = {
+  date:'12/04/2024',
+name:"1º passo",
+cianoBacteria:"satisfatório",
+conductivity:"satisfatório",
+endotoxin:"satisfatório",
+escherichaColi:"satisfatório",
+freeChlorine:"satisfatório",
+heterotrophic:"satisfatório",
+pH:"satisfatório",
+potentiometry:"satisfatório",
+seedingInDepth:"satisfatório",
+seedingOnSurface:"satisfatório",
+totalColiforms:"satisfatório",
+
+
+}
+export const fakeReportApevisa1: ApvisaModel  = {
+  date:'12/04/2024',
+  name:"2º passo",
+  cianoBacteria:"satisfatório",
+  conductivity:"satisfatório",
+  endotoxin:"satisfatório",
+  escherichaColi:"satisfatório",
+  freeChlorine:"satisfatório",
+  heterotrophic:"satisfatório",
+  pH:"satisfatório",
+  potentiometry:"satisfatório",
+  seedingInDepth:"satisfatório",
+  seedingOnSurface:"satisfatório",
+  totalColiforms:"satisfatório",
+  
+  
+  }
+  export const fakeReportApevisa2: ApvisaModel  = {
+    name:"Loop",
+    date:'12/02/2024',
+    cianoBacteria:"satisfatório",
+    conductivity:"satisfatório",
+    endotoxin:"satisfatório",
+    escherichaColi:"satisfatório",
+    freeChlorine:"satisfatório",
+    heterotrophic:"satisfatório",
+    pH:"satisfatório",
+    potentiometry:"satisfatório",
+    seedingInDepth:"satisfatório",
+    seedingOnSurface:"satisfatório",
+    totalColiforms:"satisfatório",
+    
+    
+    }
+
+    export const ArrayApavise:ApvisaModel [] =[
+      fakeReportApevisa2,fakeReportApevisa1,fakeReportApevisa
+    ] 
 export function getByTitle(data: Prop["data"]): string {
   if (
     Array.isArray(data) &&

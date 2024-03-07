@@ -48,7 +48,7 @@ const menuItems = [
   {
     name: "Relatórios",
     icon: "SummarizeOutlinedIcon",
-    items: ["Mensal", "Diasafe", "Limpeza Reservatórios"],
+    items: ["Mensal", "Diasafe", "Limpeza Reservatórios","Resultado Apevisa"],
   },
 
   {
@@ -152,7 +152,8 @@ const NavButton: FC<ButtonProps> = ({
         return "/Home/production";
         case "Apevisa":
           return "/Home/analysis/apevisa";
-
+          case "Resultado Apevisa":
+            return "/Home/report/apevisa";
       default: 
         break;
     }
