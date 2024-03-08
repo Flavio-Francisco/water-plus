@@ -9,14 +9,15 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import HouseIcon from "@mui/icons-material/House";
 import AddchartIcon from "@mui/icons-material/Addchart";
 import TimelineIcon from "@mui/icons-material/Timeline";
-import SettingsIcon from "@mui/icons-material/Settings";
 import SummarizeOutlinedIcon from "@mui/icons-material/SummarizeOutlined";
 import ThermostatAutoOutlinedIcon from "@mui/icons-material/ThermostatAutoOutlined";
 import Image from "next/image";
-
 import { Thema } from "../../../thema";
-
 import MyModal from "./manutecao";
+import SettingsModal from "./settingsModal";
+
+
+
 
 const menuItems = [
   {
@@ -51,11 +52,7 @@ const menuItems = [
     items: ["Mensal", "Diasafe", "Limpeza Reservatórios","Resultado Apevisa"],
   },
 
-  {
-    name: "Configuração",
-    icon: "SettingsIcon",
-    items: ["Dados do usuário", "Tema"],
-  },
+
 ];
 type IconProps = {
   iconName: string;
@@ -79,8 +76,6 @@ const getIconComponent = (iconName: string) => {
       return AddchartIcon;
     case "TimelineIcon":
       return TimelineIcon;
-    case "SettingsIcon":
-      return SettingsIcon;
     case "Manuteção":
       return WarningIcon;
     case "SummarizeOutlinedIcon":
@@ -152,9 +147,13 @@ const NavButton: FC<ButtonProps> = ({
         return "/Home/production";
         case "Apevisa":
           return "/Home/analysis/apevisa";
-          case "Resultado Apevisa":
-            return "/Home/report/apevisa";
-      default: 
+        case "Resultado Apevisa":
+          return "/Home/report/apevisa";
+        // case "RT e Operador":
+        //   return "/Home/settings/rt";
+      
+            default: 
+
         break;
     }
   };
@@ -232,8 +231,11 @@ export const Sidebar = () => {
               )}
             </React.Fragment>
           ))}
-
-          <MyModal />
+         <div>
+         <MyModal/>
+          <SettingsModal/>
+         </div>
+         
         </nav>
       </aside>
     </div>

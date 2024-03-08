@@ -14,6 +14,7 @@
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.15.6",
+    "@mui/lab": "^5.0.0-alpha.167",
     "@mui/material": "^5.15.6",
     "@popperjs/core": "^2.11.8",
     "@react-pdf/renderer": "^3.3.8",
