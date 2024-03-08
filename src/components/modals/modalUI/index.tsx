@@ -10,8 +10,8 @@ interface LabTabsProps {
   ComponetEdit: ReactNode;
 }
 
-function LabTabs ({ ComponetNew , ComponetEdit}:LabTabsProps)  {
-  const [value, setValue] = useState('Novo');
+function LabTabs({ ComponetNew, ComponetEdit }: LabTabsProps) {
+  const [value, setValue] = useState('1');
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
@@ -24,12 +24,12 @@ function LabTabs ({ ComponetNew , ComponetEdit}:LabTabsProps)  {
           <TabList onChange={handleChange} aria-label="lab API tabs example">
             <Tab label="Novo" value="1" />
             <Tab label="Editar" value="2" />
-            
+
           </TabList>
         </Box>
         <TabPanel value="1">{ComponetNew}</TabPanel>
         <TabPanel value="2">{ComponetEdit}</TabPanel>
-      
+
       </TabContext>
     </Box>
   );

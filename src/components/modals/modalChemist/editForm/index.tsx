@@ -1,33 +1,33 @@
 import React, { useEffect, useState } from 'react';
-import {  Button, Form } from 'react-bootstrap';
+import { Button, Form } from 'react-bootstrap';
 import { Formik } from 'formik';
-import { SchemaChemist } from '@/utils/validation/CredentialsForm'; 
+import { SchemaChemist } from '@/utils/validation/CredentialsForm';
 import { CredentialsChemist } from '@/utils/models/Credentials'; // Importando a interface CredentialsChemist
 
 
 
 
 
-const ChemistFormEdit: React.FC= () => {
+const ChemistFormNew: React.FC = () => {
 
-  const [isValues,setIsValues]=useState(false)  
+  const [isValues, setIsValues] = useState(false)
 
-    const initialValues: CredentialsChemist = {
-        Chemist: {
-          name: 'Manuel',
-          CRQ:'55555',
-          graduation:' ddd ss',
-          postGraduation: 'sssss',
-          postGraduation2: 'sssss',
-        },
-      };
-   
+  const initialValues: CredentialsChemist = {
+    Chemist: {
+      name: '',
+      CRQ: '',
+      graduation: '',
+      postGraduation: '',
+      postGraduation2: '',
+    },
+  };
 
-      useEffect(()=>{
-        setIsValues(!isValues)
-      },[])
+
+  useEffect(() => {
+    setIsValues(!isValues)
+  }, [])
   return (
-   
+
 
     <Formik
       initialValues={initialValues}
@@ -35,13 +35,13 @@ const ChemistFormEdit: React.FC= () => {
       onSubmit={(values: CredentialsChemist, { setSubmitting }) => {
         console.log(values);
         setSubmitting(false);
-       
+
       }}
     >
       {({ handleSubmit, handleChange, values, errors }) => (
         <Form noValidate onSubmit={handleSubmit}>
           <Form.Group controlId="formName">
-            <Form.Label>Nome</Form.Label>
+            <Form.Label style={{ marginTop: 10, marginBottom: 2 }}>Nome</Form.Label>
             <Form.Control
               type="text"
               name="Chemist.name"
@@ -54,7 +54,7 @@ const ChemistFormEdit: React.FC= () => {
           </Form.Group>
 
           <Form.Group controlId="formCRQ">
-            <Form.Label>CRQ</Form.Label>
+            <Form.Label style={{ marginTop: 10, marginBottom: 2 }}>CRQ</Form.Label>
             <Form.Control
               type="text"
               name="Chemist.CRQ"
@@ -67,7 +67,7 @@ const ChemistFormEdit: React.FC= () => {
           </Form.Group>
 
           <Form.Group controlId="formGraduation">
-            <Form.Label>Graduação</Form.Label>
+            <Form.Label style={{ marginTop: 10, marginBottom: 2 }}>Graduação</Form.Label>
             <Form.Control
               type="text"
               name="Chemist.graduation"
@@ -80,7 +80,7 @@ const ChemistFormEdit: React.FC= () => {
           </Form.Group>
 
           <Form.Group controlId="formPostGraduation">
-            <Form.Label>Pós-Graduação</Form.Label>
+            <Form.Label style={{ marginTop: 10, marginBottom: 2 }}>Pós-Graduação</Form.Label>
             <Form.Control
               type="text"
               name="Chemist.postGraduation"
@@ -93,7 +93,7 @@ const ChemistFormEdit: React.FC= () => {
           </Form.Group>
 
           <Form.Group controlId="formSecondPostGraduation">
-            <Form.Label>Segunda Pós-Graduação</Form.Label>
+            <Form.Label style={{ marginTop: 10, marginBottom: 2 }}>Segunda Pós-Graduação</Form.Label>
             <Form.Control
               type="text"
               name="Chemist.postGraduation2"
@@ -105,17 +105,17 @@ const ChemistFormEdit: React.FC= () => {
             <Form.Control.Feedback type="invalid">{errors.Chemist?.postGraduation2}</Form.Control.Feedback>
           </Form.Group>
 
-          <Button variant="primary" type="submit">
+          <Button variant="primary" type="submit" style={{ marginTop: 20 }}>
             Enviar
           </Button>
         </Form>
       )}
     </Formik>
 
-      
-      
-   
+
+
+
   );
 };
 
-export default ChemistFormEdit;
+export default ChemistFormNew;
