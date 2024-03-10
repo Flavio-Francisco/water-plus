@@ -1,22 +1,22 @@
 import React from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { Formik } from 'formik';
-import { SchemaDoctor } from '@/utils/validation/CredentialsForm';
-import { CredentialsDoctor } from '@/utils/models/Credentials';
+import { SchemaDoctor } from '../../../../utils/validation/CredentialsForm';
+import { CredentialsDoctor } from '../../../..//utils/models/Credentials';
 
 interface MyModalProps {
   show: boolean;
   handleClose: () => void;
 }
 
-const initialValues: CredentialsDoctor={
-    doctor: {
-        name: '',
-        CRM: '',
-        graduation: '',
-        postGraduation: '',
-        postGraduation2: '',
-      },
+const initialValues: CredentialsDoctor = {
+  doctor: {
+    name: '',
+    CRM: '',
+    graduation: '',
+    postGraduation: '',
+    postGraduation2: '',
+  },
 }
 
 const DoctorForm: React.FC<MyModalProps> = ({ show, handleClose }) => {
@@ -30,11 +30,11 @@ const DoctorForm: React.FC<MyModalProps> = ({ show, handleClose }) => {
           initialValues={initialValues}
           validationSchema={SchemaDoctor}
           onSubmit={(values: CredentialsDoctor, { setSubmitting }) => {
-         console.log(values);
-         
-              setSubmitting(false);
-              handleClose();
-         
+            console.log(values);
+
+            setSubmitting(false);
+            handleClose();
+
           }}
         >
           {({ handleSubmit, handleChange, values, errors }) => (

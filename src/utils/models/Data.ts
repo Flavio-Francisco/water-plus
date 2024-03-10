@@ -13,25 +13,24 @@ export const dataZeolica: Props = {
   title: "Pressão do zeolita",
   subtitle:
     "Quando a pressão for menor que 20%, da pressão inicial, fazer a troca do meio filtante.",
-   data : [
-      { x: 1, y: 35 },
-      { x: 2, y: 30 },
-      { x: 3, y: 25 },
-      { x: 4, y: 11 },
-      { x: 5, y: 110 },
-      { x: 6, y: 18 },
-      { x: 7, y: 17 },
-      { x: 8, y: 12 },
-      { x: 9, y: 16 },
-      { x: 10, y: 12 },
-      { x: 11, y: 25 },
-      { x: 12, y: 46 },
-      { x: 13, y: 64 },
-      { x: 14, y: 74 },
-      { x: 15, y: 14 },
-      { x: 16, y: 140 },
-    ],
-    
+  data: [
+    { x: 1, y: 35 },
+    { x: 2, y: 30 },
+    { x: 3, y: 25 },
+    { x: 4, y: 11 },
+    { x: 5, y: 110 },
+    { x: 6, y: 18 },
+    { x: 7, y: 17 },
+    { x: 8, y: 12 },
+    { x: 9, y: 16 },
+    { x: 10, y: 12 },
+    { x: 11, y: 25 },
+    { x: 12, y: 46 },
+    { x: 13, y: 64 },
+    { x: 14, y: 74 },
+    { x: 15, y: 14 },
+    { x: 16, y: 140 },
+  ],
 };
 
 export const dataAbrandador: Props = {
@@ -39,25 +38,22 @@ export const dataAbrandador: Props = {
   subtitle:
     "Quando a pressão for menor que 20%, da pressão inicial, fazer a troca do meio filtante.",
   data: [
- 
-      { x: 1, y: 35 },
-      { x: 2, y: 30 },
-      { x: 3, y: 25 },
-      { x: 4, y: 11 },
-      { x: 5, y: 14 },
-      { x: 6, y: 52 },
-      { x: 7, y: 17 },
-      { x: 8, y: 25 },
-      { x: 9, y: 47 },
-      { x: 10, y: 140 },
-      { x: 11, y: 135 },
-      { x: 12, y: 130 },
-      { x: 13, y: 138 },
-      { x: 14, y: 129 },
-      { x: 15, y: 121 },
-      { x: 16, y: 110 },
-   
-    
+    { x: 1, y: 35 },
+    { x: 2, y: 30 },
+    { x: 3, y: 25 },
+    { x: 4, y: 11 },
+    { x: 5, y: 14 },
+    { x: 6, y: 52 },
+    { x: 7, y: 17 },
+    { x: 8, y: 25 },
+    { x: 9, y: 47 },
+    { x: 10, y: 140 },
+    { x: 11, y: 135 },
+    { x: 12, y: 130 },
+    { x: 13, y: 138 },
+    { x: 14, y: 129 },
+    { x: 15, y: 121 },
+    { x: 16, y: 110 },
   ],
 };
 
@@ -65,25 +61,24 @@ export const dataCarvao: Props = {
   title: "Pressão do Carvão  do mês de Abril",
   subtitle:
     "Quando a pressão for menor que 20%, da pressão inicial, fazer a troca do meio filtante.",
-  data : [
-      { x: 1, y: 55 },
-      { x: 2, y: 30 },
-      { x: 3, y: 25 },
-      { x: 4, y: 61 },
-      { x: 5, y: 10 },
-      { x: 6, y: 18 },
-      { x: 7, y: 19 },
-      { x: 8, y: 82 },
-      { x: 9, y: 16 },
-      { x: 10, y: 112 },
-      { x: 11, y: 45 },
-      { x: 12, y: 46 },
-      { x: 13, y: 64 },
-      { x: 14, y: 74 },
-      { x: 15, y: 14 },
-      { x: 16, y: 40 },
-    ],
-    
+  data: [
+    { x: 1, y: 55 },
+    { x: 2, y: 30 },
+    { x: 3, y: 25 },
+    { x: 4, y: 61 },
+    { x: 5, y: 10 },
+    { x: 6, y: 18 },
+    { x: 7, y: 19 },
+    { x: 8, y: 82 },
+    { x: 9, y: 16 },
+    { x: 10, y: 112 },
+    { x: 11, y: 45 },
+    { x: 12, y: 46 },
+    { x: 13, y: 64 },
+    { x: 14, y: 74 },
+    { x: 15, y: 14 },
+    { x: 16, y: 40 },
+  ],
 };
 // pré tratamento
 export const dataCloroLivre: Props = {
@@ -200,7 +195,7 @@ export const dataProducao: Props = {
   ],
 };
 //diasafe
-export const fakeDiasafe: { data: string, maquina: string }[] = [
+export const fakeDiasafe: { data: string; maquina: string }[] = [
   { data: "2024-02-01", maquina: "123456" },
   { data: "2024-02-02", maquina: "654321" },
   { data: "2024-02-03", maquina: "234567" },
@@ -211,10 +206,10 @@ export const fakeDiasafe: { data: string, maquina: string }[] = [
   { data: "2024-02-08", maquina: "765432" },
   { data: "2024-02-09", maquina: "567890" },
   { data: "2024-02-10", maquina: "890123" },
-  { data: "2024-02-11", maquina: "678901" }
+  { data: "2024-02-11", maquina: "678901" },
 ];
 
-export function extractData({data}:Prop) {
+export function extractData({ data }: Prop) {
   const hoje = new Date();
   const mesAtual = new Date().getMonth() + 1; // "+1" porque os meses são indexados a partir de zero
   const anoAtual = hoje.getFullYear();
@@ -225,7 +220,7 @@ export function extractData({data}:Prop) {
   const dadosFormatados = data.slice(1).map((par, index) => ({
     date: `${par[0]}/${mesAtual + index}/${anoAtual}`,
     permeated: par[1],
-    reject:par[2]
+    reject: par[2],
   }));
 
   return dadosFormatados;
@@ -243,61 +238,57 @@ type Prop = {
   data?: object | unknown[] | undefined;
 };
 
-export const fakeReportApevisa: ApvisaModel  = {
-  date:'12/04/2024',
-name:"1º passo",
-cianoBacteria:"satisfatório",
-conductivity:"satisfatório",
-endotoxin:"não satisfatório",
-escherichaColi:"satisfatório",
-freeChlorine:"satisfatório",
-heterotrophic:"não coletado",
-pH:"satisfatório",
-potentiometry:"satisfatório",
-seedingInDepth:"satisfatório",
-seedingOnSurface:"satisfatório",
-totalColiforms:"satisfatório",
+export const fakeReportApevisa: ApvisaModel = {
+  date: "12/04/2024",
+  name: "1º passo",
+  cianoBacteria: "satisfatório",
+  conductivity: "satisfatório",
+  endotoxin: "não satisfatório",
+  escherichaColi: "satisfatório",
+  freeChlorine: "satisfatório",
+  heterotrophic: "não coletado",
+  pH: "satisfatório",
+  potentiometry: "satisfatório",
+  seedingInDepth: "satisfatório",
+  seedingOnSurface: "satisfatório",
+  totalColiforms: "satisfatório",
+};
+export const fakeReportApevisa1: ApvisaModel = {
+  date: "12/04/2024",
+  name: "2º passo",
+  cianoBacteria: "satisfatório",
+  conductivity: "satisfatório",
+  endotoxin: "satisfatório",
+  escherichaColi: "satisfatório",
+  freeChlorine: "satisfatório",
+  heterotrophic: "satisfatório",
+  pH: "satisfatório",
+  potentiometry: "satisfatório",
+  seedingInDepth: "satisfatório",
+  seedingOnSurface: "satisfatório",
+  totalColiforms: "satisfatório",
+};
+export const fakeReportApevisa2: ApvisaModel = {
+  name: "Loop",
+  date: "12/02/2024",
+  cianoBacteria: "satisfatório",
+  conductivity: "satisfatório",
+  endotoxin: "satisfatório",
+  escherichaColi: "satisfatório",
+  freeChlorine: "satisfatório",
+  heterotrophic: "satisfatório",
+  pH: "satisfatório",
+  potentiometry: "satisfatório",
+  seedingInDepth: "satisfatório",
+  seedingOnSurface: "satisfatório",
+  totalColiforms: "satisfatório",
+};
 
-
-}
-export const fakeReportApevisa1: ApvisaModel  = {
-  date:'12/04/2024',
-  name:"2º passo",
-  cianoBacteria:"satisfatório",
-  conductivity:"satisfatório",
-  endotoxin:"satisfatório",
-  escherichaColi:"satisfatório",
-  freeChlorine:"satisfatório",
-  heterotrophic:"satisfatório",
-  pH:"satisfatório",
-  potentiometry:"satisfatório",
-  seedingInDepth:"satisfatório",
-  seedingOnSurface:"satisfatório",
-  totalColiforms:"satisfatório",
-  
-  
-  }
-  export const fakeReportApevisa2: ApvisaModel  = {
-    name:"Loop",
-    date:'12/02/2024',
-    cianoBacteria:"satisfatório",
-    conductivity:"satisfatório",
-    endotoxin:"satisfatório",
-    escherichaColi:"satisfatório",
-    freeChlorine:"satisfatório",
-    heterotrophic:"satisfatório",
-    pH:"satisfatório",
-    potentiometry:"satisfatório",
-    seedingInDepth:"satisfatório",
-    seedingOnSurface:"satisfatório",
-    totalColiforms:"satisfatório",
-    
-    
-    }
-
-    export const ArrayApavise:ApvisaModel [] =[
-      fakeReportApevisa2,fakeReportApevisa1,fakeReportApevisa
-    ] 
+export const ArrayApavise: ApvisaModel[] = [
+  fakeReportApevisa2,
+  fakeReportApevisa1,
+  fakeReportApevisa,
+];
 export function getByTitle(data: Prop["data"]): string {
   if (
     Array.isArray(data) &&
@@ -411,42 +402,146 @@ export const FormInitialValues: AnalysisResult = {
   },
 };
 export function calcularPorcentagem(
-  data: object | unknown[] | undefined,
+  data: object | unknown[] | undefined
 ): Porcentagens {
   let permeated: string = "";
   let reject: string = "";
 
   if (!data || !Array.isArray(data)) {
-      return { permeated: "Dados não encontrados", reject: "" };
+    return { permeated: "Dados não encontrados", reject: "" };
   }
 
   let totalColuna1 = 0;
   let totalColuna2 = 0;
 
   for (let i = 1; i < data.length; i++) {
-      const rowData = data[i];
-      if (
-          Array.isArray(rowData) &&
-          rowData.length >= 3 &&
-          typeof rowData[1] === "number" &&
-          typeof rowData[2] === "number"
-      ) {
-          totalColuna1 += Number(rowData[1]);
-          totalColuna2 += Number(rowData[2]);
-      } else {
-          return {
-              permeated: "Estrutura de dados inválida",
-             reject: "",
-          };
-      }
+    const rowData = data[i];
+    if (
+      Array.isArray(rowData) &&
+      rowData.length >= 3 &&
+      typeof rowData[1] === "number" &&
+      typeof rowData[2] === "number"
+    ) {
+      totalColuna1 += Number(rowData[1]);
+      totalColuna2 += Number(rowData[2]);
+    } else {
+      return {
+        permeated: "Estrutura de dados inválida",
+        reject: "",
+      };
+    }
   }
 
   if (totalColuna1 === 0) {
-      return {permeated: "Divisão por zero", reject: "" };
+    return { permeated: "Divisão por zero", reject: "" };
   }
 
-  permeated = ((totalColuna1 - totalColuna2) / totalColuna1 * 100).toFixed(2) ;
-  reject = (totalColuna2 / totalColuna1 * 100).toFixed(2) ;
+  permeated = (((totalColuna1 - totalColuna2) / totalColuna1) * 100).toFixed(2);
+  reject = ((totalColuna2 / totalColuna1) * 100).toFixed(2);
 
   return { permeated, reject };
 }
+export const fakeListUser = [
+  {
+    user: {
+      name: "flavio",
+      password: "010203",
+    },
+  },
+  {
+    user: {
+      name: "usuario2",
+      password: "senha2",
+    },
+  },
+  {
+    user: {
+      name: "usuario3",
+      password: "senha3",
+    },
+  },
+  {
+    user: {
+      name: "usuario4",
+      password: "senha4",
+    },
+  },
+  {
+    user: {
+      name: "usuario5",
+      password: "senha5",
+    },
+  },
+  {
+    user: {
+      name: "usuario6",
+      password: "senha6",
+    },
+  },
+  {
+    user: {
+      name: "usuario7",
+      password: "senha7",
+    },
+  },
+  {
+    user: {
+      name: "usuario8",
+      password: "senha8",
+    },
+  },
+  {
+    user: {
+      name: "usuario9",
+      password: "senha9",
+    },
+  },
+  {
+    user: {
+      name: "usuario10",
+      password: "senha10",
+    },
+  },
+  {
+    user: {
+      name: "usuario10",
+      password: "senha10",
+    },
+  },
+  {
+    user: {
+      name: "usuario10",
+      password: "senha10",
+    },
+  },
+  {
+    user: {
+      name: "usuario10",
+      password: "senha10",
+    },
+  },
+  {
+    user: {
+      name: "usuario10",
+      password: "senha10",
+    },
+  },
+  {
+    user: {
+      name: "usuario10",
+      password: "senha10",
+    },
+  },
+  {
+    user: {
+      name: "usuario10",
+      password: "senha10",
+    },
+  },
+  {
+    user: {
+      name: "usuario10",
+      password: "senha10",
+    },
+  },
+];

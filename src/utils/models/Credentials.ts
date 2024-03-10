@@ -1,29 +1,26 @@
 export interface CredentialsChemist {
-  
-    Chemist: {
-      name:string;
-      CRQ?: string;
-      graduation?: string;
-      postGraduation?: string;
-      postGraduation2?: string;
-    };
-  
-    
+  Chemist: {
+    name: string;
+    CRQ?: string;
+    graduation?: string;
+    postGraduation?: string;
+    postGraduation2?: string;
+  };
 }
 
 export interface CredentialsDoctor {
-    doctor: {
-        name:string;
-        CRM?: string;
-        graduation?: string;
-        postGraduation?: string;
-        postGraduation2?: string;
-      };
+  doctor: {
+    name: string;
+    CRM?: string;
+    graduation?: string;
+    postGraduation?: string;
+    postGraduation2?: string;
+  };
 }
 
-export interface CredentialsDoctorOperator {
-    operator: {
-        name:string;
-        registration: string;
-      };
+export interface CredentialsOperator {
+  operator: {
+    name: string;
+    registration: string;
+  };
 }

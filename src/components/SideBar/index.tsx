@@ -44,12 +44,12 @@ const menuItems = [
   {
     name: "Análises",
     icon: "ThermostatAutoOutlinedIcon ",
-    items: ["Apevisa","ETE","Reservatórios", "Purificadores"],
+    items: ["Apevisa", "ETE", "Reservatórios", "Purificadores"],
   },
   {
     name: "Relatórios",
     icon: "SummarizeOutlinedIcon",
-    items: ["Mensal", "Diasafe", "Limpeza Reservatórios","Resultado Apevisa"],
+    items: ["Mensal", "Diasafe", "Limpeza Reservatórios", "Resultado Apevisa"],
   },
 
 
@@ -137,7 +137,7 @@ const NavButton: FC<ButtonProps> = ({
         return "/Home/report/monthly";
       case "Limpeza Reservatórios":
         return "/Home/report/reservoirCleaning";
-        case "Diasafe":
+      case "Diasafe":
         return "/Home/report/diasafe";
       case "Reservatórios":
         return "/Home/analysis/resevoir";
@@ -145,14 +145,14 @@ const NavButton: FC<ButtonProps> = ({
         return "/Home/analysis/ete";
       case "Consumo de Água":
         return "/Home/production";
-        case "Apevisa":
-          return "/Home/analysis/apevisa";
-        case "Resultado Apevisa":
-          return "/Home/report/apevisa";
-        // case "RT e Operador":
-        //   return "/Home/settings/rt";
-      
-            default: 
+      case "Apevisa":
+        return "/Home/analysis/apevisa";
+      case "Resultado Apevisa":
+        return "/Home/report/apevisa";
+      // case "RT e Operador":
+      //   return "/Home/settings/rt";
+
+      default:
 
         break;
     }
@@ -213,9 +213,8 @@ export const Sidebar = () => {
                     hasSubNav={!!item.items}
                   />
                   <div
-                    className={`sub-nav ${
-                      isSubNavOpen(item.name, item.items) ? "open" : ""
-                    }`}
+                    className={`sub-nav ${isSubNavOpen(item.name, item.items) ? "open" : ""
+                      }`}
                     key={`${item.name}-sub-nav`}
                   >
                     {item.items.map((subItem) => (
@@ -231,11 +230,11 @@ export const Sidebar = () => {
               )}
             </React.Fragment>
           ))}
-         <div>
-         <MyModal/>
-          <SettingsModal/>
-         </div>
-         
+          <div>
+            <MyModal />
+            <SettingsModal />
+          </div>
+
         </nav>
       </aside>
     </div>

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Modal, Button } from "react-bootstrap";
 import LabTabs from "../../modalUI";
 import ChemistFormNew from "../newForm";
-import ChemistFormEdit from "../editForm";
+import ChemistFormEdit from "../editFrom";
 import './styles.css'
 
 
@@ -13,7 +13,7 @@ export default function ModalLabChemist() {
   return (
     <>
       <button className="button" onClick={handleShow}>
-        Responsável Técnico Químico
+        Químico
       </button>
 
       <Modal show={showModal} onHide={handleClose}>
