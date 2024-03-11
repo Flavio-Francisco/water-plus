@@ -10,7 +10,7 @@ const initialState: DiasafeState = {
 };
 
 const diasafeStatetSlice = createSlice({
-  name: "users",
+  name: "diasafe",
   initialState,
   reducers: {
     addUser(state, action: PayloadAction<DiasafeModel>) {

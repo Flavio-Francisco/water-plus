@@ -1,18 +1,16 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { CredentialsChemist } from "@/utils/models/Credentials";
-
 
 interface ChemistState {
   chemist: CredentialsChemist[];
 }
 
-
 const initialState: ChemistState = {
-    chemist: [],
+  chemist: [],
 };
 
 const chemistSlice = createSlice({
-  name: 'users',
+  name: "chemist",
   initialState,
   reducers: {
     addUser(state, action: PayloadAction<CredentialsChemist>) {
