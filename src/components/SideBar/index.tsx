@@ -180,15 +180,25 @@ export const Sidebar = () => {
   const handleClick = (item: string) => {
     console.log("activeItem", activeItem);
     setActiveItem(item !== activeItem ? item : "");
+    if (!isMenuOpen) {
+      setMenuOpen(true);
+    }
   };
 
   const isSubNavOpen = (item: string, items: string[]) =>
     items.some((i) => i === activeItem) || item === activeItem;
+    const [isMenuOpen, setMenuOpen] = useState(false);
+   
+  
+    const toggleMenu = () => {
+      setMenuOpen(!isMenuOpen);
+    };
+  
 
   return (
     <div style={{ flexDirection: "row" }}>
-      <aside className="sidebar" style={{ background: Thema.Colors.blue1 }}>
-        <nav className="sidebar-nav">
+    <aside className={`sidebar ${isMenuOpen ? 'open' : 'closed'}`} style={{ background: Thema.Colors.blue1 }}>
+      <nav className="sidebar-nav">
           <NavHeader />
 
           {menuItems.map((item, index) => (
@@ -237,6 +247,10 @@ export const Sidebar = () => {
 
         </nav>
       </aside>
+      <button className="hamburger-menu" onClick={toggleMenu}>
+        {isMenuOpen ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+        HANBUERGE
+      </button>
     </div>
   );
 };
