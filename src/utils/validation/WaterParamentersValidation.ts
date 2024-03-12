@@ -1,4 +1,5 @@
 import * as Yup from "yup";
+import { z } from "zod";
 
 const waterTreatmentParametersSchema = Yup.object().shape({
   WATER_FEED: Yup.object().shape({
@@ -50,11 +51,58 @@ const waterTreatmentParametersSchema = Yup.object().shape({
   LOOP: Yup.object().shape({
     OutputPressure: Yup.number().required("Pressão Obrigatória!!"),
     ReturnPressure: Yup.number().required("Pressão Obrigatória!!"),
-    OzoneTestBefore1stShift: Yup.boolean().required(
-      "Ozônio Obrigatório"
-    ),
+    OzoneTestBefore1stShift: Yup.boolean().required("Ozônio Obrigatório"),
     Conductivity: Yup.number().required("Contutividade Obrigatório!!"),
   }),
 });
 
 export default waterTreatmentParametersSchema;
+
+export const WaterTreatmentParametersSchema = z.object({
+  WATER_FEED: z.object({
+    Color: z.string(),
+    Turbidity: z.string(),
+    Taste: z.string(),
+    Odor: z.string(),
+    TotalChlorine: z.number(),
+    FreeChlorine: z.number(),
+    pH: z.number(),
+  }),
+  PRE_TREATMENT: z.object({
+    SoftenerHardness: z.number(),
+    MultimediaFilterInputPressure: z.number(),
+    SoftenerInputPressure: z.number(),
+    CarbonInputPressure: z.number(),
+    CarbonOutputPressure: z.number(),
+    MultimediaFilterDisplayTime: z.string(),
+    SoftenerDisplayTime: z.string(),
+    CarbonDisplayTime: z.string(),
+    SaltReservoirLevel: z.number(),
+  }),
+  REVERSE_OSMOSIS_1ST_STEP: z.object({
+    ROInputPressure: z.number(),
+    MembraneInputPressure: z.number(),
+    RejectPressure: z.number(),
+    ROInputConductivity: z.number(),
+    ROOutputConductivity: z.number(),
+    SalinityRejectionRate: z.number(),
+    PermeateFlowRate: z.number(),
+    RejectFlowRate: z.number(),
+  }),
+  REVERSE_OSMOSIS_2ND_STEP: z.object({
+    ROInputPressure: z.number(),
+    MembraneInputPressure: z.number(),
+    RejectPressure: z.number(),
+    ROInputConductivity: z.number(),
+    ROOutputConductivity: z.number(),
+    SalinityRejectionRate: z.number(),
+    PermeateFlowRate: z.number(),
+    RejectFlowRate: z.number(),
+  }),
+  LOOP: z.object({
+    OutputPressure: z.number(),
+    ReturnPressure: z.number(),
+    OzoneTestBefore1stShift: z.boolean(),
+    Conductivity: z.number(),
+  }),
+});
