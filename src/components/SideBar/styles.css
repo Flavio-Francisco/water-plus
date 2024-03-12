@@ -49,10 +49,10 @@ button {
   top: 20px;
   left: 20px;
   z-index: 1000;
-  background: none;
+  background: #159a9c;
   border: none;
   cursor: pointer;
-  color: #fff;
+  color: #000;
   font-size: 24px;
 }
 

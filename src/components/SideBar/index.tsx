@@ -197,7 +197,7 @@ export const Sidebar = () => {
 
   return (
     <div style={{ flexDirection: "row" }}>
-    <aside className={`sidebar ${isMenuOpen ? 'open' : 'closed'}`} style={{ background: Thema.Colors.blue1 }}>
+    <aside className={`sidebar ${isMenuOpen ? 'open' : '.closed'}`} style={{ background: Thema.Colors.blue1 }}>
       <nav className="sidebar-nav">
           <NavHeader />
 
