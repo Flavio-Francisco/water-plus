@@ -47,7 +47,10 @@
     .form {
       width: 90%; /* Reduz a largura do formulário em telas menores */
       margin-left: 10%; /* Ajusta o espaço à esquerda do formulário */
-      background-color: blue;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-evenly;
+     
     }
     .image{
       border-radius: 25px;
@@ -56,6 +59,25 @@
   }
   .name{
     color: white;
-    font-size: 12px;
+    font-size: 10px;
   }
+  }
+  @media (min-width: 769px) {
+    .cardUser {
+      display: flex; /* Garante que o componente seja exibido em telas maiores */
+      visibility: visible; /* Garante que o componente seja visível em telas maiores */
+    }
+    
+    .form {
+      width: 60%; /* Reduz a largura do formulário em telas menores */
+      margin-left: 10%; /* Ajusta o espaço à esquerda do formulário */
+      display: flex;
+      flex-direction: row;
+      justify-content: space-evenly;
+     
+    }
+    .name{
+      color: white;
+      font-size: 10px;
+    }
   }
