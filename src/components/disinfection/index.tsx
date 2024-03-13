@@ -3,7 +3,7 @@ import { Button, Modal, Form, Row, Col } from 'react-bootstrap';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import './styles.css';
-
+import { Thema } from '../../../thema';
 
 const Desinfection = () => {
   const [showModal, setShowModal] = useState(false);
@@ -29,12 +29,12 @@ const Desinfection = () => {
 
   return (
     <>
-      <p
+      <Button 
       onClick={handleButtonClick} 
       className='custom-button'
-      >
+      style={{ background: Thema.Colors.blue2, borderColor: Thema.Colors.blue2}}>
         Desinfecção do Sistema
-      </p>
+      </Button>
 
       <Modal show={showModal} onHide={handleCloseModal} centered>
         <Modal.Header closeButton>

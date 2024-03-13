@@ -3,6 +3,7 @@ import './styles.css';
 import { Button, Modal, Form, Row, Col } from 'react-bootstrap';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
+import { Thema } from '../../../thema';
 
 
 export default function FilterReplacement() {
@@ -42,12 +43,13 @@ export default function FilterReplacement() {
   };
   return (
     <>
-      <p
+      <Button
         onClick={handleButtonClick}
         className="custom-button"
+        style={{ background: Thema.Colors.blue2, borderColor: Thema.Colors.blue2 }}
       >
         Troca de Diasafe
-      </p>
+      </Button>
 
       <Modal show={showModal} onHide={handleCloseModal} centered size='lg'>
         <Modal.Header closeButton>

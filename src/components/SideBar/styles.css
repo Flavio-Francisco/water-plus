@@ -23,7 +23,6 @@ button {
   flex-direction: column;
   width: 0px;
   height: 100%;
-  margin-top: 40px;
   overflow-x: hidden; /* Para evitar rolagem horizontal quando o menu estiver fechado */
   background-color: #333; /* Cor de fundo apenas para fins de visualização */
   transition: width 0.8s ease; /* Apenas uma transição para a largura */
@@ -133,3 +132,9 @@ button {
 .material-symbols-outlined {
   font-size: 16px;
 }
+ .image{
+  margin-top: 200px;
+  padding: 10;
+  width: 100px;
+  height: 100px;
+ }

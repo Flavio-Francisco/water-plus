@@ -10,12 +10,12 @@ import AddchartIcon from "@mui/icons-material/Addchart";
 import TimelineIcon from "@mui/icons-material/Timeline";
 import SummarizeOutlinedIcon from "@mui/icons-material/SummarizeOutlined";
 import ThermostatAutoOutlinedIcon from "@mui/icons-material/ThermostatAutoOutlined";
-
+import Image from "next/image";
 import { Thema } from "../../../thema";
 import MyModal from "./manutecao";
 import SettingsModal from "./settingsModal";
 import NaviBar from "./naviBar";
-
+import Logo from './logo.jpg'
 
 
 
@@ -184,13 +184,18 @@ export const Sidebar = () => {
       setMenuOpen(!isMenuOpen);
     };
   
-   
+    
   return (
     <div style={{ flexDirection: "row" }}>
      < NaviBar className="hamburger-menu" classeButtom="hamburger-menu-button" toggleMenu={toggleMenu}/>
     <aside className={`sidebar ${isMenuOpen ? 'open' : 'closed'}`} style={{ background: Thema.Colors.blue1 }}>
       <nav className="sidebar-nav">
+    <Image
+    className="image"
+     src={Logo} 
+     alt="Logo"
      
+     />
 
           {menuItems.map((item, index) => (
             <React.Fragment key={index}>

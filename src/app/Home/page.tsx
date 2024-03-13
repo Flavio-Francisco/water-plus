@@ -5,6 +5,9 @@ import { Container } from 'react-bootstrap';
 import HomeBody from '@/components/homeBody';
 import Pizza from '@/components/graficPercentage';
 import SalineRejection from '@/components/salineRejection';
+import AcidReplacement from '@/components/acidReplacement';
+import Desinfection from '@/components/disinfection';
+import FilterReplacement from '@/components/filterReplacement';
 
 
 
@@ -30,7 +33,9 @@ function Home() {
         <HomeBody />
       </Container>
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'row', width: '60%', marginLeft: 150, marginTop: 50, marginBottom: 30 }}>
-      
+               <FilterReplacement />
+                <AcidReplacement />
+                <Desinfection />
       </div>
 
     </div>
