@@ -5,6 +5,7 @@ import { Sidebar } from "@/components/SideBar"
 import { Roboto } from 'next/font/google'
 
 
+
 const roboto = Roboto({
   weight: '400',
   subsets: ['latin'],
@@ -24,7 +25,7 @@ export default function RootLayout({
     <html lang="pt-br" >
 
       <body className={roboto.className}>
-
+  
         <Sidebar />
         <div style={{ width: '81%', height: '100%', marginLeft: '19%' }}>
           {children}

@@ -1,7 +1,7 @@
 "use client";
 import "bootstrap/dist/css/bootstrap.min.css";
-import React, { FC, useState } from "react";
 import "./styles.css";
+import React, { FC, useState } from "react";
 import Logo from "./logo.jpg";
 import WarningIcon from "@mui/icons-material/Warning";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
@@ -176,6 +176,7 @@ const NavButton: FC<ButtonProps> = ({
 
 export const Sidebar = () => {
   const [activeItem, setActiveItem] = useState<string>("");
+  const [isMenuOpen, setMenuOpen] = useState(false);
 
   const handleClick = (item: string) => {
     console.log("activeItem", activeItem);
@@ -187,7 +188,7 @@ export const Sidebar = () => {
 
   const isSubNavOpen = (item: string, items: string[]) =>
     items.some((i) => i === activeItem) || item === activeItem;
-    const [isMenuOpen, setMenuOpen] = useState(false);
+    
    
   
     const toggleMenu = () => {
@@ -197,7 +198,7 @@ export const Sidebar = () => {
 
   return (
     <div style={{ flexDirection: "row" }}>
-    <aside className={`sidebar ${isMenuOpen ? 'open' : '.closed'}`} style={{ background: Thema.Colors.blue1 }}>
+    <aside className={`sidebar ${isMenuOpen ? 'open' : 'closed'}`} style={{ background: Thema.Colors.blue1 }}>
       <nav className="sidebar-nav">
           <NavHeader />
 
@@ -248,8 +249,8 @@ export const Sidebar = () => {
         </nav>
       </aside>
       <button className="hamburger-menu" onClick={toggleMenu}>
-        {isMenuOpen ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-        HANBUERGE
+         {isMenuOpen ? "Fechar Menu" : "Abrir Menu"}
+       
       </button>
     </div>
   );

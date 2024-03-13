@@ -21,14 +21,34 @@ button {
   left: 0;
   display: flex;
   flex-direction: column;
-  width: 255px;
+  width: 0px;
   height: 100%;
-  transition: width 1s;
-  transform: translateX(-100%);
-  transition: transform 0.8s ease; 
-  transition: width 1s, transform 0.8s ease;
+  
+  overflow-x: hidden; /* Para evitar rolagem horizontal quando o menu estiver fechado */
+  background-color: #333; /* Cor de fundo apenas para fins de visualização */
+  transition: width 0.8s ease; /* Apenas uma transição para a largura */
 }
 
+.sidebar.open {
+  width: 255px; /* Largura do menu quando aberto */
+}
+
+.sidebar.closed {
+  width: 0; /* Largura zero quando fechado */
+}
+.hamburger-menu {
+  width: 100%;
+  height: 10%;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  z-index: 1000;
+  background: #002333;
+  border: none;
+  cursor: pointer;
+  color: #fff;
+  font-size: 24px;
+}
 .sidebar-header {
   display: flex;
   flex-direction: column;
@@ -36,24 +56,6 @@ button {
   padding: 0 1.25rem 0 0;
   margin-bottom: 50px;
   color: white;
-}
-.sidebar.open {
-  transition: transform 0.8s ease;
-}
-.sidebar.closed {
-  transform: translateX(0);
-  transition: transform 0.8s ease, width 1s;
-}
-.hamburger-menu {
-  position: fixed;
-  top: 20px;
-  left: 20px;
-  z-index: 1000;
-  background: #159a9c;
-  border: none;
-  cursor: pointer;
-  color: #000;
-  font-size: 24px;
 }
 
 .sidebar .sidebar-header button {
