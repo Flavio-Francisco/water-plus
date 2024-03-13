@@ -2,7 +2,6 @@
 import React, { useState } from 'react';
 import "./styles.css";
 import { Container } from 'react-bootstrap';
-import { Thema } from '../../../thema';
 import Batery from '../batery';
 import Logo from '@/app/logo.jpg'
 import { dataAbrandador, dataZeolica,dataCarvao } from '@/utils/models/Data';
@@ -11,12 +10,8 @@ import { Props } from '../grafic';
 import Image from 'next/image';
 
 
-interface Iprops {
-  nameUser: string;
-}
 
-
-export default function HomeBody(props: Iprops) {
+export default function HomeBody() {
 const clear:Props = {subtitle:'',title:'',data:[]}
 
 
@@ -52,10 +47,7 @@ console.log(clear);
   }
   return (
     <Container>
-      <div className='cardUser'> 
-        <p style={{color:Thema.Colors.gray,marginTop:10}}> Seja bem vindo   </p>
-        <p style={{color:Thema.Colors.gray ,marginTop:10}}>   {props.nameUser} !</p>
-      </div>
+    
 
       <div className='batteryConteiner'>
         <div className='batteryBox' onClick={()=> handleGraficClick("zeolita")}>

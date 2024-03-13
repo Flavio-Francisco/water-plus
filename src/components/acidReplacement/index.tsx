@@ -4,7 +4,7 @@ import { Button, Modal, Form, Row, Col } from 'react-bootstrap';
 import { Formik } from 'formik';
 import './styles.css';
 import * as Yup from 'yup';
-import { Thema } from '../../../thema';
+
 
 
 export default function AcidReplacement() {
@@ -44,12 +44,12 @@ export default function AcidReplacement() {
   };
   return (
     <>
-      <Button
+      <p
         onClick={handleButtonClick}
         className="custom-button"
-        style={{ background: Thema.Colors.blue2, borderColor: Thema.Colors.blue2, marginTop: 30, marginLeft: 25 }}>
+         >
         Troca de Ácido Peracético
-      </Button>
+      </p>
 
       <Modal show={showModal} onHide={handleCloseModal} centered size='lg'>
         <Modal.Header closeButton>

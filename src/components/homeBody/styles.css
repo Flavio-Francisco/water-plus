@@ -1,22 +1,22 @@
 .cardUser {
     
     display: flex;
+    width: '30%';
     align-items: center;
     justify-content: center;
     flex-direction: row;
     position: absolute;
-    top: 20px;
+    top: 10px;
     right: 20px;
-    background-color: white;
+    background-color: "#fff";
     border-radius: 5px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.342);
-    padding: 10px;
-    transition: box-shadow 0.3s ease;
+    padding: 0px;
     gap: 5px;
   }
   
   .cardUser:hover {
     box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+    transition: box-shadow 0.3s ease;
   }
 .batteryConteiner{
   margin: 0px;

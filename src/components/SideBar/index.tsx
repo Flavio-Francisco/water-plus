@@ -2,7 +2,6 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./styles.css";
 import React, { FC, useState } from "react";
-import Logo from "./logo.jpg";
 import WarningIcon from "@mui/icons-material/Warning";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
@@ -11,10 +10,11 @@ import AddchartIcon from "@mui/icons-material/Addchart";
 import TimelineIcon from "@mui/icons-material/Timeline";
 import SummarizeOutlinedIcon from "@mui/icons-material/SummarizeOutlined";
 import ThermostatAutoOutlinedIcon from "@mui/icons-material/ThermostatAutoOutlined";
-import Image from "next/image";
+
 import { Thema } from "../../../thema";
 import MyModal from "./manutecao";
 import SettingsModal from "./settingsModal";
+import NaviBar from "./naviBar";
 
 
 
@@ -88,18 +88,7 @@ const getIconComponent = (iconName: string) => {
   }
 };
 
-const NavHeader = () => (
-  <header className="sidebar-header">
-    <Image
-      priority={true}
-      src={Logo}
-      alt="Logo"
-      width={100}
-      height={100}
-      style={{ borderRadius: 25, marginLeft: 55, marginTop: 20 }}
-    />
-  </header>
-);
+
 
 type ButtonProps = {
   onClick: (item: string) => void;
@@ -195,12 +184,13 @@ export const Sidebar = () => {
       setMenuOpen(!isMenuOpen);
     };
   
-
+   
   return (
     <div style={{ flexDirection: "row" }}>
+     < NaviBar className="hamburger-menu" classeButtom="hamburger-menu-button" toggleMenu={toggleMenu}/>
     <aside className={`sidebar ${isMenuOpen ? 'open' : 'closed'}`} style={{ background: Thema.Colors.blue1 }}>
       <nav className="sidebar-nav">
-          <NavHeader />
+     
 
           {menuItems.map((item, index) => (
             <React.Fragment key={index}>
@@ -248,10 +238,7 @@ export const Sidebar = () => {
 
         </nav>
       </aside>
-      <button className="hamburger-menu" onClick={toggleMenu}>
-         {isMenuOpen ? "Fechar Menu" : "Abrir Menu"}
-       
-      </button>
+
     </div>
   );
 };

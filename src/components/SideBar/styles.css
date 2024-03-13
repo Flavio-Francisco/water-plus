@@ -23,7 +23,7 @@ button {
   flex-direction: column;
   width: 0px;
   height: 100%;
-  
+  margin-top: 40px;
   overflow-x: hidden; /* Para evitar rolagem horizontal quando o menu estiver fechado */
   background-color: #333; /* Cor de fundo apenas para fins de visualização */
   transition: width 0.8s ease; /* Apenas uma transição para a largura */
@@ -45,9 +45,14 @@ button {
   z-index: 1000;
   background: #002333;
   border: none;
-  cursor: pointer;
   color: #fff;
   font-size: 24px;
+}
+.hamburger-menu-button{
+  cursor: pointer;
+  color: #fff;
+  margin-left: 30px;
+  margin-top: 20px;
 }
 .sidebar-header {
   display: flex;

@@ -27,7 +27,7 @@ export default function RootLayout({
       <body className={roboto.className}>
   
         <Sidebar />
-        <div style={{ width: '81%', height: '100%', marginLeft: '19%' }}>
+        <div style={{ width: '81%', height: '80%', marginLeft: '19%' }}>
           {children}
         </div>
 

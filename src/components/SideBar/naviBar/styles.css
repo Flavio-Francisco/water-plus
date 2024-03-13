@@ -1,0 +1,61 @@
+.cardUser {
+    
+    display: flex;
+    width: '30%';
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    background-color: transparent;
+    border-radius: 5px;
+    padding: 0px;
+    gap: 15px;
+  }
+  
+  .cardUser:hover {
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+    transition: box-shadow 0.3s ease;
+  }
+  .form{
+
+    display: flex;
+    flex-direction: row;
+    width: 60%;
+    margin-left: 15%;
+    margin-top: -30px;
+  }
+ 
+
+.image{
+    border-radius: 25px;
+    width: 50px;
+    height: 50px;
+}
+.name{
+  color: white;
+  font-size: 14px;
+}
+
+  @media (max-width: 768px) {
+    .cardUser {
+     display: none; /* Reduz a largura do card em telas menores */
+    
+    }
+  
+    .form {
+      width: 90%; /* Reduz a largura do formulário em telas menores */
+      margin-left: 10%; /* Ajusta o espaço à esquerda do formulário */
+      background-color: blue;
+    }
+    .image{
+      border-radius: 25px;
+      width: 25px;
+      height: 25px;
+  }
+  .name{
+    color: white;
+    font-size: 12px;
+  }
+  }
