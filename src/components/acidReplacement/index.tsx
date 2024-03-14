@@ -44,12 +44,12 @@ export default function AcidReplacement() {
   };
   return (
     <>
-      <Button
+      <button
         onClick={handleButtonClick}
-        className="custom-button"
-        style={{ background: Thema.Colors.blue2, borderColor: Thema.Colors.blue2, marginTop: 30, marginLeft: 25 }}>
-        Troca de Ácido Peracético
-      </Button>
+        className=" p-2 mt-6 md:mt-0 ml-6 md:ml-0" // Adiciona classes responsivas do Tailwind CSS para margem superior e esquerda
+        style={{ background: Thema.Colors.blue2, borderColor: Thema.Colors.blue2,borderRadius: '5px',color:Thema.Colors.white }}>
+        Ácido Peracético
+      </button>
 
       <Modal show={showModal} onHide={handleCloseModal} centered size='lg'>
         <Modal.Header closeButton>

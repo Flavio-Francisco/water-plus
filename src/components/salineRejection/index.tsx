@@ -32,9 +32,9 @@ const SalineRejection = () => {
             yValueFormatString: "#,###'%'",
             dataPoints: [
                
-                { name: "Permeado", y:   salineRejection },
-                { name: "solúveis", y:   soluble },
-            
+                { name: "Permeado", y: salineRejection },
+                { name: "rejeito", y: soluble },
+               
             ]
         }]
     };

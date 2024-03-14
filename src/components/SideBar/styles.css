@@ -151,6 +151,7 @@ button {
     overflow-x: hidden; /* Para evitar rolagem horizontal quando o menu estiver fechado */
     background-color: #333; /* Cor de fundo apenas para fins de visualização */
     transition: width 0.8s ease; /* Apenas uma transição para a largura */
+    z-index: 999; /* Garante que a barra lateral fique na frente */
   }
   .sidebar.open {
     width: 255px; /* Largura do menu quando aberto */
