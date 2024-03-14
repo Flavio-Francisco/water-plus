@@ -45,9 +45,9 @@ export default function FilterReplacement() {
     <>
       <Button
         onClick={handleButtonClick}
-        className="custom-button"
-        style={{ background: Thema.Colors.blue2, borderColor: Thema.Colors.blue2 }}
-      >
+        className=" p-2 mt-6 md:mt-0 ml-6 md:ml-0" // Adiciona classes responsivas do Tailwind CSS para margem superior e esquerda
+        style={{ background: Thema.Colors.blue2, borderColor: Thema.Colors.blue2,borderRadius: '5px',color:Thema.Colors.white }}>
+      
         Troca de Diasafe
       </Button>
 

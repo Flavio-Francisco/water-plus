@@ -28,7 +28,7 @@ function Home() {
         <HomeBody />
       </Container>
 
-      <div className="d-flex justify-content-center align-items-center flex-row w-60 md:w-auto md:ml-150 mt-10 md:mt-50 mb-30">
+      <div className="d-flex justify-content-center align-items-center flex-row w-60 md:w-auto  mt-10 md:mt-50 mb-30">
         <FilterReplacement />
         <AcidReplacement />
         <Desinfection />
