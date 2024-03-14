@@ -1,18 +1,19 @@
 .cardUser {
-    
-    display: flex;
-    width: '30%';
-    align-items: center;
-    justify-content: space-between;
-    flex-direction: row;
-    position: absolute;
-    top: 10px;
-    right: 20px;
-    background-color: transparent;
-    border-radius: 5px;
-    padding: 0px;
-    gap: 15px;
-  }
+  display: flex;
+  width: 40%;
+  justify-content: space-between;
+  flex-direction: row;
+  position: absolute;
+  top: 12px; 
+  right: 40px; 
+  bottom: 10px; 
+  background-color: transparent;
+  border-radius: 5px;
+  padding: 10px;
+  gap: 15px;
+ 
+}
+
   
   .cardUser:hover {
     box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
@@ -28,14 +29,47 @@
   }
  
 
-.image{
+.imageNavbar{
     border-radius: 25px;
-    width: 50px;
-    height: 50px;
+    width: 25px;
+    height: 25px;
+    margin-right: 5px;
+    padding: 0;
 }
 .name{
   color: white;
-  font-size: 14px;
-  margin-top: 10px;
+  font-size: 10px;
+  margin-top: 15px;
+  padding: 0;
 }
 
+@media screen and (max-width: 376px) {
+  .cardUser {
+    display: flex;
+    width: 50%;
+    justify-content: space-between;
+    flex-direction: row;
+    position: absolute;
+    top: 5px; 
+    right: 40px; 
+    bottom: 10px; 
+    background-color: transparent;
+    border-radius: 5px;
+    padding: 10px;
+    gap: 15px;
+    
+  }
+  .imageNavbar{
+    border-radius: 25px;
+    width: 25px;
+    height: 25px;
+    margin-right: 5px;
+    padding: 0;
+}
+.name{
+  color: white;
+  font-size: 10px;
+  margin-top: 15px;
+  padding: 0;
+}
+}

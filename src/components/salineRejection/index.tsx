@@ -40,9 +40,9 @@ const SalineRejection = () => {
     };
 
     return (
-        <div style={{width:'42%', fontFamily:'sans-serif'}}>
-            <CanvasJSChart options={options}  />
-        </div>
+        <div className="w-5/5 mx-10">
+        <CanvasJSChart options={options} />
+      </div>
     );
 };
 

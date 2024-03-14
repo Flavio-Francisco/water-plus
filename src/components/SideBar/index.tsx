@@ -196,7 +196,9 @@ export const Sidebar = () => {
      alt="Logo"
      
      />
+       <div className="space"/>
 
+     
           {menuItems.map((item, index) => (
             <React.Fragment key={index}>
               {!item.items && (

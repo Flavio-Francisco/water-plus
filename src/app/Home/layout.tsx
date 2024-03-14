@@ -3,8 +3,8 @@ import React from 'react'
 import { Metadata } from "next";
 import { Sidebar } from "@/components/SideBar"
 import { Roboto } from 'next/font/google'
-
-
+import '@/style/global.css'
+import './style.css'
 
 const roboto = Roboto({
   weight: '400',
@@ -27,7 +27,7 @@ export default function RootLayout({
       <body className={roboto.className}>
   
         <Sidebar />
-        <div style={{ width: '81%', height: '80%', marginLeft: '19%' }}>
+        <div className='root'>
           {children}
         </div>
 

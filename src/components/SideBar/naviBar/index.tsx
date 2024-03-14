@@ -24,7 +24,7 @@ export default function NaviBar({className,toggleMenu,classeButtom}:Iprops) {
             </div>
         <div className='cardUser'> 
                 <Image
-                className="image"
+                className="imageNavbar"
                     priority={true}
                     src={Logo}
                     alt="Logo"
