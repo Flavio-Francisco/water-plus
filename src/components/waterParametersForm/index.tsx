@@ -67,9 +67,10 @@ const WaterParametersForm = () => {
           onSubmit={handleSubmit}
         >
           {({ errors, touched }) => (
-            <Form className="max-w-full mx-auto md:mx-0 grid grid-cols-1 md:grid-cols-2 gap-4">
+           <Form className="max-w-max ml-auto mr-auto md:mx-0 grid grid-cols-1 md:grid-cols-2 gap-4">
+
           {/* WATER_FEED */}
-          <div className="w-full flex justify-center">
+          <div className="w-full flex justify-center ml-24">
     <div className="bg-white shadow-md rounded-md p-4 w-full">
               <h3 className="text-lg font-medium mb-2">Alimentação de Água</h3>
               <div className="grid grid-cols-2 gap-4">
