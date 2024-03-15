@@ -14,14 +14,14 @@ interface Iprops{
 
 
 export default function NaviBar({className,toggleMenu,classeButtom}:Iprops) {
+const name = "Flávio"
+
     return(
         <div className={className}>
             <button onClick={toggleMenu} className={classeButtom}  >
               <MenuOutlinedIcon fontSize="large" />
            </button>   
-           <div className="form">
-                
-            </div>
+       
         <div className='cardUser'> 
                 <Image
                 className="imageNavbar"
@@ -30,8 +30,8 @@ export default function NaviBar({className,toggleMenu,classeButtom}:Iprops) {
                     alt="Logo"
                    
                 />
-                    <p className="name" > Seja bem vindo</p>
-                    <p className="name" >Flavio </p>
+                    <p className="name" > Seja bem vindo {name}</p>
+                  
         </div>
         
         </div>

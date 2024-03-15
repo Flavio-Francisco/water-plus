@@ -1,10 +1,10 @@
 .cardUser {
   display: flex;
-  width: 40%;
-  justify-content: space-between;
+  width: 60%;
+  justify-content: center;
   flex-direction: row;
   position: absolute;
-  top: 12px; 
+  top: 0px; 
   right: 40px; 
   bottom: 10px; 
   background-color: transparent;
@@ -33,25 +33,26 @@
     border-radius: 25px;
     width: 25px;
     height: 25px;
-    margin-right: 5px;
+    margin-right: 1px;
     padding: 0;
 }
 .name{
+  margin-left: 0;
   color: white;
   font-size: 10px;
-  margin-top: 15px;
+  top: 0px;
   padding: 0;
 }
 
-@media screen and (max-width: 376px) {
+@media screen and (max-width: 560px) {
   .cardUser {
     display: flex;
-    width: 50%;
+    width: 40%;
     justify-content: space-between;
     flex-direction: row;
     position: absolute;
-    top: 5px; 
-    right: 40px; 
+    top: 0px; 
+    right: 20px; 
     bottom: 10px; 
     background-color: transparent;
     border-radius: 5px;
@@ -63,13 +64,15 @@
     border-radius: 25px;
     width: 25px;
     height: 25px;
-    margin-right: 5px;
+    margin-right: 0px;
+    margin-top: -4px;
     padding: 0;
+    top: 0;
 }
 .name{
   color: white;
   font-size: 10px;
-  margin-top: 15px;
+  margin-top: 0px;
   padding: 0;
 }
 }
