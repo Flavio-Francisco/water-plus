@@ -17,7 +17,7 @@ export interface WaterTreatmentParameters {
     MultimediaFilterDisplayTime: string;
     SoftenerDisplayTime: string;
     CarbonDisplayTime: string;
-    SaltReservoirLevel: number;
+    SaltReservoirLevel:string;
   };
   REVERSE_OSMOSIS_1ST_STEP: {
     ROInputPressure: number;

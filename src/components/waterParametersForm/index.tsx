@@ -26,7 +26,7 @@ const WaterParametersForm = () => {
             MultimediaFilterDisplayTime: '',
             SoftenerDisplayTime: '',
             CarbonDisplayTime: '',
-            SaltReservoirLevel: 0
+            SaltReservoirLevel: ''
         },
         REVERSE_OSMOSIS_1ST_STEP: {
             ROInputPressure: 0,
@@ -233,9 +233,9 @@ const WaterParametersForm = () => {
       {/* MultimediaFilterDisplayTime */}
       <div>
         <label htmlFor="PRE_TREATMENT.MultimediaFilterDisplayTime" className="block text-sm font-medium text-gray-700">
-          Tempo de Exibição do Filtro Multimídia
+         Horário do Filtro Multimídia
         </label>
-        <Field name="PRE_TREATMENT.MultimediaFilterDisplayTime" type="text" className="mt-1 p-2 border rounded-md w-full" />
+        <Field name="PRE_TREATMENT.MultimediaFilterDisplayTime" type="time" className="mt-1 p-2 border rounded-md w-full" />
         {errors.PRE_TREATMENT && errors.PRE_TREATMENT.MultimediaFilterDisplayTime && touched.PRE_TREATMENT && touched.PRE_TREATMENT.MultimediaFilterDisplayTime && (
           <div className="text-red-600 text-sm mt-1">{errors.PRE_TREATMENT.MultimediaFilterDisplayTime}</div>
         )}
@@ -243,9 +243,9 @@ const WaterParametersForm = () => {
   {/* SoftenerDisplayTime */}
 <div>
   <label htmlFor="PRE_TREATMENT.SoftenerDisplayTime" className="block text-sm font-medium text-gray-700">
-    Tempo de Exibição do Amaciador
+  Horário do  Exibição do Amaciador
   </label>
-  <Field name="PRE_TREATMENT.SoftenerDisplayTime" type="text" className="mt-1 p-2 border rounded-md w-full" />
+  <Field name="PRE_TREATMENT.SoftenerDisplayTime" type="time" className="mt-1 p-2 border rounded-md w-full" />
   {errors.PRE_TREATMENT && errors.PRE_TREATMENT.SoftenerDisplayTime && touched.PRE_TREATMENT && touched.PRE_TREATMENT.SoftenerDisplayTime && (
     <div className="text-red-600 text-sm mt-1">{errors.PRE_TREATMENT.SoftenerDisplayTime}</div>
   )}
@@ -254,9 +254,9 @@ const WaterParametersForm = () => {
 {/* CarbonDisplayTime */}
 <div>
   <label htmlFor="PRE_TREATMENT.CarbonDisplayTime" className="block text-sm font-medium text-gray-700">
-    Tempo de Exibição do Carvão
+  Horário do Exibição do Carvão
   </label>
-  <Field name="PRE_TREATMENT.CarbonDisplayTime" type="text" className="mt-1 p-2 border rounded-md w-full" />
+  <Field name="PRE_TREATMENT.CarbonDisplayTime" type="time" className="mt-1 p-2 border rounded-md w-full" />
   {errors.PRE_TREATMENT && errors.PRE_TREATMENT.CarbonDisplayTime && touched.PRE_TREATMENT && touched.PRE_TREATMENT.CarbonDisplayTime && (
     <div className="text-red-600 text-sm mt-1">{errors.PRE_TREATMENT.CarbonDisplayTime}</div>
   )}
@@ -267,11 +267,18 @@ const WaterParametersForm = () => {
   <label htmlFor="PRE_TREATMENT.SaltReservoirLevel" className="block text-sm font-medium text-gray-700">
     Nível do Reservatório de Sal
   </label>
-  <Field name="PRE_TREATMENT.SaltReservoirLevel" type="number" className="mt-1 p-2 border rounded-md w-full" />
+  <Field name="PRE_TREATMENT.SaltReservoirLevel" as="select" className="mt-1 p-2 border rounded-md w-full">
+    <option value="">Selecione</option>
+    <option value="Baixo">Baixo</option>
+    <option value="Médio">Médio</option>
+    <option value="Alto">Alto</option>
+    {/* Adicione outras opções conforme necessário */}
+  </Field>
   {errors.PRE_TREATMENT && errors.PRE_TREATMENT.SaltReservoirLevel && touched.PRE_TREATMENT && touched.PRE_TREATMENT.SaltReservoirLevel && (
     <div className="text-red-600 text-sm mt-1">{errors.PRE_TREATMENT.SaltReservoirLevel}</div>
   )}
 </div>
+
 </div>
     </div>
   </div>
