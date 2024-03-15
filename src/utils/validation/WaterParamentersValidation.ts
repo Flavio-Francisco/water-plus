@@ -22,7 +22,7 @@ const waterTreatmentParametersSchema = Yup.object().shape({
     MultimediaFilterDisplayTime: Yup.string().required("Horario obrigatório!!"),
     SoftenerDisplayTime: Yup.string().required("Horario obrigatório!!"),
     CarbonDisplayTime: Yup.string().required("Horario obrigatório!!"),
-    SaltReservoirLevel: Yup.number().required("Nível de sal Obrigatório!!"),
+    SaltReservoirLevel: Yup.string().required("Nível de sal Obrigatório!!"),
   }),
   REVERSE_OSMOSIS_1ST_STEP: Yup.object().shape({
     ROInputPressure: Yup.number().required("Pressão Obrigatória!!"),
