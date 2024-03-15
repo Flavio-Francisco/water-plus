@@ -67,10 +67,10 @@ const WaterParametersForm = () => {
           onSubmit={handleSubmit}
         >
           {({ errors, touched }) => (
-        <Form className="max-w-lg mx-auto">
+            <Form className="max-w-full mx-auto md:mx-0 grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* WATER_FEED */}
-          <div className="col-span-1 sm:col-span-1">
-            <div className="bg-white shadow-md rounded-md p-4">
+          <div className="w-full flex justify-center">
+    <div className="bg-white shadow-md rounded-md p-4 w-full">
               <h3 className="text-lg font-medium mb-2">Alimentação de Água</h3>
               <div className="grid grid-cols-2 gap-4">
               <div>
@@ -196,8 +196,8 @@ const WaterParametersForm = () => {
           </div>
         
 
-          <div className="col-span-1 sm:col-span-1 " >
-  <div className="bg-white shadow-md rounded-md p-4">
+          <div className="w-full flex justify-center">
+    <div className="bg-white shadow-md rounded-md p-4 w-full">
     <h3 className="text-lg font-medium mb-2">Pré-Tratamento</h3>
     <div className="grid grid-cols-2 gap-4">
       {/* SoftenerInputPressure */}
@@ -282,10 +282,238 @@ const WaterParametersForm = () => {
 </div>
     </div>
   </div>
-{/*proximo card*/}
-          <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+  <div className="w-full flex justify-center">
+    <div className="bg-white shadow-md rounded-md p-4 w-full">
+    <h3 className="text-lg font-medium mb-2">Primeiro Passo de Osmose Reversa</h3>
+    <div className="grid grid-cols-2 gap-4">
+      {/* ROInputPressure */}
+      <div>
+        <label htmlFor="REVERSE_OSMOSIS_1ST_STEP.ROInputPressure" className="block text-sm font-medium text-gray-700">
+          Pressão de Entrada OR
+        </label>
+        <Field name="REVERSE_OSMOSIS_1ST_STEP.ROInputPressure" type="number" className="mt-1 p-2 border rounded-md w-full" />
+        {errors.REVERSE_OSMOSIS_1ST_STEP && errors.REVERSE_OSMOSIS_1ST_STEP.ROInputPressure && touched.REVERSE_OSMOSIS_1ST_STEP && touched.REVERSE_OSMOSIS_1ST_STEP.ROInputPressure && (
+          <div className="text-red-600 text-sm mt-1">{errors.REVERSE_OSMOSIS_1ST_STEP.ROInputPressure}</div>
+        )}
+      </div>
+      {/* MembraneInputPressure */}
+      <div>
+        <label htmlFor="REVERSE_OSMOSIS_1ST_STEP.MembraneInputPressure" className="block text-sm font-medium text-gray-700">
+          Pressão de Entrada da Membrana
+        </label>
+        <Field name="REVERSE_OSMOSIS_1ST_STEP.MembraneInputPressure" type="number" className="mt-1 p-2 border rounded-md w-full" />
+        {errors.REVERSE_OSMOSIS_1ST_STEP && errors.REVERSE_OSMOSIS_1ST_STEP.MembraneInputPressure && touched.REVERSE_OSMOSIS_1ST_STEP && touched.REVERSE_OSMOSIS_1ST_STEP.MembraneInputPressure && (
+          <div className="text-red-600 text-sm mt-1">{errors.REVERSE_OSMOSIS_1ST_STEP.MembraneInputPressure}</div>
+        )}
+      </div>
+      {/* RejectPressure */}
+      <div>
+        <label htmlFor="REVERSE_OSMOSIS_1ST_STEP.RejectPressure" className="block text-sm font-medium text-gray-700">
+          Pressão de Rejeição
+        </label>
+        <Field name="REVERSE_OSMOSIS_1ST_STEP.RejectPressure" type="number" className="mt-1 p-2 border rounded-md w-full" />
+        {errors.REVERSE_OSMOSIS_1ST_STEP && errors.REVERSE_OSMOSIS_1ST_STEP.RejectPressure && touched.REVERSE_OSMOSIS_1ST_STEP && touched.REVERSE_OSMOSIS_1ST_STEP.RejectPressure && (
+          <div className="text-red-600 text-sm mt-1">{errors.REVERSE_OSMOSIS_1ST_STEP.RejectPressure}</div>
+        )}
+      </div>
+      {/* ROInputConductivity */}
+      <div>
+        <label htmlFor="REVERSE_OSMOSIS_1ST_STEP.ROInputConductivity" className="block text-sm font-medium text-gray-700">
+          Condutividade de Entrada OR
+        </label>
+        <Field name="REVERSE_OSMOSIS_1ST_STEP.ROInputConductivity" type="number" className="mt-1 p-2 border rounded-md w-full" />
+        {errors.REVERSE_OSMOSIS_1ST_STEP && errors.REVERSE_OSMOSIS_1ST_STEP.ROInputConductivity && touched.REVERSE_OSMOSIS_1ST_STEP && touched.REVERSE_OSMOSIS_1ST_STEP.ROInputConductivity && (
+          <div className="text-red-600 text-sm mt-1">{errors.REVERSE_OSMOSIS_1ST_STEP.ROInputConductivity}</div>
+        )}
+      </div>
+      {/* ROOutputConductivity */}
+      <div>
+        <label htmlFor="REVERSE_OSMOSIS_1ST_STEP.ROOutputConductivity" className="block text-sm font-medium text-gray-700">
+          Condutividade de Saída OR
+        </label>
+        <Field name="REVERSE_OSMOSIS_1ST_STEP.ROOutputConductivity" type="number" className="mt-1 p-2 border rounded-md w-full" />
+        {errors.REVERSE_OSMOSIS_1ST_STEP && errors.REVERSE_OSMOSIS_1ST_STEP.ROOutputConductivity && touched.REVERSE_OSMOSIS_1ST_STEP && touched.REVERSE_OSMOSIS_1ST_STEP.ROOutputConductivity && (
+          <div className="text-red-600 text-sm mt-1">{errors.REVERSE_OSMOSIS_1ST_STEP.ROOutputConductivity}</div>
+        )}
+      </div>
+      {/* SalinityRejectionRate */}
+      <div>
+        <label htmlFor="REVERSE_OSMOSIS_1ST_STEP.SalinityRejectionRate" className="block text-sm font-medium text-gray-700">
+          Taxa de Rejeição de Salinidade
+        </label>
+        <Field name="REVERSE_OSMOSIS_1ST_STEP.SalinityRejectionRate" type="number" className="mt-1 p-2 border rounded-md w-full" />
+        {errors.REVERSE_OSMOSIS_1ST_STEP && errors.REVERSE_OSMOSIS_1ST_STEP.SalinityRejectionRate && touched.REVERSE_OSMOSIS_1ST_STEP && touched.REVERSE_OSMOSIS_1ST_STEP.SalinityRejectionRate && (
+          <div className="text-red-600 text-sm mt-1">{errors.REVERSE_OSMOSIS_1ST_STEP.SalinityRejectionRate}</div>
+        )}
+      </div>
+      {/* PermeateFlowRate */}
+      <div>
+        <label htmlFor="REVERSE_OSMOSIS_1ST_STEP.PermeateFlowRate" className="block text-sm font-medium text-gray-700">
+          Taxa de Fluxo de Permeado
+        </label>
+        <Field name="REVERSE_OSMOSIS_1ST_STEP.PermeateFlowRate" type="number" className="mt-1 p-2 border rounded-md w-full" />
+        {errors.REVERSE_OSMOSIS_1ST_STEP && errors.REVERSE_OSMOSIS_1ST_STEP.PermeateFlowRate && touched.REVERSE_OSMOSIS_1ST_STEP && touched.REVERSE_OSMOSIS_1ST_STEP.PermeateFlowRate && (
+          <div className="text-red-600 text-sm mt-1">{errors.REVERSE_OSMOSIS_1ST_STEP.PermeateFlowRate}</div>
+        )}
+      </div>
+      {/* RejectFlowRate */}
+      <div>
+        <label htmlFor="REVERSE_OSMOSIS_1ST_STEP.RejectFlowRate" className="block text-sm font-medium text-gray-700">
+          Taxa de Fluxo de Rejeição
+        </label>
+        <Field name="REVERSE_OSMOSIS_1ST_STEP.RejectFlowRate" type="number" className="mt-1 p-2 border rounded-md w-full" />
+        {errors.REVERSE_OSMOSIS_1ST_STEP && errors.REVERSE_OSMOSIS_1ST_STEP.RejectFlowRate && touched.REVERSE_OSMOSIS_1ST_STEP && touched.REVERSE_OSMOSIS_1ST_STEP.RejectFlowRate && (
+          <div className="text-red-600 text-sm mt-1">{errors.REVERSE_OSMOSIS_1ST_STEP.RejectFlowRate}</div>
+        )}
+      </div>
+    </div>
+  </div>
+</div>
+<div className="w-full flex justify-center">
+    <div className="bg-white shadow-md rounded-md p-4 w-full">
+    <h3 className="text-lg font-medium mb-2">Segundo Passo de Osmose Reversa</h3>
+    <div className="grid grid-cols-2 gap-4">
+      {/* ROInputPressure */}
+      <div>
+        <label htmlFor="REVERSE_OSMOSIS_2ND_STEP.ROInputPressure" className="block text-sm font-medium text-gray-700">
+          Pressão de Entrada OR
+        </label>
+        <Field name="REVERSE_OSMOSIS_2ND_STEP.ROInputPressure" type="number" className="mt-1 p-2 border rounded-md w-full" />
+        {errors.REVERSE_OSMOSIS_2ND_STEP && errors.REVERSE_OSMOSIS_2ND_STEP.ROInputPressure && touched.REVERSE_OSMOSIS_2ND_STEP && touched.REVERSE_OSMOSIS_2ND_STEP.ROInputPressure && (
+          <div className="text-red-600 text-sm mt-1">{errors.REVERSE_OSMOSIS_2ND_STEP.ROInputPressure}</div>
+        )}
+      </div>
+      {/* MembraneInputPressure */}
+      <div>
+        <label htmlFor="REVERSE_OSMOSIS_2ND_STEP.MembraneInputPressure" className="block text-sm font-medium text-gray-700">
+          Pressão de Entrada da Membrana
+        </label>
+        <Field name="REVERSE_OSMOSIS_2ND_STEP.MembraneInputPressure" type="number" className="mt-1 p-2 border rounded-md w-full" />
+        {errors.REVERSE_OSMOSIS_2ND_STEP && errors.REVERSE_OSMOSIS_2ND_STEP.MembraneInputPressure && touched.REVERSE_OSMOSIS_2ND_STEP && touched.REVERSE_OSMOSIS_2ND_STEP.MembraneInputPressure && (
+          <div className="text-red-600 text-sm mt-1">{errors.REVERSE_OSMOSIS_2ND_STEP.MembraneInputPressure}</div>
+        )}
+      </div>
+      {/* RejectPressure */}
+      <div>
+        <label htmlFor="REVERSE_OSMOSIS_2ND_STEP.RejectPressure" className="block text-sm font-medium text-gray-700">
+          Pressão de Rejeição
+        </label>
+        <Field name="REVERSE_OSMOSIS_2ND_STEP.RejectPressure" type="number" className="mt-1 p-2 border rounded-md w-full" />
+        {errors.REVERSE_OSMOSIS_2ND_STEP && errors.REVERSE_OSMOSIS_2ND_STEP.RejectPressure && touched.REVERSE_OSMOSIS_2ND_STEP && touched.REVERSE_OSMOSIS_2ND_STEP.RejectPressure && (
+          <div className="text-red-600 text-sm mt-1">{errors.REVERSE_OSMOSIS_2ND_STEP.RejectPressure}</div>
+        )}
+      </div>
+      {/* ROInputConductivity */}
+      <div>
+        <label htmlFor="REVERSE_OSMOSIS_2ND_STEP.ROInputConductivity" className="block text-sm font-medium text-gray-700">
+          Condutividade de Entrada OR
+        </label>
+        <Field name="REVERSE_OSMOSIS_2ND_STEP.ROInputConductivity" type="number" className="mt-1 p-2 border rounded-md w-full" />
+        {errors.REVERSE_OSMOSIS_2ND_STEP && errors.REVERSE_OSMOSIS_2ND_STEP.ROInputConductivity && touched.REVERSE_OSMOSIS_2ND_STEP && touched.REVERSE_OSMOSIS_2ND_STEP.ROInputConductivity && (
+          <div className="text-red-600 text-sm mt-1">{errors.REVERSE_OSMOSIS_2ND_STEP.ROInputConductivity}</div>
+        )}
+      </div>
+      {/* ROOutputConductivity */}
+      <div>
+        <label htmlFor="REVERSE_OSMOSIS_2ND_STEP.ROOutputConductivity" className="block text-sm font-medium text-gray-700">
+          Condutividade de Saída OR
+        </label>
+        <Field name="REVERSE_OSMOSIS_2ND_STEP.ROOutputConductivity" type="number" className="mt-1 p-2 border rounded-md w-full" />
+        {errors.REVERSE_OSMOSIS_2ND_STEP && errors.REVERSE_OSMOSIS_2ND_STEP.ROOutputConductivity && touched.REVERSE_OSMOSIS_2ND_STEP && touched.REVERSE_OSMOSIS_2ND_STEP.ROOutputConductivity && (
+          <div className="text-red-600 text-sm mt-1">{errors.REVERSE_OSMOSIS_2ND_STEP.ROOutputConductivity}</div>
+        )}
+      </div>
+      {/* SalinityRejectionRate */}
+      <div>
+        <label htmlFor="REVERSE_OSMOSIS_2ND_STEP.SalinityRejectionRate" className="block text-sm font-medium text-gray-700">
+          Taxa de Rejeição de Salinidade
+        </label>
+        <Field name="REVERSE_OSMOSIS_2ND_STEP.SalinityRejectionRate" type="number" className="mt-1 p-2 border rounded-md w-full" />
+        {errors.REVERSE_OSMOSIS_2ND_STEP && errors.REVERSE_OSMOSIS_2ND_STEP.SalinityRejectionRate && touched.REVERSE_OSMOSIS_2ND_STEP && touched.REVERSE_OSMOSIS_2ND_STEP.SalinityRejectionRate && (
+          <div className="text-red-600 text-sm mt-1">{errors.REVERSE_OSMOSIS_2ND_STEP.SalinityRejectionRate}</div>
+        )}
+      </div>
+      {/* PermeateFlowRate */}
+      <div>
+        <label htmlFor="REVERSE_OSMOSIS_2ND_STEP.PermeateFlowRate" className="block text-sm font-medium text-gray-700">
+          Taxa de Fluxo de Permeado
+        </label>
+        <Field name="REVERSE_OSMOSIS_2ND_STEP.PermeateFlowRate" type="number" className="mt-1 p-2 border rounded-md w-full" />
+        {errors.REVERSE_OSMOSIS_2ND_STEP && errors.REVERSE_OSMOSIS_2ND_STEP.PermeateFlowRate && touched.REVERSE_OSMOSIS_2ND_STEP && touched.REVERSE_OSMOSIS_2ND_STEP.PermeateFlowRate && (
+          <div className="text-red-600 text-sm mt-1">{errors.REVERSE_OSMOSIS_2ND_STEP.PermeateFlowRate}</div>
+        )}
+      </div>
+      {/* RejectFlowRate */}
+      <div>
+        <label htmlFor="REVERSE_OSMOSIS_2ND_STEP.RejectFlowRate" className="block text-sm font-medium text-gray-700">
+          Taxa de Fluxo de Rejeição
+        </label>
+        <Field name="REVERSE_OSMOSIS_2ND_STEP.RejectFlowRate" type="number" className="mt-1 p-2 border rounded-md w-full" />
+        {errors.REVERSE_OSMOSIS_2ND_STEP && errors.REVERSE_OSMOSIS_2ND_STEP.RejectFlowRate && touched.REVERSE_OSMOSIS_2ND_STEP && touched.REVERSE_OSMOSIS_2ND_STEP.RejectFlowRate && (
+          <div className="text-red-600 text-sm mt-1">{errors.REVERSE_OSMOSIS_2ND_STEP.RejectFlowRate}</div>
+        )}
+      </div>
+    </div>
+  </div>
+</div>
+<div className="w-full flex justify-center">
+    <div className="bg-white shadow-md rounded-md p-4 w-full">
+    <h3 className="text-lg font-medium mb-2">Loop</h3>
+    <div className="grid grid-cols-2 gap-4">
+      {/* OutputPressure */}
+      <div>
+        <label htmlFor="LOOP.OutputPressure" className="block text-sm font-medium text-gray-700">
+          Pressão de Saída
+        </label>
+        <Field name="LOOP.OutputPressure" type="number" className="mt-1 p-2 border rounded-md w-full" />
+        {errors.LOOP && errors.LOOP.OutputPressure && touched.LOOP && touched.LOOP.OutputPressure && (
+          <div className="text-red-600 text-sm mt-1">{errors.LOOP.OutputPressure}</div>
+        )}
+      </div>
+      {/* ReturnPressure */}
+      <div>
+        <label htmlFor="LOOP.ReturnPressure" className="block text-sm font-medium text-gray-700">
+          Pressão de Retorno
+        </label>
+        <Field name="LOOP.ReturnPressure" type="number" className="mt-1 p-2 border rounded-md w-full" />
+        {errors.LOOP && errors.LOOP.ReturnPressure && touched.LOOP && touched.LOOP.ReturnPressure && (
+          <div className="text-red-600 text-sm mt-1">{errors.LOOP.ReturnPressure}</div>
+        )}
+      </div>
+      {/* OzoneTestBefore1stShift */}
+      <div>
+  <label htmlFor="LOOP.OzoneTestBefore1stShift" className="block text-sm font-medium text-gray-700">
+    Teste de Ozônio Antes do Primeiro Turno
+  </label>
+  <Field as="select" name="LOOP.OzoneTestBefore1stShift" className="mt-1 p-2 border rounded-md w-full">
+    <option value="true">Reagente</option>
+    <option value="false">Não Reagete</option>
+  </Field>
+  {errors.LOOP && errors.LOOP.OzoneTestBefore1stShift && touched.LOOP && touched.LOOP.OzoneTestBefore1stShift && (
+    <div className="text-red-600 text-sm mt-1">{errors.LOOP.OzoneTestBefore1stShift}</div>
+  )}
+</div>
+
+      {/* Conductivity */}
+      <div>
+        <label htmlFor="LOOP.Conductivity" className="block text-sm font-medium text-gray-700">
+          Condutividade
+        </label>
+        <Field name="LOOP.Conductivity" type="number" className="mt-1 p-2 border rounded-md w-full" />
+        {errors.LOOP && errors.LOOP.Conductivity && touched.LOOP && touched.LOOP.Conductivity && (
+          <div className="text-red-600 text-sm mt-1">{errors.LOOP.Conductivity}</div>
+        )}
+      </div>
+    </div>
+  </div>
+</div>
+<div>
+<button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
             Submit
           </button>
+</div>
+
+          
         </Form>
       )}
     </Formik>
