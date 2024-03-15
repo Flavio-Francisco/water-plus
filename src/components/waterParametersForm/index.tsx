@@ -196,7 +196,7 @@ const WaterParametersForm = () => {
           </div>
         
 
-          <div className="col-span-1 sm:col-span-1  bg-slate-800 " >
+          <div className="col-span-1 sm:col-span-1 " >
   <div className="bg-white shadow-md rounded-md p-4">
     <h3 className="text-lg font-medium mb-2">Pré-Tratamento</h3>
     <div className="grid grid-cols-2 gap-4">
