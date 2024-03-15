@@ -1,8 +1,7 @@
 'use client'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
-import { Formik, Field, FieldProps } from 'formik';
-import { Container, Button, Row, Col, Form } from 'react-bootstrap';
+import { Formik, Field, Form, } from 'formik';
 
 import waterTreatmentParametersSchema from '../../utils/validation/WaterParamentersValidation'; // Importa o esquema de validação
 import { WaterTreatmentParameters } from '@/utils/models/WaterParametersModel';
@@ -58,671 +57,232 @@ const WaterParametersForm = () => {
     };
 
     const handleSubmit = (values: WaterTreatmentParameters) => {
-        // Lógica de envio do formulário aqui
         console.log(values);
-    };
+      };
+    
+      return (
+        <Formik
+          initialValues={initialValues}
+          validationSchema={waterTreatmentParametersSchema}
+          onSubmit={handleSubmit}
+        >
+          {({ errors, touched }) => (
+        <Form className="max-w-lg mx-auto">
+          {/* WATER_FEED */}
+          <div className="col-span-1 sm:col-span-1">
+            <div className="bg-white shadow-md rounded-md p-4">
+              <h3 className="text-lg font-medium mb-2">Alimentação de Água</h3>
+              <div className="grid grid-cols-2 gap-4">
+              <div>
+        <label htmlFor="WATER_FEED.Color" className="block text-sm font-medium text-gray-700">
+          Cor
+        </label>
+        <Field name="WATER_FEED.Color" as="select" className="mt-1 p-2 border rounded-md w-full">
+          <option value="">Selecione</option>
+          <option value="Incolor">Incolor</option>
+          <option value="Turvar">Turvar</option>
+          <option value="Com Residuos">Com Residuos</option>
+        </Field>
+        {errors.WATER_FEED && errors.WATER_FEED.Color && touched.WATER_FEED && touched.WATER_FEED.Color && (
+          <div className="text-red-600 text-sm mt-1">{errors.WATER_FEED.Color}</div>
+        )}
+      </div>
+      {/* Turbidez */}
+      <div>
+        <label htmlFor="WATER_FEED.Turbidity" className="block text-sm font-medium text-gray-700">
+          Turbidez
+        </label>
+        <Field name="WATER_FEED.Turbidity" as="select" className="mt-1 p-2 border rounded-md w-full">
+          <option value="">Selecione</option>
+          <option value="Baixa">Baixa</option>
+          <option value="Média">Média</option>
+          <option value="Alta">Alta</option>
+        </Field>
+        {errors.WATER_FEED && errors.WATER_FEED.Turbidity && touched.WATER_FEED && touched.WATER_FEED.Turbidity && (
+          <div className="text-red-600 text-sm mt-1">{errors.WATER_FEED.Turbidity}</div>
+        )}
+      </div>
+      {/* Sabor */}
+      <div>
+        <label htmlFor="WATER_FEED.Taste" className="block text-sm font-medium text-gray-700">
+          Sabor
+        </label>
+        <Field name="WATER_FEED.Taste" as="select" className="mt-1 p-2 border rounded-md w-full">
+          <option value="">Selecione</option>
+          <option value="Insípida">Insípida</option>
+          <option value="Salga">Salga</option>
+        </Field>
+        {errors.WATER_FEED && errors.WATER_FEED.Taste && touched.WATER_FEED && touched.WATER_FEED.Taste && (
+          <div className="text-red-600 text-sm mt-1">{errors.WATER_FEED.Taste}</div>
+        )}
+      </div>
+      {/* Odor */}
+      <div>
+        <label htmlFor="WATER_FEED.Odor" className="block text-sm font-medium text-gray-700">
+          Odor
+        </label>
+        <Field name="WATER_FEED.Odor" as="select" className="mt-1 p-2 border rounded-md w-full">
+          <option value="">Selecione</option>
+          <option value="Inodora">Inodora</option>
+          <option value="Odorífero">Odorífero</option>
+        </Field>
+        {errors.WATER_FEED && errors.WATER_FEED.Odor && touched.WATER_FEED && touched.WATER_FEED.Odor && (
+          <div className="text-red-600 text-sm mt-1">{errors.WATER_FEED.Odor}</div>
+        )}
+      </div>
+      {/* cloro total */}
+      <div>
+  <label htmlFor="WATER_FEED.TotalChlorine" className="block text-sm font-medium text-gray-700">
+    Cloro Total
+  </label>
+  <Field name="WATER_FEED.TotalChlorine" as="select" className="mt-1 p-2 border rounded-md w-full">
+    <option value="">Selecione</option>
+    <option value="0">0</option>
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+ 
+  </Field>
+  {errors.WATER_FEED && errors.WATER_FEED.TotalChlorine && touched.WATER_FEED && touched.WATER_FEED.TotalChlorine && (
+    <div className="text-red-600 text-sm mt-1">{errors.WATER_FEED.TotalChlorine}</div>
+  )}
+</div>
+      {/* cloro livre */}
+      <div>
+  <label htmlFor="WATER_FEED.FreeChlorine" className="block text-sm font-medium text-gray-700">
+    Cloro Livre
+  </label>
+  <Field name="WATER_FEED.FreeChlorine" as="select" className="mt-1 p-2 border rounded-md w-full">
+    <option value="">Selecione</option>
+    <option value="0.5">0.5</option>
+    <option value="1">1</option>
+    <option value="1.5">1.5</option>
+    <option value="2">2</option>
+    
+  </Field>
+  {errors.WATER_FEED && errors.WATER_FEED.FreeChlorine && touched.WATER_FEED && touched.WATER_FEED.FreeChlorine && (
+    <div className="text-red-600 text-sm mt-1">{errors.WATER_FEED.FreeChlorine}</div>
+  )}
+</div>
 
-    return (
-        <Container className="d-flex flex-column justify-content-center align-items-center mt-3" >
-            <h1 className='mb-5'>Paramentros do Tratanento de Água</h1>
-            <Formik
-                initialValues={initialValues}
-                validationSchema={waterTreatmentParametersSchema}
-                onSubmit={handleSubmit}
-            >
-                {({ errors, touched }) => (
+      {/* pH */}
+      <div>
+  <label htmlFor="WATER_FEED.pH" className="block text-sm font-medium text-gray-700">
+    pH
+  </label>
+  <Field name="WATER_FEED.pH" as="select" className="mt-1 p-2 border rounded-md w-full">
+    <option value="">Selecione</option>
+    <option value="5">5</option>
+    <option value="5.5">5.5</option>
+    <option value="6.5">6.5</option>
+    <option value="7">7</option>
+    <option value="7.5">7.5</option>
+    <option value="8">8</option>
+    <option value="8.5">8.5</option>
+    <option value="9">9</option>
+    <option value="10">10</option>
+  
+  </Field>
+  {errors.WATER_FEED && errors.WATER_FEED.pH && touched.WATER_FEED && touched.WATER_FEED.pH && (
+    <div className="text-red-600 text-sm mt-1">{errors.WATER_FEED.pH}</div>
+  )}
+ 
+</div>
 
-                    <Form >
+              </div>
+            </div>
+          </div>
+        
 
-                        <div className="d-flex flex-row gap-5">
-                            <Row className="p-2 w-50 justify-content-center align-items-center shadow rounded " >
-                                <div className="d-flex align-items-center justify-content-center mt-1">
-                                    <h4 className="mb-1">Água de Alimentação</h4>
-                                </div>
-                                <div className="d-flex flex-row justify-content-center align-items-centerq gap-3">
-                                    <Col className=" col ">
-                                        <Field name="WATER_FEED.Color">
-                                            {({ field }: FieldProps) => (
-                                                <Form.Group className="mt-3 " controlId="Color">
-                                                    <Form.Label className='text-center'>Cor Aparente</Form.Label>
-                                                    <Form.Control
-                                                        {...field}
-                                                        type="text"
-                                                        placeholder="Cor"
-                                                        isInvalid={touched.WATER_FEED?.Color && !!errors.WATER_FEED?.Color}
-                                                    />
-                                                    <Form.Control.Feedback type="invalid">
-                                                        {errors.WATER_FEED?.Color}
-                                                    </Form.Control.Feedback>
-                                                </Form.Group>
-                                            )}
-                                        </Field>
-                                        <Field name="WATER_FEED.Turbidity">
-                                            {({ field }: FieldProps) => (
-                                                <Form.Group className="mt-3 " controlId="Turbidity">
-                                                    <Form.Label className='text-center'>Turvação</Form.Label>
-                                                    <Form.Control
-                                                        {...field}
-                                                        type="text"
-                                                        placeholder="Turvação"
-                                                        isInvalid={touched.WATER_FEED?.Turbidity && !!errors.WATER_FEED?.Turbidity}
-                                                    />
-                                                    <Form.Control.Feedback type="invalid">
-                                                        {errors.WATER_FEED?.Turbidity}
-                                                    </Form.Control.Feedback>
-                                                </Form.Group>
-                                            )}
-                                        </Field>
-                                    </Col>
-                                    <Col className=" col ">
-                                        <Field name="WATER_FEED.Taste">
-                                            {({ field }: FieldProps) => (
-                                                <Form.Group className="mt-3" controlId="Taste">
-                                                    <Form.Label className='text-center '>Sabor</Form.Label>
-                                                    <Form.Control
-                                                        {...field}
-                                                        type="text"
-                                                        placeholder=" Sabor"
-                                                        isInvalid={touched.WATER_FEED?.Taste && !!errors.WATER_FEED?.Taste}
-                                                    />
-                                                    <Form.Control.Feedback type="invalid">
-                                                        {errors.WATER_FEED?.Taste}
-                                                    </Form.Control.Feedback>
-                                                </Form.Group>
-                                            )}
-                                        </Field>
-                                        <Field name="WATER_FEED.Odor">
-                                            {({ field }: FieldProps) => (
-                                                <Form.Group className="mt-3" controlId="Odor">
-                                                    <Form.Label className='text-center '>Odor</Form.Label>
-                                                    <Form.Control
-                                                        {...field}
-                                                        type="text"
-                                                        placeholder="Odor"
-                                                        isInvalid={touched.WATER_FEED?.Odor && !!errors.WATER_FEED?.Odor}
-                                                    />
-                                                    <Form.Control.Feedback type="invalid">
-                                                        {errors.WATER_FEED?.Odor}
-                                                    </Form.Control.Feedback>
-                                                </Form.Group>
-                                            )}
-                                        </Field>
-                                    </Col>
-                                    <Col className="col ">
-                                        <Field name="WATER_FEED.TotalChlorine">
-                                            {({ field }: FieldProps) => (
-                                                <Form.Group className="mt-3" controlId="TotalChlorine">
-                                                    <Form.Label className='text-center '>Cloro Total</Form.Label>
-                                                    <Form.Control
-                                                        {...field}
-                                                        type="text"
-                                                        placeholder="Cloro Total"
-                                                        isInvalid={touched.WATER_FEED?.TotalChlorine && !!errors.WATER_FEED?.TotalChlorine}
-                                                    />
-                                                    <Form.Control.Feedback type="invalid">
-                                                        {errors.WATER_FEED?.TotalChlorine}
-                                                    </Form.Control.Feedback>
-                                                </Form.Group>
-                                            )}
-                                        </Field>
-                                        <Field name="WATER_FEED.FreeChlorine">
-                                            {({ field }: FieldProps) => (
-                                                <Form.Group className="mt-3" controlId="FreeChlorine">
-                                                    <Form.Label className='text-center '>Cloro Livre</Form.Label>
-                                                    <Form.Control
-                                                        {...field}
-                                                        type="text"
-                                                        placeholder="Cloro Livre"
-                                                        isInvalid={touched.WATER_FEED?.FreeChlorine && !!errors.WATER_FEED?.FreeChlorine}
-                                                    />
-                                                    <Form.Control.Feedback type="invalid">
-                                                        {errors.WATER_FEED?.FreeChlorine}
-                                                    </Form.Control.Feedback>
-                                                </Form.Group>
-                                            )}
-                                        </Field>
-                                    </Col>
-                                </div>
-                                <Col className="w-100 col-6 d-flex justify-content-center align-items-center">
-                                    <Field name="WATER_FEED.pH">
-                                        {({ field }: FieldProps) => (
-                                            <Form.Group className="mb-3 col-4" controlId="pH">
-                                                <Form.Label className='text-center '>PH</Form.Label>
-                                                <Form.Control
-                                                    {...field}
-                                                    type="text"
-                                                    placeholder="PH"
-                                                    isInvalid={touched.WATER_FEED?.pH && !!errors.WATER_FEED?.pH}
-                                                />
-                                                <Form.Control.Feedback type="invalid">
-                                                    {errors.WATER_FEED?.pH}
-                                                </Form.Control.Feedback>
-                                            </Form.Group>
-                                        )}
-                                    </Field>
-                                </Col>
-                            </Row>
-                            <Row className="p-2 w-50 justify-content-center align-items-center shadow rounded  " >
-                                <div className="d-flex align-items-center justify-content-center mt-1">
-                                    <h4 className="mb-1">Pré-Tratamento</h4>
-                                </div>
-                                <div className="d-flex flex-row justify-content-center align-items-centerq gap-3">
-                                    <Col className=" col ">
-                                        <Field name="PRE_TREATMENT.MultimediaFilterDisplayTime">
-                                            {({ field }: FieldProps) => (
-                                                <Form.Group className="mt-3 " controlId="MultimediaFilterDisplayTime">
-                                                    <Form.Label style={{ fontSize: 14 }}>Horário do multimeios</Form.Label>
-                                                    <Form.Control
-                                                        className='text-muted'
-                                                        {...field}
-                                                        type="time"
-                                                        placeholder="multmeios"
-                                                        isInvalid={touched.PRE_TREATMENT?.MultimediaFilterDisplayTime && !!errors.PRE_TREATMENT?.MultimediaFilterDisplayTime}
-                                                    />
-                                                    <Form.Control.Feedback type="invalid">
-                                                        {errors.PRE_TREATMENT?.MultimediaFilterDisplayTime}
-                                                    </Form.Control.Feedback>
-                                                </Form.Group>
-                                            )}
-                                        </Field>
-                                        <Field name="PRE_TREATMENT.MultimediaFilterInputPressure">
-                                            {({ field }: FieldProps) => (
-                                                <Form.Group className="mt-3 " controlId="MultimediaFilterInputPressure">
-                                                    <Form.Label style={{ fontSize: 14 }}>Pressão do multemeios</Form.Label>
-                                                    <Form.Control
-                                                        //    style={{ fontSize: 12 }}
-                                                        {...field}
-                                                        type="text"
-                                                        placeholder="Pressão do multemeios"
-                                                        isInvalid={touched.PRE_TREATMENT?.MultimediaFilterInputPressure && !!errors.PRE_TREATMENT?.MultimediaFilterInputPressure}
-                                                    />
-                                                    <Form.Control.Feedback type="invalid">
-                                                        {errors.PRE_TREATMENT?.MultimediaFilterInputPressure}
-                                                    </Form.Control.Feedback>
-                                                </Form.Group>
-                                            )}
-                                        </Field>
-                                        <Field name="PRE_TREATMENT.SaltReservoirLevel">
-                                            {({ field }: FieldProps) => (
-                                                <Form.Group className="mt-3 " controlId="SaltReservoirLevel">
-                                                    <Form.Label className='text-center'>Nível Sal</Form.Label>
-                                                    <Form.Control
-                                                        {...field}
-                                                        type="text"
-                                                        placeholder="Nível do  Sal"
-                                                        isInvalid={touched.PRE_TREATMENT?.SaltReservoirLevel && !!errors.PRE_TREATMENT?.SaltReservoirLevel}
-                                                    />
-                                                    <Form.Control.Feedback type="invalid">
-                                                        {errors.PRE_TREATMENT?.SaltReservoirLevel}
-                                                    </Form.Control.Feedback>
-                                                </Form.Group>
-                                            )}
-                                        </Field>
-                                    </Col>
-                                    <Col className=" col ">
-                                        <Field name="PRE_TREATMENT.SoftenerDisplayTime">
-                                            {({ field }: FieldProps) => (
-                                                <Form.Group className="mt-3 " controlId="SoftenerDisplayTime">
-                                                    <Form.Label style={{ fontSize: 14 }}>Horário do Abrandador</Form.Label>
-                                                    <Form.Control
-                                                        className='text-muted'
-                                                        {...field}
-                                                        type="time"
-                                                        placeholder="Horário do Abrandador"
-                                                        isInvalid={touched.PRE_TREATMENT?.SoftenerDisplayTime && !!errors.PRE_TREATMENT?.SoftenerDisplayTime}
-                                                    />
-                                                    <Form.Control.Feedback type="invalid">
-                                                        {errors.PRE_TREATMENT?.SoftenerDisplayTime}
-                                                    </Form.Control.Feedback>
-                                                </Form.Group>
-                                            )}
-                                        </Field>
-                                        <Field name="PRE_TREATMENT.SoftenerInputPressure">
-                                            {({ field }: FieldProps) => (
-                                                <Form.Group className="mt-3 " controlId="SoftenerInputPressure">
-                                                    <Form.Label style={{ fontSize: 14 }}>Pressão do abrandador</Form.Label>
-                                                    <Form.Control
-                                                        {...field}
-                                                        type="text"
-                                                        placeholder="Pressão do abrandador"
-                                                        isInvalid={touched.PRE_TREATMENT?.SoftenerInputPressure && !!errors.PRE_TREATMENT?.SoftenerInputPressure}
-                                                    />
-                                                    <Form.Control.Feedback type="invalid">
-                                                        {errors.PRE_TREATMENT?.SoftenerInputPressure}
-                                                    </Form.Control.Feedback>
-                                                </Form.Group>
-                                            )}
-                                        </Field>
-                                        <Field name="PRE_TREATMENT.SoftenerHardness">
-                                            {({ field }: FieldProps) => (
-                                                <Form.Group className="mt-3 " controlId="SoftenerHardness">
-                                                    <Form.Label style={{ fontSize: 14 }}>Dureza do Abrandador</Form.Label>
-                                                    <Form.Control
-                                                        {...field}
-                                                        type="text"
-                                                        placeholder="Dureza do Abrandador"
-                                                        isInvalid={touched.PRE_TREATMENT?.SoftenerHardness && !!errors.PRE_TREATMENT?.SoftenerHardness}
-                                                    />
-                                                    <Form.Control.Feedback type="invalid">
-                                                        {errors.PRE_TREATMENT?.SoftenerHardness}
-                                                    </Form.Control.Feedback>
-                                                </Form.Group>
-                                            )}
-                                        </Field>
-                                    </Col>
-                                    <Col className="col ">
-                                        <Field name="PRE_TREATMENT.CarbonDisplayTime">
-                                            {({ field }: FieldProps) => (
-                                                <Form.Group className="mt-3" controlId="CarbonDisplayTime">
-                                                    <Form.Label style={{ fontSize: 14 }} className='text-center'>Horário do Carvão</Form.Label>
-                                                    <Form.Control
-                                                        {...field}
-                                                        type="time"
-                                                        placeholder="Horário do Carvão"
-                                                        isInvalid={touched.PRE_TREATMENT?.CarbonDisplayTime && !!errors.PRE_TREATMENT?.CarbonDisplayTime}
-                                                    />
-                                                    <Form.Control.Feedback type="invalid">
-                                                        {errors.PRE_TREATMENT?.CarbonDisplayTime}
-                                                    </Form.Control.Feedback>
-                                                </Form.Group>
-                                            )}
-                                        </Field>
-                                        <Field name="PRE_TREATMENT.CarbonInputPressure">
-                                            {({ field }: FieldProps) => (
-                                                <Form.Group className="mt-3" controlId="CarbonInputPressure">
-                                                    <Form.Label style={{ fontSize: 14 }} className='text-center '>Entrada do Carvão</Form.Label>
-                                                    <Form.Control
+          <div className="col-span-1 sm:col-span-1  bg-slate-800 " >
+  <div className="bg-white shadow-md rounded-md p-4">
+    <h3 className="text-lg font-medium mb-2">Pré-Tratamento</h3>
+    <div className="grid grid-cols-2 gap-4">
+      {/* SoftenerInputPressure */}
+      <div>
+        <label htmlFor="PRE_TREATMENT.SoftenerInputPressure" className="block text-sm font-medium text-gray-700">
+          Pressão de Entrada do Amaciador
+        </label>
+        <Field name="PRE_TREATMENT.SoftenerInputPressure" type="number" className="mt-1 p-2 border rounded-md w-full" />
+        {errors.PRE_TREATMENT && errors.PRE_TREATMENT.SoftenerInputPressure && touched.PRE_TREATMENT && touched.PRE_TREATMENT.SoftenerInputPressure && (
+          <div className="text-red-600 text-sm mt-1">{errors.PRE_TREATMENT.SoftenerInputPressure}</div>
+        )}
+      </div>
+      {/* CarbonInputPressure */}
+      <div>
+        <label htmlFor="PRE_TREATMENT.CarbonInputPressure" className="block text-sm font-medium text-gray-700">
+          Pressão de Entrada de Carvão
+        </label>
+        <Field name="PRE_TREATMENT.CarbonInputPressure" type="number" className="mt-1 p-2 border rounded-md w-full" />
+        {errors.PRE_TREATMENT && errors.PRE_TREATMENT.CarbonInputPressure && touched.PRE_TREATMENT && touched.PRE_TREATMENT.CarbonInputPressure && (
+          <div className="text-red-600 text-sm mt-1">{errors.PRE_TREATMENT.CarbonInputPressure}</div>
+        )}
+      </div>
+      {/* CarbonOutputPressure */}
+      <div>
+        <label htmlFor="PRE_TREATMENT.CarbonOutputPressure" className="block text-sm font-medium text-gray-700">
+          Pressão de Saída de Carvão
+        </label>
+        <Field name="PRE_TREATMENT.CarbonOutputPressure" type="number" className="mt-1 p-2 border rounded-md w-full" />
+        {errors.PRE_TREATMENT && errors.PRE_TREATMENT.CarbonOutputPressure && touched.PRE_TREATMENT && touched.PRE_TREATMENT.CarbonOutputPressure && (
+          <div className="text-red-600 text-sm mt-1">{errors.PRE_TREATMENT.CarbonOutputPressure}</div>
+        )}
+      </div>
+      {/* MultimediaFilterDisplayTime */}
+      <div>
+        <label htmlFor="PRE_TREATMENT.MultimediaFilterDisplayTime" className="block text-sm font-medium text-gray-700">
+          Tempo de Exibição do Filtro Multimídia
+        </label>
+        <Field name="PRE_TREATMENT.MultimediaFilterDisplayTime" type="text" className="mt-1 p-2 border rounded-md w-full" />
+        {errors.PRE_TREATMENT && errors.PRE_TREATMENT.MultimediaFilterDisplayTime && touched.PRE_TREATMENT && touched.PRE_TREATMENT.MultimediaFilterDisplayTime && (
+          <div className="text-red-600 text-sm mt-1">{errors.PRE_TREATMENT.MultimediaFilterDisplayTime}</div>
+        )}
+      </div>
+  {/* SoftenerDisplayTime */}
+<div>
+  <label htmlFor="PRE_TREATMENT.SoftenerDisplayTime" className="block text-sm font-medium text-gray-700">
+    Tempo de Exibição do Amaciador
+  </label>
+  <Field name="PRE_TREATMENT.SoftenerDisplayTime" type="text" className="mt-1 p-2 border rounded-md w-full" />
+  {errors.PRE_TREATMENT && errors.PRE_TREATMENT.SoftenerDisplayTime && touched.PRE_TREATMENT && touched.PRE_TREATMENT.SoftenerDisplayTime && (
+    <div className="text-red-600 text-sm mt-1">{errors.PRE_TREATMENT.SoftenerDisplayTime}</div>
+  )}
+</div>
 
-                                                        {...field}
-                                                        type="text"
-                                                        placeholder="Entrada do Carvão"
-                                                        isInvalid={touched.PRE_TREATMENT?.CarbonInputPressure && !!errors.PRE_TREATMENT?.CarbonInputPressure}
-                                                    />
-                                                    <Form.Control.Feedback type="invalid">
-                                                        {errors.PRE_TREATMENT?.CarbonInputPressure}
-                                                    </Form.Control.Feedback>
-                                                </Form.Group>
-                                            )}
-                                        </Field>
-                                        <Field name="PRE_TREATMENT.CarbonOutputPressure">
-                                            {({ field }: FieldProps) => (
-                                                <Form.Group style={{ fontSize: 14 }} className="mt-3" controlId="CarbonOutputPressure">
-                                                    <Form.Label className='text-center '>Saída do Carvão</Form.Label>
-                                                    <Form.Control
-                                                        {...field}
-                                                        type="text"
-                                                        placeholder="Saída do Carvão"
-                                                        isInvalid={touched.PRE_TREATMENT?.CarbonOutputPressure && !!errors.PRE_TREATMENT?.CarbonOutputPressure}
-                                                    />
-                                                    <Form.Control.Feedback type="invalid">
-                                                        {errors.PRE_TREATMENT?.CarbonOutputPressure}
-                                                    </Form.Control.Feedback>
-                                                </Form.Group>
-                                            )}
-                                        </Field>
-                                    </Col>
-                                </div>
+{/* CarbonDisplayTime */}
+<div>
+  <label htmlFor="PRE_TREATMENT.CarbonDisplayTime" className="block text-sm font-medium text-gray-700">
+    Tempo de Exibição do Carvão
+  </label>
+  <Field name="PRE_TREATMENT.CarbonDisplayTime" type="text" className="mt-1 p-2 border rounded-md w-full" />
+  {errors.PRE_TREATMENT && errors.PRE_TREATMENT.CarbonDisplayTime && touched.PRE_TREATMENT && touched.PRE_TREATMENT.CarbonDisplayTime && (
+    <div className="text-red-600 text-sm mt-1">{errors.PRE_TREATMENT.CarbonDisplayTime}</div>
+  )}
+</div>
 
-                            </Row>
-                        </div>
-                        <div className="d-flex flex-row gap-5 mt-3">
-                            <Row className="p-2 w-50 justify-content-center align-items-center shadow rounded " >
-                                <div className="d-flex align-items-center justify-content-center mt-1">
-                                    <h4 className="mb-1">Osmose 1º Passo</h4>
-                                </div>
-                                <Col className=" col ">
-                                    <Field name="REVERSE_OSMOSIS_1ST_STEP.ROInputPressure">
-                                        {({ field }: FieldProps) => (
-                                            <Form.Group className="mt-3 " controlId="ROInputPressure">
-                                                <Form.Label className='text-center'>Pressão de Entrada da O. R.</Form.Label>
-                                                <Form.Control
-                                                    {...field}
-                                                    type="text"
-                                                    placeholder="Pressão de Entrada da O. R"
-                                                    isInvalid={touched.REVERSE_OSMOSIS_1ST_STEP?.ROInputPressure && !!errors.REVERSE_OSMOSIS_1ST_STEP?.ROInputPressure}
-                                                />
-                                                <Form.Control.Feedback type="invalid">
-                                                    {errors.REVERSE_OSMOSIS_1ST_STEP?.ROInputPressure}
-                                                </Form.Control.Feedback>
-                                            </Form.Group>
-                                        )}
-                                    </Field>
-                                    <Field name="REVERSE_OSMOSIS_1ST_STEP.MembraneInputPressure">
-                                        {({ field }: FieldProps) => (
-                                            <Form.Group className="mt-3 " controlId="MembraneInputPressure">
-                                                <Form.Label className='text-center'>Pressão da Menbrana</Form.Label>
-                                                <Form.Control
-                                                    {...field}
-                                                    type="text"
-                                                    placeholder="Pressão da Menbrana"
-                                                    isInvalid={touched.REVERSE_OSMOSIS_1ST_STEP?.MembraneInputPressure && !!errors.REVERSE_OSMOSIS_1ST_STEP?.MembraneInputPressure}
-                                                />
-                                                <Form.Control.Feedback type="invalid">
-                                                    {errors.REVERSE_OSMOSIS_1ST_STEP?.MembraneInputPressure}
-                                                </Form.Control.Feedback>
-                                            </Form.Group>
-                                        )}
-                                    </Field>
-                                    <Field name="REVERSE_OSMOSIS_1ST_STEP.RejectPressure">
-                                        {({ field }: FieldProps) => (
-                                            <Form.Group className="mt-3 " controlId="RejectPressure">
-                                                <Form.Label className='text-center'>Pressão de Regeito</Form.Label>
-                                                <Form.Control
-                                                    {...field}
-                                                    type="text"
-                                                    placeholder="Pressão de Regeito"
-                                                    isInvalid={touched.REVERSE_OSMOSIS_1ST_STEP?.RejectPressure && !!errors.REVERSE_OSMOSIS_1ST_STEP?.RejectPressure}
-                                                />
-                                                <Form.Control.Feedback type="invalid">
-                                                    {errors.REVERSE_OSMOSIS_1ST_STEP?.RejectPressure}
-                                                </Form.Control.Feedback>
-                                            </Form.Group>
-                                        )}
-                                    </Field>
-                                    <Field name="REVERSE_OSMOSIS_1ST_STEP.ROInputConductivity">
-                                        {({ field }: FieldProps) => (
-                                            <Form.Group className="mt-3 " controlId="ROInputConductivity">
-                                                <Form.Label className='text-center'> Conditividade de Entrada da O.R.</Form.Label>
-                                                <Form.Control
-                                                    {...field}
-                                                    type="text"
-                                                    placeholder="Pressão da Menbrana"
-                                                    isInvalid={touched.REVERSE_OSMOSIS_1ST_STEP?.ROInputConductivity && !!errors.REVERSE_OSMOSIS_1ST_STEP?.ROInputConductivity}
-                                                />
-                                                <Form.Control.Feedback type="invalid">
-                                                    {errors.REVERSE_OSMOSIS_1ST_STEP?.ROInputConductivity}
-                                                </Form.Control.Feedback>
-                                            </Form.Group>
-                                        )}
-                                    </Field>
-                                </Col>
-                                <Col className=" col ">
-                                    <Field name="REVERSE_OSMOSIS_1ST_STEP.ROOutputConductivity">
-                                        {({ field }: FieldProps) => (
-                                            <Form.Group className="mt-3 " controlId="ROOutputConductivity">
-                                                <Form.Label className='text-center'>Conditividade de Saída da O.R.</Form.Label>
-                                                <Form.Control
-                                                    {...field}
-                                                    type="text"
-                                                    placeholder="Conditividade de Saída da O.R."
-                                                    isInvalid={touched.REVERSE_OSMOSIS_1ST_STEP?.ROOutputConductivity && !!errors.REVERSE_OSMOSIS_1ST_STEP?.ROOutputConductivity}
-                                                />
-                                                <Form.Control.Feedback type="invalid">
-                                                    {errors.REVERSE_OSMOSIS_1ST_STEP?.ROOutputConductivity}
-                                                </Form.Control.Feedback>
-                                            </Form.Group>
-                                        )}
-                                    </Field>
-                                    <Field name="REVERSE_OSMOSIS_1ST_STEP.SalinityRejectionRate">
-                                        {({ field }: FieldProps) => (
-                                            <Form.Group className="mt-3 " controlId="SalinityRejectionRate">
-                                                <Form.Label className='text-center'>Taxa de Regeição Salina</Form.Label>
-                                                <Form.Control
-                                                    {...field}
-                                                    type="text"
-                                                    placeholder="Taxa de Regeição Salina"
-                                                    isInvalid={touched.REVERSE_OSMOSIS_1ST_STEP?.SalinityRejectionRate && !!errors.REVERSE_OSMOSIS_1ST_STEP?.SalinityRejectionRate}
-                                                />
-                                                <Form.Control.Feedback type="invalid">
-                                                    {errors.REVERSE_OSMOSIS_1ST_STEP?.SalinityRejectionRate}
-                                                </Form.Control.Feedback>
-                                            </Form.Group>
-                                        )}
-                                    </Field>
-                                    <Field name="REVERSE_OSMOSIS_1ST_STEP.PermeateFlowRate">
-                                        {({ field }: FieldProps) => (
-                                            <Form.Group className="mt-3 " controlId="PermeateFlowRate">
-                                                <Form.Label className='text-center'>Vasão do Permeado (litros/min)</Form.Label>
-                                                <Form.Control
-                                                    {...field}
-                                                    type="text"
-                                                    placeholder="Vasão do Permeado (litros/min)"
-                                                    isInvalid={touched.REVERSE_OSMOSIS_1ST_STEP?.PermeateFlowRate && !!errors.REVERSE_OSMOSIS_1ST_STEP?.PermeateFlowRate}
-                                                />
-                                                <Form.Control.Feedback type="invalid">
-                                                    {errors.REVERSE_OSMOSIS_1ST_STEP?.PermeateFlowRate}
-                                                </Form.Control.Feedback>
-                                            </Form.Group>
-                                        )}
-                                    </Field>
-                                    <Field name="REVERSE_OSMOSIS_1ST_STEP.RejectFlowRate">
-                                        {({ field }: FieldProps) => (
-                                            <Form.Group className="mt-3 " controlId="RejectFlowRate">
-                                                <Form.Label className='text-center'> Vasão do regeito (litros/min)</Form.Label>
-                                                <Form.Control
-                                                    {...field}
-                                                    type="text"
-                                                    placeholder="Pressão da Menbrana (litros/min)"
-                                                    isInvalid={touched.REVERSE_OSMOSIS_1ST_STEP?.RejectFlowRate && !!errors.REVERSE_OSMOSIS_1ST_STEP?.RejectFlowRate}
-                                                />
-                                                <Form.Control.Feedback type="invalid">
-                                                    {errors.REVERSE_OSMOSIS_1ST_STEP?.RejectFlowRate}
-                                                </Form.Control.Feedback>
-                                            </Form.Group>
-                                        )}
-                                    </Field>
-                                </Col>
-                            </Row>
-                            <Row className="p-2 w-50 justify-content-center align-items-center shadow rounded " >
-                                <div className="d-flex align-items-center justify-content-center mt-1">
-                                    <h4 className="mb-1">Osmose 2º Passo</h4>
-                                </div>
-                                <Col className=" col ">
-                                    <Field name="REVERSE_OSMOSIS_2ND_STEP.ROInputPressure">
-                                        {({ field }: FieldProps) => (
-                                            <Form.Group className="mt-3 " controlId="ROInputPressure">
-                                                <Form.Label className='text-center'>Pressão de Entrada da O. R.</Form.Label>
-                                                <Form.Control
-                                                    {...field}
-                                                    type="text"
-                                                    placeholder="Pressão de Entrada da O. R"
-                                                    isInvalid={touched.REVERSE_OSMOSIS_2ND_STEP?.ROInputPressure && !!errors.REVERSE_OSMOSIS_2ND_STEP?.ROInputPressure}
-                                                />
-                                                <Form.Control.Feedback type="invalid">
-                                                    {errors.REVERSE_OSMOSIS_2ND_STEP?.ROInputPressure}
-                                                </Form.Control.Feedback>
-                                            </Form.Group>
-                                        )}
-                                    </Field>
-                                    <Field name="REVERSE_OSMOSIS_2ND_STEP.MembraneInputPressure">
-                                        {({ field }: FieldProps) => (
-                                            <Form.Group className="mt-3 " controlId="MembraneInputPressure">
-                                                <Form.Label className='text-center'>Pressão da Menbrana</Form.Label>
-                                                <Form.Control
-                                                    {...field}
-                                                    type="text"
-                                                    placeholder="Pressão da Menbrana"
-                                                    isInvalid={touched.REVERSE_OSMOSIS_2ND_STEP?.MembraneInputPressure && !!errors.REVERSE_OSMOSIS_2ND_STEP?.MembraneInputPressure}
-                                                />
-                                                <Form.Control.Feedback type="invalid">
-                                                    {errors.REVERSE_OSMOSIS_2ND_STEP?.MembraneInputPressure}
-                                                </Form.Control.Feedback>
-                                            </Form.Group>
-                                        )}
-                                    </Field>
-                                    <Field name="REVERSE_OSMOSIS_2ND_STEP.RejectPressure">
-                                        {({ field }: FieldProps) => (
-                                            <Form.Group className="mt-3 " controlId="RejectPressure">
-                                                <Form.Label className='text-center'>Pressão de Regeito</Form.Label>
-                                                <Form.Control
-                                                    {...field}
-                                                    type="text"
-                                                    placeholder="Pressão de Regeito"
-                                                    isInvalid={touched.REVERSE_OSMOSIS_2ND_STEP?.RejectPressure && !!errors.REVERSE_OSMOSIS_2ND_STEP?.RejectPressure}
-                                                />
-                                                <Form.Control.Feedback type="invalid">
-                                                    {errors.REVERSE_OSMOSIS_2ND_STEP?.RejectPressure}
-                                                </Form.Control.Feedback>
-                                            </Form.Group>
-                                        )}
-                                    </Field>
-                                    <Field name="REVERSE_OSMOSIS_2ND_STEP.ROInputConductivity">
-                                        {({ field }: FieldProps) => (
-                                            <Form.Group className="mt-3 " controlId="ROInputConductivity">
-                                                <Form.Label className='text-center'> Conditividade de Entrada da O.R.</Form.Label>
-                                                <Form.Control
-                                                    {...field}
-                                                    type="text"
-                                                    placeholder="Pressão da Menbrana"
-                                                    isInvalid={touched.REVERSE_OSMOSIS_2ND_STEP?.ROInputConductivity && !!errors.REVERSE_OSMOSIS_2ND_STEP?.ROInputConductivity}
-                                                />
-                                                <Form.Control.Feedback type="invalid">
-                                                    {errors.REVERSE_OSMOSIS_2ND_STEP?.ROInputConductivity}
-                                                </Form.Control.Feedback>
-                                            </Form.Group>
-                                        )}
-                                    </Field>
-                                </Col>
-                                <Col className=" col ">
-                                    <Field name="REVERSE_OSMOSIS_2ND_STEP.ROOutputConductivity">
-                                        {({ field }: FieldProps) => (
-                                            <Form.Group className="mt-3 " controlId="ROOutputConductivity">
-                                                <Form.Label className='text-center'>Conditividade de Saída da O.R.</Form.Label>
-                                                <Form.Control
-                                                    {...field}
-                                                    type="text"
-                                                    placeholder="Conditividade de Saída da O.R."
-                                                    isInvalid={touched.REVERSE_OSMOSIS_2ND_STEP?.ROOutputConductivity && !!errors.REVERSE_OSMOSIS_2ND_STEP?.ROOutputConductivity}
-                                                />
-                                                <Form.Control.Feedback type="invalid">
-                                                    {errors.REVERSE_OSMOSIS_2ND_STEP?.ROOutputConductivity}
-                                                </Form.Control.Feedback>
-                                            </Form.Group>
-                                        )}
-                                    </Field>
-                                    <Field name="REVERSE_OSMOSIS_2ND_STEP.SalinityRejectionRate">
-                                        {({ field }: FieldProps) => (
-                                            <Form.Group className="mt-3 " controlId="SalinityRejectionRate">
-                                                <Form.Label className='text-center'>Taxa de Regeição Salina</Form.Label>
-                                                <Form.Control
-                                                    {...field}
-                                                    type="text"
-                                                    placeholder="Taxa de Regeição Salina"
-                                                    isInvalid={touched.REVERSE_OSMOSIS_2ND_STEP?.SalinityRejectionRate && !!errors.REVERSE_OSMOSIS_2ND_STEP?.SalinityRejectionRate}
-                                                />
-                                                <Form.Control.Feedback type="invalid">
-                                                    {errors.REVERSE_OSMOSIS_2ND_STEP?.SalinityRejectionRate}
-                                                </Form.Control.Feedback>
-                                            </Form.Group>
-                                        )}
-                                    </Field>
-                                    <Field name="REVERSE_OSMOSIS_2ND_STEP.PermeateFlowRate">
-                                        {({ field }: FieldProps) => (
-                                            <Form.Group className="mt-3 " controlId="PermeateFlowRate">
-                                                <Form.Label className='text-center'>Vasão do Permeado (litros/min)</Form.Label>
-                                                <Form.Control
-                                                    {...field}
-                                                    type="text"
-                                                    placeholder="Vasão do Permeado (litros/min)"
-                                                    isInvalid={touched.REVERSE_OSMOSIS_2ND_STEP?.PermeateFlowRate && !!errors.REVERSE_OSMOSIS_2ND_STEP?.PermeateFlowRate}
-                                                />
-                                                <Form.Control.Feedback type="invalid">
-                                                    {errors.REVERSE_OSMOSIS_2ND_STEP?.PermeateFlowRate}
-                                                </Form.Control.Feedback>
-                                            </Form.Group>
-                                        )}
-                                    </Field>
-                                    <Field name="REVERSE_OSMOSIS_2ND_STEP.RejectFlowRate">
-                                        {({ field }: FieldProps) => (
-                                            <Form.Group className="mt-3 " controlId="RejectFlowRate">
-                                                <Form.Label className='text-center'> Vasão do regeito (litros/min)</Form.Label>
-                                                <Form.Control
-                                                    {...field}
-                                                    type="text"
-                                                    placeholder="Pressão da Menbrana (litros/min)"
-                                                    isInvalid={touched.REVERSE_OSMOSIS_2ND_STEP?.RejectFlowRate && !!errors.REVERSE_OSMOSIS_2ND_STEP?.RejectFlowRate}
-                                                />
-                                                <Form.Control.Feedback type="invalid">
-                                                    {errors.REVERSE_OSMOSIS_2ND_STEP?.RejectFlowRate}
-                                                </Form.Control.Feedback>
-                                            </Form.Group>
-                                        )}
-                                    </Field>
-                                </Col>
-                            </Row>
-                        </div>
-                        <Row className=" mt-3 m-auto p-2 w-50 justify-content-center align-items-center shadow rounded " >
-                            <div className="d-flex align-items-center justify-content-center mt-1">
-                                <h4 className="mb-1">Loop</h4>
-                            </div>
-                            <Col className=" col ">
-                                <Field name="LOOP.OutputPressure">
-                                    {({ field }: FieldProps) => (
-                                        <Form.Group className="mt-3 " controlId="OutputPressure ">
-                                            <Form.Label className='text-center'>Pressão de Saída</Form.Label>
-                                            <Form.Control
-                                                {...field}
-                                                type="text"
-                                                placeholder="Pressão de Saída"
-                                                isInvalid={touched.LOOP?.OutputPressure && !!errors.LOOP?.OutputPressure}
-                                            />
-                                            <Form.Control.Feedback type="invalid">
-                                                {errors.LOOP?.OutputPressure}
-                                            </Form.Control.Feedback>
-                                        </Form.Group>
-                                    )}
-                                </Field>
-                                <Field name="LOOP.ReturnPressure">
-                                    {({ field }: FieldProps) => (
-                                        <Form.Group className="mt-3 " controlId="ReturnPressure">
-                                            <Form.Label className='text-center'>Pressão de Retorno</Form.Label>
-                                            <Form.Control
-                                                {...field}
-                                                type="text"
-                                                placeholder="Pressão de Retorno"
-                                                isInvalid={touched.LOOP?.ReturnPressure && !!errors.LOOP?.ReturnPressure}
-                                            />
-                                            <Form.Control.Feedback type="invalid">
-                                                {errors.LOOP?.ReturnPressure}
-                                            </Form.Control.Feedback>
-                                        </Form.Group>
-                                    )}
-                                </Field>
-                                <Field name="LOOP.OzoneTestBefore1stShift">
-                                    {({ field }: FieldProps) => (
-                                        <Form.Group className="mt-3 " controlId="OzoneTestBefore1stShift">
-                                            <Form.Label className='text-center'>Ozônio</Form.Label>
-                                            <Form.Control
-                                                {...field}
-                                                type="text"
-                                                placeholder="Ozônio"
-                                                isInvalid={touched.LOOP?.OzoneTestBefore1stShift && !!errors.LOOP?.OzoneTestBefore1stShift}
-                                            />
-                                            <Form.Control.Feedback type="invalid">
-                                                {errors.LOOP?.OzoneTestBefore1stShift}
-                                            </Form.Control.Feedback>
-                                        </Form.Group>
-                                    )}
-                                </Field>
-                                <Field name="LOOP.Conductivity">
-                                    {({ field }: FieldProps) => (
-                                        <Form.Group className="mt-3 " controlId="Conductivity">
-                                            <Form.Label className='text-center'>Condutividade</Form.Label>
-                                            <Form.Control
-                                                {...field}
-                                                type="text"
-                                                placeholder="Condutividade"
-                                                isInvalid={touched.LOOP?.Conductivity && !!errors.LOOP?.Conductivity}
-                                            />
-                                            <Form.Control.Feedback type="invalid">
-                                                {errors.LOOP?.Conductivity}
-                                            </Form.Control.Feedback>
-                                        </Form.Group>
-                                    )}
-                                </Field>
-                            </Col>
-                        </Row>
-                        <div className="m-auto  d-flex align-items-center justify-content-center mt-5 mb-5">
-                            <Button className="btn btn-primary btn-lg m-auto " type="submit" variant="contained">
-                                Salvar
-                            </Button>
-                        </div>
-                    </Form>
-                )}
-            </Formik>
-
-        </Container>
-    );
+{/* SaltReservoirLevel */}
+<div>
+  <label htmlFor="PRE_TREATMENT.SaltReservoirLevel" className="block text-sm font-medium text-gray-700">
+    Nível do Reservatório de Sal
+  </label>
+  <Field name="PRE_TREATMENT.SaltReservoirLevel" type="number" className="mt-1 p-2 border rounded-md w-full" />
+  {errors.PRE_TREATMENT && errors.PRE_TREATMENT.SaltReservoirLevel && touched.PRE_TREATMENT && touched.PRE_TREATMENT.SaltReservoirLevel && (
+    <div className="text-red-600 text-sm mt-1">{errors.PRE_TREATMENT.SaltReservoirLevel}</div>
+  )}
+</div>
+</div>
+    </div>
+  </div>
+{/*proximo card*/}
+          <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+            Submit
+          </button>
+        </Form>
+      )}
+    </Formik>
+      );
 };
 
 export default WaterParametersForm;
