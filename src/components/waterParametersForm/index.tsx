@@ -101,18 +101,29 @@ const WaterParametersForm = () => {
       {({  isSubmitting}) => (
         <>
       <Modal.Body>
-        <Form className=" md:mx-0 grid grid-cols-1 md:grid-cols-2 gap-4">
-        <Field as="select" name="color" className="form-control mb-2">
-                <option value="">Selecioner</option>
-                <option value="red">Red</option>
-                <option value="blue">Blue</option>
-                <option value="green">Green</option>
-                {/* Adicione outras opções conforme necessário */}
-              </Field>
-        <ErrorMessage name="color" component="div" className="text-red-500" />
        
-
-        </Form>
+      <Form className="md:mx-0 grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {/* WATER_FEED */}
+                  <div className="mb-2">
+                    <p className="block text-sm font-medium text-gray-700">Cor Aparente</p>
+                    <Field as="select" name="WATER_FEED.Color" className="form-control mb-2">
+                      <option value="">Selecioner</option>
+                      <option value="Incolor">Incolor</option>
+                      <option value="Turva">Tuvar</option>
+                    </Field>
+                    <ErrorMessage name="WATER_FEED.Color" component="div" className="text-red-500" />
+                  </div>
+                  <div className="mb-2">
+                    <p className="block text-sm font-medium text-gray-700">Turvação</p>
+                    <Field as="select" name="WATER_FEED.Turbidity" className="form-control mb-2">
+                      <option value="">Selecioner</option>
+                      <option value="Transparente">Transparente</option>
+                      <option value="Turva">Tuvar</option>
+                    </Field>
+                    <ErrorMessage name="WATER_FEED.Turbidity" component="div" className="text-red-500" />
+                  </div>
+                  {/* Add other fields here */}
+                </Form>
       </Modal.Body> 
        <Modal.Footer>
        <Button variant="secondary" onClick={handleCloseModalParm}  disabled={isSubmitting}>
