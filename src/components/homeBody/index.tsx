@@ -64,7 +64,7 @@ const HomeBody: React.FC = () => {
         <div className=" bg-white rounded-lg  shadow-md w-100">
           {selectData.title === '' ?
             <div className="flex justify-center items-center">
-              <Image src={Logo} alt={'logo'} />
+              <Image priority={true} src={Logo} alt={'logo'} />
             </div>
             :
             <GraficLineAnimed subtitle={selectData.subtitle} title={selectData.title} data={selectData.data} />
