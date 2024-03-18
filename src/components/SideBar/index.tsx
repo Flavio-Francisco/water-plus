@@ -6,7 +6,6 @@ import WarningIcon from "@mui/icons-material/Warning";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import HouseIcon from "@mui/icons-material/House";
-import AddchartIcon from "@mui/icons-material/Addchart";
 import TimelineIcon from "@mui/icons-material/Timeline";
 import SummarizeOutlinedIcon from "@mui/icons-material/SummarizeOutlined";
 import ThermostatAutoOutlinedIcon from "@mui/icons-material/ThermostatAutoOutlined";
@@ -16,6 +15,7 @@ import MyModal from "./manutecao";
 import SettingsModal from "./settingsModal";
 import NaviBar from "./naviBar";
 import Logo from './logo.jpg'
+import WaterParametersForm from "../waterParametersForm";
 
 
 
@@ -24,10 +24,7 @@ const menuItems = [
     name: "Home",
     icon: "HouseIcon",
   },
-  {
-    name: "Parametros",
-    icon: "AddchartIcon",
-  },
+
 
   {
     name: "Graficos",
@@ -72,8 +69,6 @@ const getIconComponent = (iconName: string) => {
   switch (iconName) {
     case "HouseIcon":
       return HouseIcon;
-    case "AddchartIcon":
-      return AddchartIcon;
     case "TimelineIcon":
       return TimelineIcon;
     case "Manuteção":
@@ -110,8 +105,6 @@ const NavButton: FC<ButtonProps> = ({
     switch (name) {
       case "Home":
         return "/Home";
-      case "Parametros":
-        return "/Home/parameters";
       case "Água de Alimentação":
         return "/Home/grafic ";
       case "Pré-Tratamento":
@@ -239,6 +232,7 @@ export const Sidebar = () => {
             </React.Fragment>
           ))}
           <div>
+          <WaterParametersForm />
             <MyModal />
             <SettingsModal />
           </div>

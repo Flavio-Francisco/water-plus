@@ -1,66 +1,98 @@
 'use client'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import React from 'react';
+import { Button, Modal } from 'react-bootstrap';
+import React,{useState} from 'react';
 import { Formik, Field, Form, } from 'formik';
-
+import AddchartIcon from "@mui/icons-material/Addchart";
 import waterTreatmentParametersSchema from '../../utils/validation/WaterParamentersValidation'; // Importa o esquema de validação
 import { WaterTreatmentParameters } from '@/utils/models/WaterParametersModel';
 
+
+
 const WaterParametersForm = () => {
+
+
+  const [showModalParm, setShowModalParm] = useState(false);
+
+  const handleCloseModalParm = () => setShowModalParm(false);
+  const handleShowModalParm = () => setShowModalParm(true);
+  const [isActive, setActive] = useState(false);
+  const active = () => setActive(!isActive);
+
+
+
   const initialValues: WaterTreatmentParameters = {
     WATER_FEED: {
-      Color: '',
-      Turbidity: '',
-      Taste: '',
-      Odor: '',
-      TotalChlorine: 0,
-      FreeChlorine: 0,
-      pH: 0,
+      Color:undefined,
+      FreeChlorine:undefined,
+      Odor:undefined,
+      pH:undefined,
+      Taste:undefined,
+      TotalChlorine:undefined,
+      Turbidity:undefined,
+
     },
     PRE_TREATMENT: {
-      SoftenerHardness: 0,
-      MultimediaFilterInputPressure: 0,
-      SoftenerInputPressure: 0,
-      CarbonInputPressure: 0,
-      CarbonOutputPressure: 0,
-      MultimediaFilterDisplayTime: '',
-      SoftenerDisplayTime: '',
-      CarbonDisplayTime: '',
-      SaltReservoirLevel: ''
+      CarbonDisplayTime:undefined,
+      CarbonInputPressure:undefined,
+      CarbonOutputPressure:undefined,
+      MultimediaFilterDisplayTime:undefined,
+      MultimediaFilterInputPressure:undefined,
+      SaltReservoirLevel:undefined,
+      SoftenerDisplayTime:undefined,
+      SoftenerHardness:undefined,
+      SoftenerInputPressure:undefined,
     },
     REVERSE_OSMOSIS_1ST_STEP: {
-      ROInputPressure: 0,
-      MembraneInputPressure: 0,
-      RejectPressure: 0,
-      ROInputConductivity: 0,
-      ROOutputConductivity: 0,
-      SalinityRejectionRate: 0,
-      PermeateFlowRate: 0,
-      RejectFlowRate: 0
+      MembraneInputPressure:undefined,
+      PermeateFlowRate:undefined,
+      RejectFlowRate:undefined,
+      RejectPressure:undefined,
+      ROInputConductivity:undefined,
+      ROInputPressure:undefined,
+      ROOutputConductivity:undefined,
+      SalinityRejectionRate:undefined,
+
+
     },
     REVERSE_OSMOSIS_2ND_STEP: {
-      ROInputPressure: 0,
-      MembraneInputPressure: 0,
-      RejectPressure: 0,
-      ROInputConductivity: 0,
-      ROOutputConductivity: 0,
-      SalinityRejectionRate: 0,
-      PermeateFlowRate: 0,
-      RejectFlowRate: 0
+      MembraneInputPressure:undefined,
+      PermeateFlowRate:undefined,
+      RejectFlowRate:undefined,
+      RejectPressure:undefined,
+      ROInputConductivity:undefined,
+      ROInputPressure:undefined,
+      ROOutputConductivity:undefined,
+      SalinityRejectionRate:undefined,
     },
     LOOP: {
-      OutputPressure: 0,
-      ReturnPressure: 0,
-      OzoneTestBefore1stShift: false,
-      Conductivity: 0
+      Conductivity:undefined,
+      OutputPressure:undefined,
+      OzoneTestBefore1stShift:undefined,
+      ReturnPressure:undefined,
     }
-  };
+};
+
 
   const handleSubmit = (values: WaterTreatmentParameters) => {
     console.log(values);
   };
 
   return (
+    <>
+    <button
+    className={isActive ? "active" : "sidebar-nav"}
+     onClick={() => {
+      handleShowModalParm();
+      active();
+    }}
+  ><AddchartIcon/>Parametros </button>
+    
+    <Modal show={showModalParm} onHide={handleCloseModalParm} size='xl'>
+      <Modal.Header closeButton>
+        <Modal.Title>Parametros da ETE</Modal.Title>
+      </Modal.Header>
+      
     <Formik
       initialValues={initialValues}
       validationSchema={waterTreatmentParametersSchema}
@@ -68,8 +100,8 @@ const WaterParametersForm = () => {
     >
       {({ errors, touched }) => (
 
-        <Form className=" lg:ml-23 md:mx-0 grid grid-cols-1 md:grid-cols-2 gap-4">
-
+        <Form className=" md:mx-0 grid grid-cols-1 md:grid-cols-2 gap-4">
+        <Modal.Body>
           {/* WATER_FEED */}
           <div className="w-full flex justify-center lg:ml-23">
             <div className="bg-white shadow-md rounded-md p-4 w-full">
@@ -488,6 +520,7 @@ const WaterParametersForm = () => {
                     Teste de Ozônio Antes do Primeiro Turno
                   </label>
                   <Field as="select" name="LOOP.OzoneTestBefore1stShift" className="mt-1 p-2 border rounded-md w-full">
+                  <option value="">Selecione</option>
                     <option value="true">Reagente</option>
                     <option value="false">Não Reagete</option>
                   </Field>
@@ -509,16 +542,26 @@ const WaterParametersForm = () => {
               </div>
             </div>
           </div>
-          <div>
-            <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-              Submit
-            </button>
+          
+          </Modal.Body>
+          <div className="">
+          <Modal.Footer >
+        <Button variant="secondary" onClick={handleCloseModalParm}>
+          Fechar
+        </Button>
+        <Button variant="primary" type="submit" >
+          Enviar
+        </Button>
+      </Modal.Footer>
           </div>
-
+  
 
         </Form>
       )}
     </Formik>
+ 
+    </Modal>
+    </>
   );
 };
 

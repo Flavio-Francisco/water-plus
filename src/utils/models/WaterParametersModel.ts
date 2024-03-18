@@ -1,48 +1,48 @@
 export interface WaterTreatmentParameters {
   WATER_FEED: {
-    Color: string;
-    Turbidity: string;
-    Taste: string;
-    Odor: string;
-    TotalChlorine: number;
-    FreeChlorine: number;
-    pH: number;
+    Color: string |undefined;
+    Turbidity:string |undefined;
+    Taste: string |undefined;
+    Odor: string |undefined;
+    TotalChlorine: number|undefined;
+    FreeChlorine: number|undefined;
+    pH: number|undefined;
   };
   PRE_TREATMENT: {
-    SoftenerHardness: number;
-    MultimediaFilterInputPressure: number;
-    SoftenerInputPressure: number;
-    CarbonInputPressure: number;
-    CarbonOutputPressure: number;
-    MultimediaFilterDisplayTime: string;
-    SoftenerDisplayTime: string;
-    CarbonDisplayTime: string;
-    SaltReservoirLevel:string;
+    SoftenerHardness: number|undefined;
+    MultimediaFilterInputPressure: number|undefined;
+    SoftenerInputPressure: number|undefined;
+    CarbonInputPressure: number|undefined;
+    CarbonOutputPressure: number|undefined;
+    MultimediaFilterDisplayTime: string|undefined;
+    SoftenerDisplayTime: string|undefined;
+    CarbonDisplayTime: string|undefined;
+    SaltReservoirLevel:string|undefined;
   };
   REVERSE_OSMOSIS_1ST_STEP: {
-    ROInputPressure: number;
-    MembraneInputPressure: number;
-    RejectPressure: number;
-    ROInputConductivity: number;
-    ROOutputConductivity: number;
-    SalinityRejectionRate: number;
-    PermeateFlowRate: number;
-    RejectFlowRate: number;
+    ROInputPressure: number|undefined;
+    MembraneInputPressure: number|undefined;
+    RejectPressure: number|undefined;
+    ROInputConductivity: number|undefined;
+    ROOutputConductivity: number|undefined;
+    SalinityRejectionRate: number|undefined;
+    PermeateFlowRate: number|undefined;
+    RejectFlowRate: number|undefined;
   };
   REVERSE_OSMOSIS_2ND_STEP: {
-    ROInputPressure: number;
-    MembraneInputPressure: number;
-    RejectPressure: number;
-    ROInputConductivity: number;
-    ROOutputConductivity: number;
-    SalinityRejectionRate: number;
-    PermeateFlowRate: number;
-    RejectFlowRate: number;
+    ROInputPressure: number|undefined;
+    MembraneInputPressure: number|undefined;
+    RejectPressure: number|undefined;
+    ROInputConductivity: number|undefined;
+    ROOutputConductivity: number|undefined;
+    SalinityRejectionRate: number|undefined;
+    PermeateFlowRate: number|undefined;
+    RejectFlowRate: number|undefined;
   };
   LOOP: {
-    OutputPressure: number;
-    ReturnPressure: number;
-    OzoneTestBefore1stShift: boolean;
-    Conductivity: number;
+    OutputPressure: number|undefined;
+    ReturnPressure: number|undefined;
+    OzoneTestBefore1stShift: boolean|undefined;
+    Conductivity: number|undefined;
   };
 }
