@@ -207,7 +207,7 @@ const WaterParametersForm = () => {
       </Col>
       <Col>
         <div className="mb-2">
-          <p className="block text-sm font-medium text-gray-700">Pressão de Entrada do Filtro Multimídia</p>
+          <p className="block text-sm font-medium text-gray-700">Pressão do Filtro Multimídia</p>
           <Field type="number" name="PRE_TREATMENT.MultimediaFilterInputPressure" className="form-control mb-2" />
           <ErrorMessage name="PRE_TREATMENT.MultimediaFilterInputPressure" component="div" className="text-red-500" />
         </div>

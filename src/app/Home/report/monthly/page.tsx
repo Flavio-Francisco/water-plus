@@ -5,11 +5,12 @@ import React from "react";
 
 const ReportMonthly = () => {
   return (
-    <div style={{ width: "100%", height: "99vh" }}>
-      <PDFViewer width={"100%"} height={"100%"}>
-        <Pdf />
-      </PDFViewer>
-    </div>
+    <div className="w-full h-screen">
+    <PDFViewer className="w-full h-full">
+      <Pdf />
+    </PDFViewer>
+  </div>
+  
   );
 };
 export default ReportMonthly;
