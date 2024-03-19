@@ -24,18 +24,18 @@ const WaterParametersForm = () => {
   const initialValues: WaterTreatmentParameters = {
     WATER_FEED: {
       Color:undefined,
-      FreeChlorine:undefined,
+      FreeChlorine:0,
       Odor:undefined,
       pH:undefined,
       Taste:undefined,
-      TotalChlorine:undefined,
+      TotalChlorine:0,
       Turbidity:undefined,
 
     },
     PRE_TREATMENT: {
       CarbonDisplayTime:undefined,
-      CarbonInputPressure:undefined,
-      CarbonOutputPressure:undefined,
+      CarbonInputPressure:0,
+      CarbonOutputPressure:0,
       MultimediaFilterDisplayTime:undefined,
       MultimediaFilterInputPressure:undefined,
       SaltReservoirLevel:undefined,
@@ -100,9 +100,10 @@ const WaterParametersForm = () => {
     >
       {({  isSubmitting}) => (
         <>
-      <Modal.Body>
+     
        
       <Form >
+      <Modal.Body>
         <div className="md:mx-0 grid grid-cols-1 md:grid-cols-2 gap-4">
                 <Card>
                   <Card.Header>
@@ -327,7 +328,7 @@ const WaterParametersForm = () => {
       </Col>
       <Col>
         <div className="mb-2">
-          <p className="block text-sm font-medium text-gray-700">Taxa de Rejeição de Salinidade</p>
+          <p className="block text-sm font-medium text-gray-700">Rejeição de Salinidade</p>
           <Field type="number" name="REVERSE_OSMOSIS_1ST_STEP.SalinityRejectionRate" className="form-control mb-2" />
           <ErrorMessage name="REVERSE_OSMOSIS_1ST_STEP.SalinityRejectionRate" component="div" className="text-red-500" />
         </div>
@@ -399,7 +400,7 @@ const WaterParametersForm = () => {
       </Col>
       <Col>
         <div className="mb-2">
-          <p className="block text-sm font-medium text-gray-700">Taxa de Rejeição de Salinidade</p>
+          <p className="block text-sm font-medium text-gray-700">Rejeição de Salinidade</p>
           <Field type="number" name="REVERSE_OSMOSIS_2ND_STEP.SalinityRejectionRate" className="form-control mb-2" />
           <ErrorMessage name="REVERSE_OSMOSIS_2ND_STEP.SalinityRejectionRate" component="div" className="text-red-500" />
         </div>
@@ -470,16 +471,17 @@ const WaterParametersForm = () => {
   </Card.Body>
 </Card>
 </div>
-       </Form>
+      
       </Modal.Body> 
        <Modal.Footer>
-       <Button variant="secondary" onClick={handleCloseModalParm}  disabled={isSubmitting}>
+       <Button variant="secondary"  onClick={handleCloseModalParm}  disabled={isSubmitting}>
         Fechar
        </Button>
-       <Button variant="primary" onClick={handleCloseModalParm}  disabled={isSubmitting}>
+       <Button variant="primary" type='submit'  disabled={isSubmitting}>
        {isSubmitting ? ' Salvando...' : ' Salvar'}   
        </Button>
      </Modal.Footer>
+     </Form>
      </>
       )}
       
