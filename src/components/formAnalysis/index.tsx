@@ -2,7 +2,6 @@
 import React from "react";
 import { AnalysisResult } from "@/utils/models/analysis";
 import { FormAnalysis } from "@/utils/validation/FormAnalysisReselt";
-import { FormInitialValues } from "@/utils/models/Data";
 import { Formik, Field, ErrorMessage } from "formik";
 import {
   Button,
@@ -15,9 +14,28 @@ import {
   Col,
 } from "react-bootstrap";
 
+// Valores iniciais do formulário
+export const FormInitialValues: AnalysisResult = {
+  SampleDescription: {
+    sampleName: "",
+    samplingAddress: "",
+    city: "",
+    state: "",
+    zipCode: "",
+    sampleMatrixAndOrigin: "",
+    samplingDate: "",
+    samplingResponsible: "",
+  },
+  MicrobiologigoAssays: {
+    eColiPresence: "",
+    totalColiformsPresence: "",
+    heterotrophicBacteriaCount: "",
+  },
+};
+
 const ResultForm = () => {
   const handleSubmit = (values: AnalysisResult) => {
-    console.log(values);
+    console.log("Dados do formulário submetidos:", values);
   };
 
   return (
@@ -27,8 +45,8 @@ const ResultForm = () => {
         validationSchema={FormAnalysis}
         onSubmit={handleSubmit}
       >
-        {({ errors, touched }) => (
-          <Form>
+        {({ errors, touched, handleSubmit }) => (
+          <Form onSubmit={handleSubmit}>
             <Row className="m-5 mb-5 d-flex justify-content-center align-items-center">
               <h3 className="text-center">Dados da Amostras</h3>
             </Row>
@@ -37,10 +55,11 @@ const ResultForm = () => {
               <Row>
                 <Col>
                   <FormGroup>
-                    <FormLabel htmlFor="SampleDescription.sampleName">
+                    <FormLabel htmlFor="sampleName">
                       Descrição da Amostra:
                     </FormLabel>
                     <Field
+                      id="sampleName"
                       as={FormControl}
                       type="text"
                       name="SampleDescription.sampleName"
@@ -56,10 +75,11 @@ const ResultForm = () => {
               <Row>
                 <Col>
                   <FormGroup>
-                    <FormLabel htmlFor="SampleDescription.samplingAddress">
+                    <FormLabel htmlFor="samplingAddress">
                       Endereço de amostragem
                     </FormLabel>
                     <Field
+                      id="samplingAddress"
                       as={FormControl}
                       type="text"
                       name="SampleDescription.samplingAddress"
@@ -73,12 +93,11 @@ const ResultForm = () => {
                 </Col>
               </Row>
               <Row>
-                <Col>
+                <Col xs={12} md={4}>
                   <FormGroup>
-                    <FormLabel htmlFor="SampleDescription.city">
-                      Cidade
-                    </FormLabel>
+                    <FormLabel htmlFor="city">Cidade</FormLabel>
                     <Field
+                      id="city"
                       as={FormControl}
                       type="text"
                       name="SampleDescription.city"
@@ -90,12 +109,11 @@ const ResultForm = () => {
                     <ErrorMessage name="SampleDescription.city" />
                   </FormGroup>
                 </Col>
-                <Col>
+                <Col xs={12} md={4}>
                   <FormGroup>
-                    <FormLabel htmlFor="SampleDescription.state">
-                      Estado
-                    </FormLabel>
+                    <FormLabel htmlFor="state">Estado</FormLabel>
                     <Field
+                      id="state"
                       as={FormControl}
                       type="text"
                       name="SampleDescription.state"
@@ -107,12 +125,11 @@ const ResultForm = () => {
                     <ErrorMessage name="SampleDescription.state" />
                   </FormGroup>
                 </Col>
-                <Col>
+                <Col xs={12} md={4}>
                   <FormGroup>
-                    <FormLabel htmlFor="SampleDescription.zipCode">
-                      CEP
-                    </FormLabel>
+                    <FormLabel htmlFor="zipCode">CEP</FormLabel>
                     <Field
+                      id="zipCode"
                       as={FormControl}
                       type="text"
                       name="SampleDescription.zipCode"
@@ -125,13 +142,15 @@ const ResultForm = () => {
                   </FormGroup>
                 </Col>
               </Row>
+
               <Row>
-                <Col>
+                <Col xs={12}>
                   <FormGroup>
-                    <FormLabel htmlFor="SampleDescription.sampleMatrixAndOrigin">
+                    <FormLabel htmlFor="sampleMatrixAndOrigin">
                       Matriz de Amostra e Origem
                     </FormLabel>
                     <Field
+                      id="sampleMatrixAndOrigin"
                       as={FormControl}
                       type="text"
                       name="SampleDescription.sampleMatrixAndOrigin"
@@ -144,13 +163,14 @@ const ResultForm = () => {
                   </FormGroup>
                 </Col>
               </Row>
-              <Row className="d-flex justify-content-center align-items-center">
-                <Col style={{ width: "30%" }}>
-                  <FormGroup style={{ width: "30%" }}>
-                    <FormLabel htmlFor="SampleDescription.samplingDate">
+              <Row>
+                <Col xs={12} md={6}>
+                  <FormGroup>
+                    <FormLabel htmlFor="samplingDate">
                       Data da Coleta
                     </FormLabel>
                     <Field
+                      id="samplingDate"
                       as={FormControl}
                       type="date"
                       name="SampleDescription.samplingDate"
@@ -162,12 +182,13 @@ const ResultForm = () => {
                     <ErrorMessage name="SampleDescription.samplingDate" />
                   </FormGroup>
                 </Col>
-                <Col style={{ width: "70%" }}>
-                  <FormGroup style={{ width: "70%" }}>
-                    <FormLabel htmlFor="SampleDescription.samplingResponsible">
+                <Col xs={12} md={6}>
+                  <FormGroup>
+                    <FormLabel htmlFor="samplingResponsible">
                       Responsável pela Coleta
                     </FormLabel>
                     <Field
+                      id="samplingResponsible"
                       as={FormControl}
                       type="text"
                       name="SampleDescription.samplingResponsible"
@@ -181,17 +202,22 @@ const ResultForm = () => {
                 </Col>
               </Row>
             </Row>
+
+
+            
+          
             <Row className="m-5 mb-5 d-flex justify-content-center align-items-center">
               <h3 className="text-center">Resultados</h3>
             </Row>
             <Row className="shadow p-3 mb-5 bg-white rounded">
-              <Row className=" p-3 ">
-                <Col>
+              <Row className="p-3">
+                <Col xs={12} sm={4} className="mb-3 mb-sm-0">
                   <FormGroup>
-                    <FormLabel htmlFor="MicrobiologigoAssays.eColiPresence">
+                    <FormLabel htmlFor="eColiPresence">
                       Escherichia Coli
                     </FormLabel>
                     <Field
+                      id="eColiPresence"
                       as={FormControl}
                       type="text"
                       name="MicrobiologigoAssays.eColiPresence"
@@ -203,12 +229,13 @@ const ResultForm = () => {
                     <ErrorMessage name="MicrobiologigoAssays.eColiPresence" />
                   </FormGroup>
                 </Col>
-                <Col>
+                <Col xs={12} sm={4} className="mb-3 mb-sm-0">
                   <FormGroup>
-                    <FormLabel htmlFor="MicrobiologigoAssays.totalColiformsPresence">
+                    <FormLabel htmlFor="totalColiformsPresence">
                       Coliformes Totais
                     </FormLabel>
                     <Field
+                      id="totalColiformsPresence"
                       as={FormControl}
                       type="text"
                       name="MicrobiologigoAssays.totalColiformsPresence"
@@ -220,18 +247,18 @@ const ResultForm = () => {
                     <ErrorMessage name="MicrobiologigoAssays.totalColiformsPresence" />
                   </FormGroup>
                 </Col>
-                <Col>
+                <Col xs={12} sm={4}>
                   <FormGroup>
-                    <FormLabel htmlFor="MicrobiologigoAssays.heterotrophicBacteriaCount">
+                    <FormLabel htmlFor="heterotrophicBacteriaCount">
                       Heterotróficas
                     </FormLabel>
                     <Field
+                      id="heterotrophicBacteriaCount"
                       as={FormControl}
                       type="text"
                       name="MicrobiologigoAssays.heterotrophicBacteriaCount"
                       isInvalid={
-                        !!errors.MicrobiologigoAssays
-                          ?.heterotrophicBacteriaCount &&
+                        !!errors.MicrobiologigoAssays?.heterotrophicBacteriaCount &&
                         touched.MicrobiologigoAssays?.heterotrophicBacteriaCount
                       }
                     />
@@ -243,7 +270,7 @@ const ResultForm = () => {
 
             <Row className="m-5 mb-5 d-flex justify-content-center align-items-center">
               <Col className="d-flex justify-content-center align-items-center">
-                <Button style={{ width: "100px" }} type="submit">
+                <Button className="w-auto bg-blue-700" type="submit">
                   Salvar
                 </Button>
               </Col>

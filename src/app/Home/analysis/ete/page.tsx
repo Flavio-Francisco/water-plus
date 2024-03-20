@@ -4,11 +4,11 @@ import { Row } from "react-bootstrap";
 
 export default function Purifiers() {
   return (
-    <div>
+    <div className="mx-auto w-2/3">
       <Row className="m-5 mb-5 d-flex justify-content-center align-items-center">
-        <h2 className="text-center">
+        <h1 className="text-center font-bold">
           Resultados das Amostras dos Purificadores
-        </h2>
+        </h1>
       </Row>
       <ResultForm />
     </div>
