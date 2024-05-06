@@ -16,15 +16,13 @@ import SettingsModal from "./settingsModal";
 import NaviBar from "./naviBar";
 import Logo from './logo.jpg'
 import WaterParametersForm from "../waterParametersForm";
-
-
+import { useRouter } from "next/navigation";
 
 const menuItems = [
   {
     name: "Home",
     icon: "HouseIcon",
   },
-
 
   {
     name: "Graficos",
@@ -48,8 +46,6 @@ const menuItems = [
     icon: "SummarizeOutlinedIcon",
     items: ["Mensal", "Diasafe", "Limpeza Reservatórios", "Resultado Apevisa"],
   },
-
-
 ];
 type IconProps = {
   iconName: string;
@@ -82,8 +78,6 @@ const getIconComponent = (iconName: string) => {
       return null;
   }
 };
-
-
 
 type ButtonProps = {
   onClick: (item: string) => void;
@@ -135,24 +129,26 @@ const NavButton: FC<ButtonProps> = ({
       //   return "/Home/settings/rt";
 
       default:
-
         break;
     }
   };
-
+  const { push } = useRouter();
   return (
-    <a href={Href(name)} style={{ textDecoration: "none", color: "#d4d4ea" }}>
-      <button
-        type="button"
-        onClick={() => onClick(name)}
-        className={isActive ? "active" : ""}
-      >
-        {icon && <Icon iconName={icon} />}
+    //  <a href={Href(name)} style={{ textDecoration: "none", color: "#d4d4ea" }}>
+    <button
+      type="button"
+      onClick={() => {
+        onClick(name);
+        push(Href(name) || "");
+      }}
+      className={isActive ? "active" : ""}
+    >
+      {icon && <Icon iconName={icon} />}
 
-        <span>{name}</span>
-        {hasSubNav && (isActive ? <ExpandLessIcon /> : <ExpandMoreIcon />)}
-      </button>
-    </a>
+      <span>{name}</span>
+      {hasSubNav && (isActive ? <ExpandLessIcon /> : <ExpandMoreIcon />)}
+    </button>
+    //  </a>
   );
 };
 
