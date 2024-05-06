@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
-import { Button, Modal, Form, Row, Col } from 'react-bootstrap';
-import { Formik } from 'formik';
-import * as Yup from 'yup';
-import './styles.css';
-import { Thema } from '../../../thema';
+"use client";
+import React, { useState } from "react";
+import { Button, Modal, Form, Row, Col } from "react-bootstrap";
+import { Formik } from "formik";
+import * as Yup from "yup";
+import "./styles.css";
+import { Thema } from "../../../thema";
 
 const Desinfection = () => {
   const [showModal, setShowModal] = useState(false);
@@ -17,22 +18,30 @@ const Desinfection = () => {
   };
 
   const validationSchema = Yup.object().shape({
-    step1: Yup.string().required('Campo obrigatório'),
-    data1: Yup.date().required('Campo obrigatório'),
-    step2: Yup.string().required('Campo obrigatório'),
-    data2: Yup.date().required('Campo obrigatório'),
-    loop: Yup.string().required('Campo obrigatório'),
-    data3: Yup.date().required('Campo obrigatório'),
-    product: Yup.string().required('Campo obrigatório'),
-    quantity: Yup.number().required('Campo obrigatório').positive('A quantidade deve ser maior que zero'),
+    step1: Yup.string().required("Campo obrigatório"),
+    data1: Yup.date().required("Campo obrigatório"),
+    step2: Yup.string().required("Campo obrigatório"),
+    data2: Yup.date().required("Campo obrigatório"),
+    loop: Yup.string().required("Campo obrigatório"),
+    data3: Yup.date().required("Campo obrigatório"),
+    product: Yup.string().required("Campo obrigatório"),
+    quantity: Yup.number()
+      .required("Campo obrigatório")
+      .positive("A quantidade deve ser maior que zero"),
   });
 
   return (
     <>
-      <Button 
-      onClick={handleButtonClick} 
-      className=" p-2 mt-6 md:mt-0 ml-6 md:ml-0" // Adiciona classes responsivas do Tailwind CSS para margem superior e esquerda
-        style={{ background: Thema.Colors.blue2, borderColor: Thema.Colors.blue2,borderRadius: '5px',color:Thema.Colors.white }}>
+      <Button
+        onClick={handleButtonClick}
+        className=" p-2 mt-6 md:mt-0 ml-6 md:ml-0" // Adiciona classes responsivas do Tailwind CSS para margem superior e esquerda
+        style={{
+          background: Thema.Colors.blue2,
+          borderColor: Thema.Colors.blue2,
+          borderRadius: "5px",
+          color: Thema.Colors.white,
+        }}
+      >
         Desinfecção do Sistema
       </Button>
 
@@ -43,14 +52,14 @@ const Desinfection = () => {
         <Modal.Body>
           <Formik
             initialValues={{
-              step1: '',
-              data1: '',
-              step2: '',
-              data2: '',
-              product: '',
-              quantity: '',
-              loop: '',
-              data3: '',
+              step1: "",
+              data1: "",
+              step2: "",
+              data2: "",
+              product: "",
+              quantity: "",
+              loop: "",
+              data3: "",
             }}
             validationSchema={validationSchema}
             onSubmit={(values) => {
@@ -161,9 +170,7 @@ const Desinfection = () => {
                   </Col>
                 </Row>
                 <Form.Group controlId="product">
-                  <Form.Label>Produto
-
-                  </Form.Label>
+                  <Form.Label>Produto</Form.Label>
                   <Form.Control
                     type="text"
                     name="product"
@@ -177,8 +184,11 @@ const Desinfection = () => {
                 </Form.Group>
 
                 <Form.Group controlId="quantity">
-                  <Form.Label>Quantidade
-                    <text style={{ marginLeft: 15, fontSize: 12, color: 'red' }}>
+                  <Form.Label>
+                    Quantidade
+                    <text
+                      style={{ marginLeft: 15, fontSize: 12, color: "red" }}
+                    >
                       (balde com 5 Lts.)
                     </text>
                   </Form.Label>
@@ -195,7 +205,10 @@ const Desinfection = () => {
                   </Form.Control.Feedback>
                 </Form.Group>
 
-                <Button type="submit" style={{ marginTop: 20, width: 150, marginLeft: '35%' }}>
+                <Button
+                  type="submit"
+                  style={{ marginTop: 20, width: 150, marginLeft: "35%" }}
+                >
                   Salvar
                 </Button>
               </Form>
