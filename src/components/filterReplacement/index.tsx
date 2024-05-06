@@ -1,10 +1,11 @@
 "use client";
 import React, { useState } from "react";
 import "./styles.css";
-import { Button, Modal, Form, Row, Col } from "react-bootstrap";
+import { Modal, Form, Row, Col } from "react-bootstrap";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { Thema } from "../../../thema";
+import { Button } from "@mui/material";
 
 export default function FilterReplacement() {
   const [showModal, setShowModal] = useState(false);
@@ -44,7 +45,6 @@ export default function FilterReplacement() {
     <>
       <Button
         onClick={handleButtonClick}
-        className=" p-2  mt-6 md:mt-0 ml-2 md:ml-0 w-20" // Adiciona classes responsivas do Tailwind CSS para margem superior e esquerda
         style={{
           background: Thema.Colors.blue2,
           borderColor: Thema.Colors.blue2,

@@ -1,4 +1,4 @@
-import { Props } from "@/components/grafic";
+
 import { Credentials, ReportModel, ReservoirCleaning } from "../models/report";
 import { AnalysisResult } from "@/utils/models/analysis";
 import { ApvisaModel } from "./Apvisa";
@@ -8,146 +8,45 @@ interface Porcentagens {
   permeated: string;
   reject: string;
 }
+ export interface Props {
+  title: string;
+  day?: number[] ;
+  data?: number[] ;
+}
 
 export const dataZeolica: Props = {
   title: "Pressão do zeolita",
-  subtitle:
-    "Quando a pressão for menor que 20%, da pressão inicial, fazer a troca do meio filtante.",
-  data: [
-    { x: 1, y: 35 },
-    { x: 2, y: 30 },
-    { x: 3, y: 25 },
-    { x: 4, y: 11 },
-    { x: 5, y: 110 },
-    { x: 6, y: 18 },
-    { x: 7, y: 17 },
-    { x: 8, y: 12 },
-    { x: 9, y: 16 },
-    { x: 10, y: 12 },
-    { x: 11, y: 25 },
-    { x: 12, y: 46 },
-    { x: 13, y: 64 },
-    { x: 14, y: 74 },
-    { x: 15, y: 14 },
-    { x: 16, y: 140 },
-  ],
+ day:[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],
+  data: [81,84,85,84,89,87,100,91,88,89,90,95,91,89,86  ],
 };
 
 export const dataAbrandador: Props = {
   title: "Pressão do Abrandador",
-  subtitle:
-    "Quando a pressão for menor que 20%, da pressão inicial, fazer a troca do meio filtante.",
-  data: [
-    { x: 1, y: 35 },
-    { x: 2, y: 30 },
-    { x: 3, y: 25 },
-    { x: 4, y: 11 },
-    { x: 5, y: 14 },
-    { x: 6, y: 52 },
-    { x: 7, y: 17 },
-    { x: 8, y: 25 },
-    { x: 9, y: 47 },
-    { x: 10, y: 140 },
-    { x: 11, y: 135 },
-    { x: 12, y: 130 },
-    { x: 13, y: 138 },
-    { x: 14, y: 129 },
-    { x: 15, y: 121 },
-    { x: 16, y: 110 },
-  ],
+  day:[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],
+  data: [81,84,85,84,89,87,68,91,78,89,92,95,91,89,86  ],
 };
 
 export const dataCarvao: Props = {
-  title: "Pressão do Carvão  do mês de Abril",
-  subtitle:
-    "Quando a pressão for menor que 20%, da pressão inicial, fazer a troca do meio filtante.",
-  data: [
-    { x: 1, y: 55 },
-    { x: 2, y: 30 },
-    { x: 3, y: 25 },
-    { x: 4, y: 61 },
-    { x: 5, y: 10 },
-    { x: 6, y: 18 },
-    { x: 7, y: 19 },
-    { x: 8, y: 82 },
-    { x: 9, y: 16 },
-    { x: 10, y: 112 },
-    { x: 11, y: 45 },
-    { x: 12, y: 46 },
-    { x: 13, y: 64 },
-    { x: 14, y: 74 },
-    { x: 15, y: 14 },
-    { x: 16, y: 40 },
-  ],
+  title: "Pressão do Carvão ",
+  day:[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],
+  data: [79,84,81,84,82,87,78,90,78,89,72,95,91,89,84  ],
 };
+
 // pré tratamento
 export const dataCloroLivre: Props = {
   title: "Cloro Livre",
-  subtitle: "valor maximo 2.5 ppm.",
-  data: [
-    { x: 1, y: 2 },
-    { x: 2, y: 2.5 },
-    { x: 3, y: 1.5 },
-    { x: 4, y: 1 },
-    { x: 5, y: 1 },
-    { x: 6, y: 2 },
-    { x: 7, y: 2.5 },
-    { x: 8, y: 2 },
-    { x: 9, y: 2 },
-    { x: 10, y: 2 },
-    { x: 11, y: 2.5 },
-    { x: 12, y: 1 },
-    { x: 13, y: 2 },
-    { x: 14, y: 1.4 },
-    { x: 15, y: 1.5 },
-    { x: 16, y: 1.4 },
-  ],
+  day:[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],
+  data: [79,84,81,84,82,87,78,90,78,89,72,95,91,89,84  ],
 };
 export const dataCloroTotal: Props = {
   title: "Cloro Total",
-  subtitle: "valor maximo 2.5 ppm.",
-  data: [
-    ["Dias", "Cloro Total"],
-    { x: 1, y: 2 },
-    { x: 2, y: 2.5 },
-    { x: 3, y: 1.5 },
-    { x: 4, y: 1 },
-    { x: 5, y: 1 },
-    { x: 6, y: 2 },
-    { x: 7, y: 2.5 },
-    { x: 8, y: 2 },
-    { x: 9, y: 2 },
-    { x: 10, y: 2 },
-    { x: 11, y: 2.5 },
-    { x: 12, y: 1 },
-    { x: 13, y: 2 },
-    { x: 14, y: 1.4 },
-    { x: 15, y: 1.5 },
-    { x: 16, y: 1.4 },
-  ],
+  day:[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],
+  data: [79,84,81,84,82,87,78,90,78,89,72,95,91,89,84  ],
 };
 export const dataPH: Props = {
   title: "Cloro PH",
-  subtitle: "valor maximo 2.5 ppm.",
-  data: [
-    ["Dias", "PH"],
-    { x: 1, y: 55 },
-    { x: 2, y: 30 },
-    { x: 3, y: 25 },
-    { x: 4, y: 61 },
-    { x: 5, y: 10 },
-    { x: 6, y: 18 },
-    { x: 7, y: 19 },
-    { x: 8, y: 82 },
-    { x: 9, y: 16 },
-    { x: 10, y: 112 },
-    { x: 11, y: 45 },
-    { x: 12, y: 46 },
-    { x: 13, y: 64 },
-    { x: 14, y: 74 },
-    { x: 15, y: 14 },
-    { x: 16, y: 40 },
-  ],
+  day:[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],
+  data: [79,84,81,84,82,87,78,90,78,89,72,95,91,89,84  ],
 };
 export const Datafull = [
   dataZeolica,
@@ -161,38 +60,8 @@ export const Datafull = [
 
 export const dataProducao: Props = {
   title: "Media de produção",
-  subtitle: "os dados são baseados na posetagem de rejeito",
-  data: [
-    ["Dias", "Permeado", "Rejeito"],
-    [1, 12, 3],
-    [2, 14, 3],
-    [3, 13, 2],
-    [4, 13, 3],
-    [5, 12, 3],
-    [6, 12, 3],
-    [7, 15, 3],
-    [8, 12, 1],
-    [9, 12, 3],
-    [10, 12, 3],
-    [11, 12, 2],
-    [12, 14, 3],
-    [13, 12, 3],
-    [14, 12, 3],
-    [15, 12, 3],
-    [16, 12, 3],
-    [17, 11, 1],
-    [18, 14, 1],
-    [19, 17, 5],
-    [20, 12, 3],
-    [21, 16, 3],
-    [22, 12, 3],
-    [23, 15, 3],
-    [24, 16, 3],
-    [25, 14, 3],
-    [26, 14, 3],
-    [27, 14, 3],
-    [28, 14, 3],
-  ],
+  day:[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],
+  data: [79,84,81,84,82,87,78,90,78,89,72,95,91,89,84  ],
 };
 //diasafe
 export const fakeDiasafe: { data: string; maquina: string }[] = [
@@ -402,7 +271,7 @@ export const FormInitialValues: AnalysisResult = {
   },
 };
 export function calcularPorcentagem(
-  data: object | unknown[] | undefined
+  data: Props|undefined
 ): Porcentagens {
   let permeated: string = "";
   let reject: string = "";

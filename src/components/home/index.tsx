@@ -25,10 +25,18 @@ function Home() {
         <HomeBody />
       </Container>
 
-      <div className="d-flex  align-items-center mx-auto md: flex-row w-80 md:w-auto  mt-10 md:mt-50 mb-30 justify-evenly ">
-        <FilterReplacement />
-        <AcidReplacement />
-        <Desinfection />
+      <div className="d-flex flex-wrap justify-content-center mt-10 md:mt-50 mb-30">
+        <div className="d-flex flex-wrap justify-content-evenly w-100">
+          <div className="mb-3">
+            <FilterReplacement />
+          </div>
+          <div className="mb-3">
+            <AcidReplacement />
+          </div>
+          <div className="mb-3">
+            <Desinfection />
+          </div>
+        </div>
       </div>
     </div>
   );

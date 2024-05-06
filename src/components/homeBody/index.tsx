@@ -2,43 +2,38 @@
 import React, { useState } from "react";
 import Batery from "../batery";
 import Logo from "@/app/logo.jpg";
-import { dataAbrandador, dataZeolica, dataCarvao } from "@/utils/models/Data";
+import {
+  dataAbrandador,
+  dataZeolica,
+  dataCarvao,
+  Props,
+} from "@/utils/models/Data";
 import GraficLineAnimed from "../graficLineAnimed";
 import Image from "next/image";
 
 // Defina o tipo para as props do componente GraficLineAnimed
-interface Props {
-  subtitle: string | null | undefined;
-  title: string | null | undefined;
-  data?: object | unknown[] | undefined;
-}
 
 // Componente HomeBody
 const HomeBody: React.FC = () => {
-  const clear: Props = { subtitle: "", title: "", data: [] };
-  const [selectData, setSelectData] = useState<Props>(clear);
+  const [selectData, setSelectData] = useState<Props>(dataAbrandador);
 
   // Função para selecionar os dados do gráfico
-  const dataSelect = (grafic: string) => {
+  const dataSelect = async (grafic: string) => {
     switch (grafic) {
       case "abrandador":
-        setSelectData(dataAbrandador);
+        await setSelectData(dataAbrandador);
         break;
       case "zeolita":
-        setSelectData(dataZeolica);
+        await setSelectData(dataZeolica);
         break;
       case "carvao":
-        setSelectData(dataCarvao);
+        await setSelectData(dataCarvao);
         break;
+      case "img":
+        return <Image src={Logo} alt={"logo"} />;
       default:
         return <Image src={Logo} alt={"logo"} />;
     }
-  };
-
-  // Manipulador de clique para os gráficos
-  const handleGraficClick = (grafic: string) => {
-    dataSelect(grafic);
-    console.log(grafic);
   };
 
   return (
@@ -48,21 +43,21 @@ const HomeBody: React.FC = () => {
           <div className="flex flex-row md:flex-row justify-center gap-4">
             <div
               className="flex flex-col items-center"
-              onClick={() => handleGraficClick("zeolita")}
+              onClick={() => dataSelect("zeolita")}
             >
               <p className="text-center">Zeolita</p>
               <Batery chargeLevel={100} />
             </div>
             <div
               className="flex flex-col items-center"
-              onClick={() => handleGraficClick("abrandador")}
+              onClick={() => dataSelect("abrandador")}
             >
               <p className="text-center">Abrandador</p>
               <Batery chargeLevel={70} />
             </div>
             <div
               className="flex flex-col items-center"
-              onClick={() => handleGraficClick("carvao")}
+              onClick={() => dataSelect("carvao")}
             >
               <p className="text-center">Carvão</p>
               <Batery chargeLevel={60} />
@@ -71,16 +66,18 @@ const HomeBody: React.FC = () => {
         </div>
 
         <div className=" bg-white rounded-lg  shadow-md w-100">
-          {selectData.title === "" ? (
+          {selectData.title === "img" ? (
             <div className="flex justify-center items-center">
               <Image priority={true} src={Logo} alt={"logo"} />
             </div>
           ) : (
-            <GraficLineAnimed
-              subtitle={selectData.subtitle}
-              title={selectData.title}
-              data={selectData.data}
-            />
+            <div className="flex justify-center items-center">
+              <GraficLineAnimed
+                day={selectData.day}
+                title={selectData.title}
+                data={selectData.data}
+              />
+            </div>
           )}
         </div>
       </div>

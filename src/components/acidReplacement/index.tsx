@@ -46,40 +46,46 @@ export default function AcidReplacement() {
     <>
       <button
         onClick={handleButtonClick}
-        className=" p-2 mt-6 md:mt-0 ml-6 md:ml-0" // Adiciona classes responsivas do Tailwind CSS para margem superior e esquerda
-        style={{ background: Thema.Colors.blue2, borderColor: Thema.Colors.blue2,borderRadius: '5px',color:Thema.Colors.white }}>
+        style={{
+          background: Thema.Colors.blue2,
+          borderColor: Thema.Colors.blue2,
+          borderRadius: "5px",
+          color: Thema.Colors.white,
+          padding: 7,
+        }}
+      >
         Ácido Peracético
       </button>
 
-      <Modal show={showModal} onHide={handleCloseModal} centered size='lg'>
+      <Modal show={showModal} onHide={handleCloseModal} centered size="lg">
         <Modal.Header closeButton>
           <Modal.Title>Troca de Ácido Peracético</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Formik
             initialValues={{
-              numeroMaquina: '',
-              data: '',
-              numeroMaquina1: '',
-              data1: '',
-              numeroMaquina2: '',
-              data2: '',
-              numeroMaquina3: '',
-              data3: '',
-              numeroMaquina4: '',
-              data4: '',
-              numeroMaquina5: '',
-              data5: '',
-              numeroMaquina6: '',
-              data6: '',
-              numeroMaquina7: '',
-              data7: '',
-              numeroMaquina8: '',
-              data8: '',
-              numeroMaquina9: '',
-              data9: '',
-              numeroMaquina10: '',
-              data10: '',
+              numeroMaquina: "",
+              data: "",
+              numeroMaquina1: "",
+              data1: "",
+              numeroMaquina2: "",
+              data2: "",
+              numeroMaquina3: "",
+              data3: "",
+              numeroMaquina4: "",
+              data4: "",
+              numeroMaquina5: "",
+              data5: "",
+              numeroMaquina6: "",
+              data6: "",
+              numeroMaquina7: "",
+              data7: "",
+              numeroMaquina8: "",
+              data8: "",
+              numeroMaquina9: "",
+              data9: "",
+              numeroMaquina10: "",
+              data10: "",
             }}
             validationSchema={validationSchema}
             onSubmit={(values) => {
@@ -89,9 +95,7 @@ export default function AcidReplacement() {
           >
             {({ handleSubmit, handleChange, values, errors }) => (
               <Form noValidate onSubmit={handleSubmit}>
-
                 <Row>
-
                   <Col>
                     <Form.Group controlId="numeroMaquina">
                       <Form.Label>Número da Máquina</Form.Label>
@@ -107,7 +111,6 @@ export default function AcidReplacement() {
                       </Form.Control.Feedback>
                     </Form.Group>
                   </Col>
-
 
                   <Col>
                     <Form.Group controlId="data">
@@ -142,7 +145,6 @@ export default function AcidReplacement() {
                     </Form.Group>
                   </Col>
 
-
                   <Col>
                     <Form.Group controlId="data1">
                       <Form.Label>Data</Form.Label>
@@ -175,7 +177,6 @@ export default function AcidReplacement() {
                       </Form.Control.Feedback>
                     </Form.Group>
                   </Col>
-
 
                   <Col>
                     <Form.Group controlId="data2">
@@ -211,7 +212,6 @@ export default function AcidReplacement() {
                     </Form.Group>
                   </Col>
 
-
                   <Col>
                     <Form.Group controlId="data3">
                       <Form.Label>Data</Form.Label>
@@ -244,7 +244,6 @@ export default function AcidReplacement() {
                       </Form.Control.Feedback>
                     </Form.Group>
                   </Col>
-
 
                   <Col>
                     <Form.Group controlId="data4">
@@ -279,7 +278,6 @@ export default function AcidReplacement() {
                     </Form.Group>
                   </Col>
 
-
                   <Col>
                     <Form.Group controlId="data5">
                       <Form.Label>Data</Form.Label>
@@ -312,7 +310,6 @@ export default function AcidReplacement() {
                       </Form.Control.Feedback>
                     </Form.Group>
                   </Col>
-
 
                   <Col>
                     <Form.Group controlId="data6">
@@ -347,7 +344,6 @@ export default function AcidReplacement() {
                     </Form.Group>
                   </Col>
 
-
                   <Col>
                     <Form.Group controlId="data7">
                       <Form.Label>Data</Form.Label>
@@ -380,7 +376,6 @@ export default function AcidReplacement() {
                       </Form.Control.Feedback>
                     </Form.Group>
                   </Col>
-
 
                   <Col>
                     <Form.Group controlId="data8a">
@@ -415,7 +410,6 @@ export default function AcidReplacement() {
                     </Form.Group>
                   </Col>
 
-
                   <Col>
                     <Form.Group controlId="data9">
                       <Form.Label>Data</Form.Label>
@@ -449,7 +443,6 @@ export default function AcidReplacement() {
                     </Form.Group>
                   </Col>
 
-
                   <Col>
                     <Form.Group controlId="data10">
                       <Form.Label>Data</Form.Label>
@@ -467,7 +460,11 @@ export default function AcidReplacement() {
                   </Col>
                 </Row>
 
-                <Button type="submit" onClick={() => handleSubmit} style={{ marginTop: 20, width: 150, marginLeft: '40%' }}>
+                <Button
+                  type="submit"
+                  onClick={() => handleSubmit}
+                  style={{ marginTop: 20, width: 150, marginLeft: "40%" }}
+                >
                   Salvar
                 </Button>
               </Form>

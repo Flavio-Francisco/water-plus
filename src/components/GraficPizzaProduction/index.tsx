@@ -1,12 +1,12 @@
 "use client";
 import * as React from "react";
 import { PieChart, pieArcLabelClasses } from "@mui/x-charts/PieChart";
-import { calcularPorcentagem, dataProducao } from "@/utils/models/Data";
+
 
 export default function GraficPizzaProduction() {
-  const percentage = calcularPorcentagem(dataProducao?.data);
-  const permeado = Number(percentage.permeated);
-  const rejeito = Number(percentage.reject);
+  
+  const permeado = 14;
+  const rejeito = 3;
 
   const data = [
     { id: 0, value: permeado, label: "Permeado" },
@@ -25,9 +25,9 @@ export default function GraficPizzaProduction() {
           colors={["#1114cf", "#dc3545"]}
           series={[
             {
-              arcLabel: (item) => `${item.value}%`,
+              arcLabel: (item) => `${item.value} LPM`,
               arcLabelMinAngle: 45,
-              data,
+              data: data,
               highlightScope: { faded: "global", highlighted: "item" },
               faded: { innerRadius: 30, additionalRadius: -30, color: "gray" },
             },

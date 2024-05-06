@@ -11,7 +11,7 @@ export default function GraficPizzaRegection() {
     { id: 1, value: soluble, label: "Rejeito" },
   ];
   const size = {
-    width: 400, // Alterado para 100% para ocupar toda a largura do contêiner pai
+    width: 400,
     height: 200,
   };
   return (
