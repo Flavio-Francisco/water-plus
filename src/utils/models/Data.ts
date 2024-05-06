@@ -13,6 +13,10 @@ interface Porcentagens {
   day?: number[] ;
   data?: number[] ;
 }
+export interface IpropsData {
+ 
+  data?: number[]|undefined ;
+}
 
 export const dataZeolica: Props = {
   title: "Pressão do zeolita",
@@ -78,31 +82,40 @@ export const fakeDiasafe: { data: string; maquina: string }[] = [
   { data: "2024-02-11", maquina: "678901" },
 ];
 
-export function extractData({ data }: Prop) {
+export function extractData( data :Props) {
   const hoje = new Date();
   const mesAtual = new Date().getMonth() + 1; // "+1" porque os meses são indexados a partir de zero
   const anoAtual = hoje.getFullYear();
-  if (!Array.isArray(data)) {
+  if (!Array.isArray(data.data)) {
     throw new Error("Os dados fornecidos não são um array.");
   }
 
-  const dadosFormatados = data.slice(1).map((par, index) => ({
-    date: `${par[0]}/${mesAtual + index}/${anoAtual}`,
-    permeated: par[1],
-    reject: par[2],
+  const Day = data?.day?.slice(1).map((par, index) => ({
+    date: `${par}/${mesAtual + index}/${anoAtual}`,
+    
+  })
+  
+  );
+  const Permeado = data?.data?.slice(1).map((par) => ({
+    permeado: par
+    
   }));
+  const dadosFormatados = {
+    Day,
+    Permeado 
+ }
+
 
   return dadosFormatados;
 }
-export function getItemByIndex(index: number, arry: Props[]): Props | null {
-  if (index >= 0 && index < arry.length) {
-    console.log(arry[index]);
-
-    return arry[index];
+export function getItemByIndex(index: number, array: Props[]): Props | null {
+  if (index >= 0 && index < array.length) {
+    return array[index];
   } else {
     return null; // Retorna null se o índice estiver fora do intervalo
   }
 }
+
 type Prop = {
   data?: object | unknown[] | undefined;
 };
@@ -271,7 +284,7 @@ export const FormInitialValues: AnalysisResult = {
   },
 };
 export function calcularPorcentagem(
-  data: Props|undefined
+  data:number[] | undefined
 ): Porcentagens {
   let permeated: string = "";
   let reject: string = "";

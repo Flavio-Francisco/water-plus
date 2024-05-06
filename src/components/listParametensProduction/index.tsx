@@ -1,72 +1,39 @@
-import { extractData } from "@/utils/models/Data";
+import { Props, extractData } from "@/utils/models/Data";
 import React from "react";
+import { Table } from "react-bootstrap";
 
-type Prop = {
-  data?: object | unknown[] | undefined;
-};
-
-export default function ListParametsProduction({ data }: Prop) {
-  if (!data) {
+export default function ListParametsProduction(data: Props) {
+  if (!data || !data.data) {
     return <div>Dados não fornecidos</div>;
   }
 
-  const Data = extractData({ data });
+  const Data = extractData(data);
 
   return (
     <div>
-      <h1 style={{ textAlign: "center", marginTop: 30, marginBottom: 30 }}>
+      <h1 className="text-center mt-8 mb-8 text-2xl font-bold">
         Dados Diários:
       </h1>
-      <ul>
-        {Data.map((item, index) => (
-          <li
-            key={index}
-            style={{
-              width: "90%",
-              border: "1px solid grey",
-              display: "flex",
-              flex: 1,
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "space-evenly",
-            }}
-          >
-            <p
-              style={{
-                fontSize: 18,
-                textAlign: "center",
-                justifyContent: "center",
-                alignItems: "center",
-                marginTop: 12,
-              }}
-            >
-              data: {item.date}
-            </p>
-            <p
-              style={{
-                fontSize: 18,
-                textAlign: "center",
-                justifyContent: "center",
-                alignItems: "center",
-                marginTop: 12,
-              }}
-            >
-              Permeado: {item.permeated}
-            </p>
-            <p
-              style={{
-                fontSize: 18,
-                textAlign: "center",
-                justifyContent: "center",
-                alignItems: "center",
-                marginTop: 12,
-              }}
-            >
-              Rejeito: {item.reject}
-            </p>
-          </li>
-        ))}
-      </ul>
+      <Table striped bordered hover className="m-auto w-4/5">
+        <thead>
+          <tr>
+            <th style={{ width: "40%", textAlign: "center" }}>Dia</th>
+            <th style={{ width: "40%", textAlign: "center" }}>Parâmetro</th>
+          </tr>
+        </thead>
+        <tbody>
+          {Data.Day?.map((dayItem, index) => (
+            <tr key={index}>
+              <td style={{ width: "40%", textAlign: "center" }}>
+                <p>{dayItem.date}</p>
+              </td>
+              <td style={{ width: "40%", textAlign: "center" }}>
+                {(data?.data || [])[index]}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </Table>
     </div>
   );
 }
