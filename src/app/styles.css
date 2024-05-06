@@ -9,10 +9,19 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
+
+}
+.body{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  width: 100%;
   background: url(bg.jpg) no-repeat;
   background-size: cover;
   background-position: center;
 }
+
 .wrapper {
   width: 420px;
   background: transparent;
