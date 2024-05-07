@@ -65,7 +65,7 @@ const HomeBody: React.FC = () => {
           </div>
         </div>
 
-        <div className=" bg-white rounded-lg  shadow-md w-100">
+        <div className=" bg-white rounded-lg  shadow-md w-full">
           {selectData.title === "img" ? (
             <div className="flex justify-center items-center">
               <Image priority={true} src={Logo} alt={"logo"} />

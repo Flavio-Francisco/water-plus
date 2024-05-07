@@ -12,11 +12,14 @@ export default function ModalLabUser() {
   const handleShow = () => setShowModal(true);
   return (
     <>
-      <button className="button" onClick={handleShow}>
+      <button
+        className="p-3 w-full text-lg text-left hover:bg-[#1976d2]"
+        onClick={handleShow}
+      >
         Usuários
       </button>
 
-      <Modal show={showModal} onHide={handleClose} size="lg" >
+      <Modal show={showModal} onHide={handleClose} size="lg" className="mt-10">
         <Modal.Header closeButton>
           <Modal.Title> Usuários</Modal.Title>
         </Modal.Header>
@@ -41,5 +44,5 @@ export default function ModalLabUser() {
         </Modal.Footer>
       </Modal>
     </>
-  )
+  );
 }

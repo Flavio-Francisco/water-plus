@@ -8,7 +8,7 @@ body {
 }
 
 button {
-  background: transparent;
+
   border: 0;
   padding: 0;
   cursor: pointer;
@@ -53,20 +53,14 @@ button {
   color: rgba(255, 255, 255, 0.2);
 }
 
-.button {
-  height: 50px;
-  width: 100%;
-  font-size: 18px;
-  color: #000;
-  padding-left: 26px;
-}
+
 
 .sidebar button span:nth-child(2) {
   flex: 1 1 auto;
 }
 
 .button:hover {
-  background: #159a9c;
+  background: #1976d2;
   color: #000;
 }
 
@@ -93,7 +87,7 @@ button {
   width: 5px;
   height: 5px;
   border-radius: 50%;
-  background-color: #d4d4ea;
+  background-color: #1976d2;
 }
 
 .material-symbols-outlined {

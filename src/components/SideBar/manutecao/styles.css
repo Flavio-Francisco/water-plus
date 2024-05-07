@@ -73,7 +73,7 @@ button {
 }
 
 .sidebar button.active {
-  background: #159a9c;
+  background: "rgba(25,118,210,255)";
 }
 
 .sub-nav {

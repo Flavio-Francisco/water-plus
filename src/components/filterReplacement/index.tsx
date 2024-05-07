@@ -55,7 +55,13 @@ export default function FilterReplacement() {
         Troca Diasafe
       </Button>
 
-      <Modal show={showModal} onHide={handleCloseModal} centered size="lg">
+      <Modal
+        show={showModal}
+        onHide={handleCloseModal}
+        centered
+        size="lg"
+        className="m-10"
+      >
         <Modal.Header closeButton>
           <Modal.Title>Troca de Diasafe</Modal.Title>
         </Modal.Header>

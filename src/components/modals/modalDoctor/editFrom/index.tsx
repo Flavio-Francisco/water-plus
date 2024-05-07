@@ -18,7 +18,6 @@ const initialValues: CredentialsDoctor = {
 
 const DoctorFormEdit: React.FC = () => {
   return (
-
     <Formik
       initialValues={initialValues}
       validationSchema={SchemaDoctor}
@@ -26,14 +25,14 @@ const DoctorFormEdit: React.FC = () => {
         console.log(values);
 
         setSubmitting(false);
-
-
       }}
     >
       {({ handleSubmit, handleChange, values, errors }) => (
         <Form noValidate onSubmit={handleSubmit}>
           <Form.Group controlId="formName">
-            <Form.Label style={{ marginTop: 10, marginBottom: 2 }}>Nome</Form.Label>
+            <Form.Label style={{ marginTop: 10, marginBottom: 2 }}>
+              Nome
+            </Form.Label>
             <Form.Control
               type="text"
               name="doctor.name"
@@ -42,11 +41,15 @@ const DoctorFormEdit: React.FC = () => {
               onChange={handleChange}
               isInvalid={!!errors.doctor?.name}
             />
-            <Form.Control.Feedback type="invalid">{errors.doctor?.name}</Form.Control.Feedback>
+            <Form.Control.Feedback type="invalid">
+              {errors.doctor?.name}
+            </Form.Control.Feedback>
           </Form.Group>
 
           <Form.Group controlId="formCRM">
-            <Form.Label style={{ marginTop: 10, marginBottom: 2 }}>CRM</Form.Label>
+            <Form.Label style={{ marginTop: 10, marginBottom: 2 }}>
+              CRM
+            </Form.Label>
             <Form.Control
               type="text"
               name="doctor.CRM"
@@ -55,10 +58,14 @@ const DoctorFormEdit: React.FC = () => {
               onChange={handleChange}
               isInvalid={!!errors.doctor?.CRM}
             />
-            <Form.Control.Feedback type="invalid">{errors.doctor?.CRM}</Form.Control.Feedback>
+            <Form.Control.Feedback type="invalid">
+              {errors.doctor?.CRM}
+            </Form.Control.Feedback>
           </Form.Group>
           <Form.Group controlId="formGraduation">
-            <Form.Label style={{ marginTop: 10, marginBottom: 2 }}>Graduação</Form.Label>
+            <Form.Label style={{ marginTop: 10, marginBottom: 2 }}>
+              Graduação
+            </Form.Label>
             <Form.Control
               type="text"
               name="doctor.graduation"
@@ -67,11 +74,15 @@ const DoctorFormEdit: React.FC = () => {
               onChange={handleChange}
               isInvalid={!!errors.doctor?.graduation}
             />
-            <Form.Control.Feedback type="invalid">{errors.doctor?.graduation}</Form.Control.Feedback>
+            <Form.Control.Feedback type="invalid">
+              {errors.doctor?.graduation}
+            </Form.Control.Feedback>
           </Form.Group>
 
           <Form.Group controlId="formPostGraduation">
-            <Form.Label style={{ marginTop: 10, marginBottom: 2 }}>Pós-Graduação</Form.Label>
+            <Form.Label style={{ marginTop: 10, marginBottom: 2 }}>
+              Pós-Graduação
+            </Form.Label>
             <Form.Control
               type="text"
               name="doctor.postGraduation"
@@ -80,11 +91,15 @@ const DoctorFormEdit: React.FC = () => {
               onChange={handleChange}
               isInvalid={!!errors.doctor?.postGraduation}
             />
-            <Form.Control.Feedback type="invalid">{errors.doctor?.postGraduation}</Form.Control.Feedback>
+            <Form.Control.Feedback type="invalid">
+              {errors.doctor?.postGraduation}
+            </Form.Control.Feedback>
           </Form.Group>
 
           <Form.Group controlId="formSecondPostGraduation">
-            <Form.Label style={{ marginTop: 10, marginBottom: 2 }}>Segunda Pós-Graduação</Form.Label>
+            <Form.Label style={{ marginTop: 10, marginBottom: 2 }}>
+              Segunda Pós-Graduação
+            </Form.Label>
             <Form.Control
               type="text"
               name="doctor.postGraduation2"
@@ -93,17 +108,22 @@ const DoctorFormEdit: React.FC = () => {
               onChange={handleChange}
               isInvalid={!!errors.doctor?.postGraduation2}
             />
-            <Form.Control.Feedback type="invalid">{errors.doctor?.postGraduation2}</Form.Control.Feedback>
+            <Form.Control.Feedback type="invalid">
+              {errors.doctor?.postGraduation2}
+            </Form.Control.Feedback>
           </Form.Group>
 
-
-          <Button variant="primary" type="submit" style={{ marginTop: 20 }}>
+          <Button
+            variant="primary"
+            className="bg-[#1976d2]"
+            type="submit"
+            style={{ marginTop: 20 }}
+          >
             Enviar
           </Button>
         </Form>
       )}
     </Formik>
-
   );
 };
 

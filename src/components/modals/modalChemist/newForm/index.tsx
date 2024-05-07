@@ -27,21 +27,20 @@ const ChemistFormEdit: React.FC = () => {
     setIsValues(!isValues)
   }, [])
   return (
-
-
     <Formik
       initialValues={Values}
       validationSchema={SchemaChemist} // Utilizando o schema de validação correspondente
       onSubmit={(values: CredentialsChemist, { setSubmitting }) => {
         console.log(values);
         setSubmitting(false);
-
       }}
     >
       {({ handleSubmit, handleChange, values, errors }) => (
         <Form noValidate onSubmit={handleSubmit}>
           <Form.Group controlId="formName">
-            <Form.Label style={{ marginTop: 10, marginBottom: 2 }}>Nome</Form.Label>
+            <Form.Label style={{ marginTop: 10, marginBottom: 2 }}>
+              Nome
+            </Form.Label>
             <Form.Control
               type="text"
               name="Chemist.name"
@@ -50,11 +49,15 @@ const ChemistFormEdit: React.FC = () => {
               onChange={handleChange}
               isInvalid={!!errors.Chemist?.name}
             />
-            <Form.Control.Feedback type="invalid">{errors.Chemist?.name}</Form.Control.Feedback>
+            <Form.Control.Feedback type="invalid">
+              {errors.Chemist?.name}
+            </Form.Control.Feedback>
           </Form.Group>
 
           <Form.Group controlId="formCRQ">
-            <Form.Label style={{ marginTop: 10, marginBottom: 2 }}>CRQ</Form.Label>
+            <Form.Label style={{ marginTop: 10, marginBottom: 2 }}>
+              CRQ
+            </Form.Label>
             <Form.Control
               type="text"
               name="Chemist.CRQ"
@@ -63,11 +66,15 @@ const ChemistFormEdit: React.FC = () => {
               onChange={handleChange}
               isInvalid={!!errors.Chemist?.CRQ}
             />
-            <Form.Control.Feedback type="invalid">{errors.Chemist?.CRQ}</Form.Control.Feedback>
+            <Form.Control.Feedback type="invalid">
+              {errors.Chemist?.CRQ}
+            </Form.Control.Feedback>
           </Form.Group>
 
           <Form.Group controlId="formGraduation">
-            <Form.Label style={{ marginTop: 10, marginBottom: 2 }}>Graduação</Form.Label>
+            <Form.Label style={{ marginTop: 10, marginBottom: 2 }}>
+              Graduação
+            </Form.Label>
             <Form.Control
               type="text"
               name="Chemist.graduation"
@@ -76,11 +83,15 @@ const ChemistFormEdit: React.FC = () => {
               onChange={handleChange}
               isInvalid={!!errors.Chemist?.graduation}
             />
-            <Form.Control.Feedback type="invalid">{errors.Chemist?.graduation}</Form.Control.Feedback>
+            <Form.Control.Feedback type="invalid">
+              {errors.Chemist?.graduation}
+            </Form.Control.Feedback>
           </Form.Group>
 
           <Form.Group controlId="formPostGraduation">
-            <Form.Label style={{ marginTop: 10, marginBottom: 2 }}>Pós-Graduação</Form.Label>
+            <Form.Label style={{ marginTop: 10, marginBottom: 2 }}>
+              Pós-Graduação
+            </Form.Label>
             <Form.Control
               type="text"
               name="Chemist.postGraduation"
@@ -89,11 +100,15 @@ const ChemistFormEdit: React.FC = () => {
               onChange={handleChange}
               isInvalid={!!errors.Chemist?.postGraduation}
             />
-            <Form.Control.Feedback type="invalid">{errors.Chemist?.postGraduation}</Form.Control.Feedback>
+            <Form.Control.Feedback type="invalid">
+              {errors.Chemist?.postGraduation}
+            </Form.Control.Feedback>
           </Form.Group>
 
           <Form.Group controlId="formSecondPostGraduation">
-            <Form.Label style={{ marginTop: 10, marginBottom: 2 }}>Segunda Pós-Graduação</Form.Label>
+            <Form.Label style={{ marginTop: 10, marginBottom: 2 }}>
+              Segunda Pós-Graduação
+            </Form.Label>
             <Form.Control
               type="text"
               name="Chemist.postGraduation2"
@@ -102,16 +117,22 @@ const ChemistFormEdit: React.FC = () => {
               onChange={handleChange}
               isInvalid={!!errors.Chemist?.postGraduation2}
             />
-            <Form.Control.Feedback type="invalid">{errors.Chemist?.postGraduation2}</Form.Control.Feedback>
+            <Form.Control.Feedback type="invalid">
+              {errors.Chemist?.postGraduation2}
+            </Form.Control.Feedback>
           </Form.Group>
 
-          <Button variant="primary" type="submit" style={{ marginTop: 20, }}>
+          <Button
+            variant="primary"
+            className="bg-[#1976d2]"
+            type="submit"
+            style={{ marginTop: 20 }}
+          >
             Enviar
           </Button>
         </Form>
       )}
     </Formik>
-
   );
 };
 

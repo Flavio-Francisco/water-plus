@@ -28,6 +28,13 @@ import AssignmentOutlinedIcon from "@mui/icons-material/AssignmentOutlined";
 import WaterOutlinedIcon from "@mui/icons-material/WaterOutlined";
 import { useRouter } from "next/navigation";
 import Dashboard from "./Dashboard";
+import WaterParametersForm from "../waterParametersForm";
+import Maintenance from "../SideBar/manutecao";
+import SettingsModal from "../SideBar/settingsModal";
+import LogOut from "../logOut";
+import UserCard from "../CardUser";
+import Image from "next/image";
+import Logo from "../SideBar/logo.jpg";
 const drawerWidth = 240;
 
 const openedMixin = (theme: Theme): CSSObject => ({
@@ -133,8 +140,55 @@ export default function Drawer({
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            Water plus
+            <Image
+              style={{ borderRadius: 15 }}
+              priority
+              className="image"
+              src={Logo}
+              alt="Logo"
+              width={30}
+              height={30}
+            />
           </Typography>
+          <div className="flex flex-row gap-8 m-auto w-4/12">
+            <ListItemIcon
+              title="Parametros"
+              sx={{
+                minWidth: 0,
+                mr: open ? 3 : "auto",
+                justifyContent: "center",
+                color: "white",
+              }}
+            >
+              <WaterParametersForm />
+            </ListItemIcon>
+            <ListItemIcon
+              title="Manuteção"
+              sx={{
+                minWidth: 0,
+                mr: open ? 3 : "auto",
+                justifyContent: "center",
+                color: "white",
+              }}
+            >
+              <Maintenance />
+            </ListItemIcon>
+            <ListItemIcon
+              title="Configuração"
+              sx={{
+                minWidth: 0,
+                mr: open ? 3 : "auto",
+                justifyContent: "center",
+                color: "white",
+              }}
+            >
+              <SettingsModal />
+            </ListItemIcon>
+          </div>
+          <div className="gap-5 flex flex-row justify-center items-center">
+            <UserCard />
+            <LogOut />
+          </div>
         </Toolbar>
       </AppBar>
       <ActionDrawer variant="permanent" open={open}>

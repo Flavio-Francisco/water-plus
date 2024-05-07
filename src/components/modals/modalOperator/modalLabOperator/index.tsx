@@ -12,11 +12,14 @@ export default function ModalLabOperador() {
   const handleShow = () => setShowModal(true);
   return (
     <>
-      <button className="button" onClick={handleShow}>
-        Operador Responsável 
+      <button
+        className="p-3 w-full text-lg text-left hover:bg-[#1976d2]"
+        onClick={handleShow}
+      >
+        Operador Responsável
       </button>
 
-      <Modal show={showModal} onHide={handleClose}>
+      <Modal show={showModal} onHide={handleClose} className="m-10">
         <Modal.Header closeButton>
           <Modal.Title>Operador</Modal.Title>
         </Modal.Header>
@@ -41,5 +44,5 @@ export default function ModalLabOperador() {
         </Modal.Footer>
       </Modal>
     </>
-  )
+  );
 }

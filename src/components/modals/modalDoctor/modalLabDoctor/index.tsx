@@ -12,11 +12,14 @@ export default function ModalLabDoctor() {
   const handleShow = () => setShowModal(true);
   return (
     <>
-      <button className="button" onClick={handleShow}>
+      <button
+        className="p-3 w-full text-lg text-left hover:bg-[#1976d2]"
+        onClick={handleShow}
+      >
         Responsável Técnico Médico
       </button>
 
-      <Modal show={showModal} onHide={handleClose}>
+      <Modal show={showModal} onHide={handleClose} className="m-10">
         <Modal.Header closeButton>
           <Modal.Title>Médico</Modal.Title>
         </Modal.Header>
@@ -35,11 +38,15 @@ export default function ModalLabDoctor() {
           />
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+          <Button
+            className="bg-slate-500"
+            variant="secondary"
+            onClick={handleClose}
+          >
             Fechar
           </Button>
         </Modal.Footer>
       </Modal>
     </>
-  )
+  );
 }

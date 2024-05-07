@@ -57,7 +57,13 @@ export default function AcidReplacement() {
         Ácido Peracético
       </button>
 
-      <Modal show={showModal} onHide={handleCloseModal} centered size="lg">
+      <Modal
+        show={showModal}
+        onHide={handleCloseModal}
+        centered
+        size="lg"
+        className="m-10"
+      >
         <Modal.Header closeButton>
           <Modal.Title>Troca de Ácido Peracético</Modal.Title>
         </Modal.Header>

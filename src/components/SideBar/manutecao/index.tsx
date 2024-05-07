@@ -6,9 +6,8 @@ import React, { useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 import WarningIcon from "@mui/icons-material/Warning";
 import { fakeReservoirCleaning } from "@/utils/models/Data";
-import "../styles.css";
 
-function MyModal() {
+function Maintenance() {
   const [show, setShow] = useState(false);
   const [isActive, setActive] = useState(false);
   const handleClose = () => {
@@ -29,10 +28,9 @@ function MyModal() {
         }}
       >
         <WarningIcon />
-        Manutenção
       </button>
 
-      <Modal show={show} onHide={handleClose}>
+      <Modal show={show} onHide={handleClose} className="mt-10">
         <Modal.Header closeButton>
           <Modal.Title>Procedimentos Agendados</Modal.Title>
         </Modal.Header>
@@ -44,7 +42,11 @@ function MyModal() {
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+          <Button
+            className="bg-slate-500"
+            variant="secondary"
+            onClick={handleClose}
+          >
             Fechar
           </Button>
         </Modal.Footer>
@@ -53,4 +55,4 @@ function MyModal() {
   );
 }
 
-export default MyModal;
+export default Maintenance;
