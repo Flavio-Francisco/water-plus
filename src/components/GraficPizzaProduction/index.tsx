@@ -22,7 +22,7 @@ export default function GraficPizzaProduction() {
       <div className="w-full md:w-3/4 lg:w-1/2">
         {/* Adicionado contêiner responsivo */}
         <PieChart
-          colors={["#1114cf", "#dc3545"]}
+          colors={["rgba(25,118,210,255)", "#dc3545"]}
           series={[
             {
               arcLabel: (item) => `${item.value} LPM`,

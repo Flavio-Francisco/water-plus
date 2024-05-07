@@ -9,9 +9,7 @@ interface Props {
 }
 
 const GraficLineAnimed = ({ title, data, day }: Props) => {
-  useEffect(() => {
-    console.log("coco");
-  }, [data, day]);
+  useEffect(() => {}, [data, day]);
   return (
     <div className="">
       <div className="w-full sm:w-2/4 md:w-1/2 lg:w-1/3 ">
@@ -24,7 +22,7 @@ const GraficLineAnimed = ({ title, data, day }: Props) => {
             },
           ]}
           grid={{ vertical: true, horizontal: true }}
-          colors={["#1114cf"]}
+          colors={["rgba(25,118,210,255)"]}
           width={500}
           height={300}
         />
