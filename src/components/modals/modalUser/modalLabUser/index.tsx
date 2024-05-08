@@ -13,7 +13,7 @@ export default function ModalLabUser() {
   return (
     <>
       <button
-        className="p-3 w-full text-lg text-left hover:bg-[#1976d2]"
+        className="p-3 w-full text-lg text-left hover:bg-[#add8e6]"
         onClick={handleShow}
       >
         Usuários
@@ -38,7 +38,11 @@ export default function ModalLabUser() {
           />
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+          <Button
+            variant="secondary"
+            className="bg-slate-500 text-lg text-left hover:bg-slate-600"
+            onClick={handleClose}
+          >
             Fechar
           </Button>
         </Modal.Footer>

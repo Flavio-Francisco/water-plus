@@ -25,7 +25,9 @@ const UserFormNew: React.FC = () => {
       {({ handleSubmit, handleChange, values, errors }) => (
         <Form noValidate onSubmit={handleSubmit}>
           <Form.Group controlId="formName">
-            <Form.Label style={{ marginTop: 10, marginBottom: 2 }}>Nome</Form.Label>
+            <Form.Label style={{ marginTop: 10, marginBottom: 2 }}>
+              Nome
+            </Form.Label>
             <Form.Control
               type="text"
               name="user.name"
@@ -34,12 +36,18 @@ const UserFormNew: React.FC = () => {
               onChange={handleChange}
               isInvalid={!!errors.user?.name}
             />
-            <Form.Control.Feedback type="invalid">{errors.user?.name}</Form.Control.Feedback>
+            <Form.Control.Feedback type="invalid">
+              {errors.user?.name}
+            </Form.Control.Feedback>
           </Form.Group>
 
           <Form.Group controlId="formPassword">
-            <Form.Label style={{ marginTop: 10, marginBottom: 2 }}>Senha</Form.Label>
-            <div style={{ display: 'flex', flexDirection: 'row', borderRight: 0 }}>
+            <Form.Label style={{ marginTop: 10, marginBottom: 2 }}>
+              Senha
+            </Form.Label>
+            <div
+              style={{ display: "flex", flexDirection: "row", borderRight: 0 }}
+            >
               <Form.Control
                 style={{ borderBottomRightRadius: 0, borderTopRightRadius: 0 }}
                 type={showPassword ? "text" : "password"}
@@ -49,15 +57,33 @@ const UserFormNew: React.FC = () => {
                 onChange={handleChange}
                 isInvalid={!!errors.user?.password}
               />
-              <Button onClick={() => setShowPassword(!showPassword)} style={{ borderBottomLeftRadius: 0, borderTopLeftRadius: 0, background: "#fff", borderColor: '#ced4da', borderLeft: 0, }}>
-
-                {showPassword === true ? <VisibilityOffOutlined fontSize='small' color='action' /> : < VisibilityOutlinedIcon fontSize='small' color='action' />}
+              <Button
+                onClick={() => setShowPassword(!showPassword)}
+                style={{
+                  borderBottomLeftRadius: 0,
+                  borderTopLeftRadius: 0,
+                  background: "#fff",
+                  borderColor: "#ced4da",
+                  borderLeft: 0,
+                }}
+              >
+                {showPassword === true ? (
+                  <VisibilityOffOutlined fontSize="small" color="action" />
+                ) : (
+                  <VisibilityOutlinedIcon fontSize="small" color="action" />
+                )}
               </Button>
             </div>
-            <Form.Control.Feedback type="invalid">{errors.user?.password}</Form.Control.Feedback>
+            <Form.Control.Feedback type="invalid">
+              {errors.user?.password}
+            </Form.Control.Feedback>
           </Form.Group>
 
-          <Button variant="primary" type="submit" style={{ marginTop: 20 }}>
+          <Button
+            className=" text-lg text-left bg-[#1976d2]"
+            type="submit"
+            style={{ marginTop: 20 }}
+          >
             Enviar
           </Button>
         </Form>

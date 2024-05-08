@@ -1,6 +1,6 @@
 import React from 'react'
 import { Roboto } from 'next/font/google'
-
+import "./globals.css";
 
 const roboto = Roboto({
   weight: '400',

@@ -13,7 +13,7 @@ export default function ModalLabChemist() {
   return (
     <>
       <button
-        className="p-3 w-full text-lg text-left hover:bg-[#1976d2]"
+        className="p-3 w-full text-lg text-left hover:bg-[#add8e6]"
         onClick={handleShow}
       >
         Responsável Técnico Químico

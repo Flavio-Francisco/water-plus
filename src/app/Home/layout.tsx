@@ -24,10 +24,9 @@ export default function RootLayout({
   return (
     <html lang="pt-br">
       <body className={roboto.className}>
-        {/* <Sidebar /> */}
-        <Drawer >
-        <div className="root">{children}</div>
-        </Drawer >
+        <Drawer>
+          <div className="root">{children}</div>
+        </Drawer>
       </body>
     </html>
   );

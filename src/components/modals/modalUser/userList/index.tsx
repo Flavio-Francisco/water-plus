@@ -21,39 +21,52 @@ const UserList: React.FC = () => {
 
 
     return (
-        <div style={{ width: '100%', }}>
-            {select === true ?
-                <button className='button' onClick={handleShowList}>Mostrar Lista de Usuários</button>
-                :
-                null
-            }
+      <div style={{ width: "100%" }}>
+        {select === true ? (
+          <button
+            className="p-3 w-full text-lg text-left hover:bg-[#add8e6]"
+            onClick={handleShowList}
+          >
+            Mostrar Lista de Usuários
+          </button>
+        ) : null}
 
-            <div className='conteinerList'>
-                {/* Renderiza a lista de usuários apenas se o estado showList for true */}
-                {showList && (
-                    <div>
-                        <h5 className='h5'>Lista de Usuários</h5>
-                        <div style={{ maxHeight: '400px', maxWidth: '500px', overflowY: 'auto' }} >
-
-                            <ListGroup style={{ width: '450px', }}>
-                                {fakeListUser.map((user, index) => (
-                                    <ListGroup.Item key={index} action onClick={() => handleSelectUser(user)} >
-                                        {user.user.name}
-                                    </ListGroup.Item>
-                                ))}
-                            </ListGroup>
-                        </div>
-                    </div>
-                )}
-                {/* Renderiza o formulário de edição do usuário apenas se um usuário estiver selecionado */}
-                {selectedUser && (
-                    <div className='form'>
-                        <h5 className='h5'>Editar Usuário</h5>
-                        <UserForm initialValues={selectedUser} /> {/* Passa o usuário selecionado como initialValues para o formulário de edição */}
-                    </div>
-                )}
+        <div className="conteinerList">
+          {/* Renderiza a lista de usuários apenas se o estado showList for true */}
+          {showList && (
+            <div>
+              <h5 className="h5">Lista de Usuários</h5>
+              <div
+                style={{
+                  maxHeight: "400px",
+                  maxWidth: "500px",
+                  overflowY: "auto",
+                }}
+              >
+                <ListGroup style={{ width: "450px" }}>
+                  {fakeListUser.map((user, index) => (
+                    <ListGroup.Item
+                      key={index}
+                      action
+                      onClick={() => handleSelectUser(user.user)}
+                    >
+                      {user.user.name}
+                    </ListGroup.Item>
+                  ))}
+                </ListGroup>
+              </div>
             </div>
+          )}
+          {/* Renderiza o formulário de edição do usuário apenas se um usuário estiver selecionado */}
+          {selectedUser && (
+            <div className="form">
+              <h5 className="h5">Editar Usuário</h5>
+              <UserForm initialValues={selectedUser} />{" "}
+              {/* Passa o usuário selecionado como initialValues para o formulário de edição */}
+            </div>
+          )}
         </div>
+      </div>
     );
 };
 
