@@ -1,0 +1,218 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("PostgreSQL")
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model Reservoir_cleaning {
+  id           Int      @id
+  lastCleaning String
+  nextCleaning String?
+  system_id    Int?
+  systems      systems? @relation(fields: [system_id], references: [id], onDelete: Cascade)
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model apevisa {
+  id               Int      @id
+  date             String
+  name             String?
+  cianoBacteria    String?
+  escherichaColi   String?
+  endotoxin        String?
+  heterotrophic    String?
+  totalColiforms   String?
+  seedingInDepth   String?
+  seedingOnSurface String?
+  conductivity     String?
+  freeChlorine_    String?  @map("freeChlorine?")
+  pH               String?
+  potentiometry    String?
+  system_id        Int?
+  systems          systems? @relation(fields: [system_id], references: [id], onDelete: Cascade)
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model chemical {
+  id              Int      @id(map: "chemist_pkey")
+  name            String?
+  CRM             String?
+  graduation      String?
+  postGraduation  String?
+  postGraduation2 String?
+  system_id       Int?
+  systems         systems? @relation(fields: [system_id], references: [id], onDelete: Cascade)
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model diasefe {
+  id        Int      @id
+  date      String
+  machine   String?
+  system_id Int?
+  systems   systems? @relation(fields: [system_id], references: [id], onDelete: Cascade)
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model doctor {
+  id              Int      @id
+  name            String?
+  CRM             String?
+  graduation      String?
+  postGraduation  String?
+  postGraduation2 String?
+  system_id       Int?
+  systems         systems? @relation(fields: [system_id], references: [id], onDelete: Cascade)
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model microbiologigo_assays {
+  id                         Int      @id
+  samplingDate               String
+  sampleMatrixAndOrigin      String?
+  eColiPresence              String?
+  totalColiformsPresence     String?
+  heterotrophicBacteriaCount String?
+  system_id                  Int?
+  systems                    systems? @relation(fields: [system_id], references: [id], onDelete: Cascade)
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model operator {
+  id           Int      @id
+  name         String
+  registration String?
+  system_id    Int?
+  systems      systems? @relation(fields: [system_id], references: [id], onDelete: Cascade)
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model parameters {
+  id                            Int      @id
+  Color                         String
+  Turbidity                     String?
+  Taste                         String?
+  Odor                          String?
+  TotalChlorine                 Float?   @db.Real
+  FreeChlorine                  Float?   @db.Real
+  ph                            Float?   @db.Real
+  SoftenerHardness              Float?   @db.Real
+  MultimediaFilterInputPressure Float?   @db.Real
+  SoftenerInputPressure         Float?   @db.Real
+  CarbonInputPressure           Float?   @db.Real
+  CarbonOutputPressure          Float?   @db.Real
+  MultimediaFilterDisplayTime   String?
+  SoftenerDisplayTime           String?
+  CarbonDisplayTime             String?
+  SaltReservoirLevel            String?
+  ROInputPressure1              Float?   @db.Real
+  ROInputPressure2              Float?   @db.Real
+  MembraneInputPressure1        Float?   @db.Real
+  MembraneInputPressure2        Float?   @db.Real
+  RejectPressur1                Float?   @db.Real
+  RejectPressur2                Float?   @db.Real
+  ROInputConductivity1          Float?   @db.Real
+  ROInputConductivity2          Float?   @db.Real
+  ROOutputConductivity1         Float?   @db.Real
+  ROOutputConductivity2         Float?   @db.Real
+  SalinityRejectionRate1        Float?   @db.Real
+  SalinityRejectionRate2        Float?   @db.Real
+  PermeateFlowRate1             Float?   @db.Real
+  PermeateFlowRate2             Float?   @db.Real
+  RejectFlowRate1               Float?   @db.Real
+  RejectFlowRate2               Float?   @db.Real
+  OutputPressure                Float?   @db.Real
+  ReturnPressure                Float?   @db.Real
+  OzoneTestBefore1stShift       Boolean?
+  Conductivity                  Float?   @db.Real
+  system_id                     Int?
+  systems                       systems? @relation(fields: [system_id], references: [id], onDelete: Cascade)
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model reservoir_analysis {
+  id                                            Int      @id
+  bicarbonateAlkalinity                         String
+  carbonateAlkalinity                           String?
+  hydroxideAlkalinity                           String?
+  totalAlkalinity                               String?
+  aluminum                                      String?
+  ammonia                                       String?
+  calcium                                       String?
+  chlorides                                     String?
+  freeResidualChlorine                          String?
+  electricalConductivity                        String?
+  apparentColor                                 String?
+  carbonateHardness                             String?
+  nonCarbonateHardness                          String?
+  totalHardness                                 String?
+  totalIron                                     String?
+  magnesium                                     String?
+  manganese                                     String?
+  nitrate                                       String?
+  nitrite                                       String?
+  dissolvedOxygen                               String?
+  pH                                            String?
+  potassium                                     String?
+  sodium                                        String?
+  totalDissolvedSolids                          String?
+  sulfate                                       String?
+  hydrogenSulfide                               String?
+  surfactants                                   String?
+  totalColiforms                                String?
+  heterotrophicBacteriaCount                    String?
+  endotoxins                                    String?
+  samplingDate                                  String?
+  sampleMatrixAndOrigin                         String?
+  system_id                                     Int?
+  systems_reservoir_analysis_idTosystems        systems  @relation("reservoir_analysis_idTosystems", fields: [id], references: [id], onDelete: Cascade)
+  systems_reservoir_analysis_system_idTosystems systems? @relation("reservoir_analysis_system_idTosystems", fields: [system_id], references: [id], onDelete: Cascade)
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model reservoir_cleaning_report {
+  id               Int      @id
+  flushing         String
+  laboratory       String?
+  loopDisinfection String?
+  initialTime      String?
+  finalTime        String?
+  comments         String?
+  system_id        Int?
+  systems          systems? @relation(fields: [system_id], references: [id], onDelete: Cascade)
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model systems {
+  id                                                       Int                         @id
+  name                                                     String
+  address                                                  String?
+  city                                                     String?
+  state                                                    String?
+  zipCode                                                  String?
+  number                                                   Int?
+  Reservoir_cleaning                                       Reservoir_cleaning[]
+  apevisa                                                  apevisa[]
+  chemical                                                 chemical[]
+  diasefe                                                  diasefe[]
+  doctor                                                   doctor[]
+  microbiologigo_assays                                    microbiologigo_assays[]
+  operator                                                 operator[]
+  parameters                                               parameters[]
+  reservoir_analysis_reservoir_analysis_idTosystems        reservoir_analysis?         @relation("reservoir_analysis_idTosystems")
+  reservoir_analysis_reservoir_analysis_system_idTosystems reservoir_analysis[]        @relation("reservoir_analysis_system_idTosystems")
+  reservoir_cleaning_report                                reservoir_cleaning_report[]
+  user                                                     user[]
+}
+
+model user {
+  id        Int      @id
+  name      String   @unique
+  password  String?
+  system_id Int?
+  systems   systems? @relation(fields: [system_id], references: [id], onDelete: Cascade)
+}

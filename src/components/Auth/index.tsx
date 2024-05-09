@@ -7,6 +7,7 @@ import Autocomplete from "@mui/material/Autocomplete";
 import { Formik, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { UserModel } from "@/utils/models/userModel";
+import { useRouter } from "next/navigation";
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().required("Você deve informar seu usuário"),
@@ -26,6 +27,7 @@ const Sistemas: Sistema[] = [
 ];
 
 export default function Auth() {
+  const { push } = useRouter();
   const handleSubmit = (
     values: UserModel,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -34,6 +36,7 @@ export default function Auth() {
     console.log(values);
     setSubmitting(false);
     resetForm();
+    push("/Home");
   };
 
   return (
