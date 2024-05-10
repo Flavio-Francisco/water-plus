@@ -35,6 +35,10 @@ import LogOut from "../logOut";
 import UserCard from "../CardUser";
 import Image from "next/image";
 import Logo from "../SideBar/logo.jpg";
+import ImageUser from "../../../public/user-not.png";
+import { useUserContext } from "@/context/userContext";
+import { CircularProgress } from "@mui/material";
+
 const drawerWidth = 240;
 
 const openedMixin = (theme: Theme): CSSObject => ({
@@ -113,7 +117,7 @@ export default function Drawer({
 }>) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-
+  const { user } = useUserContext();
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -122,8 +126,38 @@ export default function Drawer({
     setOpen(false);
   };
   const { push } = useRouter();
+  if (user === null) {
+    return (
+      <div className="min-h-screen flex justify-center items-center">
+        <div className="m-auto flex flex-col justify-center items-center">
+          <div>
+            <h1 className="text-5xl font-bold text-center mb-6 text-[rgba(25,118,210,255)]">
+              Desculpe!!!
+            </h1>
+            <h2 className="text-4xl font-bold first-letter:text-center text-[rgba(25,118,210,255)]">
+              Não Há Usuário Logado no Sistema
+            </h2>
+          </div>
+          <div className="rounded-full">
+            <Image
+              className="rounded-full"
+              priority
+              width={200}
+              height={200}
+              src={ImageUser}
+              alt={"imagem"}
+            />
+          </div>
+          <div className="m-auto">
+            <CircularProgress size={100} />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box sx={{ display: user === null ? "none" : "flex" }}>
       <CssBaseline />
       <AppBar position="fixed" open={open}>
         <Toolbar>

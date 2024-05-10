@@ -58,3 +58,14 @@ export interface AnalysisResult {
     heterotrophicBacteriaCount: string;
   };
 }
+
+export interface Systems{
+  id: number | null;
+name: string | null;
+  address: string | null;
+  city: string | null;
+  state: string | null;
+  zipCode: string | null;
+  number: number| null;
+
+}

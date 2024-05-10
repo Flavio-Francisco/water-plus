@@ -6,7 +6,8 @@ import { Roboto } from 'next/font/google'
 import '@/style/global.css'
 import './style.css'
 import Drawer from '@/components/Drawer';
-
+import Provider from "@/components/Providers";
+import { UserProvider } from "@/context/userContext";
 
 const roboto = Roboto({
   weight: "400",
@@ -24,9 +25,13 @@ export default function RootLayout({
   return (
     <html lang="pt-br">
       <body className={roboto.className}>
-        <Drawer>
-          <div className="root">{children}</div>
-        </Drawer>
+        <Provider>
+          <UserProvider>
+            <Drawer>
+              <div className="root">{children}</div>
+            </Drawer>
+          </UserProvider>
+        </Provider>
       </body>
     </html>
   );

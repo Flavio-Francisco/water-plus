@@ -22,6 +22,8 @@
     "@popperjs/core": "^2.11.8",
     "@prisma/client": "^5.13.0",
     "@react-pdf/renderer": "^3.3.8",
+    "@tanstack/react-query": "^5.35.1",
+    "@tanstack/react-query-devtools": "^5.35.1",
     "@types/react-input-mask": "^3.0.5",
     "antd": "^5.12.8",
     "apexcharts": "^3.45.1",
