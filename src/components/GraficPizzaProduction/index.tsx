@@ -23,8 +23,7 @@ export default function GraficPizzaProduction() {
       }
     },
   });
-  console.log("grafic", poduction);
-  console.log("user.system_id", user?.system_id);
+
   if (isError) {
     <div className="flex flex-col justify-center items-center w-full">
       <h1 className="text-center">Erro ao carregar dados</h1>

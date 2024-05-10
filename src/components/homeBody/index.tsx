@@ -10,14 +10,25 @@ import {
 } from "@/utils/models/Data";
 import GraficLineAnimed from "../graficLineAnimed";
 import Image from "next/image";
+import { useUserContext } from "@/context/userContext";
+import { GetBatery } from "@/app/fecth/batery";
+import { useQuery } from "@tanstack/react-query";
 
-// Defina o tipo para as props do componente GraficLineAnimed
-
-// Componente HomeBody
 const HomeBody: React.FC = () => {
   const [selectData, setSelectData] = useState<Props>(dataAbrandador);
+  const { user } = useUserContext();
 
-  // Função para selecionar os dados do gráfico
+  const { data } = useQuery({
+    queryKey: ["batery"],
+    queryFn: () => {
+      if (user) {
+        return GetBatery(user.system_id);
+      } else {
+        return null;
+      }
+    },
+  });
+
   const dataSelect = async (grafic: string) => {
     switch (grafic) {
       case "abrandador":
@@ -46,21 +57,21 @@ const HomeBody: React.FC = () => {
               onClick={() => dataSelect("zeolita")}
             >
               <p className="text-center">Zeolita</p>
-              <Batery chargeLevel={100} />
+              <Batery chargeLevel={data?.sand} />
             </div>
             <div
               className="flex flex-col items-center"
               onClick={() => dataSelect("abrandador")}
             >
               <p className="text-center">Abrandador</p>
-              <Batery chargeLevel={70} />
+              <Batery chargeLevel={data?.resin} />
             </div>
             <div
               className="flex flex-col items-center"
               onClick={() => dataSelect("carvao")}
             >
               <p className="text-center">Carvão</p>
-              <Batery chargeLevel={60} />
+              <Batery chargeLevel={data?.coal} />
             </div>
           </div>
         </div>
