@@ -46,3 +46,49 @@ export interface WaterTreatmentParameters {
     Conductivity: number|undefined;
   };
 }
+
+
+export interface ParametersDB {
+  id: number | null;
+  Color: string | null;
+  Turbidity: string | null;
+  Taste: string | null;
+  Odor: string | null;
+  TotalChlorine: number | null;
+  FreeChlorine: number | null;
+  ph: number | null;
+  
+  SoftenerHardness: number | null;
+  MultimediaFilterInputPressure: number | null;
+  SoftenerInputPressure: number | null;
+  CarbonInputPressure: number | null;
+  CarbonOutputPressure: number | null;
+  MultimediaFilterDisplayTime: string | null;
+  SoftenerDisplayTime: string | null;
+  CarbonDisplayTime: string | null;
+  SaltReservoirLevel: string | null;
+  
+  ROInputPressure1: number | null;
+  MembraneInputPressure1: number | null;
+  RejectPressur1: number | null;
+  ROInputConductivity1: number | null;
+  ROOutputConductivity1: number | null;
+  SalinityRejectionRate1: number | null;
+  PermeateFlowRate1: number | null;
+  RejectFlowRate1: number | null;
+  
+  ROInputPressure2: number | null;
+  MembraneInputPressure2: number | null;
+  RejectPressur2: number | null;
+  ROInputConductivity2: number | null;
+  ROOutputConductivity2: number | null;
+  SalinityRejectionRate2: number | null;
+  PermeateFlowRate2: number | null;
+  RejectFlowRate2: number | null;
+
+  OutputPressure: number | null;
+  ReturnPressure: number | null;
+  OzoneTestBefore1stShift: boolean | null;
+  Conductivity: number | null;
+}
+

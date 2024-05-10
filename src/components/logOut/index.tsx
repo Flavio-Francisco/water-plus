@@ -1,14 +1,14 @@
 "use client";
 
+import { useUserContext } from "@/context/userContext";
 import ExitToAppSharpIcon from "@mui/icons-material/ExitToAppSharp";
-import { useRouter } from "next/navigation";
 import React from "react";
 
 export default function LogOut() {
-  const { push } = useRouter();
+  const { signOut } = useUserContext();
 
   return (
-    <button className="" onClick={() => push("/")}>
+    <button className="" onClick={() => signOut()}>
       <ExitToAppSharpIcon />
     </button>
   );

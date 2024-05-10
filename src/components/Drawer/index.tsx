@@ -220,7 +220,10 @@ export default function Drawer({
             </ListItemIcon>
           </div>
           <div className="gap-5 flex flex-row justify-center items-center">
-            <UserCard />
+            <div className="max-md:hidden mt-2">
+              <UserCard />
+            </div>
+
             <LogOut />
           </div>
         </Toolbar>

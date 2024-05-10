@@ -1,13 +1,41 @@
+import { useUserContext } from "@/context/userContext";
+import { getCurrentDate } from "@/utils/functions/FormateDate";
 import { getMessage } from "@/utils/functions/message";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 const UserCard: React.FC = () => {
-  const user = "Flávio";
+  const { user } = useUserContext();
   const message = getMessage();
+  const currentDate = getCurrentDate();
+  const [city, setCity] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchLocation = async () => {
+      try {
+        const response = await fetch("https://ipapi.co/json/");
+        if (response.ok) {
+          const data = await response.json();
+          setCity(data.city);
+        } else {
+          throw new Error("Failed to fetch location data");
+        }
+      } catch (error) {
+        console.error("Error fetching location:", error);
+      }
+    };
+
+    fetchLocation();
+  }, []);
+
   return (
-    <div className="bg-transparent flex items-center justify-center ">
+    <div className="bg-transparent flex flex-col items-center justify-center ">
+      <p className="text-sm text-center text-white w-full mb-0">
+        {city}
+        {"   "} {currentDate}
+      </p>
+
       <p className="text-sm text-center text-white">
-        {message} {user}
+        {message} {user?.name}
       </p>
     </div>
   );

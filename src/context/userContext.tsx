@@ -12,7 +12,7 @@ import {
 } from "react";
 
 interface UserData {
-  user: UserAuth | undefined | null;
+  user: UserAuth | null;
   getUser: (user: UserAuth | null) => void;
   signOut: () => void;
   clearCache: () => void;
