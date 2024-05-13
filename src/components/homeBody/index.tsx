@@ -2,22 +2,30 @@
 import React, { useState } from "react";
 import Batery from "../batery";
 import Logo from "@/app/logo.jpg";
-import {
-  dataAbrandador,
-  dataZeolica,
-  dataCarvao,
-  Props,
-} from "@/utils/models/Data";
+import { Props } from "@/utils/models/Data";
 import GraficLineAnimed from "../graficLineAnimed";
 import Image from "next/image";
 import { useUserContext } from "@/context/userContext";
 import { GetBatery } from "@/app/fecth/batery";
 import { useQuery } from "@tanstack/react-query";
+import { GetDataFull } from "@/app/fecth/dataform";
+import { useDataFull } from "@/context/userDataFull";
+import getObjects from "@/utils/functions/getObject";
+import { GetAnnual } from "@/app/fecth/annual";
 
 const HomeBody: React.FC = () => {
-  const [selectData, setSelectData] = useState<Props>(dataAbrandador);
   const { user } = useUserContext();
-
+  const { getDataFull, getProduction } = useDataFull();
+  const { data: production } = useQuery({
+    queryKey: ["annual"],
+    queryFn: () => {
+      if (user) {
+        return GetAnnual(user.system_id);
+      } else {
+        return null;
+      }
+    },
+  });
   const { data } = useQuery({
     queryKey: ["batery"],
     queryFn: () => {
@@ -28,17 +36,27 @@ const HomeBody: React.FC = () => {
       }
     },
   });
+  const { data: dataFull } = useQuery({
+    queryKey: ["dataFull"],
+    queryFn: () => GetDataFull(user?.system_id || null),
+  });
 
+  getDataFull(dataFull);
+  getProduction(production);
+  const Abrandador = getObjects(dataFull, "Pressão de Entrada do Abrandador")!;
+  const Zeolica = getObjects(dataFull, "Pressão de Entrada Multimídia")!;
+  const Carvao = getObjects(dataFull, "Pressão de Entrada de Carvão")!;
+  const [selectData, setSelectData] = useState<Props>(Abrandador);
   const dataSelect = async (grafic: string) => {
     switch (grafic) {
       case "abrandador":
-        await setSelectData(dataAbrandador);
+        setSelectData(Abrandador);
         break;
       case "zeolita":
-        await setSelectData(dataZeolica);
+        await setSelectData(Zeolica);
         break;
       case "carvao":
-        await setSelectData(dataCarvao);
+        await setSelectData(Carvao);
         break;
       case "img":
         return <Image src={Logo} alt={"logo"} />;
@@ -77,16 +95,16 @@ const HomeBody: React.FC = () => {
         </div>
 
         <div className=" bg-white rounded-lg  shadow-md w-full">
-          {selectData.title === "img" ? (
+          {selectData?.title === "img" ? (
             <div className="flex justify-center items-center">
               <Image priority={true} src={Logo} alt={"logo"} />
             </div>
           ) : (
             <div className="flex justify-center items-center">
               <GraficLineAnimed
-                day={selectData.day}
-                title={selectData.title}
-                data={selectData.data}
+                day={selectData?.day}
+                title={selectData?.title}
+                data={selectData?.data}
               />
             </div>
           )}

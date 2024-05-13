@@ -1,6 +1,5 @@
 "use client";
-import { GetDataFull } from "@/app/fecth/dataform";
-import { useQuery } from "@tanstack/react-query";
+
 import React from "react";
 
 import {
@@ -11,17 +10,20 @@ import {
   useState,
 } from "react";
 import { useUserContext } from "./userContext";
+import { WaterData } from "@/components/production";
 
 interface Props {
   title: string;
-  day: number[];
-  data: (number | null)[];
+  day?: number[];
+  data?: number[];
 }
 interface DataFull {
+  production: WaterData | null;
   dataFull: Props[] | null;
   signOutDataFull: () => void;
   clearCacheDataFull: () => void;
-  refetch: () => void;
+  getDataFull: (data: Props[] | null) => void;
+  getProduction: (data: WaterData | null) => void;
 }
 
 interface DataFullContextType {
@@ -35,24 +37,33 @@ export const useDataFull = () => useContext(DataFull);
 export const DataFullProvider: React.FC<DataFullContextType> = ({
   children,
 }) => {
+  const [production, setProduction] = useState<WaterData | null>(null);
   const [dataFull, setDataFull] = useState<Props[] | null>(null);
   const { user } = useUserContext();
-  const { data, refetch } = useQuery({
-    queryKey: ["dataFull"],
-    queryFn: () => GetDataFull(user?.system_id || null),
-  });
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  async function getDataFull() {
-    if (
-      data != null &&
-      data != undefined &&
-      data != "Nenhum dado encontrado para o sistema com ID fornecido" &&
-      data != "Ocorreu um erro ao processar os dados"
-    ) {
+
+  async function getDataFull(data: Props[] | null) {
+    if (data != null) {
       localStorage.setItem("DataFull", JSON.stringify(data));
     }
   }
+  async function getProduction(data: WaterData | null) {
+    if (data != null) {
+      localStorage.setItem("Production", JSON.stringify(data));
+    }
+  }
 
+  async function restoreProductionFromCache() {
+    const cachedUserData = localStorage.getItem("Production");
+    if (
+      cachedUserData != null &&
+      cachedUserData != undefined &&
+      cachedUserData !=
+        "Nenhum dado encontrado para o sistema com ID fornecido" &&
+      cachedUserData != "Ocorreu um erro ao processar os dados"
+    ) {
+      setProduction(JSON.parse(cachedUserData));
+    }
+  }
   async function restoreDataFullFromCache() {
     const cachedUserData = localStorage.getItem("DataFull");
     if (
@@ -77,26 +88,19 @@ export const DataFullProvider: React.FC<DataFullContextType> = ({
 
   useEffect(() => {
     restoreDataFullFromCache();
-  }, []); // Executa apenas na montagem inicial
-
-  useEffect(() => {
-    if (
-      data != null &&
-      data != undefined &&
-      data != "Nenhum dado encontrado para o sistema com ID fornecido" &&
-      data != "Ocorreu um erro ao processar os dados"
-    ) {
-      setDataFull(data);
-      getDataFull();
-    }
-
-    console.log("data", data);
-    console.log("dataFull", dataFull);
-  }, [user, data]); //
+    restoreProductionFromCache();
+  }, [user]); // Executa apenas na montagem inicial
 
   return (
     <DataFull.Provider
-      value={{ dataFull, clearCacheDataFull, signOutDataFull, refetch }}
+      value={{
+        dataFull,
+        clearCacheDataFull,
+        signOutDataFull,
+        getDataFull,
+        getProduction,
+        production,
+      }}
     >
       {children}
     </DataFull.Provider>

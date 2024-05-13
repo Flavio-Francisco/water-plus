@@ -108,14 +108,13 @@ export function extractData( data :Props) {
 
   return dadosFormatados;
 }
-export function getItemByIndex(index: number, array: Props[]): Props | null {
-  if (index >= 0 && index < array.length) {
-    return array[index];
+export function getItemByIndex(index: number, array: Props[]|null): Props | null {
+  if (index >= 0 && index < (array||[]).length) {
+      return (array||[])[index];
   } else {
-    return null; // Retorna null se o índice estiver fora do intervalo
+      return null; // Retorna null se o índice estiver fora do intervalo
   }
 }
-
 type Prop = {
   data?: object | unknown[] | undefined;
 };

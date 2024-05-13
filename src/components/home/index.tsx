@@ -11,7 +11,7 @@ import GraficPizzaRegection from "@/components/GraficPizzaRegection";
 
 function Home() {
   return (
-    <div className=" bg-white  ">
+    <div className=" bg-white container ">
       <div className=" mt-10  sm:mt-150 text-center md:text-left">
         <h1>Water Plus</h1>
         <h6>Monitoramento de Tratamento de Água</h6>

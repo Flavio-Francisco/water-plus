@@ -2,12 +2,13 @@
 
 .root{
  width: 81%;
- height: 80%;
+ height: 40%;
 margin: auto;
 }
-@media only screen and (max-width: 1010px) {
+@media only screen and (max-width: 580px) {
     .root {
-        width: 100%;
-        margin-left: 0; /* Para garantir que a margem à esquerda seja removida quando a largura for definida como 100% */
+        width: 90%;
+        height: 20%;
+      /* Para garantir que a margem à esquerda seja removida quando a largura for definida como 100% */
     }
 }
