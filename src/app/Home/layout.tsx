@@ -8,6 +8,7 @@ import './style.css'
 import Drawer from '@/components/Drawer';
 import Provider from "@/components/Providers";
 import { UserProvider } from "@/context/userContext";
+import { DataFullProvider } from "@/context/userDataFull";
 
 const roboto = Roboto({
   weight: "400",
@@ -27,9 +28,11 @@ export default function RootLayout({
       <body className={roboto.className}>
         <Provider>
           <UserProvider>
-            <Drawer>
-              <div className="root">{children}</div>
-            </Drawer>
+            <DataFullProvider>
+              <Drawer>
+                <div className="root">{children}</div>
+              </Drawer>
+            </DataFullProvider>
           </UserProvider>
         </Provider>
       </body>

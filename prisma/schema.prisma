@@ -92,45 +92,46 @@ model operator {
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model parameters {
-  id                            Int      @id
+  id                            Int       @id @default(autoincrement())
   Color                         String
   Turbidity                     String?
   Taste                         String?
   Odor                          String?
-  TotalChlorine                 Float?   @db.Real
-  FreeChlorine                  Float?   @db.Real
-  ph                            Float?   @db.Real
-  SoftenerHardness              Float?   @db.Real
-  MultimediaFilterInputPressure Float?   @db.Real
-  SoftenerInputPressure         Float?   @db.Real
-  CarbonInputPressure           Float?   @db.Real
-  CarbonOutputPressure          Float?   @db.Real
+  TotalChlorine                 Float?    @db.Real
+  FreeChlorine                  Float?    @db.Real
+  ph                            Float?    @db.Real
+  SoftenerHardness              Float?    @db.Real
+  MultimediaFilterInputPressure Float?    @db.Real
+  SoftenerInputPressure         Float?    @db.Real
+  CarbonInputPressure           Float?    @db.Real
+  CarbonOutputPressure          Float?    @db.Real
   MultimediaFilterDisplayTime   String?
   SoftenerDisplayTime           String?
   CarbonDisplayTime             String?
   SaltReservoirLevel            String?
-  ROInputPressure1              Float?   @db.Real
-  ROInputPressure2              Float?   @db.Real
-  MembraneInputPressure1        Float?   @db.Real
-  MembraneInputPressure2        Float?   @db.Real
-  RejectPressur1                Float?   @db.Real
-  RejectPressur2                Float?   @db.Real
-  ROInputConductivity1          Float?   @db.Real
-  ROInputConductivity2          Float?   @db.Real
-  ROOutputConductivity1         Float?   @db.Real
-  ROOutputConductivity2         Float?   @db.Real
-  SalinityRejectionRate1        Float?   @db.Real
-  SalinityRejectionRate2        Float?   @db.Real
-  PermeateFlowRate1             Float?   @db.Real
-  PermeateFlowRate2             Float?   @db.Real
-  RejectFlowRate1               Float?   @db.Real
-  RejectFlowRate2               Float?   @db.Real
-  OutputPressure                Float?   @db.Real
-  ReturnPressure                Float?   @db.Real
+  ROInputPressure1              Float?    @db.Real
+  ROInputPressure2              Float?    @db.Real
+  MembraneInputPressure1        Float?    @db.Real
+  MembraneInputPressure2        Float?    @db.Real
+  RejectPressur1                Float?    @db.Real
+  RejectPressur2                Float?    @db.Real
+  ROInputConductivity1          Float?    @db.Real
+  ROInputConductivity2          Float?    @db.Real
+  ROOutputConductivity1         Float?    @db.Real
+  ROOutputConductivity2         Float?    @db.Real
+  SalinityRejectionRate1        Float?    @db.Real
+  SalinityRejectionRate2        Float?    @db.Real
+  PermeateFlowRate1             Float?    @db.Real
+  PermeateFlowRate2             Float?    @db.Real
+  RejectFlowRate1               Float?    @db.Real
+  RejectFlowRate2               Float?    @db.Real
+  OutputPressure                Float?    @db.Real
+  ReturnPressure                Float?    @db.Real
   OzoneTestBefore1stShift       Boolean?
-  Conductivity                  Float?   @db.Real
+  Conductivity                  Float?    @db.Real
   system_id                     Int?
-  systems                       systems? @relation(fields: [system_id], references: [id], onDelete: Cascade)
+  date                          DateTime? @db.Date
+  systems                       systems?  @relation(fields: [system_id], references: [id], onDelete: Cascade)
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.

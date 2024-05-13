@@ -11,10 +11,12 @@ import { CircularProgress } from "@mui/material";
 import { Systems } from "@/utils/models/analysis";
 import { auth } from "@/app/fecth/auth";
 import { useUserContext } from "@/context/userContext";
+import { useDataFull } from "@/context/userDataFull";
 
 export default function Auth() {
   const { push } = useRouter();
   const { getUser, clearCache } = useUserContext();
+  const { clearCacheDataFull } = useDataFull();
   const [selectedValue, setSelectedValue] = useState<Systems | null>(null);
   const [selectedPassword, setSelectPassword] = useState<string>("");
   const [selectedName, setSelectName] = useState<string>("");
@@ -36,6 +38,7 @@ export default function Auth() {
     if (isLoading === true) {
       resetForm();
       clearCache();
+      clearCacheDataFull();
     }
   }, [isLoading]);
 

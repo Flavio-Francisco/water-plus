@@ -49,7 +49,9 @@ export interface WaterTreatmentParameters {
 
 
 export interface ParametersDB {
+ 
   id: number | null;
+  date:Date | null;
   Color: string | null;
   Turbidity: string | null;
   Taste: string | null;
