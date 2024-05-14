@@ -33,43 +33,46 @@ export async function GET(req: NextRequest) {
                 system_id: Number(id)
             }
         });
-
+    
         if (data && data.length > 0) {
-            const unifiedData: UnifiedData = {
-                samplingDate: [],
-                sampleMatrixAndOrigin: data[0].sampleMatrixAndOrigin||'', // Assume que é o mesmo para todos os registros
-                eColiPresence: [],
-                totalColiformsPresence: [],
-                heterotrophicBacteriaCount: [],
-                endotoxins:[],
-                system_id: data[0].system_id ||0// Assume que é o mesmo para todos os registros
-            };
-
-                const groupedData: Record<string, Microbiological[]> = {};
-                data.forEach(record => {
-                    if (record.sampleMatrixAndOrigin !== null && record.eColiPresence !== null && record.totalColiformsPresence !== null && record.heterotrophicBacteriaCount !== null && record.system_id !== null ) {
-                        const origin = record.sampleMatrixAndOrigin; // Não há necessidade de tratamento para null aqui
-                        if (!groupedData[origin]) {
-                            groupedData[origin] = [];
-                        }
-                        groupedData[origin].push(record);
-                    }
-                });
-
-
-            // Para cada grupo, unifique os dados
+            const groupedData: Record<string, Microbiological[]> = {};
+    
+            // Agrupe os dados com base em sampleMatrixAndOrigin
+            data.forEach(record => {
+                const origin = record.sampleMatrixAndOrigin || 'Unknown'; // Use 'Unknown' se sampleMatrixAndOrigin for nulo
+                if (!groupedData[origin]) {
+                    groupedData[origin] = [];
+                }
+                groupedData[origin].push(record);
+            });
+    
+            // Crie um array de objetos UnifiedData para cada grupo
+            const unifiedDataArray: UnifiedData[] = [];
             for (const origin in groupedData) {
                 const group = groupedData[origin];
+                const unifiedData: UnifiedData = {
+                    samplingDate: [],
+                    sampleMatrixAndOrigin: origin,
+                    eColiPresence: [],
+                    totalColiformsPresence: [],
+                    heterotrophicBacteriaCount: [],
+                    endotoxins: [],
+                    system_id: 0 // Assume que é o mesmo para todos os registros
+                };
+    
+                // Preencha os arrays de dados unificados
                 group.forEach(record => {
                     unifiedData.samplingDate.push(record.samplingDate);
-                    unifiedData.eColiPresence.push(Number(record.eColiPresence));
-                    unifiedData.totalColiformsPresence.push(Number(record.totalColiformsPresence));
-                    unifiedData.heterotrophicBacteriaCount.push(Number(record.heterotrophicBacteriaCount));
-                    unifiedData.endotoxins.push(Number(record.endotoxins));
+                    unifiedData.eColiPresence.push(Number(record.eColiPresence || 0));
+                    unifiedData.totalColiformsPresence.push(Number(record.totalColiformsPresence || 0));
+                    unifiedData.heterotrophicBacteriaCount.push(Number(record.heterotrophicBacteriaCount || 0));
+                    unifiedData.endotoxins.push(Number(record.endotoxins || 0));
                 });
+    
+                unifiedDataArray.push(unifiedData);
             }
-
-            return NextResponse.json(unifiedData);
+    
+            return NextResponse.json(unifiedDataArray);
         } else {
             return NextResponse.json({
                 message: "Nenhum dado encontrado para o sistema com ID fornecido"
@@ -78,8 +81,7 @@ export async function GET(req: NextRequest) {
     } catch (error) {
         return NextResponse.json({
             message: "Ocorreu um erro ao processar os dados"
-        },
-        {
+        }, {
             status: 500
         });
     }

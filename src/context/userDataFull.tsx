@@ -19,14 +19,14 @@ interface Props {
   data?: number[];
 }
 interface DataFull {
-  analys: UnifiedData | null;
+  analys: UnifiedData[] | null;
   production: WaterData | null;
   dataFull: Props[] | null;
   signOutDataFull: () => void;
   clearCacheDataFull: () => void;
   getDataFull: (data: Props[] | null) => void;
   getProduction: (data: WaterData | null) => void;
-  getAnalys: (data: UnifiedData | null) => void;
+  getAnalys: (data: UnifiedData[] | null) => void;
 }
 
 interface DataFullContextType {
@@ -42,10 +42,10 @@ export const DataFullProvider: React.FC<DataFullContextType> = ({
 }) => {
   const [production, setProduction] = useState<WaterData | null>(null);
   const [dataFull, setDataFull] = useState<Props[] | null>(null);
-  const [analys, setAnalys] = useState<UnifiedData | null>(null);
+  const [analys, setAnalys] = useState<UnifiedData[] | null>(null);
   const { user } = useUserContext();
 
-  async function getAnalys(data: UnifiedData | null) {
+  async function getAnalys(data: UnifiedData[] | null) {
     if (data != null) {
       setAnalys(data);
       localStorage.setItem("Analys", JSON.stringify(data));

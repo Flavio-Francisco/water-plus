@@ -25,6 +25,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     fontSize: "0.8rem",
     padding: "8px",
   },
+  textAlign: "center",
 }));
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
@@ -36,9 +37,9 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 const ListAnalys = (data: UnifiedData) => {
   return (
-    <div className="container">
-      <h1 className="text-center mt-8 mb-8 text-xl font-bold">
-        Dados Diários:
+    <div className="">
+      <h1 className="text-center mt-8 mb-8 text-base font-bold">
+        Valores das Análises
       </h1>
       <TableContainer component={Paper}>
         <Table aria-label="customized table">
