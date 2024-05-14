@@ -5,9 +5,9 @@
  height: 40%;
 margin: auto;
 }
-@media only screen and (max-width: 580px) {
+@media only screen and (max-width: 380px) {
     .root {
-        width: 90%;
+        width: 10%;
         height: 20%;
       /* Para garantir que a margem à esquerda seja removida quando a largura for definida como 100% */
     }

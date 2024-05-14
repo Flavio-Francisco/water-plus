@@ -2,7 +2,6 @@
 import React from "react";
 import GraficProduction from "@/components/graficProtution";
 import Line from "@/components/line";
-import { dataProducao } from "@/utils/models/Data";
 import ListParametsProduction from "@/components/listParametensProduction";
 import { useDataFull } from "@/context/userDataFull";
 import CardProduction from "./CardPoduction";
@@ -30,7 +29,7 @@ export default function Production() {
           </h1>
         </div>
 
-        <div className="right-1 absolute">
+        <div className="right-5 absolute">
           <CardModal>
             <CardProduction
               month={production?.month}
@@ -46,18 +45,18 @@ export default function Production() {
       <Line />
 
       <GraficProduction
-        data={dataProducao.data}
-        title={dataProducao.title}
-        day={dataProducao.day}
+        data={production?.data}
+        title={""}
+        day={production?.day}
       />
 
       <Line />
 
       <div className="w-100">
         <ListParametsProduction
-          day={dataProducao.day}
-          title={dataProducao.title}
-          data={dataProducao.data}
+          data={production?.data}
+          title={""}
+          day={production?.day}
         />
       </div>
     </div>

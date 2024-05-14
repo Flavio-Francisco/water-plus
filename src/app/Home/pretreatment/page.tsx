@@ -1,92 +1,49 @@
 "use client";
-import ButtonList from "@/components/butonTexts";
 
-import Logo from "@/app/logo.jpg";
 import Image from "next/image";
-import ListParamets from "@/components/listParametens";
-import { Datafull, Props, getItemByIndex } from "@/utils/models/Data";
-import React, { useState, useEffect } from "react";
-import GraficLineAnimedPages from "@/components/graficLineAnimedPages";
+
+import React, { useEffect } from "react";
+import { useDataFull } from "@/context/userDataFull";
+
+import GraficAnalys from "@/components/graficAnalys";
+import ListAnalys from "@/components/listAnalys";
 
 const GraficPreTreatment = () => {
-  const [select, setSelect] = useState(100);
-  const [arryData, setArryData] = useState<Props | null>();
-
-  const ButtonText = Datafull.map((i) => i.title);
+  const { analys } = useDataFull();
 
   useEffect(() => {
-    select;
-    const arry = getItemByIndex(select, Datafull);
-    setArryData(arry);
-
-    console.log("esse é o select", select);
-  }, [ButtonText]);
+    console.log("grafico", analys);
+  }, [analys]);
 
   return (
-    <div>
-      <div
-        style={{
-          display: "flex",
-          flex: 1,
-          justifyContent: "center",
-          alignItems: "center",
-          marginTop: 30,
-        }}
-      >
-        <h1 className="text-center mt-8 mb-8 text-3xl font-bold">
-          Graficos do Pré-Tratamento
+    <div className="container mx-auto max-[580px]:max-w-[320px]">
+      <div className="mt-8 w-full">
+        <h1 className="text-center mt-8 mb-8 text-3xl font-bold max-[580px]:text-lg">
+          Dados das Amotras
         </h1>
       </div>
-      <ButtonList
-        buttonTexts={ButtonText}
-        getBayIndex={(index) => {
-          setSelect(index);
-          console.log("esse é o index", index);
-        }}
+
+      <GraficAnalys
+        samplingDate={analys?.samplingDate || []}
+        sampleMatrixAndOrigin={analys?.sampleMatrixAndOrigin || ""}
+        eColiPresence={analys?.eColiPresence || []}
+        totalColiformsPresence={analys?.totalColiformsPresence || []}
+        heterotrophicBacteriaCount={analys?.heterotrophicBacteriaCount || []}
+        endotoxins={analys?.endotoxins || []}
+        system_id={analys?.system_id || 0}
       />
-      {select === 100 ? (
-        <div
-          style={{
-            display: "flex",
-            flex: 1,
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Image src={Logo} alt="Logo" width={300} height={300} />
-        </div>
-      ) : (
-        <div className="w-full">
-          {arryData ? ( // Verifica se arryData existe antes de acessar suas propriedades
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                marginTop: 30,
-              }}
-            >
-              <p style={{ marginTop: 30, fontSize: 20, fontWeight: "bold" }}>
-                {arryData.title}
-              </p>
-            </div>
-          ) : null}
-          <hr />
-          {arryData ? (
-            <GraficLineAnimedPages
-              day={arryData.day}
-              title={arryData.title}
-              data={arryData.data}
-            />
-          ) : null}
-          <hr />
-          {arryData ? (
-            <div className=" flex justify-center">
-              <ListParamets data={arryData.data} day={arryData.day} />
-            </div>
-          ) : null}
-        </div>
-      )}
+
+      <div className="container ">
+        <ListAnalys
+          samplingDate={analys?.samplingDate || []}
+          sampleMatrixAndOrigin={analys?.sampleMatrixAndOrigin || ""}
+          eColiPresence={analys?.eColiPresence || []}
+          totalColiformsPresence={analys?.totalColiformsPresence || []}
+          heterotrophicBacteriaCount={analys?.heterotrophicBacteriaCount || []}
+          endotoxins={analys?.endotoxins || []}
+          system_id={analys?.system_id || 0}
+        />
+      </div>
     </div>
   );
 };

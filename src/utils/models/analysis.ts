@@ -56,6 +56,7 @@ export interface AnalysisResult {
     eColiPresence: string;
     totalColiformsPresence: string;
     heterotrophicBacteriaCount: string;
+    endotoxins:string
   };
 }
 

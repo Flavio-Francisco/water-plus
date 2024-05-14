@@ -12,10 +12,11 @@ import { GetDataFull } from "@/app/fecth/dataform";
 import { useDataFull } from "@/context/userDataFull";
 import getObjects from "@/utils/functions/getObject";
 import { GetAnnual } from "@/app/fecth/annual";
+import { GetAnalys } from "@/app/fecth/analys";
 
 const HomeBody: React.FC = () => {
   const { user } = useUserContext();
-  const { getDataFull, getProduction } = useDataFull();
+  const { getDataFull, getProduction, getAnalys } = useDataFull();
   const { data: production } = useQuery({
     queryKey: ["annual"],
     queryFn: () => {
@@ -36,13 +37,26 @@ const HomeBody: React.FC = () => {
       }
     },
   });
+  const { data: analys } = useQuery({
+    queryKey: ["analys"],
+    queryFn: () => {
+      if (user) {
+        return GetAnalys(user.system_id);
+      } else {
+        return null;
+      }
+    },
+  });
+  console.log(" analys", analys);
+
   const { data: dataFull } = useQuery({
     queryKey: ["dataFull"],
     queryFn: () => GetDataFull(user?.system_id || null),
   });
-
+  getAnalys(analys);
   getDataFull(dataFull);
   getProduction(production);
+
   const Abrandador = getObjects(dataFull, "Pressão de Entrada do Abrandador")!;
   const Zeolica = getObjects(dataFull, "Pressão de Entrada Multimídia")!;
   const Carvao = getObjects(dataFull, "Pressão de Entrada de Carvão")!;

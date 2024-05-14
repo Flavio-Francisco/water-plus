@@ -71,13 +71,14 @@ model doctor {
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model microbiologigo_assays {
-  id                         Int      @id
+  id                         Int      @id @default(autoincrement())
   samplingDate               String
   sampleMatrixAndOrigin      String?
   eColiPresence              String?
   totalColiformsPresence     String?
   heterotrophicBacteriaCount String?
   system_id                  Int?
+  endotoxins                 String?
   systems                    systems? @relation(fields: [system_id], references: [id], onDelete: Cascade)
 }
 

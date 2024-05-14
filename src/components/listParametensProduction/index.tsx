@@ -1,4 +1,4 @@
-import { Props, extractData } from "@/utils/models/Data";
+import { Props } from "@/utils/models/Data";
 import React from "react";
 import { Table } from "react-bootstrap";
 
@@ -7,13 +7,9 @@ export default function ListParametsProduction(data: Props) {
     return <div>Dados não fornecidos</div>;
   }
 
-  const Data = extractData(data);
-
   return (
     <div>
-      <h1 className="text-center mt-8 mb-8 text-2xl font-bold">
-        Dados Diários:
-      </h1>
+      <h1 className="text-center mt-8 mb-8 text-2xl font-bold">Produção</h1>
       <Table striped bordered hover className="m-auto w-4/5">
         <thead>
           <tr>
@@ -22,13 +18,13 @@ export default function ListParametsProduction(data: Props) {
           </tr>
         </thead>
         <tbody>
-          {Data.Day?.map((dayItem, index) => (
+          {data.day?.map((dayItem, index) => (
             <tr key={index}>
               <td style={{ width: "40%", textAlign: "center" }}>
-                <p>{dayItem.date}</p>
+                <p>{dayItem}</p>
               </td>
               <td style={{ width: "40%", textAlign: "center" }}>
-                {(data?.data || [])[index]}
+                {(data?.data || [])[index]} LPM
               </td>
             </tr>
           ))}

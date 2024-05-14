@@ -11,6 +11,7 @@ import {
 } from "react";
 import { useUserContext } from "./userContext";
 import { WaterData } from "@/components/production";
+import { UnifiedData } from "@/app/api/analys/route";
 
 interface Props {
   title: string;
@@ -18,12 +19,14 @@ interface Props {
   data?: number[];
 }
 interface DataFull {
+  analys: UnifiedData | null;
   production: WaterData | null;
   dataFull: Props[] | null;
   signOutDataFull: () => void;
   clearCacheDataFull: () => void;
   getDataFull: (data: Props[] | null) => void;
   getProduction: (data: WaterData | null) => void;
+  getAnalys: (data: UnifiedData | null) => void;
 }
 
 interface DataFullContextType {
@@ -39,8 +42,15 @@ export const DataFullProvider: React.FC<DataFullContextType> = ({
 }) => {
   const [production, setProduction] = useState<WaterData | null>(null);
   const [dataFull, setDataFull] = useState<Props[] | null>(null);
+  const [analys, setAnalys] = useState<UnifiedData | null>(null);
   const { user } = useUserContext();
 
+  async function getAnalys(data: UnifiedData | null) {
+    if (data != null) {
+      setAnalys(data);
+      localStorage.setItem("Analys", JSON.stringify(data));
+    }
+  }
   async function getDataFull(data: Props[] | null) {
     if (data != null) {
       localStorage.setItem("DataFull", JSON.stringify(data));
@@ -49,6 +59,18 @@ export const DataFullProvider: React.FC<DataFullContextType> = ({
   async function getProduction(data: WaterData | null) {
     if (data != null) {
       localStorage.setItem("Production", JSON.stringify(data));
+    }
+  }
+  async function restoreAnalysFromCache() {
+    const cachedUserData = localStorage.getItem("Analys");
+    if (
+      cachedUserData != null &&
+      cachedUserData != undefined &&
+      cachedUserData !=
+        "Nenhum dado encontrado para o sistema com ID fornecido" &&
+      cachedUserData != "Ocorreu um erro ao processar os dados"
+    ) {
+      setAnalys(JSON.parse(cachedUserData));
     }
   }
 
@@ -89,6 +111,7 @@ export const DataFullProvider: React.FC<DataFullContextType> = ({
   useEffect(() => {
     restoreDataFullFromCache();
     restoreProductionFromCache();
+    restoreAnalysFromCache();
   }, [user]); // Executa apenas na montagem inicial
 
   return (
@@ -99,7 +122,9 @@ export const DataFullProvider: React.FC<DataFullContextType> = ({
         signOutDataFull,
         getDataFull,
         getProduction,
+        getAnalys,
         production,
+        analys,
       }}
     >
       {children}
