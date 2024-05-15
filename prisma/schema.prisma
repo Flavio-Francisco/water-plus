@@ -131,7 +131,7 @@ model parameters {
   OzoneTestBefore1stShift       Boolean?
   Conductivity                  Float?    @db.Real
   system_id                     Int?
-  date                          DateTime? @db.Date
+  date                          DateTime? @default(now()) @db.Date
   systems                       systems?  @relation(fields: [system_id], references: [id], onDelete: Cascade)
 }
 

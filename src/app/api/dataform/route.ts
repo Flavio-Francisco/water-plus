@@ -1,4 +1,4 @@
-import { ParametersDB } from "@/utils/models/WaterParametersModel";
+import { ParametersDB, WaterTreatmentParameters } from "@/utils/models/WaterParametersModel";
 import prisma from "../../../../lib/db";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -96,14 +96,78 @@ export async function GET(req: NextRequest) {
         });
     }
 }
-
-
-
 // Função para converter os valores para number ou null
 function parseNumericValue(value: string | number | boolean | Date | null): number | null {
     if (typeof value === 'string' || typeof value === 'boolean' || value instanceof Date) {
         return null;
     } else {
         return value;
+    }
+}
+
+export async function POST(req: NextRequest) {
+    const url = new URL(req.nextUrl.href);
+    const id = url.searchParams.get("id");
+    const parameters: WaterTreatmentParameters = await req.json()
+
+    console.log(parameters);
+    
+    try {
+        const data = await prisma.parameters.create({
+            data: {
+                Color: parameters.WATER_FEED.Color || '',
+                CarbonDisplayTime: parameters.PRE_TREATMENT.CarbonDisplayTime,
+                CarbonInputPressure: parameters.PRE_TREATMENT.CarbonInputPressure,
+                CarbonOutputPressure: parameters.PRE_TREATMENT.CarbonOutputPressure,
+                Conductivity: parameters.LOOP.Conductivity,
+                FreeChlorine: parameters.WATER_FEED.FreeChlorine,
+                MembraneInputPressure1: parameters.REVERSE_OSMOSIS_1ST_STEP.MembraneInputPressure,
+                MembraneInputPressure2: parameters.REVERSE_OSMOSIS_2ND_STEP.MembraneInputPressure,
+                MultimediaFilterDisplayTime: parameters.PRE_TREATMENT.MultimediaFilterDisplayTime,
+                MultimediaFilterInputPressure: parameters.PRE_TREATMENT.MultimediaFilterInputPressure,
+                Odor: parameters.WATER_FEED.Odor,
+                OutputPressure: parameters.LOOP.OutputPressure,
+                OzoneTestBefore1stShift: parameters.LOOP.OzoneTestBefore1stShift,
+                PermeateFlowRate1: parameters.REVERSE_OSMOSIS_1ST_STEP.PermeateFlowRate,
+                PermeateFlowRate2: parameters.REVERSE_OSMOSIS_2ND_STEP.PermeateFlowRate,
+                ph: parameters.WATER_FEED.pH,
+                RejectFlowRate1: parameters.REVERSE_OSMOSIS_1ST_STEP.RejectFlowRate,
+                RejectFlowRate2: parameters.REVERSE_OSMOSIS_2ND_STEP.RejectFlowRate,
+                RejectPressur1: parameters.REVERSE_OSMOSIS_1ST_STEP.RejectPressure,
+                RejectPressur2: parameters.REVERSE_OSMOSIS_2ND_STEP.RejectPressure,
+                ReturnPressure: parameters.LOOP.ReturnPressure,
+                ROInputConductivity1: parameters.REVERSE_OSMOSIS_1ST_STEP.ROInputConductivity,
+                ROInputConductivity2: parameters.REVERSE_OSMOSIS_2ND_STEP.ROOutputConductivity,
+                ROInputPressure1: parameters.REVERSE_OSMOSIS_1ST_STEP.ROInputPressure,
+                ROInputPressure2: parameters.REVERSE_OSMOSIS_2ND_STEP.ROInputPressure,
+                ROOutputConductivity1: parameters.REVERSE_OSMOSIS_1ST_STEP.ROOutputConductivity,
+                ROOutputConductivity2: parameters.REVERSE_OSMOSIS_2ND_STEP.ROOutputConductivity,
+                SalinityRejectionRate1: parameters.REVERSE_OSMOSIS_1ST_STEP.SalinityRejectionRate,
+                SalinityRejectionRate2: parameters.REVERSE_OSMOSIS_2ND_STEP.SalinityRejectionRate,
+                SaltReservoirLevel: parameters.PRE_TREATMENT.SaltReservoirLevel,
+                SoftenerDisplayTime: parameters.PRE_TREATMENT.SoftenerDisplayTime,
+                SoftenerHardness: parameters.PRE_TREATMENT.SoftenerHardness,
+                SoftenerInputPressure: parameters.PRE_TREATMENT.SoftenerInputPressure,
+                Taste: parameters.WATER_FEED.Taste,
+                TotalChlorine: parameters.WATER_FEED.TotalChlorine,
+                Turbidity: parameters.WATER_FEED.Turbidity,
+                system_id: Number(id)
+            
+            
+            }
+         
+     
+        });
+        return NextResponse.json(data)
+    } catch (error) {
+        return NextResponse.json({
+     message:"Erro ao salvar dados"
+        },
+            {
+                status:500
+            }
+        )
+    
+    
     }
 }

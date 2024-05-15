@@ -6,27 +6,23 @@ import { Formik, Field, Form, ErrorMessage, } from 'formik';
 import AddchartIcon from "@mui/icons-material/Addchart";
 import waterTreatmentParametersSchema from '../../utils/validation/WaterParamentersValidation'; // Importa o esquema de validação
 import { WaterTreatmentParameters } from '@/utils/models/WaterParametersModel';
-
-
+import { useMutation } from "@tanstack/react-query";
+import { createParamets } from "@/app/fecth/dataform";
+import { useUserContext } from "@/context/userContext";
 
 const WaterParametersForm = () => {
-
-
   const [showModalParm, setShowModalParm] = useState(false);
-
   const handleCloseModalParm = () => setShowModalParm(false);
   const handleShowModalParm = () => setShowModalParm(true);
   const [isActive, setActive] = useState(false);
   const active = () => setActive(!isActive);
 
-
-
   const initialValues: WaterTreatmentParameters = {
     WATER_FEED: {
-      Color: '',
-      Turbidity: '',
-      Taste: '',
-      Odor: '',
+      Color: "",
+      Turbidity: "",
+      Taste: "",
+      Odor: "",
       TotalChlorine: 0,
       FreeChlorine: 0,
       pH: 0,
@@ -37,10 +33,10 @@ const WaterParametersForm = () => {
       SoftenerInputPressure: 0,
       CarbonInputPressure: 0,
       CarbonOutputPressure: 0,
-      MultimediaFilterDisplayTime: '',
-      SoftenerDisplayTime: '',
-      CarbonDisplayTime: '',
-      SaltReservoirLevel: '',
+      MultimediaFilterDisplayTime: "",
+      SoftenerDisplayTime: "",
+      CarbonDisplayTime: "",
+      SaltReservoirLevel: "",
     },
     REVERSE_OSMOSIS_1ST_STEP: {
       ROInputPressure: 0,
@@ -65,15 +61,31 @@ const WaterParametersForm = () => {
     LOOP: {
       OutputPressure: 0,
       ReturnPressure: 0,
-      OzoneTestBefore1stShift: false,
+      OzoneTestBefore1stShift: undefined,
       Conductivity: 0,
     },
   };
-  
 
+  const { user } = useUserContext();
+  const { mutate } = useMutation({
+    mutationKey: ["Full"],
+    mutationFn: (values: WaterTreatmentParameters) =>
+      createParamets(user?.system_id || 0, values),
+    onSuccess() {
+      alert("dados salvos com sucesso!!!");
+      setShowModalParm(false);
+    },
+    onError() {
+      alert("Esse formulario deve ser preenchido na tela inicial!!!");
+    },
+  });
 
   const handleSubmit = (values: WaterTreatmentParameters) => {
-    console.log(values);
+    if (values) {
+      mutate({ ...values });
+    }
+
+    console.log("valor formulario", values);
   };
 
   return (
@@ -88,7 +100,12 @@ const WaterParametersForm = () => {
         <AddchartIcon />
       </button>
 
-      <Modal show={showModalParm} onHide={handleCloseModalParm} size="xl" className='mt-10'>
+      <Modal
+        show={showModalParm}
+        onHide={handleCloseModalParm}
+        size="xl"
+        className="mt-10"
+      >
         <Modal.Header closeButton>
           <Modal.Title>Parametros da ETA</Modal.Title>
         </Modal.Header>
@@ -256,7 +273,7 @@ const WaterParametersForm = () => {
                                   (_, i) => 3 + i * 0.5
                                 ).map((value) => (
                                   <option key={value} value={value.toFixed(1)}>
-                                    {value.toFixed(1)}
+                                    {Number(value.toFixed(1))}
                                   </option>
                                 ))}
                               </Field>
@@ -847,7 +864,7 @@ const WaterParametersForm = () => {
                 </Modal.Body>
                 <Modal.Footer>
                   <Button
-                     className="bg-slate-500"
+                    className="bg-slate-500"
                     variant="secondary"
                     onClick={handleCloseModalParm}
                     disabled={isSubmitting}
@@ -855,7 +872,7 @@ const WaterParametersForm = () => {
                     Fechar
                   </Button>
                   <Button
-                    className='bg-[#1976d2]'
+                    className="bg-[#1976d2]"
                     variant="primary"
                     type="submit"
                     disabled={isSubmitting}

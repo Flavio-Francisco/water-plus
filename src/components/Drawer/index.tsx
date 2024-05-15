@@ -20,9 +20,7 @@ import ListItemText from "@mui/material/ListItemText";
 import WaterDropOutlinedIcon from "@mui/icons-material/WaterDropOutlined";
 import GrainOutlinedIcon from "@mui/icons-material/GrainOutlined";
 import OtherHousesOutlinedIcon from "@mui/icons-material/OtherHousesOutlined";
-import Filter1OutlinedIcon from "@mui/icons-material/Filter1Outlined";
-import Filter2OutlinedIcon from "@mui/icons-material/Filter2Outlined";
-import LoopOutlinedIcon from "@mui/icons-material/LoopOutlined";
+
 import HubOutlinedIcon from "@mui/icons-material/HubOutlined";
 import AssignmentOutlinedIcon from "@mui/icons-material/AssignmentOutlined";
 import WaterOutlinedIcon from "@mui/icons-material/WaterOutlined";
@@ -279,7 +277,7 @@ export default function Drawer({
               onClick={() => push("/Home/grafic ")}
             >
               <ListItemIcon
-                title="Água de Alimentação"
+                title="Grafico dos Parametros"
                 sx={{
                   minWidth: 0,
                   mr: open ? 3 : "auto",
@@ -289,7 +287,7 @@ export default function Drawer({
                 <WaterDropOutlinedIcon />
               </ListItemIcon>
               <ListItemText
-                primary={"Água de Alimentação"}
+                primary={"Grafico dos Parametros"}
                 sx={{ opacity: open ? 1 : 0 }}
               />
             </ListItemButton>
@@ -307,7 +305,7 @@ export default function Drawer({
               onClick={() => push("/Home/pretreatment")}
             >
               <ListItemIcon
-                title="Pré-Tratamento"
+                title="Dados das Analíses"
                 sx={{
                   minWidth: 0,
                   mr: open ? 3 : "auto",
@@ -317,7 +315,7 @@ export default function Drawer({
                 <GrainOutlinedIcon />
               </ListItemIcon>
               <ListItemText
-                primary={"Pré-Tratamento"}
+                primary={"Dados das Analíses"}
                 sx={{ opacity: open ? 1 : 0 }}
               />
             </ListItemButton>
@@ -352,90 +350,7 @@ export default function Drawer({
           </ListItem>
         </List>
         <Divider />
-        <List>
-          <ListItem disablePadding sx={{ display: "block" }}>
-            <ListItemButton
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? "initial" : "center",
-                px: 2.5,
-              }}
-              onClick={() => push("/Home/firststep")}
-            >
-              <ListItemIcon
-                title="Osmose 1º Passo"
-                sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : "auto",
-                  justifyContent: "center",
-                }}
-              >
-                <Filter1OutlinedIcon />
-              </ListItemIcon>
-              <ListItemText
-                primary={"Osmose 1º Passo"}
-                sx={{ opacity: open ? 1 : 0 }}
-              />
-            </ListItemButton>
-          </ListItem>
-        </List>
-        <Divider />
-        <List>
-          <ListItem disablePadding sx={{ display: "block" }}>
-            <ListItemButton
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? "initial" : "center",
-                px: 2.5,
-              }}
-              onClick={() => push("/Home/secondstep")}
-            >
-              <ListItemIcon
-                title="Osmose 2º Passo"
-                sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : "auto",
-                  justifyContent: "center",
-                }}
-              >
-                <Filter2OutlinedIcon />
-              </ListItemIcon>
-              <ListItemText
-                primary={"Osmose 2º Passo"}
-                sx={{ opacity: open ? 1 : 0 }}
-              />
-            </ListItemButton>
-          </ListItem>
-        </List>
-        <Divider />
-        <List>
-          <ListItem disablePadding sx={{ display: "block" }}>
-            <ListItemButton
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? "initial" : "center",
-                px: 2.5,
-              }}
-              onClick={() => push("/Home/loop")}
-            >
-              <ListItemIcon
-                title="Looping"
-                sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : "auto",
-                  justifyContent: "center",
-                }}
-              >
-                <LoopOutlinedIcon />
-              </ListItemIcon>
-              <ListItemText
-                primary={"Looping"}
-                sx={{ opacity: open ? 1 : 0 }}
-              />
-            </ListItemButton>
-          </ListItem>
-        </List>
-        <Divider />
+
         <List>
           <ListItem disablePadding sx={{ display: "block" }}>
             <ListItemButton

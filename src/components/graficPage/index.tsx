@@ -17,9 +17,16 @@ const GraficPage = () => {
   const ButtonText = (dataFull || []).map((i) => i.title);
 
   useEffect(() => {
-    const arry = getItemByIndex(select, dataFull || []);
-    setArryData(arry);
-  }, [select]);
+    const fetchData = async () => {
+      // Esperar até que dataFull não seja nulo
+      if (dataFull !== null) {
+        const arry = getItemByIndex(select, dataFull);
+        setArryData(arry);
+      }
+    };
+    fetchData();
+  }, [select, dataFull]);
+  
 
   return (
     <div className="container mx-auto max-[580px]:max-w-[400px]">

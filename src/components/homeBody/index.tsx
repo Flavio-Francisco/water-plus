@@ -14,6 +14,8 @@ import getObjects from "@/utils/functions/getObject";
 import { GetAnnual } from "@/app/fecth/annual";
 import { GetAnalys } from "@/app/fecth/analys";
 
+
+
 const HomeBody: React.FC = () => {
   const { user } = useUserContext();
   const { getDataFull, getProduction, getAnalys } = useDataFull();
@@ -53,6 +55,9 @@ const HomeBody: React.FC = () => {
     queryKey: ["dataFull"],
     queryFn: () => GetDataFull(user?.system_id || null),
   });
+  if (data != null) {
+    localStorage.setItem("DataFull", JSON.stringify(data));
+  }
   getAnalys(analys);
   getDataFull(dataFull);
   getProduction(production);
