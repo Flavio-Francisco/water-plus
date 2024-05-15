@@ -38,7 +38,7 @@ model apevisa {
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model chemical {
-  id              Int      @id(map: "chemist_pkey")
+  id              Int      @id(map: "chemist_pkey") @default(autoincrement())
   name            String?
   CRM             String?
   graduation      String?

@@ -1,15 +1,22 @@
 import React, { useState } from "react";
 import { Modal, Button } from "react-bootstrap";
-import LabTabs from "../../modalUI";
-import ChemistFormNew from "../newForm";
-import ChemistFormEdit from "../editForm";
-import './styles.css'
-
+import ChemistFormEdit, { CredentialsChemistdb } from "../editForm";
+import "./styles.css";
+import { useQuery } from "@tanstack/react-query";
+import { getChemical } from "@/app/fecth/chemical";
+import { useUserContext } from "@/context/userContext";
 
 export default function ModalLabChemist() {
   const [showModal, setShowModal] = useState(false);
   const handleClose = () => setShowModal(false);
   const handleShow = () => setShowModal(true);
+  const handleUpdate = (success: boolean) => setShowModal(success);
+  const { user } = useUserContext();
+
+  const { data, refetch } = useQuery<CredentialsChemistdb>({
+    queryKey: ["chermicalDB"],
+    queryFn: () => getChemical(user?.system_id || 0),
+  });
   return (
     <>
       <button
@@ -24,17 +31,10 @@ export default function ModalLabChemist() {
           <Modal.Title>Químico</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <LabTabs
-            ComponetNew={
-              <div>
-                <ChemistFormEdit />
-              </div>
-            }
-            ComponetEdit={
-              <div>
-                <ChemistFormNew />
-              </div>
-            }
+          <ChemistFormEdit
+            data={data}
+            refech={refetch}
+            onUpdate={handleUpdate}
           />
         </Modal.Body>
         <Modal.Footer>

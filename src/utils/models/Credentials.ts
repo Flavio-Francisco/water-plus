@@ -1,5 +1,6 @@
 export interface CredentialsChemist {
   Chemist: {
+    id?: number;
     name: string;
     CRQ?: string;
     graduation?: string;
@@ -23,4 +24,13 @@ export interface CredentialsOperator {
     name: string;
     registration: string;
   };
+}
+export interface Chemist {
+  
+    name: string;
+    CRQ?: string;
+    graduation?: string;
+    postGraduation?: string;
+    postGraduation2?: string;
+  
 }
