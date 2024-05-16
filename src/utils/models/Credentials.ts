@@ -21,8 +21,11 @@ export interface CredentialsDoctor {
 
 export interface CredentialsOperator {
   operator: {
+    id?: number;
     name: string;
     registration: string;
+    systen_id?: number;
+
   };
 }
 export interface Chemist {

@@ -214,5 +214,6 @@ model user {
   name      String   @unique
   password  String?
   system_id Int?
+  adm       Boolean?
   systems   systems? @relation(fields: [system_id], references: [id], onDelete: Cascade)
 }

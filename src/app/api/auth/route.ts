@@ -21,6 +21,7 @@ export async function POST(req: NextRequest) {
                 system_id:true,
                 name: true,
                 password: true,
+                adm:true
                 
             }
         })

@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { UserAuth } from "@/utils/models/userModel";
+import { UserModel } from "@/utils/models/userModel";
 import { useRouter } from "next/navigation";
 
 import {
@@ -12,11 +12,11 @@ import {
 } from "react";
 
 interface UserData {
-  user: UserAuth | null;
-  getUser: (user: UserAuth | null) => void;
+  user: UserModel | null;
+  getUser: (user: UserModel | null) => void;
   signOut: () => void;
   clearCache: () => void;
-  updateUser: (updatedUser: UserAuth) => void;
+  updateUser: (updatedUser: UserModel) => void;
 }
 
 interface UserContextType {
@@ -28,7 +28,7 @@ const UserContext = createContext({} as UserData);
 export const useUserContext = () => useContext(UserContext);
 
 export const UserProvider: React.FC<UserContextType> = ({ children }) => {
-  const [user, setUser] = useState<UserAuth | null>(null);
+  const [user, setUser] = useState<UserModel | null>(null);
 
   const router = useRouter();
 
@@ -45,7 +45,7 @@ export const UserProvider: React.FC<UserContextType> = ({ children }) => {
     localStorage.setItem("userData", JSON.stringify(null));
   }
 
-  function getUser(user: UserAuth | null) {
+  function getUser(user: UserModel | null) {
     setUser(user);
     localStorage.setItem("userData", JSON.stringify(user));
   }
@@ -53,7 +53,7 @@ export const UserProvider: React.FC<UserContextType> = ({ children }) => {
     setUser(null);
     localStorage.setItem("userData", JSON.stringify(null));
   }
-  function updateUser(updatedUser: UserAuth) {
+  function updateUser(updatedUser: UserModel) {
     setUser(updatedUser);
     localStorage.setItem("userData", JSON.stringify(updatedUser));
   }
