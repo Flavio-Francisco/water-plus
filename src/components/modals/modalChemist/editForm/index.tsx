@@ -48,7 +48,15 @@ const ChemistFormNew = ({ data, refech, onUpdate }: Ipros) => {
     },
     onSuccess: () => {
       refech();
+      alert("dados atualizados com sucesso!!!");
       onUpdate(false);
+
+    },
+    onError: () => {
+      refech();
+      alert("Erro ao atualizados dados!!!")
+      onUpdate(false);
+
     },
   });
 

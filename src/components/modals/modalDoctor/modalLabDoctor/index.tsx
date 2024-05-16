@@ -1,15 +1,22 @@
 import React, { useState } from "react";
 import { Modal, Button } from "react-bootstrap";
-import LabTabs from "../../modalUI";
-import DoctorFormNew from "../editFrom";
-import DoctorFormEdit from "../newForm";
-import './styles.css'
-
+import DoctorFormEdit, { CredentialDoctordb } from "../newForm";
+import "./styles.css";
+import { getDoctor } from "@/app/fecth/doctor";
+import { useQuery } from "@tanstack/react-query";
+import { useUserContext } from "@/context/userContext";
 
 export default function ModalLabDoctor() {
   const [showModal, setShowModal] = useState(false);
   const handleClose = () => setShowModal(false);
   const handleShow = () => setShowModal(true);
+  const handleUpdate = (success: boolean) => setShowModal(success);
+  const { user } = useUserContext();
+
+  const { data, refetch } = useQuery<CredentialDoctordb>({
+    queryKey: ["doctorModal"],
+    queryFn: () => getDoctor(user?.system_id || 0),
+  });
   return (
     <>
       <button
@@ -24,17 +31,10 @@ export default function ModalLabDoctor() {
           <Modal.Title>Médico</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <LabTabs
-            ComponetNew={
-              <div>
-                <DoctorFormEdit />
-              </div>
-            }
-            ComponetEdit={
-              <div>
-                <DoctorFormNew />
-              </div>
-            }
+          <DoctorFormEdit
+            data={data}
+            refech={refetch}
+            onUpdate={handleUpdate}
           />
         </Modal.Body>
         <Modal.Footer>

@@ -9,7 +9,7 @@ datasource db {
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model Reservoir_cleaning {
-  id           Int      @id
+  id           Int      @id @default(autoincrement())
   lastCleaning String
   nextCleaning String?
   system_id    Int?
@@ -18,7 +18,7 @@ model Reservoir_cleaning {
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model apevisa {
-  id               Int      @id
+  id               Int      @id @default(autoincrement())
   date             String
   name             String?
   cianoBacteria    String?
@@ -50,7 +50,7 @@ model chemical {
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model diasefe {
-  id        Int      @id
+  id        Int      @id @default(autoincrement())
   date      String
   machine   String?
   system_id Int?
@@ -59,7 +59,7 @@ model diasefe {
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model doctor {
-  id              Int      @id
+  id              Int      @id @default(autoincrement())
   name            String?
   CRM             String?
   graduation      String?
@@ -84,7 +84,7 @@ model microbiologigo_assays {
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model operator {
-  id           Int      @id
+  id           Int      @id @default(autoincrement())
   name         String
   registration String?
   system_id    Int?
@@ -137,7 +137,7 @@ model parameters {
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model reservoir_analysis {
-  id                                            Int      @id
+  id                                            Int      @id @default(autoincrement())
   bicarbonateAlkalinity                         String
   carbonateAlkalinity                           String?
   hydroxideAlkalinity                           String?
@@ -171,13 +171,12 @@ model reservoir_analysis {
   samplingDate                                  String?
   sampleMatrixAndOrigin                         String?
   system_id                                     Int?
-  systems_reservoir_analysis_idTosystems        systems  @relation("reservoir_analysis_idTosystems", fields: [id], references: [id], onDelete: Cascade)
   systems_reservoir_analysis_system_idTosystems systems? @relation("reservoir_analysis_system_idTosystems", fields: [system_id], references: [id], onDelete: Cascade)
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model reservoir_cleaning_report {
-  id               Int      @id
+  id               Int      @id @default(autoincrement())
   flushing         String
   laboratory       String?
   loopDisinfection String?
@@ -190,7 +189,7 @@ model reservoir_cleaning_report {
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model systems {
-  id                                                       Int                         @id
+  id                                                       Int                         @id @default(autoincrement())
   name                                                     String
   address                                                  String?
   city                                                     String?
@@ -205,14 +204,13 @@ model systems {
   microbiologigo_assays                                    microbiologigo_assays[]
   operator                                                 operator[]
   parameters                                               parameters[]
-  reservoir_analysis_reservoir_analysis_idTosystems        reservoir_analysis?         @relation("reservoir_analysis_idTosystems")
   reservoir_analysis_reservoir_analysis_system_idTosystems reservoir_analysis[]        @relation("reservoir_analysis_system_idTosystems")
   reservoir_cleaning_report                                reservoir_cleaning_report[]
   user                                                     user[]
 }
 
 model user {
-  id        Int      @id
+  id        Int      @id @default(autoincrement())
   name      String   @unique
   password  String?
   system_id Int?
