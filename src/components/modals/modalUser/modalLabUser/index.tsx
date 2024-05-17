@@ -4,12 +4,24 @@ import LabTabs from "../../modalUI";
 import OperatorFormEdit from "../newForm";
 import UserList from "@/components/modals/modalUser/userList"
 import './styles.css'
-
+import { getUserDB } from "@/app/fecth/user";
+import { useUserContext } from "@/context/userContext";
+import { UserModel } from "@/utils/models/userModel";
+import { useQuery } from "@tanstack/react-query";
 
 export default function ModalLabUser() {
   const [showModal, setShowModal] = useState(false);
   const handleClose = () => setShowModal(false);
   const handleShow = () => setShowModal(true);
+
+  const handleUpdate = (success: boolean) => setShowModal(success);
+  const { user } = useUserContext();
+
+  const { data, refetch } = useQuery<UserModel[]>({
+    queryKey: ["userModal"],
+    queryFn: () => getUserDB(user?.system_id || 0),
+  });
+
   return (
     <>
       <button
@@ -32,7 +44,11 @@ export default function ModalLabUser() {
             }
             ComponetEdit={
               <div>
-                <UserList />
+                <UserList
+                  data={data}
+                  onUpdate={handleUpdate}
+                  refech={refetch}
+                />
               </div>
             }
           />

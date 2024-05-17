@@ -30,7 +30,7 @@ export default function RootLayout({
           <UserProvider>
             <DataFullProvider>
               <Drawer>
-                <div className="root">{children}</div>
+                <div className="">{children}</div>
               </Drawer>
             </DataFullProvider>
           </UserProvider>

@@ -30,7 +30,7 @@ const UserFormNew: React.FC = () => {
             </Form.Label>
             <Form.Control
               type="text"
-              name="user.name"
+              name="name"
               placeholder="Digite o nome do usuário"
               value={values.user.name}
               onChange={handleChange}
@@ -51,7 +51,7 @@ const UserFormNew: React.FC = () => {
               <Form.Control
                 style={{ borderBottomRightRadius: 0, borderTopRightRadius: 0 }}
                 type={showPassword ? "text" : "password"}
-                name="user.password"
+                name="password"
                 placeholder="Digite a senha"
                 value={values.user.password}
                 onChange={handleChange}

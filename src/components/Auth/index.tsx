@@ -7,11 +7,11 @@ import Autocomplete from "@mui/material/Autocomplete";
 import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { getSystems } from "@/app/fecth/systems";
-import { CircularProgress } from "@mui/material";
 import { Systems } from "@/utils/models/analysis";
 import { auth } from "@/app/fecth/auth";
 import { useUserContext } from "@/context/userContext";
 import { useDataFull } from "@/context/userDataFull";
+import Loader from "../loader/page";
 
 export default function Auth() {
   const { push } = useRouter();
@@ -65,7 +65,7 @@ export default function Auth() {
         }}
       >
         <h1>
-          <CircularProgress size={100} />
+          <Loader />
         </h1>
       </div>
     );

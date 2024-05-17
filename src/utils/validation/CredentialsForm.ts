@@ -1,5 +1,6 @@
 import * as Yup from "yup";
 
+
 export const SchemaDoctor = Yup.object().shape({
   doctor: Yup.object().shape({
     name: Yup.string().required("Nome é obrigatório"),
@@ -28,8 +29,8 @@ export const SchemaOperator = Yup.object().shape({
 });
 
 export const SchemaUser = Yup.object().shape({
-  user: Yup.object().shape({
+
     name: Yup.string().required("Nome é obrigatório"),
     password: Yup.string().required("senha é obrigatório"),
-  }),
+    adm:Yup.string().required()
 });

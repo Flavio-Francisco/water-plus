@@ -4,10 +4,9 @@
 export interface UserModel{
         id?: number;
         name:string;
-        password: string;
-        adm?: boolean;
-        system_id?: number;
-   
+        password: string|null;
+        adm?: boolean|null;
+        system_id?: number|null;
 }
 
 export interface UserAuth{

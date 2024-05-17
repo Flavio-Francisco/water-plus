@@ -3,9 +3,10 @@ import CounteDisinfection from "@/components/counteDisinfection";
 import CounteResevation from "@/components/countResevation";
 import "bootstrap/dist/css/bootstrap.min.css";
 import React, { useState } from "react";
-import { Button, Modal } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
 import WarningIcon from "@mui/icons-material/Warning";
 import { fakeReservoirCleaning } from "@/utils/models/Data";
+import ModalForm from "@/components/waterParametersForm/ModalForm";
 
 function Maintenance() {
   const [show, setShow] = useState(false);
@@ -29,11 +30,11 @@ function Maintenance() {
       >
         <WarningIcon />
       </button>
-
-      <Modal show={show} onHide={handleClose} className="mt-10">
-        <Modal.Header closeButton>
-          <Modal.Title>Procedimentos Agendados</Modal.Title>
-        </Modal.Header>
+      <ModalForm
+        handleCloseModalParm={handleClose}
+        showModalParm={show}
+        title="Procedimentos Agendados"
+      >
         <Modal.Body>
           <div>
             <Counter date={String(new Date())} />
@@ -41,16 +42,7 @@ function Maintenance() {
             <CounteResevation date={fakeReservoirCleaning.nextCleaning} />
           </div>
         </Modal.Body>
-        <Modal.Footer>
-          <Button
-            className="bg-slate-500"
-            variant="secondary"
-            onClick={handleClose}
-          >
-            Fechar
-          </Button>
-        </Modal.Footer>
-      </Modal>
+      </ModalForm>
     </>
   );
 }

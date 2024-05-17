@@ -1,73 +1,77 @@
-import React, { useState } from 'react';
-import { ListGroup } from 'react-bootstrap';
-import UserForm from "@/components/modals/modalUser/editFrom"; // Assumindo que você já tenha criado o componente UserForm
-import { fakeListUser } from '@/utils/models/Data'; // Importa a lista de usuários fictícia
+import React, { useState } from "react";
+import UserForm from "@/components/modals/modalUser/editFrom";
+
 import { UserModel } from "@/utils/models/userModel";
-import "./styles.css"
+import "./styles.css";
+import { Autocomplete, TextField } from "@mui/material";
 
-const UserList: React.FC = () => {
-    const [showList, setShowList] = useState(false); // Estado para controlar a exibição da lista de usuários
-    const [selectedUser, setSelectedUser] = useState<UserModel>(); // Estado para armazenar o usuário selecionado
-    const [select, setSelect] = useState(true);
-    const handleShowList = () => {
-        setShowList(true); // Quando o botão é clicado, mostra a lista de usuários
-    };
+interface Ipros {
+  data: UserModel[] | undefined;
+  refech: () => void;
+  onUpdate: (success: boolean) => void;
+}
 
-    const handleSelectUser = (user: UserModel) => {
+const UserList = ({ data, onUpdate, refech }: Ipros) => {
+  const [selectedUser, setSelectedUser] = useState<UserModel>();
 
-        setSelectedUser(user); // Quando um usuário é selecionado, armazena o usuário selecionado no estado
-        setSelect(!select)
-    };
+  const handleOperatorChange = (
+    event: React.ChangeEvent<object>,
+    newValue: string | UserModel | null
+  ) => {
+    if (typeof newValue === "string") {
+      const found = data?.find((a) => a.name === newValue) || null;
 
+      setSelectedUser({
+        id: found?.id || 0,
+        name: found?.name || "",
+        password: found?.password || "",
+        adm: found?.adm || false,
+        system_id: found?.system_id,
+      })!;
+    } else {
+      setSelectedUser({
+        id: newValue?.id,
+        name: newValue?.name || "",
+        password: newValue?.password || "",
+        adm: newValue?.adm || false,
+        system_id: newValue?.system_id,
+      });
+    }
+  };
 
-    return (
-      <div style={{ width: "100%" }}>
-        {select === true ? (
-          <button
-            className="p-3 w-full text-lg text-left hover:bg-[#add8e6]"
-            onClick={handleShowList}
-          >
-            Mostrar Lista de Usuários
-          </button>
-        ) : null}
-
-        <div className="conteinerList">
-          {/* Renderiza a lista de usuários apenas se o estado showList for true */}
-          {showList && (
-            <div>
-              <h5 className="h5">Lista de Usuários</h5>
-              <div
-                style={{
-                  maxHeight: "400px",
-                  maxWidth: "500px",
-                  overflowY: "auto",
-                }}
-              >
-                <ListGroup style={{ width: "450px" }}>
-                  {fakeListUser.map((user, index) => (
-                    <ListGroup.Item
-                      key={index}
-                      action
-                      onClick={() => handleSelectUser(user.user)}
-                    >
-                      {user.user.name}
-                    </ListGroup.Item>
-                  ))}
-                </ListGroup>
-              </div>
-            </div>
+  return (
+    <div className="container">
+      <div className="conteinerList">
+        <Autocomplete
+          className="m-auto w-full  mt-2.5 md:w-2/6 max-md:w-4/5"
+          value={selectedUser}
+          onChange={handleOperatorChange}
+          selectOnFocus
+          clearOnBlur
+          handleHomeEndKeys
+          id="free-solo-with-text-demo"
+          options={data || []} // Use array vazio se `pacientData` for `undefined`
+          getOptionLabel={(option) => option.name || ""}
+          renderInput={(params) => (
+            <TextField {...params} label="Selecione o Usuário" />
           )}
-          {/* Renderiza o formulário de edição do usuário apenas se um usuário estiver selecionado */}
-          {selectedUser && (
-            <div className="form">
-              <h5 className="h5">Editar Usuário</h5>
-              <UserForm initialValues={selectedUser} />{" "}
-              {/* Passa o usuário selecionado como initialValues para o formulário de edição */}
-            </div>
-          )}
-        </div>
+        />
+
+        {/* Renderiza o formulário de edição do usuário apenas se um usuário estiver selecionado */}
+        {selectedUser && (
+          <div className="form">
+            <h5 className="h5">Editar Usuário</h5>
+            <UserForm
+              onUpdate={onUpdate}
+              refech={refech}
+              initialValues={selectedUser}
+            />{" "}
+            {/* Passa o usuário selecionado como initialValues para o formulário de edição */}
+          </div>
+        )}
       </div>
-    );
+    </div>
+  );
 };
 
 export default UserList;

@@ -40,7 +40,7 @@ const OperatorFormNew = ({ data, onUpdate, refech }: Ipros) => {
           id: found?.id,
           name: found?.name || "",
           registration: found?.registration || "",
-          systen_id: user?.system_id,
+          systen_id: user?.system_id||0,
         },
       });
     } else {
@@ -49,7 +49,7 @@ const OperatorFormNew = ({ data, onUpdate, refech }: Ipros) => {
           id: newValue?.id,
           name: newValue?.name || "",
           registration: newValue?.registration || "",
-          systen_id: user?.system_id,
+          systen_id: user?.system_id||0,
         },
       });
     }

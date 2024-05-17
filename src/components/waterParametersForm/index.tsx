@@ -1,14 +1,16 @@
 'use client'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Button, Card, Col, Modal, Row } from 'react-bootstrap';
-import React,{useState} from 'react';
-import { Formik, Field, Form, ErrorMessage, } from 'formik';
+import { Button, Card, Col, Modal, Row } from "react-bootstrap";
+import React, { useState } from "react";
+import { Formik, Field, Form, ErrorMessage } from "formik";
 import AddchartIcon from "@mui/icons-material/Addchart";
-import waterTreatmentParametersSchema from '../../utils/validation/WaterParamentersValidation'; // Importa o esquema de validação
-import { WaterTreatmentParameters } from '@/utils/models/WaterParametersModel';
+import waterTreatmentParametersSchema from "../../utils/validation/WaterParamentersValidation"; // Importa o esquema de validação
+import { WaterTreatmentParameters } from "@/utils/models/WaterParametersModel";
 import { useMutation } from "@tanstack/react-query";
 import { createParamets } from "@/app/fecth/dataform";
 import { useUserContext } from "@/context/userContext";
+
+import ModalForm from "./ModalForm";
 
 const WaterParametersForm = () => {
   const [showModalParm, setShowModalParm] = useState(false);
@@ -89,7 +91,7 @@ const WaterParametersForm = () => {
   };
 
   return (
-    <div>
+    <div className="">
       <button
         className={isActive ? "active" : "sidebar-nav"}
         onClick={() => {
@@ -100,16 +102,11 @@ const WaterParametersForm = () => {
         <AddchartIcon />
       </button>
 
-      <Modal
-        show={showModalParm}
-        onHide={handleCloseModalParm}
-        size="xl"
-        className="mt-10"
+      <ModalForm
+        showModalParm={showModalParm}
+        handleCloseModalParm={handleCloseModalParm}
+        title="Parametros da ETA"
       >
-        <Modal.Header closeButton>
-          <Modal.Title>Parametros da ETA</Modal.Title>
-        </Modal.Header>
-
         <Formik
           initialValues={initialValues}
           validationSchema={waterTreatmentParametersSchema}
@@ -117,7 +114,7 @@ const WaterParametersForm = () => {
         >
           {({ isSubmitting }) => (
             <>
-              <Form className="mt-9">
+              <Form className="mt-9 w-full max-[600]:w-4/5">
                 <Modal.Body>
                   <div className="md:mx-0 grid grid-cols-1 md:grid-cols-2 gap-4">
                     <Card>
@@ -864,14 +861,6 @@ const WaterParametersForm = () => {
                 </Modal.Body>
                 <Modal.Footer>
                   <Button
-                    className="bg-slate-500"
-                    variant="secondary"
-                    onClick={handleCloseModalParm}
-                    disabled={isSubmitting}
-                  >
-                    Fechar
-                  </Button>
-                  <Button
                     className="bg-[#1976d2]"
                     variant="primary"
                     type="submit"
@@ -884,7 +873,7 @@ const WaterParametersForm = () => {
             </>
           )}
         </Formik>
-      </Modal>
+      </ModalForm>
     </div>
   );
 };
