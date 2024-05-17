@@ -58,7 +58,7 @@ const GraficAnalys = (data: UnifiedData) => {
           },
         ]}
         grid={{ vertical: true, horizontal: true }}
-        height={300}
+        height={400}
         sx={{
           width: "120%",
         }}

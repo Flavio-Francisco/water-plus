@@ -6,7 +6,7 @@ import AnalysList from "@/components/AnalysList";
 
 const GraficPreTreatment = () => {
   return (
-    <div className="container  max-[580px]:max-w-[540px]">
+    <div className="container w-4/5 max-[580px]:max-w-[540px]">
       <AnalysList />
     </div>
   );
