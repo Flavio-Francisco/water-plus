@@ -406,7 +406,7 @@ export default function Drawer({
       </ActionDrawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
-        <div className="m-auto">{children}</div>
+        <div className="m">{children}</div>
       </Box>
     </Box>
   );

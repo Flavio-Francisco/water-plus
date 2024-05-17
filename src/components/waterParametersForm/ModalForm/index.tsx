@@ -34,6 +34,7 @@ export default function ModalForm({
   return (
     <React.Fragment>
       <Dialog
+        maxWidth={"xl"}
         open={showModalParm}
         TransitionComponent={Transition}
         keepMounted
@@ -43,7 +44,7 @@ export default function ModalForm({
         <DialogTitle>{title}</DialogTitle>
         <DialogContent>{children}</DialogContent>
         <DialogActions>
-          <Button onClick={handleCloseModalParm}>Fecha</Button>
+          <Button onClick={handleCloseModalParm}>Fechar</Button>
         </DialogActions>
       </Dialog>
     </React.Fragment>

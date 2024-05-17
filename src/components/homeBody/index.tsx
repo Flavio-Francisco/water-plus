@@ -23,7 +23,7 @@ const HomeBody: React.FC = () => {
     queryKey: ["annual"],
     queryFn: () => {
       if (user) {
-        return GetAnnual(user.system_id);
+        return GetAnnual(user.system_id || 0);
       } else {
         return null;
       }
@@ -33,7 +33,7 @@ const HomeBody: React.FC = () => {
     queryKey: ["batery"],
     queryFn: () => {
       if (user) {
-        return GetBatery(user.system_id);
+        return GetBatery(user.system_id || 0);
       } else {
         return null;
       }
@@ -43,7 +43,7 @@ const HomeBody: React.FC = () => {
     queryKey: ["analys"],
     queryFn: () => {
       if (user) {
-        return GetAnalys(user.system_id);
+        return GetAnalys(user.system_id || 0);
       } else {
         return null;
       }
