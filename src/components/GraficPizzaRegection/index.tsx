@@ -16,7 +16,7 @@ export default function GraficPizzaRegection() {
     queryKey: ["percentage"],
     queryFn: () => {
       if (user) {
-        return GetPercentage(user.system_id);
+        return GetPercentage(user.system_id || 0);
       } else {
         return null; // Ou outra ação adequada caso user seja null
       }
