@@ -30,6 +30,7 @@ export const FormInitialValues: AnalysisResult = {
     eColiPresence: "",
     totalColiformsPresence: "",
     heterotrophicBacteriaCount: "",
+    endotoxins: "",
   },
 };
 
