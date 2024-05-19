@@ -17,7 +17,7 @@ export default function GraficPizzaProduction() {
     queryKey: ["poduction"],
     queryFn: () => {
       if (user) {
-        return GetPoduction(user.system_id);
+        return GetPoduction(user.system_id || 0);
       } else {
         return null;
       }
