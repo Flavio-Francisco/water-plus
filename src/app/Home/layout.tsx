@@ -30,7 +30,14 @@ export default function RootLayout({
           <UserProvider>
             <DataFullProvider>
               <Drawer>
-                <div className="">{children}</div>
+                <div className="flex flex-col min-h-screen">
+                  {/* Adicionando classes para definir a altura mínima da tela e um layout de coluna flexível */}
+                  <main className="flex-1 overflow-y-auto">
+                    {/* Usando overflow-y-auto para adicionar uma barra de rolagem vertical apenas quando necessário */}
+                    {children}
+                  </main>
+                  {/* Usando flex-1 para que o conteúdo principal ocupe o restante do espaço disponível */}
+                </div>
               </Drawer>
             </DataFullProvider>
           </UserProvider>
