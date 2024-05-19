@@ -280,6 +280,7 @@ export const FormInitialValues: AnalysisResult = {
     eColiPresence: "",
     totalColiformsPresence: "",
     heterotrophicBacteriaCount: "",
+    endotoxins:''
   },
 };
 export function calcularPorcentagem(
