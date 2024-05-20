@@ -72,23 +72,28 @@ export default function Auth() {
   }
   const handleSubmit = async () => {
     setSubmitting(true);
-    const dados = await auth({
-      name: selectedName || "",
-      password: selectedPassword || "",
-      system_id: selectedValue?.id || 0,
-    });
-    if (dados != null) {
-      getUser(dados);
-      push("/Home");
-      setSubmitting(false);
-      resetForm();
-    } else {
-      alert("Dados não Encontrados!!!");
-      setSubmitting(false);
-      resetForm();
-    }
 
-    console.log("valores do formulario", dados);
+    if (selectedName === "" && selectedPassword === "") {
+      alert("campos não podem ser vazios");
+      setSubmitting(false);
+    } else {
+      const dados = await auth({
+        name: selectedName || "",
+        password: selectedPassword || "",
+        system_id: selectedValue?.id || 0,
+      });
+      if (dados != null) {
+        getUser(dados);
+        push("/Home");
+        setSubmitting(false);
+        resetForm();
+      } else {
+        alert("Dados não Encontrados!!!");
+        setSubmitting(false);
+        resetForm();
+      }
+      console.log("valores do formulario", dados);
+    }
   };
 
   const handleSelectName = (value: string) => {
@@ -146,7 +151,7 @@ export default function Auth() {
               className="w-full p-2 "
             />
           </div>
-          <div className="mb-6">
+          <div className="mb-6 w-full">
             <Autocomplete
               className="w-full p-2 rounded"
               id="combo-box-demo"
