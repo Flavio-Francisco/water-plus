@@ -3,10 +3,13 @@ export interface Props {
     day?: number[] ;
     data?: number[] ;
   }
-const getObjects = (dados: Props[], title: string) => {
-    const objetoDesejado = dados?.find(objeto => objeto.title === title);
-
+  export const getObjects = (data: Props[] | undefined, title: string) => {
+    // Verifica se data é uma matriz e tem pelo menos um elemento
+    const objetoDesejado = Array.isArray(data) && data.length > 0
+      // Usa o método find se data for uma matriz
+      ? data.find(objeto => objeto.title === title)
+      // Retorna null se data não for uma matriz ou estiver vazia
+      : null;
+  
     return objetoDesejado;
-};
-
-export default getObjects;
+  };

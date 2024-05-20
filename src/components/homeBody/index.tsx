@@ -10,7 +10,7 @@ import { GetBatery } from "@/app/fecth/batery";
 import { useQuery } from "@tanstack/react-query";
 import { GetDataFull } from "@/app/fecth/dataform";
 import { useDataFull } from "@/context/userDataFull";
-import getObjects from "@/utils/functions/getObject";
+import { getObjects } from "@/utils/functions/getObject";
 import { GetAnnual } from "@/app/fecth/annual";
 import { GetAnalys } from "@/app/fecth/analys";
 

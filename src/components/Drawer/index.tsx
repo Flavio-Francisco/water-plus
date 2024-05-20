@@ -125,7 +125,7 @@ export default function Drawer({
   const { push } = useRouter();
   if (user === null) {
     return (
-      <div className="min-h-screen flex justify-center items-center">
+      <div className="h-screen flex justify-center items-center">
         <div className="m-auto flex flex-col justify-center items-center">
           <div className="m-auto">
             <Loader />
@@ -163,7 +163,7 @@ export default function Drawer({
               height={30}
             />
           </Typography>
-          <div className="flex flex-row gap-8 m-auto w-4/12">
+          <div className="flex flex-row gap-8 m-auto ">
             <ListItemIcon
               title="Parametros"
               sx={{
@@ -404,10 +404,10 @@ export default function Drawer({
           </ListItem>
         </List>
       </ActionDrawer>
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+      <div className="conteiner w-full max-[600]:w-[430]  max-[650]:m-auto">
         <DrawerHeader />
-        <div className="m">{children}</div>
-      </Box>
+        <div className=" flex justify-center items-center">{children}</div>
+      </div>
     </Box>
   );
 }
