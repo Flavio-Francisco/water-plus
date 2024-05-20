@@ -153,7 +153,7 @@ export default function Auth() {
           </div>
           <div className="mb-6 w-full">
             <Autocomplete
-              className="w-full p-2 rounded"
+              className="w-full rounded"
               id="combo-box-demo"
               options={systems}
               value={selectedValue}
