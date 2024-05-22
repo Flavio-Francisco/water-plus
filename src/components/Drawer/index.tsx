@@ -136,7 +136,7 @@ export default function Drawer({
 
   return (
     <div
-      className="conteiner max-sm:w-10/12 max-sm:mx-auto"
+      className="conteiner max-sm:w-9/12 max-sm:mx-auto"
       style={{
         display: user === null ? "none" : "flex",
         overflow: "hidden",

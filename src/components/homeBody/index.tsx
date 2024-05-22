@@ -86,9 +86,9 @@ const HomeBody: React.FC = () => {
 
   return (
     <div className=" conteiner w-full mt-5">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-sm:w-96">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-sm:w-80">
         <div className=" bg-white rounded-lg p-3 shadow-md md:top-10 md:right-20">
-          <div className="flex flex-row md:flex-row ga-5  justify-evenly max-sm:gap-1">
+          <div className="flex flex-row md:flex-row  justify-evenly  ">
             <div
               className="flex flex-col items-center"
               onClick={() => dataSelect("zeolita")}
