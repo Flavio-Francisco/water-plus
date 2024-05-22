@@ -21,7 +21,7 @@ export default function Production() {
   const { production } = useDataFull();
 
   return (
-    <div className=" flex flex-col justify-center items-center mt-4 w-11/12  max-sm:w-[400px] max-sm:left-10 absolute">
+    <div className=" flex flex-col justify-center items-center mt-4 w-11/12  max-sm:w-[390px] max-sm:left-10 absolute">
       <div className="w-full flex flex-row gap-3">
         <div className=" w-full flex justify-center items-center">
           <h1 className="text-center mt-8 mb-8 text-3xl font-bold max-sm:text-2xl">

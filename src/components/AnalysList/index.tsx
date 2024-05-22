@@ -31,7 +31,7 @@ export default function AnalysList() {
   };
 
   return (
-    <div className=" flex flex-col justify-center items-center mt-4 w-11/12  max-sm:w-[400px] max-sm:left-10 absolute">
+    <div className=" flex flex-col justify-center items-center mt-4 w-11/12  max-sm:w-[390px] max-sm:left-10 absolute">
       <div className="container w-11/12  ">
         <Autocomplete
           className="m-auto mt-5 max-md:w-4/5 w-2/5"
