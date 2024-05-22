@@ -29,24 +29,26 @@ const GraficPage = () => {
   
 
   return (
-    <div className="container mx-auto max-[580px]:max-w-[400px]">
+    <div className=" flex flex-col justify-center items-center w-11/12  max-sm:w-[390px] max-sm:left-10 absolute">
       <div className="mt-8 w-full">
         <h1 className="text-center mt-8 mb-8 text-3xl font-bold max-[580px]:text-lg">
           Parâmetros
         </h1>
       </div>
-      <ButtonList
-        buttonTexts={ButtonText}
-        getBayIndex={(index) => {
-          setSelect(index);
-        }}
-      />
+      <div className=" w-11/12   max-sm:w-[300px]">
+        <ButtonList
+          buttonTexts={ButtonText}
+          getBayIndex={(index) => {
+            setSelect(index);
+          }}
+        />
+      </div>
       {select === 100 ? (
         <div className="flex justify-center items-center">
           <Image src={Logo} alt="Logo" width={300} height={300} />
         </div>
       ) : (
-        <div>
+        <div className="w-11/12 ">
           {arryData ? (
             <div className="flex justify-center items-center">
               <p className="mt-8 text-base font-bold max-[580px]:text-lg">
@@ -56,7 +58,7 @@ const GraficPage = () => {
           ) : null}
           <hr />
           {arryData ? (
-            <div className="flex justify-center items-center max-[580px]:max-w-[450px]">
+            <div className="flex justify-center items-center max-sm:w-[390px]  ">
               <GraficLineAnimedPages
                 day={arryData.day}
                 title={arryData.title}

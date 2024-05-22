@@ -32,7 +32,7 @@ const GraficProduction = ({ title, data, day }: Props) => {
           grid={{ vertical: true, horizontal: true }}
           colors={["rgba(25,118,210,255)"]}
           //width={1200}
-          height={300}
+          height={350}
           sx={{
             width: "95%",
           }}

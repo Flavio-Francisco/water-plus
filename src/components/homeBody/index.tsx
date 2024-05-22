@@ -85,10 +85,10 @@ const HomeBody: React.FC = () => {
   };
 
   return (
-    <div className=" mx-auto px-4 mt-5">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+    <div className=" conteiner w-full mt-5">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-sm:w-96">
         <div className=" bg-white rounded-lg p-3 shadow-md md:top-10 md:right-20">
-          <div className="flex flex-row md:flex-row justify-center gap-4">
+          <div className="flex flex-row md:flex-row ga-5  justify-evenly max-sm:gap-1">
             <div
               className="flex flex-col items-center"
               onClick={() => dataSelect("zeolita")}
@@ -113,7 +113,7 @@ const HomeBody: React.FC = () => {
           </div>
         </div>
 
-        <div className=" bg-white rounded-lg  shadow-md w-full">
+        <div className=" bg-white rounded-lg  shadow-md max-sm:w-full w-[450px]">
           {selectData?.title === "img" ? (
             <div className="flex justify-center items-center">
               <Image priority={true} src={Logo} alt={"logo"} />

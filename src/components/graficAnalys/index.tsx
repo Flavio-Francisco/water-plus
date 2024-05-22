@@ -20,6 +20,7 @@ const GraficAnalys = (data: UnifiedData) => {
   };
   return (
     <div className="conteiner mt-5 h-full">
+      <hr />
       <LineChart
         topAxis={{
           label: data.sampleMatrixAndOrigin || "",
@@ -64,6 +65,7 @@ const GraficAnalys = (data: UnifiedData) => {
         }}
         {...customize}
       />
+      <hr />
     </div>
   );
 };

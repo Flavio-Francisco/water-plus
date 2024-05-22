@@ -1,7 +1,5 @@
 "use client";
-import "bootstrap/dist/css/bootstrap.min.css";
 import React from "react";
-import { Container } from "react-bootstrap";
 import HomeBody from "@/components/homeBody";
 import AcidReplacement from "@/components/acidReplacement";
 import Desinfection from "@/components/disinfection";
@@ -11,23 +9,21 @@ import GraficPizzaRegection from "@/components/GraficPizzaRegection";
 
 function Home() {
   return (
-    <div className=" bg-white container ">
-      <div className=" mt-10  sm:mt-150 text-center md:text-left">
-        <h1>Water Plus</h1>
-        <h6>Monitoramento de Tratamento de Água</h6>
+    <div className="conteiner flex flex-col justify-center items-center  max-sm:w-7/12 max-sm:m-auto ">
+      <div className=" max-sm:mt-10 sm:mt-[50px] text-center md:text-left ">
+        <h1 className="text-3xl font-bold whitespace-nowrap">Water Plus</h1>
       </div>
 
-      <div className="sm:grid sm:grid-cols-2 md:grid-cols-2 mt-10 justify-between">
+      <div className=" conteiner  grid sm:grid-cols-2 md:grid-cols-2 mt-10 justify-between">
         <GraficPizzaProduction />
         <GraficPizzaRegection />
       </div>
-
-      <Container className="d-flex justify-content-center align-items-center">
+      <div className="flex justify-center items-center ">
         <HomeBody />
-      </Container>
+      </div>
 
-      <div className="d-flex flex-wrap justify-content-center mt-10 md:mt-50 mb-30">
-        <div className="d-flex flex-wrap justify-content-evenly w-100">
+      <div className="container">
+        <div className="flex justify-center items-center  gap-4">
           <div className="mb-3">
             <FilterReplacement />
           </div>

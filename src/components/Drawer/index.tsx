@@ -1,7 +1,6 @@
 "use client";
 import * as React from "react";
 import { styled, useTheme, Theme, CSSObject } from "@mui/material/styles";
-import Box from "@mui/material/Box";
 import MuiDrawer from "@mui/material/Drawer";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
@@ -136,7 +135,13 @@ export default function Drawer({
   }
 
   return (
-    <Box sx={{ display: user === null ? "none" : "flex" }}>
+    <div
+      className="conteiner max-sm:w-10/12 max-sm:mx-auto"
+      style={{
+        display: user === null ? "none" : "flex",
+        overflow: "hidden",
+      }}
+    >
       <CssBaseline />
       <AppBar position="fixed" open={open}>
         <Toolbar>
@@ -404,10 +409,10 @@ export default function Drawer({
           </ListItem>
         </List>
       </ActionDrawer>
-      <div className="conteiner w-full max-[600]:w-[430]  max-[650]:m-auto">
+      <div className=" w-full max-sm:w-2/4  max-sm:m-auto">
         <DrawerHeader />
-        <div className=" flex justify-center items-center">{children}</div>
+        <div className=" container max-sm:mx-auto ">{children}</div>
       </div>
-    </Box>
+    </div>
   );
 }

@@ -27,7 +27,13 @@
   position: absolute;
   bottom: 1px;
   left: 1px;
-  width: 93px;
+  width: 96px;
   background-color: rgba(25,118,210,255);
   transition: height 0.5s ease-in-out;
+}
+
+@media (max-width: 640px) {
+  .battery-indicator {
+    width: 72px; /* 50% da largura padrão quando a largura da tela for menor que 640px */
+  }
 }

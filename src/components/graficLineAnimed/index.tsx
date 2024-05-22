@@ -16,13 +16,13 @@ const GraficLineAnimed = ({ title, data, day }: Props) => {
   // Converter valores de `day` para instâncias de Date
 
   return (
-    <div className="">
+    <div className="w-full ">
       {data === null || data === undefined ? (
         <div className=" mt-12 flex justify-center items-center ">
           <Image priority src={Logo} alt="Logo" height={75} width={150} />
         </div>
       ) : (
-        <div className="w-full sm:w-2/4 md:w-1/2 lg:w-1/3 ">
+        <div className="flex justify-center items-center ">
           <LineChart
             margin={{ left: 70, right: 70 }}
             xAxis={[

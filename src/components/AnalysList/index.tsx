@@ -31,10 +31,10 @@ export default function AnalysList() {
   };
 
   return (
-    <>
-      <div className="container ">
+    <div className=" flex flex-col justify-center items-center mt-4 w-11/12  max-sm:w-[400px] max-sm:left-10 absolute">
+      <div className="container w-11/12  ">
         <Autocomplete
-          className="m-auto mt-2.5 md:w-2/6 max-md:w-4/5"
+          className="m-auto mt-5 max-md:w-4/5 w-2/5"
           value={selectedAnalys}
           onChange={handleAnalysChange}
           selectOnFocus
@@ -47,10 +47,10 @@ export default function AnalysList() {
             <TextField {...params} label="Selecione o Ponto da Coleta" />
           )}
         />
-        <div>
+        <div className="container w-full">
           {selectedAnalys && (
             <div>
-              <div className="container w-full">
+              <div className="w-11/12 ">
                 <GraficAnalys
                   samplingDate={selectedAnalys?.samplingDate}
                   sampleMatrixAndOrigin={selectedAnalys?.sampleMatrixAndOrigin}
@@ -65,7 +65,7 @@ export default function AnalysList() {
                   system_id={selectedAnalys?.system_id}
                 />
               </div>
-              <div className=" w-full">
+              <div className=" w-11/12">
                 <ListAnalys
                   samplingDate={selectedAnalys?.samplingDate}
                   sampleMatrixAndOrigin={selectedAnalys?.sampleMatrixAndOrigin}
@@ -84,6 +84,6 @@ export default function AnalysList() {
           )}
         </div>
       </div>
-    </>
+    </div>
   );
 }

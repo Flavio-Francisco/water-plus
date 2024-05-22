@@ -7,11 +7,15 @@ interface BatteryLoadingProps {
 
 export default function Batery({chargeLevel}:BatteryLoadingProps){
 
-return(
+return (
+  <div className="flex justify-center items-center  max-sm:w-[78px] ">
     <div className="battery-loading">
-    
-    <div className="battery-indicator" style={{ height: `${chargeLevel}%` }}></div>
+      <div
+        className="battery-indicator"
+        style={{ height: `${chargeLevel}%` }}
+      ></div>
+    </div>
   </div>
-  
-)
+);
+   
 }
