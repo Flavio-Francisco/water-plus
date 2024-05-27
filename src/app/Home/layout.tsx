@@ -9,6 +9,7 @@ import Drawer from '@/components/Drawer';
 import Provider from "@/components/Providers";
 import { UserProvider } from "@/context/userContext";
 import { DataFullProvider } from "@/context/userDataFull";
+import { EventsProvider } from "@/context/eventContext";
 
 const roboto = Roboto({
   weight: "400",
@@ -29,7 +30,9 @@ export default function RootLayout({
         <Provider>
           <UserProvider>
             <DataFullProvider>
-              <Drawer>{children}</Drawer>
+              <EventsProvider>
+                <Drawer>{children}</Drawer>
+              </EventsProvider>
             </DataFullProvider>
           </UserProvider>
         </Provider>

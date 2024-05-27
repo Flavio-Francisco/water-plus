@@ -3,7 +3,7 @@ import React from "react";
 
 const Grafic = () => {
   return (
-    <div>
+    <div className="flex justify-center items-center">
       <GraficPage />
     </div>
   );

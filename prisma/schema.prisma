@@ -201,6 +201,7 @@ model systems {
   chemical                                                 chemical[]
   diasefe                                                  diasefe[]
   doctor                                                   doctor[]
+  events                                                   events[]
   microbiologigo_assays                                    microbiologigo_assays[]
   operator                                                 operator[]
   parameters                                               parameters[]
@@ -216,4 +217,15 @@ model user {
   system_id Int?
   adm       Boolean?
   systems   systems? @relation(fields: [system_id], references: [id], onDelete: Cascade)
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model events {
+  id          Int      @id @default(autoincrement())
+  title       String?
+  date        String?
+  description String?
+  editable    Boolean?
+  systen_id   Int?
+  systems     systems? @relation(fields: [systen_id], references: [id], onDelete: Cascade)
 }

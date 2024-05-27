@@ -13,11 +13,12 @@ import { useDataFull } from "@/context/userDataFull";
 import { getObjects } from "@/utils/functions/getObject";
 import { GetAnnual } from "@/app/fecth/annual";
 import { GetAnalys } from "@/app/fecth/analys";
-
-
+import { useEventInput } from "@/context/eventContext";
+import { getEventsDB } from "@/app/fecth/events";
 
 const HomeBody: React.FC = () => {
   const { user } = useUserContext();
+  const { getEvents } = useEventInput();
   const { getDataFull, getProduction, getAnalys } = useDataFull();
   const { data: production } = useQuery({
     queryKey: ["annual"],
@@ -49,7 +50,6 @@ const HomeBody: React.FC = () => {
       }
     },
   });
-  console.log(" analys", analys);
 
   const { data: dataFull } = useQuery({
     queryKey: ["dataFull"],
@@ -58,9 +58,22 @@ const HomeBody: React.FC = () => {
   if (data != null) {
     localStorage.setItem("DataFull", JSON.stringify(data));
   }
+  const { data: events } = useQuery({
+    queryKey: ["events"],
+    queryFn: () => {
+      if (user) {
+        return getEventsDB(user.system_id || 0);
+      } else {
+        return null;
+      }
+    },
+  });
+
   getAnalys(analys);
+  getEvents(events);
   getDataFull(dataFull);
   getProduction(production);
+  console.log("events", events);
 
   const Abrandador = getObjects(dataFull, "Pressão de Entrada do Abrandador")!;
   const Zeolica = getObjects(dataFull, "Pressão de Entrada Multimídia")!;

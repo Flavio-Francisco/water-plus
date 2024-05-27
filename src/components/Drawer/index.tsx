@@ -34,6 +34,7 @@ import Image from "next/image";
 import Logo from "../SideBar/logo.jpg";
 import { useUserContext } from "@/context/userContext";
 import Loader from "../loader/page";
+import CalendarModal from "../Calendar/CalendarModal";
 
 const drawerWidth = 240;
 
@@ -180,6 +181,18 @@ export default function Drawer({
             >
               <WaterParametersForm />
             </ListItemIcon>
+            <ListItemIcon
+              title="Parametros"
+              sx={{
+                minWidth: 0,
+                mr: open ? 3 : "auto",
+                justifyContent: "center",
+                color: "white",
+              }}
+            >
+              <CalendarModal />
+            </ListItemIcon>
+
             <ListItemIcon
               title="Manuteção"
               sx={{
