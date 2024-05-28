@@ -34,6 +34,7 @@
 
 @media (max-width: 640px) {
   .battery-indicator {
-    width: 72px; /* 50% da largura padrão quando a largura da tela for menor que 640px */
+    width: 60px; /* 50% da largura padrão quando a largura da tela for menor que 640px */
   }
+  
 }

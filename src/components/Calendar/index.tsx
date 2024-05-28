@@ -1,5 +1,4 @@
 "use client";
-"use client";
 import React, { useState, useEffect, useRef } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
@@ -48,6 +47,7 @@ export default function Calendar({ events: initialEvents }: CalendarProps) {
     title: user?.name,
     description: "",
   });
+
   const [contentHeight, setContentHeight] = useState<number>(
     window.innerWidth < 500 ? 300 : 500
   );
@@ -139,7 +139,7 @@ export default function Calendar({ events: initialEvents }: CalendarProps) {
   };
 
   return (
-    <div className="container max-sm:w-10/12 max-sm:absolute max-sm:left-16 mt-9">
+    <div className="container  mt-9">
       <div className="w-full">
         <FullCalendar
           ref={calendarRef}
@@ -156,9 +156,15 @@ export default function Calendar({ events: initialEvents }: CalendarProps) {
             day: "Dia",
           }}
           headerToolbar={{
-            right: "dayGridMonth today prev,next",
-            center: "title",
-            left: "timeGridWeek,timeGridDay,listWeek",
+            right:
+              window.innerWidth < 500
+                ? "today prev,next"
+                : "dayGridMonth today prev,next",
+            center: window.innerWidth < 500 ? "dayGridMonth" : "title",
+            left:
+              window.innerWidth < 500
+                ? ""
+                : "timeGridWeek,timeGridDay,listWeek",
           }}
           dateClick={handleDateClick}
           eventClick={handleEventClick}

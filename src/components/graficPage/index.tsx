@@ -44,8 +44,8 @@ const GraficPage = () => {
         />
       </div>
       {select === 100 ? (
-        <div className="flex justify-center items-center">
-          <Image src={Logo} alt="Logo" width={300} height={300} />
+        <div className="flex justify-center items-center max-sm:ml-24">
+          <Image src={Logo} alt="Logo" width={250} height={250} />
         </div>
       ) : (
         <div className="w-10/12 ">

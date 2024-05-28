@@ -39,7 +39,7 @@ function CalendarModal() {
         open={show}
         onClose={handleClose}
       >
-        <Modal.Body>
+        <Modal.Body className="max-sm:flex max-sm:justify-center max-sm:items-center">
           <Calendar events={events || []} />
         </Modal.Body>
       </Dialog>
