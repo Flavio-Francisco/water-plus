@@ -35,6 +35,7 @@ import Logo from "../SideBar/logo.jpg";
 import { useUserContext } from "@/context/userContext";
 import Loader from "../loader/page";
 import CalendarModal from "../Calendar/CalendarModal";
+import DashboardTSX from "./DashboardTSX";
 
 const drawerWidth = 240;
 
@@ -115,6 +116,7 @@ export default function Drawer({
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const { user } = useUserContext();
+
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -122,6 +124,7 @@ export default function Drawer({
   const handleDrawerClose = () => {
     setOpen(false);
   };
+
   const { push } = useRouter();
   if (user === null) {
     return (
@@ -367,7 +370,8 @@ export default function Drawer({
                   justifyContent: "center",
                 }}
               >
-                <Dashboard
+                <DashboardTSX icon={<AssignmentOutlinedIcon />} />
+                {/* <Dashboard
                   name1="Mensal"
                   name2="Limpeza Reservatórios"
                   name3="Diasefe"
@@ -376,8 +380,7 @@ export default function Drawer({
                   route2="/Home/report/reservoirCleaning"
                   route3="/Home/report/diasafe"
                   route4="/Home/report/apevisa"
-                  icon={<AssignmentOutlinedIcon />}
-                />
+                /> */}
               </ListItemIcon>
               <ListItemText
                 primary={"Relatórios"}
