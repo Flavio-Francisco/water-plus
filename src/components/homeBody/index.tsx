@@ -15,11 +15,26 @@ import { GetAnnual } from "@/app/fecth/annual";
 import { GetAnalys } from "@/app/fecth/analys";
 import { useEventInput } from "@/context/eventContext";
 import { getEventsDB } from "@/app/fecth/events";
+import { getChemical } from "@/app/fecth/chemical";
+import { useChemist } from "@/context/useChermist";
 
 const HomeBody: React.FC = () => {
   const { user } = useUserContext();
   const { getEvents } = useEventInput();
   const { getDataFull, getProduction, getAnalys } = useDataFull();
+  const { getChemist, refetchChemist } = useChemist();
+
+  const { data: chemist, refetch: refetchchemist } = useQuery({
+    queryKey: ["chemicalDB"],
+    queryFn: () => {
+      if (user) {
+        return getChemical(user?.system_id || 0);
+      } else {
+        return null;
+      }
+    },
+  });
+
   const { data: production } = useQuery({
     queryKey: ["annual"],
     queryFn: () => {
@@ -73,8 +88,18 @@ const HomeBody: React.FC = () => {
   getEvents(events);
   getDataFull(dataFull);
   getProduction(production);
+  if (getChemist) {
+    getChemist(chemist);
+  } else {
+    console.error("getChemist is not defined");
+  }
+  if (refetchChemist) {
+    refetchChemist(refetchchemist);
+  } else {
+    console.error("refetchChemist is not defined");
+  }
   console.log("events", events);
-
+  console.log("chemist", chemist);
   const Abrandador = getObjects(dataFull, "Pressão de Entrada do Abrandador")!;
   const Zeolica = getObjects(dataFull, "Pressão de Entrada Multimídia")!;
   const Carvao = getObjects(dataFull, "Pressão de Entrada de Carvão")!;

@@ -1,22 +1,17 @@
 import React, { useState } from "react";
 import { Modal, Button } from "react-bootstrap";
-import ChemistFormEdit, { CredentialsChemistdb } from "../editForm";
+import ChemistFormEdit from "../editForm";
 import "./styles.css";
-import { useQuery } from "@tanstack/react-query";
-import { getChemical } from "@/app/fecth/chemical";
-import { useUserContext } from "@/context/userContext";
+
+import { useChemist } from "@/context/useChermist";
 
 export default function ModalLabChemist() {
   const [showModal, setShowModal] = useState(false);
   const handleClose = () => setShowModal(false);
   const handleShow = () => setShowModal(true);
   const handleUpdate = (success: boolean) => setShowModal(success);
-  const { user } = useUserContext();
 
-  const { data, refetch } = useQuery<CredentialsChemistdb>({
-    queryKey: ["chermicalDB"],
-    queryFn: () => getChemical(user?.system_id || 0),
-  });
+  const { Chemist, refetch } = useChemist();
   return (
     <>
       <button
@@ -32,7 +27,17 @@ export default function ModalLabChemist() {
         </Modal.Header>
         <Modal.Body>
           <ChemistFormEdit
-            data={data}
+            data={
+              Chemist || {
+                CRM: "",
+                graduation: "",
+                id: 0,
+                name: "",
+                postGraduation: "",
+                postGraduation2: "",
+                system_id: 0,
+              }
+            }
             refech={refetch}
             onUpdate={handleUpdate}
           />
