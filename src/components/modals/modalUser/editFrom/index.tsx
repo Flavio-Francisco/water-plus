@@ -105,7 +105,7 @@ const UserFormEdit: React.FC<Iprops> = ({
               {errors.password}
             </Form.Control.Feedback>
 
-            <Form.Group controlId="formCheckbox">
+            <Form.Group controlId="formCheckbox" className="mt-2">
               <FormCheck
                 type="checkbox"
                 label="Admistrador"

@@ -17,17 +17,20 @@ import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { Dayjs } from "dayjs";
+import { useQuery } from "@tanstack/react-query";
+import { getMachines } from "@/app/fecth/diasafe";
+import { useUserContext } from "@/context/userContext";
 
 interface IProps {
   icon: React.ReactNode;
 }
 
 export default function DashboardTSX({ icon }: IProps) {
+  const { user } = useUserContext();
   const { operator } = useOperator();
   const { doctor } = useDoctor();
   const { Chemist } = useChemist();
   const [value, setValue] = React.useState<Dayjs | null>(null);
-  console.log(value?.toString());
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -35,6 +38,12 @@ export default function DashboardTSX({ icon }: IProps) {
   const [openModal2, setOpenModal2] = React.useState(false);
   const [openModal3, setOpenModal3] = React.useState(false);
   const [openModal4, setOpenModal4] = React.useState(false);
+
+  const { data } = useQuery({
+    queryKey: ["diasafe"],
+    queryFn: () => getMachines(user?.system_id || 0),
+  });
+  console.log("diasafe modal", data);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -178,7 +187,7 @@ export default function DashboardTSX({ icon }: IProps) {
         >
           <div className="w-full h-screen">
             <PDFViewer className="w-full h-full">
-              <ReportDiasafe />
+              <ReportDiasafe data={data || []} />
             </PDFViewer>
           </div>
         </ModalTsx>

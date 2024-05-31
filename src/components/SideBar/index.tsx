@@ -176,18 +176,19 @@ export const Sidebar = () => {
     
   return (
     <div style={{ flexDirection: "row" }}>
-     < NaviBar className="hamburger-menu" classeButtom="hamburger-menu-button" toggleMenu={toggleMenu}/>
-    <aside className={`sidebar ${isMenuOpen ? 'open' : 'closed'}`} style={{ background: Thema.Colors.blue1 }}>
-      <nav className="sidebar-nav">
-    <Image
-    className="image"
-     src={Logo} 
-     alt="Logo"
-     
-     />
-       <div className="space"/>
+      <NaviBar
+        className="hamburger-menu"
+        classeButtom="hamburger-menu-button"
+        toggleMenu={toggleMenu}
+      />
+      <aside
+        className={`sidebar ${isMenuOpen ? "open" : "closed"}`}
+        style={{ background: Thema.Colors.blue1 }}
+      >
+        <nav className="sidebar-nav">
+          <Image priority className="image" src={Logo} alt="Logo" />
+          <div className="space" />
 
-     
           {menuItems.map((item, index) => (
             <React.Fragment key={index}>
               {!item.items && (
@@ -210,8 +211,9 @@ export const Sidebar = () => {
                     hasSubNav={!!item.items}
                   />
                   <div
-                    className={`sub-nav ${isSubNavOpen(item.name, item.items) ? "open" : ""
-                      }`}
+                    className={`sub-nav ${
+                      isSubNavOpen(item.name, item.items) ? "open" : ""
+                    }`}
                     key={`${item.name}-sub-nav`}
                   >
                     {item.items.map((subItem) => (
@@ -228,14 +230,12 @@ export const Sidebar = () => {
             </React.Fragment>
           ))}
           <div>
-          <WaterParametersForm />
+            <WaterParametersForm />
             <MyModal />
             <SettingsModal />
           </div>
-
         </nav>
       </aside>
-
     </div>
   );
 };

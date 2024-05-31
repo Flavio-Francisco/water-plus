@@ -56,7 +56,9 @@ export default function ModalSetting({ icon }: IProps) {
   const handlecloseModal4 = () => {
     setOpenModal4(false);
   };
-
+  const onUpdate = () => {
+    setOpenModal4(false);
+  };
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -112,7 +114,7 @@ export default function ModalSetting({ icon }: IProps) {
             handleOpenModal4();
           }}
         >
-          Apevisa
+          Usuários
         </MenuItem>
       </Menu>
 
@@ -180,7 +182,7 @@ export default function ModalSetting({ icon }: IProps) {
           onClose={handlecloseModal4}
           maxWidth="sm"
         >
-          {user?.adm === true && <ModalLabUser />}
+          {user?.adm === true && <ModalLabUser onUpdate={onUpdate} />}
         </ModalTsx>
       </div>
     </div>

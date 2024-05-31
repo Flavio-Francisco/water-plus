@@ -43,7 +43,7 @@ const UserList = ({ data, onUpdate, refech }: Ipros) => {
     <div className="container">
       <div className="conteinerList">
         <Autocomplete
-          className="m-auto w-full  mt-2.5 md:w-2/6 max-md:w-4/5"
+          className="m-auto w-full mb-3 mt-4 md:w-4/6 max-md:w-4/5"
           value={selectedUser}
           onChange={handleOperatorChange}
           selectOnFocus
