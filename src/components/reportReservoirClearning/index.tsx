@@ -1,18 +1,19 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Page, Text, View, Document } from "@react-pdf/renderer";
-import { fakeReservoirCleaning, fackCredentials } from "@/utils/models/Data";
-import { ReservoirCleaning, Credentials } from "@/utils/models/report";
-import { styles } from "./styles";
 
-const ReservoirClearning = () => {
+import { styles } from "./styles";
+import { CredentialsChemistdb } from "../modals/modalChemist/editForm";
+import { formatDate } from "@/utils/functions/FormateDate";
+
+interface IProps {
+  Chemist: CredentialsChemistdb | null;
+  lastCleaning: string;
+}
+
+const ReservoirClearning = ({ Chemist, lastCleaning }: IProps) => {
   const date = new Date();
-  const [reservoir, setReservoir] = useState<ReservoirCleaning>();
-  const [credentials, setCredentials] = useState<Credentials>();
-  useEffect(() => {
-    setReservoir(fakeReservoirCleaning);
-    setCredentials(fackCredentials);
-  }, [fakeReservoirCleaning]);
+  const dateCleaing = formatDate(new Date(lastCleaning));
   return (
     <Document>
       <Page size="A4" style={styles.body}>
@@ -39,25 +40,25 @@ const ReservoirClearning = () => {
           potabilidade.
         </Text>
         <View style={styles.space} />
-        <Text style={styles.p}>
-          ULTIMA LIMPEZA E DESINFECÇÃO EXECUTADA EM: {reservoir?.lastCleaning}
+        <Text style={styles.pSignature}>
+          ULTIMA LIMPEZA E DESINFECÇÃO EXECUTADA EM: {dateCleaing}
         </Text>
-        <Text style={styles.p}>
-          LIMPEZA PREVISTA PARA : {reservoir?.nextCleaning}
-        </Text>
+
         <View style={styles.space} />
         <View style={styles.signature}>
           <View style={styles.lineSignature} />
+          <Text style={styles.pSignature}> Nome:{Chemist?.name}</Text>
           <Text style={styles.pSignature}>
-            {credentials?.Chemist.graduation}
+            {" "}
+            Graduação:{Chemist?.graduation}
           </Text>
-          <Text style={styles.pSignature}>CRQ: {credentials?.Chemist.CRQ}</Text>
-          <Text style={styles.pSignature}>
-            {credentials?.Chemist.postGraduation}
-          </Text>
-          <Text style={styles.pSignature}>
-            {credentials?.Chemist.postGraduation2}
-          </Text>
+          <Text style={styles.pSignature}>CRQ: {Chemist?.CRM}</Text>
+          {Chemist?.postGraduation && (
+            <Text style={styles.pSignature}>{Chemist?.postGraduation}</Text>
+          )}
+          {Chemist?.postGraduation2 && (
+            <Text style={styles.pSignature}>{Chemist?.postGraduation2}</Text>
+          )}
         </View>
       </Page>
     </Document>

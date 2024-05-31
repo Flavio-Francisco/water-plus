@@ -12,18 +12,23 @@ import { ArrayApavise } from "@/utils/models/Data";
 import { useDoctor } from "@/context/useDoctor";
 import { useChemist } from "@/context/useChermist";
 import { useOperator } from "@/context/useOperator";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { Dayjs } from "dayjs";
 
 interface IProps {
   icon: React.ReactNode;
 }
 
 export default function DashboardTSX({ icon }: IProps) {
+  const { operator } = useOperator();
   const { doctor } = useDoctor();
   const { Chemist } = useChemist();
-  const { operator } = useOperator();
-  console.log(doctor);
-  console.log(Chemist);
-  console.log(operator);
+  const [value, setValue] = React.useState<Dayjs | null>(null);
+  console.log(value?.toString());
+
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const [openModal1, setOpenModal1] = React.useState(false);
@@ -132,16 +137,38 @@ export default function DashboardTSX({ icon }: IProps) {
           </div>
         </ModalTsx>
         <ModalTsx
-          fullWidth={true}
+          fullWidth={value === null ? false : true}
           open={openModal2}
           onClose={handlecloseModal2}
           maxWidth="xl"
         >
-          <div className="w-full h-screen">
-            <PDFViewer className="w-full h-full">
-              <ReservoirClearning />
-            </PDFViewer>
-          </div>
+          {value === null ? (
+            <div className="flex flex-col justify-center items-center">
+              <div className="mb-3">
+                <p className="text-lg">
+                  Selecione a Data da Última Desinfecção
+                </p>
+              </div>
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DemoContainer components={["DatePicker"]}>
+                  <DatePicker
+                    value={value}
+                    onChange={(newValue) => setValue(newValue)}
+                  />
+                </DemoContainer>
+              </LocalizationProvider>
+            </div>
+          ) : null}
+          {value && (
+            <div className="w-full h-screen">
+              <PDFViewer className="w-full h-full">
+                <ReservoirClearning
+                  Chemist={Chemist}
+                  lastCleaning={value?.toString()}
+                />
+              </PDFViewer>
+            </div>
+          )}
         </ModalTsx>
         <ModalTsx
           fullWidth={true}
