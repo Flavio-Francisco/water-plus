@@ -161,10 +161,7 @@ export default function Calendar({ events: initialEvents }: CalendarProps) {
                 ? "today prev,next"
                 : "dayGridMonth today prev,next",
             center: window.innerWidth < 500 ? "dayGridMonth" : "title",
-            left:
-              window.innerWidth < 500
-                ? ""
-                : "timeGridWeek,timeGridDay,listWeek",
+            left: window.innerWidth < 500 ? "" : "timeGridWeek timeGridDay",
           }}
           dateClick={handleDateClick}
           eventClick={handleEventClick}

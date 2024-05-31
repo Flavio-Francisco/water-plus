@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Form } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import { Formik } from "formik";
 import { SchemaOperator } from "@/utils/validation/CredentialsForm";
 import { CredentialsOperator } from "@/utils/models/Credentials";
@@ -7,7 +7,7 @@ import { useMutation } from "@tanstack/react-query";
 import { createOperator, updateOperator } from "@/app/fecth/operator";
 import { useUserContext } from "@/context/userContext";
 import Loader from "@/components/loader/page";
-import { Autocomplete, TextField } from "@mui/material";
+import { Autocomplete, Button, TextField } from "@mui/material";
 
 export interface CredentialOperator {
   id?: number;
@@ -40,7 +40,7 @@ const OperatorFormNew = ({ data, onUpdate, refech }: Ipros) => {
           id: found?.id,
           name: found?.name || "",
           registration: found?.registration || "",
-          systen_id: user?.system_id||0,
+          systen_id: user?.system_id || 0,
         },
       });
     } else {
@@ -49,7 +49,7 @@ const OperatorFormNew = ({ data, onUpdate, refech }: Ipros) => {
           id: newValue?.id,
           name: newValue?.name || "",
           registration: newValue?.registration || "",
-          systen_id: user?.system_id||0,
+          systen_id: user?.system_id || 0,
         },
       });
     }
@@ -98,7 +98,7 @@ const OperatorFormNew = ({ data, onUpdate, refech }: Ipros) => {
   return (
     <>
       <Autocomplete
-        className="m-auto mt-2.5 md:w-2/6 max-md:w-4/5"
+        className="m-auto mt-2.5 md:w-4/6 max-md:w-10/12"
         value={operator.operator}
         onChange={handleOperatorChange}
         selectOnFocus
@@ -159,7 +159,11 @@ const OperatorFormNew = ({ data, onUpdate, refech }: Ipros) => {
                 </Form.Control.Feedback>
               </Form.Group>
 
-              <Button variant="primary" type="submit" style={{ marginTop: 20 }}>
+              <Button
+                variant="contained"
+                type="submit"
+                style={{ marginTop: 20 }}
+              >
                 Enviar
               </Button>
             </Form>

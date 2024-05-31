@@ -9,7 +9,6 @@ export default function ModalLabChemist() {
   const [showModal, setShowModal] = useState(false);
   const handleClose = () => setShowModal(false);
   const handleShow = () => setShowModal(true);
-  const handleUpdate = (success: boolean) => setShowModal(success);
 
   const { Chemist, refetch } = useChemist();
   return (
@@ -39,7 +38,6 @@ export default function ModalLabChemist() {
               }
             }
             refech={refetch}
-            onUpdate={handleUpdate}
           />
         </Modal.Body>
         <Modal.Footer>

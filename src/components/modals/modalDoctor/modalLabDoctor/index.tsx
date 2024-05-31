@@ -1,22 +1,16 @@
 import React, { useState } from "react";
 import { Modal, Button } from "react-bootstrap";
-import DoctorFormEdit, { CredentialDoctordb } from "../newForm";
+import DoctorFormEdit from "../newForm";
 import "./styles.css";
-import { getDoctor } from "@/app/fecth/doctor";
-import { useQuery } from "@tanstack/react-query";
-import { useUserContext } from "@/context/userContext";
+import { useDoctor } from "@/context/useDoctor";
 
 export default function ModalLabDoctor() {
   const [showModal, setShowModal] = useState(false);
   const handleClose = () => setShowModal(false);
   const handleShow = () => setShowModal(true);
   const handleUpdate = (success: boolean) => setShowModal(success);
-  const { user } = useUserContext();
+  const { doctor, refetch } = useDoctor();
 
-  const { data, refetch } = useQuery<CredentialDoctordb>({
-    queryKey: ["doctorModal"],
-    queryFn: () => getDoctor(user?.system_id || 0),
-  });
   return (
     <>
       <button
@@ -32,7 +26,17 @@ export default function ModalLabDoctor() {
         </Modal.Header>
         <Modal.Body>
           <DoctorFormEdit
-            data={data}
+            data={
+              doctor || {
+                CRM: "",
+                graduation: "",
+                name: "",
+                postGraduation: "",
+                postGraduation2: "",
+                id: 0,
+                system_id: 0,
+              }
+            }
             refech={refetch}
             onUpdate={handleUpdate}
           />

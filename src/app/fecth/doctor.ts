@@ -25,7 +25,7 @@ export async function updateDoctor(system_id:number|null, data:CredentialsDoctor
 }
 
 
-export async function getDoctor(system_id: number | null) {
+export async function getDoctorDB(system_id: number | null) {
    
     
     const doctor = await axios.get(`api/doctor?id=${system_id}`)

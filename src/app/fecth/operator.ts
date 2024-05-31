@@ -25,7 +25,7 @@ export async function updateOperator(system_id:number|null, data:CredentialsOper
 }
 
 
-export async function getOperator(system_id: number | null) {
+export async function getOperatorDB(system_id: number | null) {
    
     
     const operator = await axios.get(`api/operator?id=${system_id}`)

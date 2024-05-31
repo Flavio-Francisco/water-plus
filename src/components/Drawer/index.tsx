@@ -19,7 +19,6 @@ import ListItemText from "@mui/material/ListItemText";
 import WaterDropOutlinedIcon from "@mui/icons-material/WaterDropOutlined";
 import GrainOutlinedIcon from "@mui/icons-material/GrainOutlined";
 import OtherHousesOutlinedIcon from "@mui/icons-material/OtherHousesOutlined";
-
 import HubOutlinedIcon from "@mui/icons-material/HubOutlined";
 import AssignmentOutlinedIcon from "@mui/icons-material/AssignmentOutlined";
 import WaterOutlinedIcon from "@mui/icons-material/WaterOutlined";
@@ -27,7 +26,6 @@ import { useRouter } from "next/navigation";
 import Dashboard from "./Dashboard";
 import WaterParametersForm from "../waterParametersForm";
 import Maintenance from "../SideBar/manutecao";
-import SettingsModal from "../SideBar/settingsModal";
 import LogOut from "../logOut";
 import UserCard from "../CardUser";
 import Image from "next/image";
@@ -36,7 +34,8 @@ import { useUserContext } from "@/context/userContext";
 import Loader from "../loader/page";
 import CalendarModal from "../Calendar/CalendarModal";
 import DashboardTSX from "./DashboardTSX";
-
+import ModalSetting from "../ModalSetting";
+import SettingsIcon from "@mui/icons-material/Settings";
 const drawerWidth = 240;
 
 const openedMixin = (theme: Theme): CSSObject => ({
@@ -184,17 +183,6 @@ export default function Drawer({
             >
               <WaterParametersForm />
             </ListItemIcon>
-            <ListItemIcon
-              title="Parametros"
-              sx={{
-                minWidth: 0,
-                mr: open ? 3 : "auto",
-                justifyContent: "center",
-                color: "white",
-              }}
-            >
-              <CalendarModal />
-            </ListItemIcon>
 
             <ListItemIcon
               title="Manuteção"
@@ -216,7 +204,7 @@ export default function Drawer({
                 color: "white",
               }}
             >
-              <SettingsModal />
+              <ModalSetting icon={<SettingsIcon />} />
             </ListItemIcon>
           </div>
           <div className="gap-5 flex flex-row justify-center items-center">
@@ -371,16 +359,6 @@ export default function Drawer({
                 }}
               >
                 <DashboardTSX icon={<AssignmentOutlinedIcon />} />
-                {/* <Dashboard
-                  name1="Mensal"
-                  name2="Limpeza Reservatórios"
-                  name3="Diasefe"
-                  name4="Resultado Apevisa"
-                  route1="/Home/report/monthly"
-                  route2="/Home/report/reservoirCleaning"
-                  route3="/Home/report/diasafe"
-                  route4="/Home/report/apevisa"
-                /> */}
               </ListItemIcon>
               <ListItemText
                 primary={"Relatórios"}
@@ -419,6 +397,34 @@ export default function Drawer({
               </ListItemIcon>
               <ListItemText
                 primary={"Análises"}
+                sx={{ opacity: open ? 1 : 0 }}
+              />
+            </ListItemButton>
+          </ListItem>
+        </List>
+        <Divider />
+
+        <List>
+          <ListItem disablePadding sx={{ display: "block" }}>
+            <ListItemButton
+              sx={{
+                minHeight: 48,
+                justifyContent: open ? "initial" : "center",
+                px: 2.5,
+              }}
+            >
+              <ListItemIcon
+                title="Obsevações"
+                sx={{
+                  minWidth: 0,
+                  mr: open ? 3 : "auto",
+                  justifyContent: "center",
+                }}
+              >
+                <CalendarModal />
+              </ListItemIcon>
+              <ListItemText
+                primary={"Obsevações"}
                 sx={{ opacity: open ? 1 : 0 }}
               />
             </ListItemButton>

@@ -17,18 +17,39 @@ import { useEventInput } from "@/context/eventContext";
 import { getEventsDB } from "@/app/fecth/events";
 import { getChemical } from "@/app/fecth/chemical";
 import { useChemist } from "@/context/useChermist";
+import { getDoctorDB } from "@/app/fecth/doctor";
+import { useDoctor } from "@/context/useDoctor";
+import { getOperatorDB } from "@/app/fecth/operator";
+import { useOperator } from "@/context/useOperator";
 
 const HomeBody: React.FC = () => {
   const { user } = useUserContext();
   const { getEvents } = useEventInput();
   const { getDataFull, getProduction, getAnalys } = useDataFull();
   const { getChemist, refetchChemist } = useChemist();
+  const { getDoctor, refetchDoctor } = useDoctor();
+  const { getOperator, refetchOperator } = useOperator();
 
   const { data: chemist, refetch: refetchchemist } = useQuery({
     queryKey: ["chemicalDB"],
     queryFn: () => {
       if (user) {
         return getChemical(user?.system_id || 0);
+      } else {
+        return null;
+      }
+    },
+  });
+
+  const { data: operator, refetch: refetchopertor } = useQuery({
+    queryKey: ["operator"],
+    queryFn: () => getOperatorDB(user?.system_id || 0),
+  });
+  const { data: doctor, refetch: refetchdoctor } = useQuery({
+    queryKey: ["doctorModal"],
+    queryFn: () => {
+      if (user) {
+        return getDoctorDB(user?.system_id || 0);
       } else {
         return null;
       }
@@ -83,11 +104,14 @@ const HomeBody: React.FC = () => {
       }
     },
   });
-
+  getDoctor(doctor);
   getAnalys(analys);
   getEvents(events);
+  getOperator(operator);
   getDataFull(dataFull);
   getProduction(production);
+  refetchDoctor(refetchdoctor);
+  refetchOperator(refetchopertor);
   if (getChemist) {
     getChemist(chemist);
   } else {
@@ -98,8 +122,7 @@ const HomeBody: React.FC = () => {
   } else {
     console.error("refetchChemist is not defined");
   }
-  console.log("events", events);
-  console.log("chemist", chemist);
+
   const Abrandador = getObjects(dataFull, "Pressão de Entrada do Abrandador")!;
   const Zeolica = getObjects(dataFull, "Pressão de Entrada Multimídia")!;
   const Carvao = getObjects(dataFull, "Pressão de Entrada de Carvão")!;

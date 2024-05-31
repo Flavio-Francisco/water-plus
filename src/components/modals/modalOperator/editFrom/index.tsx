@@ -1,11 +1,12 @@
 import React from 'react';
-import { Button, Form } from 'react-bootstrap';
-import { Formik } from 'formik';
-import { SchemaOperator } from '@/utils/validation/CredentialsForm';
-import { CredentialsOperator } from '@/utils/models/Credentials'; // Importe a nova interface
+import { Form } from "react-bootstrap";
+import { Formik } from "formik";
+import { SchemaOperator } from "@/utils/validation/CredentialsForm";
+import { CredentialsOperator } from "@/utils/models/Credentials"; // Importe a nova interface
 import { useUserContext } from "@/context/userContext";
 import { useMutation } from "@tanstack/react-query";
 import { createOperator } from "@/app/fecth/operator";
+import { Button } from "@mui/material";
 
 const initialValues: CredentialsOperator = {
   // Use a nova interface para initialValues
@@ -84,7 +85,7 @@ const OperatorFormEdit = ({ onUpdate, refech }: Iprops) => {
             </Form.Control.Feedback>
           </Form.Group>
 
-          <Button variant="primary" type="submit" style={{ marginTop: 20 }}>
+          <Button variant="contained" type="submit" style={{ marginTop: 20 }}>
             Enviar
           </Button>
         </Form>

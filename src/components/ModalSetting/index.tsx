@@ -2,35 +2,32 @@
 import * as React from "react";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import ModalTsx from "./ModalTsx";
-import { PDFViewer } from "@react-pdf/renderer";
-import Pdf from "@/components/pdf";
-import ReservoirClearning from "@/components/reportReservoirClearning";
-import ReportDiasafe from "@/components/reportDiasafe";
-import ReportApevisa from "@/components/reportApvisa";
-import { ArrayApavise } from "@/utils/models/Data";
-import { useDoctor } from "@/context/useDoctor";
+import ModalTsx from "../Drawer/DashboardTSX/ModalTsx";
+import ChemistFormEdit from "../modals/modalChemist/editForm";
 import { useChemist } from "@/context/useChermist";
+import DoctorFormEdit from "../modals/modalDoctor/editFrom";
+import LabTabs from "../modals/modalUI";
+import OperatorFormNew from "../modals/modalOperator/editFrom";
+import OperatorFormEdit from "../modals/modalOperator/newForm";
+import ModalLabUser from "../modals/modalUser/modalLabUser";
+import { useUserContext } from "@/context/userContext";
 import { useOperator } from "@/context/useOperator";
 
 interface IProps {
   icon: React.ReactNode;
 }
 
-export default function DashboardTSX({ icon }: IProps) {
-  const { doctor } = useDoctor();
-  const { Chemist } = useChemist();
-  const { operator } = useOperator();
-  console.log(doctor);
-  console.log(Chemist);
-  console.log(operator);
+export default function ModalSetting({ icon }: IProps) {
+  const { Chemist, refetch } = useChemist();
+  const { user } = useUserContext();
+  const { operator, refetchOpetor } = useOperator();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const [openModal1, setOpenModal1] = React.useState(false);
   const [openModal2, setOpenModal2] = React.useState(false);
   const [openModal3, setOpenModal3] = React.useState(false);
   const [openModal4, setOpenModal4] = React.useState(false);
-
+  const handleUpdate = (success: boolean) => setOpenModal2(success);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -90,7 +87,7 @@ export default function DashboardTSX({ icon }: IProps) {
             handleOpenModal1();
           }}
         >
-          Mensal
+          Químico Responsável
         </MenuItem>
         <MenuItem
           onClick={() => {
@@ -98,7 +95,8 @@ export default function DashboardTSX({ icon }: IProps) {
             handleOpenModal2();
           }}
         >
-          Limpeza Reservatórios
+          {" "}
+          Médico Responsável
         </MenuItem>
         <MenuItem
           onClick={() => {
@@ -106,7 +104,7 @@ export default function DashboardTSX({ icon }: IProps) {
             handleOpenModal3();
           }}
         >
-          Diasafe
+          Operador Responsável
         </MenuItem>
         <MenuItem
           onClick={() => {
@@ -123,45 +121,66 @@ export default function DashboardTSX({ icon }: IProps) {
           fullWidth={true}
           open={openModal1}
           onClose={handlecloseModal1}
-          maxWidth="xl"
+          maxWidth="sm"
         >
-          <div className="w-full h-screen">
-            <PDFViewer className="w-full h-full">
-              <Pdf Chemist={Chemist} doctor={doctor} operator={operator} />
-            </PDFViewer>
+          <div className="w-full h-screen max-sm:h-4/6">
+            <ChemistFormEdit
+              data={
+                Chemist || {
+                  CRM: "",
+                  graduation: "",
+                  id: 0,
+                  name: "",
+                  postGraduation: "",
+                  postGraduation2: "",
+                  system_id: 0,
+                }
+              }
+              refech={refetch}
+            />
           </div>
         </ModalTsx>
         <ModalTsx
           fullWidth={true}
           open={openModal2}
           onClose={handlecloseModal2}
-          maxWidth="xl"
+          maxWidth="sm"
         >
-          <div className="w-full h-screen">
-            <PDFViewer className="w-full h-full">
-              <ReservoirClearning />
-            </PDFViewer>
-          </div>
+          <DoctorFormEdit />
         </ModalTsx>
         <ModalTsx
           fullWidth={true}
           open={openModal3}
           onClose={handlecloseModal3}
-          maxWidth="xl"
+          maxWidth="sm"
         >
-          <div className="w-full h-screen">
-            <PDFViewer className="w-full h-full">
-              <ReportDiasafe />
-            </PDFViewer>
-          </div>
+          <LabTabs
+            ComponetNew={
+              <div>
+                <OperatorFormEdit
+                  refech={refetchOpetor}
+                  onUpdate={handleUpdate}
+                  data={operator || []}
+                />
+              </div>
+            }
+            ComponetEdit={
+              <div>
+                <OperatorFormNew
+                  refech={refetchOpetor}
+                  onUpdate={handleUpdate}
+                />
+              </div>
+            }
+          />
         </ModalTsx>
         <ModalTsx
           fullWidth={true}
           open={openModal4}
           onClose={handlecloseModal4}
-          maxWidth="xl"
+          maxWidth="sm"
         >
-          <ReportApevisa reports={ArrayApavise} />
+          {user?.adm === true && <ModalLabUser />}
         </ModalTsx>
       </div>
     </div>

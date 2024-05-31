@@ -8,8 +8,17 @@ import {
 } from "@/utils/models/Data";
 import { ReportModel, Credentials } from "../../utils/models/report";
 import { styles } from "./styles";
+import { CredentialsChemistdb } from "../modals/modalChemist/editForm";
+import { CredentialDoctordb } from "../modals/modalDoctor/newForm";
+import { CredentialOperator } from "../modals/modalOperator/newForm";
 
-const Pdf = () => {
+interface Iprops {
+  Chemist: CredentialsChemistdb | null;
+  doctor: CredentialDoctordb | null;
+  operator: CredentialOperator[] | null;
+}
+
+const Pdf = ({ Chemist, doctor, operator }: Iprops) => {
   const [report, setReport] = useState<ReportModel>();
   const [credentials, setCredentials] = useState<Credentials>();
   const date = new Date();
@@ -17,8 +26,18 @@ const Pdf = () => {
 
   useEffect(() => {
     setReport(fackreport);
-    setCredentials(fackCredentials);
-  }, [fackreport, fackCredentials]);
+    console.log("PDF doctor", doctor);
+    if (Chemist && doctor && operator) {
+      setCredentials({
+        Chemist,
+        doctor,
+        operator: operator[0],
+      });
+    } else {
+      setCredentials(fackCredentials);
+    }
+  }, [Chemist]);
+  console.log("PDF Chemist", Chemist);
 
   return (
     <Document pageLayout="singlePage">
@@ -156,34 +175,36 @@ const Pdf = () => {
           <View style={styles.space}></View>
           <View style={styles.signature}>
             <View style={styles.lineSignature} />
-            <Text style={styles.pSignature}> Médico/ Responsável Técnico</Text>
-            <Text style={styles.pSignature}> Diretor Técnico</Text>
+
+            <Text style={styles.pSignature}>nome: {doctor?.name}</Text>
             <Text style={styles.pSignature}>
-              {" "}
               CRM: {credentials?.doctor.CRM}
             </Text>
+            <Text style={styles.pSignature}> Médico/ Responsável Técnico</Text>
           </View>
           <View style={styles.signature}>
             <View style={styles.lineSignature} />
+            <Text style={styles.pSignature}>nome: {Chemist?.name}</Text>
+            <Text style={styles.pSignature}>CRQ: {Chemist?.CRM}</Text>
             <Text style={styles.pSignature}>
-              {credentials?.Chemist.graduation}
+              graduação: {credentials?.Chemist.graduation}
             </Text>
             <Text style={styles.pSignature}>
-              CRQ: {credentials?.Chemist.CRQ}
+              Pós-graduação: {credentials?.Chemist.postGraduation2}
             </Text>
-            <Text style={styles.pSignature}>
-              {credentials?.Chemist.postGraduation}
-            </Text>
-            <Text style={styles.pSignature}>
-              {credentials?.Chemist.postGraduation2}
-            </Text>
+            <Text style={styles.pSignature}> Químico/ Responsável Técnico</Text>
           </View>
+
           <View style={styles.signature}>
             <View style={styles.lineSignature} />
-            <Text style={styles.pSignature}> Técnico Operacional</Text>
+
+            <Text style={styles.pSignature}>
+              nome: {credentials?.operator.name}
+            </Text>
             <Text style={styles.pSignature}>
               Matrícula: {credentials?.operator.registration}
             </Text>
+            <Text style={styles.pSignature}> Técnico Operacional</Text>
           </View>
         </View>
       </Page>

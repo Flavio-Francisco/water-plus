@@ -257,6 +257,7 @@ export const fackCredentials: Credentials = {
     postGraduation2: "fake post graduation",
   },
   operator: {
+    name:"Flavio",
     registration: "55555555",
   },
 };

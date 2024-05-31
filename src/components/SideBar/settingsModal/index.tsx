@@ -3,8 +3,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import React, { useState } from "react";
 import { Modal } from "react-bootstrap";
 import SettingsIcon from "@mui/icons-material/Settings";
-
-import ModalLabChemist from "@/components/modals/modalChemist/modalLabChemist";
 import ModalLabDoctor from "@/components/modals/modalDoctor/modalLabDoctor";
 import ModalLabOperador from "@/components/modals/modalOperator/modalLabOperator";
 import ModalLabUser from "@/components/modals/modalUser/modalLabUser";
@@ -43,7 +41,6 @@ function SettingsModal() {
         title="Responsavéis Técnicos"
       >
         <Modal.Body>
-          <ModalLabChemist />
           <ModalLabDoctor />
           <ModalLabOperador />
           {user?.adm === true && <ModalLabUser />}

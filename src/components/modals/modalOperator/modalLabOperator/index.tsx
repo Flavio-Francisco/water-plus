@@ -2,24 +2,18 @@ import React, { useState } from "react";
 import { Modal, Button } from "react-bootstrap";
 import LabTabs from "../../modalUI";
 import OperatorFormNew from "../editFrom";
-import OperatorFormEdit, { CredentialOperator } from "../newForm";
+import OperatorFormEdit from "../newForm";
 import "./styles.css";
-import { useUserContext } from "@/context/userContext";
-import { useQuery } from "@tanstack/react-query";
-import { getOperator } from "@/app/fecth/operator";
+
+import { useOperator } from "@/context/useOperator";
 
 export default function ModalLabOperador() {
   const [showModal, setShowModal] = useState(false);
   const handleClose = () => setShowModal(false);
   const handleShow = () => setShowModal(true);
   const handleUpdate = (success: boolean) => setShowModal(success);
-  const { user } = useUserContext();
 
-  const { data, refetch } = useQuery<CredentialOperator[]>({
-    queryKey: ["operator"],
-    queryFn: () => getOperator(user?.system_id || 0),
-  });
-
+  const { operator, refetchOpetor } = useOperator();
   return (
     <>
       <button
@@ -38,15 +32,18 @@ export default function ModalLabOperador() {
             ComponetNew={
               <div>
                 <OperatorFormEdit
-                  data={data}
-                  refech={refetch}
+                  data={operator || []}
+                  refech={refetchOpetor}
                   onUpdate={handleUpdate}
                 />
               </div>
             }
             ComponetEdit={
               <div>
-                <OperatorFormNew refech={refetch} onUpdate={handleUpdate} />
+                <OperatorFormNew
+                  refech={refetchOpetor}
+                  onUpdate={handleUpdate}
+                />
               </div>
             }
           />

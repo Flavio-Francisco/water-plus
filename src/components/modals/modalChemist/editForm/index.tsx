@@ -20,10 +20,9 @@ export interface CredentialsChemistdb {
 interface Ipros {
   data: CredentialsChemistdb | undefined;
   refech: () => void;
-  onUpdate: (success: boolean) => void;
 }
 
-const ChemistFormNew = ({ data, refech, onUpdate }: Ipros) => {
+const ChemistFormNew = ({ data, refech }: Ipros) => {
   const [isValues, setIsValues] = useState(true);
   const initialValues: CredentialsChemist = {
     Chemist: {
@@ -49,14 +48,10 @@ const ChemistFormNew = ({ data, refech, onUpdate }: Ipros) => {
     onSuccess: () => {
       refech();
       alert("dados atualizados com sucesso!!!");
-      onUpdate(false);
-
     },
     onError: () => {
       refech();
-      alert("Erro ao atualizados dados!!!")
-      onUpdate(false);
-
+      alert("Erro ao atualizados dados!!!");
     },
   });
 
@@ -68,7 +63,7 @@ const ChemistFormNew = ({ data, refech, onUpdate }: Ipros) => {
 
   if (data === undefined && isValues) {
     return (
-      <div className="flex flex-col justify-center items-center">
+      <div className="flex flex-col justify-center items-center ">
         <div className="text-blue">
           <h1 style={{ color: "rgba(25,118,210,255)" }}>Carregando ....</h1>
         </div>

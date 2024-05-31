@@ -40,6 +40,7 @@ export interface Credentials {
   };
 
   operator: {
+    name: string;
     registration: string;
   };
 }

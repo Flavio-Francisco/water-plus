@@ -14,7 +14,9 @@ const GraficPage = () => {
   const [select, setSelect] = useState<number>(100);
   const [arryData, setArryData] = useState<Props | null>(null);
   const { dataFull } = useDataFull();
-  const ButtonText = (dataFull || []).map((i) => i.title);
+  const ButtonText = (dataFull || [])
+    .filter((_, index) => index !== 0 && index !== 28)
+    .map((item) => item.title);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -26,7 +28,6 @@ const GraficPage = () => {
     };
     fetchData();
   }, [select, dataFull]);
-  
 
   return (
     <div className=" flex flex-col justify-center items-center w-11/12  max-sm:w-[300px] max-sm:left-11 absolute">
@@ -40,6 +41,7 @@ const GraficPage = () => {
           buttonTexts={ButtonText}
           getBayIndex={(index) => {
             setSelect(index);
+            console.log(index);
           }}
         />
       </div>

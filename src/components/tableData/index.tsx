@@ -18,32 +18,28 @@ interface IProps {
 }
 
 const TableData = ({ fake }: IProps) => {
-    console.log("aqui e direto no compomente",fake);
-    
-    return(
-  
-      <View style={styles.table}>
-        <View style={[styles.row, styles.headerCell]}>
-          <View style={[styles.cell, styles.headerCell]}>
-            <Text style={styles.h1}>Data</Text>
+  return (
+    <View style={styles.table}>
+      <View style={[styles.row, styles.headerCell]}>
+        <View style={[styles.cell, styles.headerCell]}>
+          <Text style={styles.h1}>Data</Text>
+        </View>
+        <View style={[styles.cell, styles.headerCell]}>
+          <Text style={styles.h1}>Máquina</Text>
+        </View>
+      </View>
+      {fake.map((item, index) => (
+        <View style={styles.row} key={index}>
+          <View style={styles.cell}>
+            <Text style={styles.text}>{item.data}</Text>
           </View>
-          <View style={[styles.cell, styles.headerCell]}>
-            <Text style={styles.h1}>Máquina</Text>
+          <View style={styles.cell}>
+            <Text style={styles.text}>{item.maquina}</Text>
           </View>
         </View>
-        {fake.map((item, index) => (
-          <View style={styles.row} key={index}>
-            <View style={styles.cell}>
-              <Text style={styles.text}>{item.data}</Text>
-            </View>
-            <View style={styles.cell}>
-              <Text style={styles.text}>{item.maquina}</Text>
-            </View>
-          </View>
-        ))}
-      </View>
-    
-  )
+      ))}
+    </View>
+  );
 };
 
 export default TableData;
