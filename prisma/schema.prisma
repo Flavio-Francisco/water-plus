@@ -197,8 +197,10 @@ model systems {
   zipCode                                                  String?
   number                                                   Int?
   Reservoir_cleaning                                       Reservoir_cleaning[]
+  acid                                                     acid[]
   apevisa                                                  apevisa[]
   chemical                                                 chemical[]
+  desifection                                              desifection[]
   diasefe                                                  diasefe[]
   doctor                                                   doctor[]
   events                                                   events[]
@@ -228,4 +230,30 @@ model events {
   editable    Boolean?
   systen_id   Int?
   systems     systems? @relation(fields: [systen_id], references: [id], onDelete: Cascade)
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model desifection {
+  id        Int     @default(autoincrement())
+  step1     String
+  step2     String?
+  data1     String?
+  data2     String?
+  data3     String?
+  product   String?
+  quantity  String?
+  loop      String?
+  system_id Int
+  systems   systems @relation(fields: [system_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([id, system_id])
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model acid {
+  id        Int      @default(autoincrement())
+  date      String
+  machine   String   @id
+  system_id Int?
+  systems   systems? @relation(fields: [system_id], references: [id], onDelete: Cascade)
 }

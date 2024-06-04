@@ -21,6 +21,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getMachines } from "@/app/fecth/diasafe";
 import { useUserContext } from "@/context/userContext";
 
+
 interface IProps {
   icon: React.ReactNode;
 }
@@ -43,7 +44,6 @@ export default function DashboardTSX({ icon }: IProps) {
     queryKey: ["diasafe"],
     queryFn: () => getMachines(user?.system_id || 0),
   });
-  console.log("diasafe modal", data);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);

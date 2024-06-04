@@ -31,7 +31,7 @@ const TableData = ({ data }: IProps) => {
           <Text style={styles.h1}>Máquina</Text>
         </View>
       </View>
-      {data.map((item, index) => (
+      {(data || []).map((item, index) => (
         <View style={styles.row} key={index}>
           <View style={styles.cell}>
             <Text style={styles.text}>{item.date}</Text>

@@ -22,6 +22,7 @@ import OtherHousesOutlinedIcon from "@mui/icons-material/OtherHousesOutlined";
 import HubOutlinedIcon from "@mui/icons-material/HubOutlined";
 import AssignmentOutlinedIcon from "@mui/icons-material/AssignmentOutlined";
 import WaterOutlinedIcon from "@mui/icons-material/WaterOutlined";
+import ChecklistRtlOutlinedIcon from "@mui/icons-material/ChecklistRtlOutlined";
 import { useRouter } from "next/navigation";
 import Dashboard from "./Dashboard";
 import WaterParametersForm from "../waterParametersForm";
@@ -36,6 +37,7 @@ import CalendarModal from "../Calendar/CalendarModal";
 import DashboardTSX from "./DashboardTSX";
 import ModalSetting from "../ModalSetting";
 import SettingsIcon from "@mui/icons-material/Settings";
+import ModalForms from "../ModalForms";
 const drawerWidth = 240;
 
 const openedMixin = (theme: Theme): CSSObject => ({
@@ -430,8 +432,36 @@ export default function Drawer({
             </ListItemButton>
           </ListItem>
         </List>
+        <Divider />
+
+        <List>
+          <ListItem disablePadding sx={{ display: "block" }}>
+            <ListItemButton
+              sx={{
+                minHeight: 48,
+                justifyContent: open ? "initial" : "center",
+                px: 2.5,
+              }}
+            >
+              <ListItemIcon
+                title="Formulários"
+                sx={{
+                  minWidth: 0,
+                  mr: open ? 3 : "auto",
+                  justifyContent: "center",
+                }}
+              >
+                <ModalForms icon={<ChecklistRtlOutlinedIcon />} />
+              </ListItemIcon>
+              <ListItemText
+                primary={"Formulários"}
+                sx={{ opacity: open ? 1 : 0 }}
+              />
+            </ListItemButton>
+          </ListItem>
+        </List>
       </ActionDrawer>
-      <div className=" w-full max-sm:w-2/4  max-sm:m-auto">
+      <div className=" w-full h-screen max-sm:w-2/4  max-sm:m-auto">
         <DrawerHeader />
         <div className=" container max-sm:mx-auto ">{children}</div>
       </div>

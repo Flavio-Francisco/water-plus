@@ -1,11 +1,9 @@
 "use client";
-import React, { useEffect } from "react";
+import React from "react";
 import { Page, Text, View, Document } from "@react-pdf/renderer";
-import { fakeDiasafe } from "@/utils/models/Data";
 
 import { styles } from "./styles";
 import TableData from "../tableData";
-
 
 export interface Machines {
   id: number;
@@ -19,9 +17,6 @@ interface Iprops {
 const ReportDiasafe = ({ data }: Iprops) => {
   const date = new Date();
 
-  useEffect(() => {
-    console.log("esses ", fakeDiasafe);
-  }, [fakeDiasafe]);
   return (
     <Document>
       <Page size="A4" style={styles.body}>
