@@ -1,83 +1,104 @@
 import React, { useState, useEffect } from "react";
-import "./styles.css";
-
-interface Iprops {
+import { Machines } from "../reportDiasafe";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import Line from "../line";
+import { getReservatorir } from "@/app/fecth/resevatorir";
+import { useUserContext } from "@/context/userContext";
+interface Desinfection {
+  id: number;
   date: string;
+  machine: string;
+  system_id: string;
 }
 
-const CounteResevation = ({ date }: Iprops) => {
-  const [diasRestantes, setDiasRestantes] = useState<number>(0);
-  const [cor, setCor] = useState<string>(""); // Inicialmente definida como vazia
-  const [cor1, setCor1] = useState<string>("");
-
-  function calcularDiasRestantes(dataInicial: string) {
-    const hoje = new Date();
-    const dataInicialDate = new Date(dataInicial);
-    const diferencaTempo = dataInicialDate.getTime() - hoje.getTime();
-    const diferencaDias = Math.ceil(diferencaTempo / (1000 * 3600 * 24)); // Convertendo milissegundos em dias
-    return diferencaDias;
-  }
+const CounteResevation: React.FC = () => {
+  const { user } = useUserContext();
+  const queryClient = useQueryClient();
+  const date: Machines[] | undefined = queryClient.getQueryData(["diasafe"]);
+  const [tempoRestante, setTempoRestante] = useState({
+    dias: 0,
+    horas: 0,
+    minutos: 0,
+    segundos: 0,
+  });
+  const { data } = useQuery<Desinfection[]>({
+    queryKey: ["diasafe"],
+    queryFn: () => getReservatorir(user?.system_id || 0),
+  });
 
   useEffect(() => {
-    const dias = calcularDiasRestantes(date);
-    setDiasRestantes(dias);
+    console.log(data);
+
+    if (data) {
+      const interval = setInterval(() => {
+        const hoje = new Date();
+        const dataInicialDate = new Date(data[0].date || "");
+
+        const diferencaTempo =
+          dataInicialDate.getTime() + 15768000000 - hoje.getTime();
+
+        const absoluteDiferencaTempo = Math.abs(diferencaTempo); // Convert negative to positive
+        const diferencaSegundos = Math.ceil(absoluteDiferencaTempo / 1000);
+        const segundosRestantes = diferencaSegundos % 60;
+        const minutosRestantes = Math.floor(diferencaSegundos / 60) % 60;
+        const horasRestantes = Math.floor(diferencaSegundos / 3600) % 24;
+        const diasRestantes = Math.floor(diferencaSegundos / (3600 * 24));
+
+        setTempoRestante({
+          dias: diasRestantes,
+          horas: horasRestantes,
+          minutos: minutosRestantes,
+          segundos: segundosRestantes,
+        });
+      }, 1000);
+
+      return () => clearInterval(interval);
+    }
   }, [date]);
 
-  useEffect(() => {
-    let interval: NodeJS.Timeout;
-    if (cor1 === "gray") {
-      interval = setInterval(() => {
-        setCor1(cor);
-      }, 1000);
-    } else {
-      interval = setInterval(() => {
-        setCor1("gray");
-      }, 2000);
-    }
-
-    // Limpa o intervalo quando o componente é desmontado
-    return () => clearInterval(interval);
-  }, [cor1]);
-
-  useEffect(() => {
-    if (diasRestantes <= 10) {
-      setCor("red");
-    } else if (diasRestantes <= 20) {
-      setCor("yellow");
-    } else {
-      setCor("green");
-    }
-  }, [diasRestantes]);
-
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "center",
-        alignItems: "center",
-        padding: "10px",
-      }}
-    >
-      <p style={{ textAlign: "center", padding: "10px", marginTop: 10 }}>
-        Próxima Limpeza do Reservatório será
+    <div className="flex flex-col justify-center items-center ">
+      <p className="text-center p-3 font-bold text-xl">
+        Tempo Para Próxima Limpeza do Reservatório
       </p>
-      <div
-        style={{
-          background: cor1,
-          width: 40,
-          padding: "10px",
-          borderRadius: "25px",
-          color: "white",
-          textAlign: "center",
-          transition: "background-color 1s ease-in-out",
-        }}
-      >
-        {diasRestantes}
+      <Line />
+      <div className="flex flex-row justify-center items-center mt-4">
+        <div className="flex flex-col items-center">
+          <div className="bg-gray-800 p-3 rounded-full text-white  text-base font-bold mb-2">
+            {tempoRestante.dias <= 0
+              ? "Por favor Efetuar a Troca"
+              : tempoRestante.dias}
+          </div>
+          {tempoRestante.dias <= 0 ? null : (
+            <p className="text-center mb-2">dias</p>
+          )}
+        </div>
+        {tempoRestante.dias <= 0 ? null : (
+          <div className="flex flex-col items-center mx-4">
+            <div className="bg-gray-800 p-3 rounded-full text-white text-base font-bold mb-2">
+              {tempoRestante.horas}
+            </div>
+            <p className="text-center mb-2">horas</p>
+          </div>
+        )}
+        {tempoRestante.dias <= 0 ? null : (
+          <div className="flex flex-col items-center mx-2">
+            <div className="bg-gray-800 p-3 rounded-full text-white text-base font-bold mb-2">
+              {tempoRestante.minutos}
+            </div>
+            <p className="text-center mb-2">minutos</p>
+          </div>
+        )}
+        {tempoRestante.dias <= 0 ? null : (
+          <div className="flex flex-col items-center">
+            <div className="bg-gray-800 p-3 rounded-full text-white text-base font-bold mb-2">
+              {tempoRestante.segundos}
+            </div>
+            <p className="text-center mb-2">segundos</p>
+          </div>
+        )}
       </div>
-      <p style={{ textAlign: "center", padding: "10px", marginTop: 10 }}>
-        dias.
-      </p>
+      <Line />
     </div>
   );
 };

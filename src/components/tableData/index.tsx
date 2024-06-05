@@ -21,6 +21,8 @@ interface IProps {
 }
 
 const TableData = ({ data }: IProps) => {
+
+  
   return (
     <View style={styles.table}>
       <View style={[styles.row, styles.headerCell]}>
@@ -31,16 +33,17 @@ const TableData = ({ data }: IProps) => {
           <Text style={styles.h1}>Máquina</Text>
         </View>
       </View>
-      {(data || []).map((item, index) => (
-        <View style={styles.row} key={index}>
-          <View style={styles.cell}>
-            <Text style={styles.text}>{item.date}</Text>
+      {data &&
+        (data || []).map((item, index) => (
+          <View style={styles.row} key={index}>
+            <View style={styles.cell}>
+              <Text style={styles.text}>{item.date}</Text>
+            </View>
+            <View style={styles.cell}>
+              <Text style={styles.text}>{item.machine}</Text>
+            </View>
           </View>
-          <View style={styles.cell}>
-            <Text style={styles.text}>{item.machine}</Text>
-          </View>
-        </View>
-      ))}
+        ))}
     </View>
   );
 };

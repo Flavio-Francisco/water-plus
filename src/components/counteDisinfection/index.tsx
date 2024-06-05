@@ -1,79 +1,95 @@
 import React, { useState, useEffect } from 'react';
-import "./styles.css";
+import { useQueryClient } from "@tanstack/react-query";
+import Line from "../line";
+import { DesinfectionModel } from "@/utils/models/desifection";
 
-interface Iprops {
-  date: string
-}
+const CounteDisinfection: React.FC = () => {
+  const queryClient = useQueryClient();
+  const date: DesinfectionModel | undefined = queryClient.getQueryData([
+    "desinfection",
+  ]);
+  console.log(date);
 
-export let corIndicador = '';
-
-const CounteDisinfection = ({ date }: Iprops) => {
-  const [diasRestantes, setDiasRestantes] = useState(30);
-  const [dataInicial, setDataInicial] = useState('');
-
+  const [tempoRestante, setTempoRestante] = useState({
+    dias: 0,
+    horas: 0,
+    minutos: 0,
+    segundos: 0,
+  });
 
   useEffect(() => {
-    if (dataInicial) {
+    if (date?.data1) {
       const interval = setInterval(() => {
-        setDiasRestantes(calcularDiasRestantes());
+        const hoje = new Date();
+        const dataInicialDate = new Date(date?.data1 || "");
 
+        const diferencaTempo =
+          dataInicialDate.getTime() + 2628000000 - hoje.getTime();
 
-      }, 86400000); // 86400000 milissegundos = 1 dia
+        const absoluteDiferencaTempo = Math.abs(diferencaTempo); // Convert negative to positive
+        const diferencaSegundos = Math.ceil(absoluteDiferencaTempo / 1000);
+        const segundosRestantes = diferencaSegundos % 60;
+        const minutosRestantes = Math.floor(diferencaSegundos / 60) % 60;
+        const horasRestantes = Math.floor(diferencaSegundos / 3600) % 24;
+        const diasRestantes = Math.floor(diferencaSegundos / (3600 * 24));
+
+        setTempoRestante({
+          dias: diasRestantes,
+          horas: horasRestantes,
+          minutos: minutosRestantes,
+          segundos: segundosRestantes,
+        });
+      }, 1000);
+
       return () => clearInterval(interval);
     }
-    setDataInicial(date);
-  }, [dataInicial, date]);
-
-
-  function calcularDiasRestantes() {
-    const hoje = new Date();
-    const dataInicialDate = new Date(dataInicial);
-    const diferencaTempo = dataInicialDate.getTime() - hoje.getTime();
-    const diferencaDias = Math.ceil(diferencaTempo / (1000 * 3600 * 24)); // Convertendo milissegundos em dias
-    return diferencaDias + 30; // Adicionando 30 dias
-  }
-
-
-  if (diasRestantes <= 10) {
-    corIndicador = 'red';
-  } else if (diasRestantes <= 20) {
-    corIndicador = 'yellow';
-  } else {
-    corIndicador = 'green';
-  }
-  const [cor, setCor] = useState<string>(corIndicador); // Inicialmente definida como cor escura
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      // Alterna entre as cores escura e clara
-      setCor((corAtual) => (corAtual === '#cccccc ' ? corIndicador : '#cccccc '));
-    }, 2000);
-
-    // Limpa o intervalo quando o componente é desmontado
-    return () => clearInterval(interval);
-  }, []); 
-
-
+  }, [date]);
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', padding: '10px' }}>
-      <p style={{ textAlign: 'center', padding: '10px', marginTop: 10 }}>Próxima Desinfecção será realizada em</p>
-      <div style={{
-   
-        background:cor,
-        width: 40,
-        padding: '10px',
-        borderRadius: '25px',
-        color: 'white',
-        textAlign: 'center',
-        transition: 'background-color 1s ease-in-out',
-      }}>
-        {diasRestantes}
+    <div className="flex flex-col justify-center items-center ">
+      <p className="text-center p-3 font-bold text-xl">
+        Tempo Para Próxima Desinfecção
+      </p>
+      <Line />
+      <div className="flex flex-row justify-center items-center mt-4">
+        <div className="flex flex-col items-center">
+          <div className="bg-gray-800 p-3 rounded-full text-white  text-base font-bold mb-2">
+            {tempoRestante.dias <= 0
+              ? "Por favor Efetuar a Troca"
+              : tempoRestante.dias}
+          </div>
+          {tempoRestante.dias <= 0 ? null : (
+            <p className="text-center mb-2">dias</p>
+          )}
+        </div>
+        {tempoRestante.dias <= 0 ? null : (
+          <div className="flex flex-col items-center mx-4">
+            <div className="bg-gray-800 p-3 rounded-full text-white text-base font-bold mb-2">
+              {tempoRestante.horas}
+            </div>
+            <p className="text-center mb-2">horas</p>
+          </div>
+        )}
+        {tempoRestante.dias <= 0 ? null : (
+          <div className="flex flex-col items-center mx-2">
+            <div className="bg-gray-800 p-3 rounded-full text-white text-base font-bold mb-2">
+              {tempoRestante.minutos}
+            </div>
+            <p className="text-center mb-2">minutos</p>
+          </div>
+        )}
+        {tempoRestante.dias <= 0 ? null : (
+          <div className="flex flex-col items-center">
+            <div className="bg-gray-800 p-3 rounded-full text-white text-base font-bold mb-2">
+              {tempoRestante.segundos}
+            </div>
+            <p className="text-center mb-2">segundos</p>
+          </div>
+        )}
       </div>
-      <p style={{ textAlign: 'center', padding: '10px', marginTop: 10 }}>dias.</p>
+      <Line />
     </div>
   );
 };
 
 export default CounteDisinfection;
-

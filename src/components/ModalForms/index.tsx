@@ -31,7 +31,7 @@ export default function ModalForms({ icon }: IProps) {
   });
   console.log(acid);
 
-  const { data, refetch } = useQuery({
+  const { refetch } = useQuery({
     queryKey: ["desinfection"],
     queryFn: () => {
       if (user) {
@@ -42,7 +42,7 @@ export default function ModalForms({ icon }: IProps) {
     },
   });
 
-  console.log("desinfection", data);
+
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);

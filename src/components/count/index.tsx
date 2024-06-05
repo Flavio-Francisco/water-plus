@@ -1,61 +1,94 @@
 import React, { useState, useEffect } from 'react';
+import { Machines } from "../reportDiasafe";
+import { useQueryClient } from "@tanstack/react-query";
+import Line from "../line";
 
-interface Iprops{
-    date:string
-}
+const Counter: React.FC = () => {
+  const queryClient = useQueryClient();
+  const date: Machines[] | undefined = queryClient.getQueryData(["diasafe"]);
+  const [tempoRestante, setTempoRestante] = useState({
+    dias: 0,
+    horas: 0,
+    minutos: 0,
+    segundos: 0,
+  });
 
-const Counter = ({date}:Iprops) => {
-    const [diasRestantes, setDiasRestantes] = useState(90);
-    const [dataInicial, setDataInicial] = useState('');
-
-   useEffect(() => {
-    if (dataInicial) {
+  7884000000;
+  useEffect(() => {
+    if (date?.[0]?.date) {
       const interval = setInterval(() => {
-        setDiasRestantes(calcularDiasRestantes());
-      }, 86400000); // 86400000 milissegundos = 1 dia
-
-      return () => clearInterval(interval);
-    }
-    setDataInicial(date)
-  }, [dataInicial]);
-    function calcularDiasRestantes() {
         const hoje = new Date();
-        const dataInicialDate = new Date(dataInicial);
-        const diferencaTempo = dataInicialDate.getTime() - hoje.getTime();
-        const diferencaDias = Math.ceil(diferencaTempo / (1000 * 3600 * 24)); // Convertendo milissegundos em dias
-        return diferencaDias + 90; // Adicionando 90 dias
-      }
-    let corIndicador = '';
-    if (diasRestantes <= 30) {
-        corIndicador = 'red';
-    } else if (diasRestantes <= 60) {
-        corIndicador = 'yellow';
-    } else {
-        corIndicador = 'green';
-    }
-    const [cor, setCor] = useState<string>(corIndicador); // Inicialmente definida como cor escura
+        const dataInicialDate = new Date(date?.[0]?.date || "");
+        console.log(date?.[0]?.date);
 
-    useEffect(() => {
-      const interval = setInterval(() => {
-        // Alterna entre as cores escura e clara
-        setCor((corAtual) => (corAtual === '#cccccc ' ? corIndicador : '#cccccc '));
-      }, 2000);
-  
-      // Limpa o intervalo quando o componente é desmontado
+        const diferencaTempo =
+          dataInicialDate.getTime() + 7884000000 - hoje.getTime();
+
+        const absoluteDiferencaTempo = Math.abs(diferencaTempo); // Convert negative to positive
+        console.log(absoluteDiferencaTempo);
+        const diferencaSegundos = Math.ceil(absoluteDiferencaTempo / 1000);
+        const segundosRestantes = diferencaSegundos % 60;
+        const minutosRestantes = Math.floor(diferencaSegundos / 60) % 60;
+        const horasRestantes = Math.floor(diferencaSegundos / 3600) % 24;
+        const diasRestantes = Math.floor(diferencaSegundos / (3600 * 24));
+
+        setTempoRestante({
+          dias: diasRestantes,
+          horas: horasRestantes,
+          minutos: minutosRestantes,
+          segundos: segundosRestantes,
+        });
+      }, 1000);
+
       return () => clearInterval(interval);
-    }, []); 
+    }
+  }, [date]);
 
-    return (
-        <div style={{display:'flex', flexDirection:'row',justifyContent:'center',alignItems:'center',  padding: '10px'}}>
-            <p style={{textAlign:'center',padding: '10px', marginTop:10}}>PróximaTroca do Diasafe será realizada em   </p>
-            <div style={{width:40, backgroundColor: cor, padding: '10px', borderRadius: '25px', color: 'white' ,textAlign:'center',  transition: 'background-color 1s ease-in-out',}}>
-                {diasRestantes} 
-            </div>
-            <p style={{textAlign:'center',padding: '10px', marginTop:10}}>dias.</p>
+  return (
+    <div className="flex flex-col justify-center items-center ">
+      <p className="text-center p-3 font-bold text-xl">
+        Tempo Para Próxima Troca do Diasafe
+      </p>
+      <Line />
+      <div className="flex flex-row justify-center items-center mt-4">
+        <div className="flex flex-col items-center">
+          <div className="bg-gray-800 p-3 rounded-full text-white  text-base font-bold mb-2">
+            {tempoRestante.dias <= 0
+              ? "Por favor Efetuar a Troca"
+              : tempoRestante.dias}
+          </div>
+          {tempoRestante.dias <= 0 ? null : (
+            <p className="text-center mb-2">dias</p>
+          )}
         </div>
-
-
-    );
+        {tempoRestante.dias <= 0 ? null : (
+          <div className="flex flex-col items-center mx-4">
+            <div className="bg-gray-800 p-3 rounded-full text-white text-base font-bold mb-2">
+              {tempoRestante.horas}
+            </div>
+            <p className="text-center mb-2">horas</p>
+          </div>
+        )}
+        {tempoRestante.dias <= 0 ? null : (
+          <div className="flex flex-col items-center mx-2">
+            <div className="bg-gray-800 p-3 rounded-full text-white text-base font-bold mb-2">
+              {tempoRestante.minutos}
+            </div>
+            <p className="text-center mb-2">minutos</p>
+          </div>
+        )}
+        {tempoRestante.dias <= 0 ? null : (
+          <div className="flex flex-col items-center">
+            <div className="bg-gray-800 p-3 rounded-full text-white text-base font-bold mb-2">
+              {tempoRestante.segundos}
+            </div>
+            <p className="text-center mb-2">segundos</p>
+          </div>
+        )}
+      </div>
+      <Line />
+    </div>
+  );
 };
 
 export default Counter;

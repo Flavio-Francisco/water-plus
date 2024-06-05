@@ -17,10 +17,11 @@ import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { Dayjs } from "dayjs";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { getMachines } from "@/app/fecth/diasafe";
 import { useUserContext } from "@/context/userContext";
-
+import { createReservoir } from "@/app/fecth/resevatorir";
+import { formatDateResevatorir } from "@/utils/functions/FormateDate";
 
 interface IProps {
   icon: React.ReactNode;
@@ -43,6 +44,11 @@ export default function DashboardTSX({ icon }: IProps) {
   const { data } = useQuery({
     queryKey: ["diasafe"],
     queryFn: () => getMachines(user?.system_id || 0),
+  });
+
+  const { mutate, data: i } = useMutation({
+    mutationKey: ["resevatorirForm"],
+    mutationFn: (date: string) => createReservoir(user?.system_id || 0, date),
   });
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -77,6 +83,13 @@ export default function DashboardTSX({ icon }: IProps) {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  React.useEffect(() => {
+    const date = formatDateResevatorir(new Date(value?.toString() || ""));
+    console.log(date);
+    mutate(date);
+    //console.log(formatDate(new Date());
+    console.log(i);
+  }, [value]);
 
   return (
     <div>
