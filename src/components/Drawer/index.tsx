@@ -461,7 +461,7 @@ export default function Drawer({
           </ListItem>
         </List>
       </ActionDrawer>
-      <div className=" w-full h-screen max-sm:w-2/4  max-sm:m-auto">
+      <div className=" w-full max-sm:w-2/4  max-sm:m-auto">
         <DrawerHeader />
         <div className=" container max-sm:mx-auto ">{children}</div>
       </div>
