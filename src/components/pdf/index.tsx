@@ -4,38 +4,32 @@ import { Page, Text, View, Document } from "@react-pdf/renderer";
 import {
   returnMinthly,
   fackreport,
-  fackCredentials,
+
 } from "@/utils/models/Data";
-import { ReportModel, Credentials } from "../../utils/models/report";
+import { ReportModel } from "../../utils/models/report";
 import { styles } from "./styles";
 import { CredentialsChemistdb } from "../modals/modalChemist/editForm";
 import { CredentialDoctordb } from "../modals/modalDoctor/newForm";
 import { CredentialOperator } from "../modals/modalOperator/newForm";
+import { DesinfectionModel } from "@/utils/models/desifection";
+import { formatDate } from "@/utils/functions/FormateDate";
 
 interface Iprops {
   Chemist: CredentialsChemistdb | null;
   doctor: CredentialDoctordb | null;
   operator: CredentialOperator[] | null;
+  data?: DesinfectionModel | undefined;
 }
 
-const Pdf = ({ Chemist, doctor, operator }: Iprops) => {
+const Pdf = ({ Chemist, doctor, operator, data }: Iprops) => {
   const [report, setReport] = useState<ReportModel>();
-  const [credentials, setCredentials] = useState<Credentials>();
+
   const date = new Date();
   const minthly = returnMinthly(date);
 
   useEffect(() => {
     setReport(fackreport);
     console.log("PDF doctor", doctor);
-    if (Chemist && doctor && operator) {
-      setCredentials({
-        Chemist,
-        doctor,
-        operator: operator[0],
-      });
-    } else {
-      setCredentials(fackCredentials);
-    }
   }, [Chemist]);
   console.log("PDF Chemist", Chemist);
 
@@ -100,7 +94,8 @@ const Pdf = ({ Chemist, doctor, operator }: Iprops) => {
             </Text>
             <Text style={styles.p1}>
               –Preparação e EXECUÇÃO do sistema de tratamento de água para a
-              desinfecção e descontaminação geral DIA {report?.flushing}.
+              desinfecção e descontaminação geral DIA{" "}
+              {formatDate(new Date(data?.data1 || ""))}.
             </Text>
             <Text style={styles.p1}>
               – Acompanhamento coleta microbiológica e endotoxina- LABORATÓRIO
@@ -119,7 +114,7 @@ const Pdf = ({ Chemist, doctor, operator }: Iprops) => {
             <Text style={styles.p}>
               TRATAMENTO DE ÁGUA: Executado a desinfeção no tanque e looping,
               conforme técnica de controle e qualidade e água- DIA{" "}
-              {report?.loopDisinfection}
+              {formatDate(new Date(data?.data1 || ""))}
             </Text>
 
             <View style={styles.h1}>
@@ -176,33 +171,25 @@ const Pdf = ({ Chemist, doctor, operator }: Iprops) => {
           <View style={styles.signature}>
             <View style={styles.lineSignature} />
 
-            <Text style={styles.pSignature}>nome: {doctor?.name}</Text>
-            <Text style={styles.pSignature}>
-              CRM: {credentials?.doctor.CRM}
-            </Text>
+            <Text style={styles.pSignature}>{doctor?.name}</Text>
+            <Text style={styles.pSignature}>CRM: {doctor?.CRM}</Text>
             <Text style={styles.pSignature}> Médico/ Responsável Técnico</Text>
           </View>
           <View style={styles.signature}>
             <View style={styles.lineSignature} />
-            <Text style={styles.pSignature}>nome: {Chemist?.name}</Text>
+            <Text style={styles.pSignature}>{Chemist?.name}</Text>
             <Text style={styles.pSignature}>CRQ: {Chemist?.CRM}</Text>
-            <Text style={styles.pSignature}>
-              graduação: {credentials?.Chemist.graduation}
-            </Text>
-            <Text style={styles.pSignature}>
-              Pós-graduação: {credentials?.Chemist.postGraduation2}
-            </Text>
+            <Text style={styles.pSignature}>{Chemist?.graduation}</Text>
+            <Text style={styles.pSignature}>{Chemist?.postGraduation2}</Text>
             <Text style={styles.pSignature}> Químico/ Responsável Técnico</Text>
           </View>
 
           <View style={styles.signature}>
             <View style={styles.lineSignature} />
 
+            <Text style={styles.pSignature}>{operator?.[0]?.name}</Text>
             <Text style={styles.pSignature}>
-              nome: {credentials?.operator.name}
-            </Text>
-            <Text style={styles.pSignature}>
-              Matrícula: {credentials?.operator.registration}
+              Matrícula: {operator?.[0]?.registration}
             </Text>
             <Text style={styles.pSignature}> Técnico Operacional</Text>
           </View>

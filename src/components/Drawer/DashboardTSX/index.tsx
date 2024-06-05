@@ -17,11 +17,12 @@ import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { Dayjs } from "dayjs";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getMachines } from "@/app/fecth/diasafe";
 import { useUserContext } from "@/context/userContext";
 import { createReservoir } from "@/app/fecth/resevatorir";
 import { formatDateResevatorir } from "@/utils/functions/FormateDate";
+import { DesinfectionModel } from "@/utils/models/desifection";
 
 interface IProps {
   icon: React.ReactNode;
@@ -50,6 +51,10 @@ export default function DashboardTSX({ icon }: IProps) {
     mutationKey: ["resevatorirForm"],
     mutationFn: (date: string) => createReservoir(user?.system_id || 0, date),
   });
+  const queryClient = useQueryClient();
+  const date: DesinfectionModel | undefined = queryClient.getQueryData([
+    "desinfection",
+  ]);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -154,7 +159,12 @@ export default function DashboardTSX({ icon }: IProps) {
         >
           <div className="w-full h-screen">
             <PDFViewer className="w-full h-full">
-              <Pdf Chemist={Chemist} doctor={doctor} operator={operator} />
+              <Pdf
+                Chemist={Chemist}
+                doctor={doctor}
+                operator={operator}
+                data={date}
+              />
             </PDFViewer>
           </div>
         </ModalTsx>
