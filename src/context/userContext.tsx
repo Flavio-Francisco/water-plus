@@ -34,7 +34,7 @@ export const UserProvider: React.FC<UserContextType> = ({ children }) => {
 
   async function restoreUserFromCache() {
     const cachedUserData = localStorage.getItem("userData");
-    if (cachedUserData) {
+    if (cachedUserData && cachedUserData !== "undefined") {
       setUser(JSON.parse(cachedUserData));
     }
   }

@@ -36,7 +36,7 @@ export const OperatorProvider: React.FC<UserContextType> = ({ children }) => {
 
   async function restoreUserFromCache() {
     const cachedUserData = localStorage.getItem("CredentialOperator");
-    if (cachedUserData) {
+    if (cachedUserData && cachedUserData !== "undefined") {
       setOperator(JSON.parse(cachedUserData));
     }
   }

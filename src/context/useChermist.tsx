@@ -35,7 +35,7 @@ export const ChemistProvider: React.FC<UserContextType> = ({ children }) => {
 
   async function restoreUserFromCache() {
     const cachedUserData = localStorage.getItem("CredentialsChemistdb");
-    if (cachedUserData) {
+    if (cachedUserData && cachedUserData !== "undefined") {
       setChemist(JSON.parse(cachedUserData));
     }
   }
