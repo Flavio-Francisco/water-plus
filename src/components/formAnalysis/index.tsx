@@ -4,7 +4,7 @@ import { AnalysisResult } from "@/utils/models/analysis";
 import { FormAnalysis } from "@/utils/validation/FormAnalysisReselt";
 import { Formik, Field, ErrorMessage } from "formik";
 import {
-  Button,
+
   Container,
   Form,
   FormGroup,
@@ -13,6 +13,7 @@ import {
   Row,
   Col,
 } from "react-bootstrap";
+import { Button } from "@mui/material";
 
 // Valores iniciais do formulário
 export const FormInitialValues: AnalysisResult = {
@@ -167,9 +168,7 @@ const ResultForm = () => {
               <Row>
                 <Col xs={12} md={6}>
                   <FormGroup>
-                    <FormLabel htmlFor="samplingDate">
-                      Data da Coleta
-                    </FormLabel>
+                    <FormLabel htmlFor="samplingDate">Data da Coleta</FormLabel>
                     <Field
                       id="samplingDate"
                       as={FormControl}
@@ -204,9 +203,6 @@ const ResultForm = () => {
               </Row>
             </Row>
 
-
-            
-          
             <Row className="m-5 mb-5 d-flex justify-content-center align-items-center">
               <h3 className="text-center">Resultados</h3>
             </Row>
@@ -259,7 +255,8 @@ const ResultForm = () => {
                       type="text"
                       name="MicrobiologigoAssays.heterotrophicBacteriaCount"
                       isInvalid={
-                        !!errors.MicrobiologigoAssays?.heterotrophicBacteriaCount &&
+                        !!errors.MicrobiologigoAssays
+                          ?.heterotrophicBacteriaCount &&
                         touched.MicrobiologigoAssays?.heterotrophicBacteriaCount
                       }
                     />
@@ -271,7 +268,7 @@ const ResultForm = () => {
 
             <Row className="m-5 mb-5 d-flex justify-content-center align-items-center">
               <Col className="d-flex justify-content-center align-items-center">
-                <Button className="w-auto bg-blue-700" type="submit">
+                <Button variant="contained" type="submit">
                   Salvar
                 </Button>
               </Col>

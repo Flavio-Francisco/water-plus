@@ -78,7 +78,7 @@ const ReservoirAnalysisForm = () => {
             </div>
 
             <div className="shadow rounded p-3">
-            <div className="flex flex-col w-full md:w-3/5 mt-1">
+              <div className="flex flex-col w-full md:w-3/5 mt-1">
                 <Field name="SampleDescription.sampleName">
                   {({ field }: FieldProps) => (
                     <Form.Group
@@ -105,7 +105,7 @@ const ReservoirAnalysisForm = () => {
                 </Field>
               </div>
               <div className="flex flex-col md:flex-row w-full md:w-4/5 gap-4 sm:gap-6 md:gap-8 lg:gap-10 xl:gap-12">
-              <div className="flex flex-col w-full md:w-3/5 mt-1">
+                <div className="flex flex-col w-full md:w-3/5 mt-1">
                   <Field name="SampleDescription.samplingAddress">
                     {({ field }: FieldProps) => (
                       <Form.Group
@@ -158,7 +158,7 @@ const ReservoirAnalysisForm = () => {
               </div>
 
               <div className="flex flex-col md:flex-row w-full md:w-4/5 mt-1 gap-4 sm:gap-6 md:gap-8 lg:gap-10 xl:gap-12">
-              <div className="flex flex-col w-full md:w-3/5 mt-1">
+                <div className="flex flex-col w-full md:w-3/5 mt-1">
                   <Field name="SampleDescription.state">
                     {({ field }: FieldProps) => (
                       <Form.Group
@@ -236,7 +236,7 @@ const ReservoirAnalysisForm = () => {
               </div>
 
               <div className="flex flex-col md:flex-row w-full md:w-4/5 mt-1 gap-4 sm:gap-6 md:gap-8 lg:gap-10 xl:gap-12">
-              <div className="flex flex-col w-full md:w-3/5 mt-1">
+                <div className="flex flex-col w-full md:w-3/5 mt-1">
                   <Field name="SampleDescription.sampleMatrixAndOrigin">
                     {({ field }: FieldProps) => (
                       <Form.Group
@@ -295,8 +295,8 @@ const ReservoirAnalysisForm = () => {
               <h3 className="text-center"> Resultados da Análise</h3>
             </div>
             <div className="flex flex-col md:flex-row w-full gap-4 sm:gap-6 md:gap-8 lg:gap-10 xl:gap-12">
-      {/* Seu conteúdo aqui */}
-      <div className="shadow rounded flex flex-col w-full md:w-1/5 p-4">
+              {/* Seu conteúdo aqui */}
+              <div className="shadow rounded flex flex-col w-full md:w-1/5 p-4">
                 <Field name="bicarbonateAlkalinity">
                   {({ field }: FieldProps) => (
                     <Form.Group
@@ -912,7 +912,7 @@ const ReservoirAnalysisForm = () => {
               </div>
             </div>
             <div className="m-auto  d-flex align-items-center justify-content-center mt-5 mb-5">
-              <Button className="btn btn-primary btn-lg m-auto " type="submit">
+              <Button variant="contained" type="submit">
                 Salvar
               </Button>
             </div>

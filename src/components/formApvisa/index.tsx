@@ -5,13 +5,14 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import { ApvisaModel } from "@/utils/models/Apvisa";
 import { validationApvisa } from "@/utils/validation/ApevisaForm";
 import {
-  Button,
+
   Col,
   Container,
   Form as BootstrapForm,
   Row,
 } from "react-bootstrap";
 import Line from "../line";
+import { Button } from "@mui/material";
 
 const initialValues: ApvisaModel = {
   name: "",
@@ -31,12 +32,10 @@ const initialValues: ApvisaModel = {
 const FormApvisa: React.FC = () => {
   const handleSubmit = (
     values: ApvisaModel,
-    { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void },
+    { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
   ) => {
-
     console.log(values);
     setSubmitting(false);
-   
   };
 
   return (
@@ -50,7 +49,7 @@ const FormApvisa: React.FC = () => {
       className=" p-5"
     >
       <Row className="m-5 mb-5 d-flex justify-content-center align-items-center">
-        <h1 style={{ textAlign: "center" }}>Coleta Apevisa</h1>
+        <h1 className="text-center text-lg font-bold">Coleta Apevisa</h1>
       </Row>
 
       <Formik
@@ -638,9 +637,11 @@ const FormApvisa: React.FC = () => {
               </Col>
               <Line />
             </BootstrapForm.Group>
-            <Button type="submit" disabled={isSubmitting} className="w-40 mt-8">
-              Salva
-            </Button>
+            <div className=" mt-8">
+              <Button variant="contained" type="submit" disabled={isSubmitting}>
+                Salvar
+              </Button>
+            </div>
           </Form>
         )}
       </Formik>

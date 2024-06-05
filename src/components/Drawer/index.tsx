@@ -24,7 +24,7 @@ import AssignmentOutlinedIcon from "@mui/icons-material/AssignmentOutlined";
 import WaterOutlinedIcon from "@mui/icons-material/WaterOutlined";
 import ChecklistRtlOutlinedIcon from "@mui/icons-material/ChecklistRtlOutlined";
 import { useRouter } from "next/navigation";
-import Dashboard from "./Dashboard";
+import Dashboard from "./Dashboard/index";
 import WaterParametersForm from "../waterParametersForm";
 import Maintenance from "../SideBar/manutecao";
 import LogOut from "../logOut";
@@ -387,15 +387,7 @@ export default function Drawer({
                   justifyContent: "center",
                 }}
               >
-                <Dashboard
-                  name1="Reservatórios"
-                  name2="ETA"
-                  name3="Apevisa"
-                  route1="/Home/analysis/resevoir"
-                  route2="/Home/analysis/ete"
-                  route3="/Home/analysis/apevisa"
-                  icon={<HubOutlinedIcon />}
-                />
+                <Dashboard icon={<HubOutlinedIcon />} />
               </ListItemIcon>
               <ListItemText
                 primary={"Análises"}
