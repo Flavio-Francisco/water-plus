@@ -296,7 +296,7 @@ const WaterParametersForm = () => {
                           <Col>
                             <div className="mb-2">
                               <p className="block text-sm font-medium text-gray-700">
-                                Dureza do Amaciador
+                                Dureza do Abrandador
                               </p>
                               <Field
                                 type="number"
@@ -313,7 +313,7 @@ const WaterParametersForm = () => {
                           <Col>
                             <div className="mb-2">
                               <p className="block text-sm font-medium text-gray-700">
-                                Pressão do Filtro Multimídia
+                                Pressão do Multimídia
                               </p>
                               <Field
                                 type="number"
@@ -332,7 +332,7 @@ const WaterParametersForm = () => {
                           <Col>
                             <div className="mb-2">
                               <p className="block text-sm font-medium text-gray-700">
-                                Pressão de Entrada do Amaciador
+                                Pressão do Abrandador
                               </p>
                               <Field
                                 type="number"
@@ -349,7 +349,7 @@ const WaterParametersForm = () => {
                           <Col>
                             <div className="mb-2">
                               <p className="block text-sm font-medium text-gray-700">
-                                Pressão de Entrada do Carbono
+                                Pressão de Entrada do Carvão{" "}
                               </p>
                               <Field
                                 type="number"
@@ -368,7 +368,7 @@ const WaterParametersForm = () => {
                           <Col>
                             <div className="mb-2">
                               <p className="block text-sm font-medium text-gray-700">
-                                Pressão de Saída do Carbono
+                                Pressão de Saída do Carvão
                               </p>
                               <Field
                                 type="number"
@@ -385,7 +385,7 @@ const WaterParametersForm = () => {
                           <Col>
                             <div className="mb-2">
                               <p className="block text-sm font-medium text-gray-700">
-                                Horário Filtro Multimídia
+                                Horário Multimídia
                               </p>
                               <Field
                                 type="time"
@@ -827,8 +827,8 @@ const WaterParametersForm = () => {
                                 className="form-control mb-2"
                               >
                                 <option value="">Selecione</option>
-                                <option value="true">Sim</option>
-                                <option value="false">Não</option>
+                                <option value="true">Presente</option>
+                                <option value="false">Ausente</option>
                               </Field>
                               <ErrorMessage
                                 name="LOOP.OzoneTestBefore1stShift"

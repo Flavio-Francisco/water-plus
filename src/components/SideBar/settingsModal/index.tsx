@@ -18,6 +18,12 @@ function SettingsModal() {
     setActive(false);
   };
 
+  const onUpdate = (secess: boolean) => {
+    if (secess === true) {
+      const e = "";
+      console.log(e);
+    }
+  };
   const handleShow = () => setShow(true);
 
   const active = () => setActive(!isActive);
@@ -43,7 +49,7 @@ function SettingsModal() {
         <Modal.Body>
           <ModalLabDoctor />
           <ModalLabOperador />
-          {user?.adm === true && <ModalLabUser />}
+          {user?.adm === true && <ModalLabUser onUpdate={onUpdate} />}
         </Modal.Body>
       </ModalForm>
     </>

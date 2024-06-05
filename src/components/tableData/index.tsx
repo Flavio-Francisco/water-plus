@@ -1,4 +1,5 @@
 import React from "@react-pdf/renderer";
+import { FC } from "react";
 import { Machines } from "../reportDiasafe";
 const { View, Text, StyleSheet } = React;
 
@@ -20,10 +21,12 @@ interface IProps {
   data: Machines[];
 }
 
-const TableData = ({ data }: IProps) => {
+const TableData: FC<IProps> = ({ data }) => {
+  if (!Array.isArray(data)) {
+    // Se data não for um array, você pode retornar um componente de erro ou um texto de aviso
+    return <Text>Dados inválidos, esperava-se um array.</Text>;
+  }
 
-
-if (data) {
   return (
     <View style={styles.table}>
       <View style={[styles.row, styles.headerCell]}>
@@ -34,20 +37,18 @@ if (data) {
           <Text style={styles.h1}>Máquina</Text>
         </View>
       </View>
-      {data &&
-        (data || []).map((item, index) => (
-          <View style={styles.row} key={index}>
-            <View style={styles.cell}>
-              <Text style={styles.text}>{item.date}</Text>
-            </View>
-            <View style={styles.cell}>
-              <Text style={styles.text}>{item.machine}</Text>
-            </View>
+      {data.map((item, index) => (
+        <View style={styles.row} key={index}>
+          <View style={styles.cell}>
+            <Text style={styles.text}>{item.date}</Text>
           </View>
-        ))}
+          <View style={styles.cell}>
+            <Text style={styles.text}>{item.machine}</Text>
+          </View>
+        </View>
+      ))}
     </View>
   );
-}
 };
 
 export default TableData;
