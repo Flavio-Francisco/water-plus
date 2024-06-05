@@ -22,7 +22,8 @@ interface IProps {
 
 const TableData = ({ data }: IProps) => {
 
-  
+
+if (data) {
   return (
     <View style={styles.table}>
       <View style={[styles.row, styles.headerCell]}>
@@ -46,6 +47,7 @@ const TableData = ({ data }: IProps) => {
         ))}
     </View>
   );
+}
 };
 
 export default TableData;

@@ -29,10 +29,10 @@ const CounteResevation: React.FC = () => {
   useEffect(() => {
     console.log(data);
 
-    if (data) {
+    if (data != undefined) {
       const interval = setInterval(() => {
         const hoje = new Date();
-        const dataInicialDate = new Date(data[0].date || "");
+        const dataInicialDate = new Date(data[0]?.date || "");
 
         const diferencaTempo =
           dataInicialDate.getTime() + 15768000000 - hoje.getTime();
