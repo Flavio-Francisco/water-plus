@@ -103,7 +103,7 @@ export async function POST(req: NextRequest) {
 
         });
 
-      console.log("retorno da rota update",data);
+      console.log("retorno da rota create user",data);
       
 
         return NextResponse.json(data);

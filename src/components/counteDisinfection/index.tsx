@@ -8,7 +8,6 @@ const CounteDisinfection: React.FC = () => {
   const date: DesinfectionModel | undefined = queryClient.getQueryData([
     "desinfection",
   ]);
-  console.log(date);
 
   const [tempoRestante, setTempoRestante] = useState({
     dias: 0,

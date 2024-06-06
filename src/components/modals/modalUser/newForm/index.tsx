@@ -1,25 +1,44 @@
 import React, { useState } from 'react';
-import { Button, Form } from 'react-bootstrap';
-import { Formik } from 'formik';
-import { SchemaUser } from "@/utils/validation/CredentialsForm"
-import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
-import { VisibilityOffOutlined } from '@mui/icons-material'
-const initialValues = {
-  user: {
-    name: '',
-    password: '',
-  },
+import { Button, Form, FormCheck } from "react-bootstrap";
+import { Formik } from "formik";
+import { SchemaUser } from "@/utils/validation/CredentialsForm";
+import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
+import { VisibilityOffOutlined } from "@mui/icons-material";
+import { UserModel } from "@/utils/models/userModel";
+import { useMutation } from "@tanstack/react-query";
+import { useUserContext } from "@/context/userContext";
+import { createUserForm } from "@/app/fecth/user";
+const initialValues: UserModel = {
+  name: "",
+  password: "",
+  adm: false,
 };
 
 const UserFormNew: React.FC = () => {
+  const { user } = useUserContext();
   const [showPassword, setShowPassword] = useState(false);
+  const { mutate } = useMutation({
+    mutationKey: ["createUser"],
+    mutationFn: async (values: UserModel) => {
+      await createUserForm(user?.system_id || 0, values);
+    },
+    onSuccess: () => {
+      alert("dados Salvos com sucesso!!!");
+    },
+    onError: () => {
+      alert("Erro ao atualizados dados!!!");
+    },
+  });
   return (
     <Formik
       initialValues={initialValues}
       validationSchema={SchemaUser}
-      onSubmit={(values, { setSubmitting }) => {
+      onSubmit={(values: UserModel, { setSubmitting, resetForm }) => {
         console.log(values);
+        mutate(values);
+
         setSubmitting(false);
+        resetForm();
       }}
     >
       {({ handleSubmit, handleChange, values, errors }) => (
@@ -32,12 +51,12 @@ const UserFormNew: React.FC = () => {
               type="text"
               name="name"
               placeholder="Digite o nome do usuário"
-              value={values.user.name}
+              value={values.name}
               onChange={handleChange}
-              isInvalid={!!errors.user?.name}
+              isInvalid={!!errors.name}
             />
             <Form.Control.Feedback type="invalid">
-              {errors.user?.name}
+              {errors.name}
             </Form.Control.Feedback>
           </Form.Group>
 
@@ -45,6 +64,7 @@ const UserFormNew: React.FC = () => {
             <Form.Label style={{ marginTop: 10, marginBottom: 2 }}>
               Senha
             </Form.Label>
+
             <div
               style={{ display: "flex", flexDirection: "row", borderRight: 0 }}
             >
@@ -53,9 +73,9 @@ const UserFormNew: React.FC = () => {
                 type={showPassword ? "text" : "password"}
                 name="password"
                 placeholder="Digite a senha"
-                value={values.user.password}
+                value={values.password || ""}
                 onChange={handleChange}
-                isInvalid={!!errors.user?.password}
+                isInvalid={!!errors?.password}
               />
               <Button
                 onClick={() => setShowPassword(!showPassword)}
@@ -75,12 +95,21 @@ const UserFormNew: React.FC = () => {
               </Button>
             </div>
             <Form.Control.Feedback type="invalid">
-              {errors.user?.password}
+              {errors.password}
             </Form.Control.Feedback>
           </Form.Group>
 
+          <Form.Group controlId="formCheckbox" className="mt-2">
+            <FormCheck
+              type="checkbox"
+              label="Admistrador"
+              name="adm"
+              checked={values.adm || false}
+              onChange={handleChange}
+            />
+          </Form.Group>
           <Button
-            className=" text-lg text-left bg-[#1976d2]"
+            className="text-lg text-left bg-[#1976d2]"
             type="submit"
             style={{ marginTop: 20 }}
           >

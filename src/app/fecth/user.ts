@@ -34,8 +34,8 @@ export async function updateUserForm(id: number, user: UserModel) {
 
 export async function createUserForm(system_id: number, user: UserModel) {
     try {
-        const data = await axios.patch(`api/auth/user?id=${system_id}`, user);
-        console.log("retorno da rota de update", data);
+        const data = await axios.post(`api/auth/user?id=${system_id}`, user);
+        console.log("retorno da rota de create", data);
         return data.data;
     } catch (error) {
         console.error("Erro ao atualizar usuário:", error);

@@ -13,19 +13,17 @@ const Counter: React.FC = () => {
     segundos: 0,
   });
 
-  7884000000;
+ 
   useEffect(() => {
     if (date?.[0]?.date) {
       const interval = setInterval(() => {
         const hoje = new Date();
         const dataInicialDate = new Date(date?.[0]?.date || "");
-        console.log(date?.[0]?.date);
 
         const diferencaTempo =
           dataInicialDate.getTime() + 7884000000 - hoje.getTime();
 
         const absoluteDiferencaTempo = Math.abs(diferencaTempo); // Convert negative to positive
-        console.log(absoluteDiferencaTempo);
         const diferencaSegundos = Math.ceil(absoluteDiferencaTempo / 1000);
         const segundosRestantes = diferencaSegundos % 60;
         const minutosRestantes = Math.floor(diferencaSegundos / 60) % 60;

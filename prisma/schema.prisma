@@ -228,6 +228,7 @@ model events {
   description String?
   editable    Boolean?
   systen_id   Int?
+  status      String?
   systems     systems? @relation(fields: [systen_id], references: [id], onDelete: Cascade)
 }
 

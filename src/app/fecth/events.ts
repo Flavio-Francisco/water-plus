@@ -35,7 +35,18 @@ export async function updateEvents(id: number, events: EventInput) {
         throw error;
     }
 }
-
+export async function updateEventStatus(id: number, status: string) {
+    try {
+        const data = await axios.patch(`api/status?id=${id}`, {
+          status:status
+        });
+        console.log("retorno da rota startus ", data);
+        return data.data;
+    } catch (error) {
+        console.error("Erro ao atualizar events:", error);
+        throw error;
+    }
+}
 
 export async function createEvents(system_id: number, events: EventInput) {
     try {

@@ -105,3 +105,22 @@ button {
 .material-symbols-outlined {
   font-size: 16px;
 }
+.status-circle {
+  border-radius: 50%;
+  width: 10px;
+  height: 10px;
+  margin-right: 8px;
+  display: inline-block;
+}
+
+.status-completed {
+  background-color: blue;
+}
+
+.status-pending {
+  background-color: #fffe40;
+}
+
+.status-cancelled {
+  background-color: red;
+}

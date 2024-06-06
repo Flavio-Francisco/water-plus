@@ -11,7 +11,11 @@ import DialogActions from "@mui/material/DialogActions";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { useUserContext } from "@/context/userContext";
-import { createEvents, deleteEvents } from "@/app/fecth/events";
+import {
+  createEvents,
+  deleteEvents,
+  updateEventStatus,
+} from "@/app/fecth/events";
 
 export interface Event {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -19,6 +23,7 @@ export interface Event {
   title: string;
   date: string;
   description: string;
+  status: string;
   editable: boolean;
 }
 
@@ -30,6 +35,7 @@ interface RenderEventContentProps {
     title: string;
     extendedProps: {
       description: string;
+      status: string;
     };
   };
 }
@@ -42,10 +48,12 @@ export default function Calendar({ events: initialEvents }: CalendarProps) {
   const { user } = useUserContext();
   const calendarRef = useRef<FullCalendar | null>(null);
   const [events, setEvents] = useState<Event[]>(initialEvents);
+
   const [newEvent, setNewEvent] = useState({
     id: 0,
-    title: user?.name,
+    title: "",
     description: "",
+    status: "pending",
   });
 
   const [contentHeight, setContentHeight] = useState<number>(
@@ -91,17 +99,17 @@ export default function Calendar({ events: initialEvents }: CalendarProps) {
     if (newEvent.title && selectedDate) {
       const newEventObj: Event = {
         id: newEvent.id,
-        title: `${user?.name}`,
+        title: newEvent.title,
         date: selectedDate,
         description: newEvent.description,
+        status: newEvent.status,
         editable: true,
       };
       try {
-        // Chamada para salvar o novo evento no banco de dados
         await createEvents(user?.system_id || 0, newEventObj);
 
         setEvents((prevEvents) => [...prevEvents, newEventObj]);
-        setNewEvent({ title: user?.name, description: "", id: 0 });
+        setNewEvent({ title: "", description: "", id: 0, status: "pending" });
         setDialogOpen(false);
         if (calendarRef.current) {
           const calendarApi = calendarRef.current.getApi();
@@ -131,15 +139,71 @@ export default function Calendar({ events: initialEvents }: CalendarProps) {
     }
   };
 
+  const handleStatusChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (selectedEvent) {
+      const { value } = e.target;
+
+      try {
+        await updateEventStatus(selectedEvent.event.id, value);
+     
+
+        if (calendarRef.current) {
+          const calendarApi = calendarRef.current.getApi();
+          const event = calendarApi.getEventById(selectedEvent.event.id);
+          if (event) {
+            event.setExtendedProp("status", value);
+            setEvents((prevEvents) =>
+              prevEvents.map((event) =>
+                event.id === selectedEvent.event.id
+                  ? { ...event, status: value }
+                  : event
+              )
+            );
+          }
+        }
+      } catch (error) {
+        console.error("Erro ao atualizar o status do evento:", error);
+      }
+    }
+  };
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case "completed":
+        return "blue";
+      case "pending":
+        return "#fffe40";
+      case "cancelled":
+        return "red";
+      default:
+        return "#fffe40";
+    }
+  };
+
   const handleCloseDialog = () => {
     setDialogOpen(false);
-    setNewEvent({ title: user?.name, description: "", id: 0 });
+    setNewEvent({ title: "", description: "", id: 0, status: "pending" });
     setSelectedDate(null);
     setSelectedEvent(null);
   };
 
+  function renderEventContent(eventInfo: RenderEventContentProps) {
+    const status = eventInfo.event.extendedProps.status;
+    const color = getStatusColor(status);
+  
+    return (
+      <div className="flex items-center">
+        <div
+          className="w-2.5 h-2.5 rounded-full"
+          style={{ backgroundColor: color }}
+        ></div>
+        <b className="m-2">{eventInfo.event.title}</b>
+      </div>
+    );
+  }
+
   return (
-    <div className="container  mt-9">
+    <div className="container mt-9">
       <div className="w-full">
         <FullCalendar
           ref={calendarRef}
@@ -148,7 +212,9 @@ export default function Calendar({ events: initialEvents }: CalendarProps) {
           contentHeight={contentHeight}
           plugins={[dayGridPlugin, interactionPlugin, timeGridPlugin]}
           initialView="dayGridMonth"
+          eventTextColor="#000"
           eventContent={renderEventContent}
+          eventColor="#fff"
           buttonText={{
             today: "Hoje",
             month: "Mês",
@@ -188,7 +254,7 @@ export default function Calendar({ events: initialEvents }: CalendarProps) {
             {selectedEvent ? (
               <div className="mt-3">
                 <p className="mb-2">
-                  <strong>Autor:</strong> {selectedEvent.event.title}
+                  <strong>Título:</strong> {selectedEvent.event.title}
                 </p>
                 <div className="p-2 mt-2 bg-gray-100 rounded">
                   <div className="whitespace-pre-line pl-4 ml-2">
@@ -196,18 +262,33 @@ export default function Calendar({ events: initialEvents }: CalendarProps) {
                     {selectedEvent.event.extendedProps.description
                       .split("\n")
                       .map((paragraph, index) => (
-                        <p key={index} className="mb-2 ">
+                        <p key={index} className="mb-2">
                           {paragraph}
                         </p>
                       ))}
                   </div>
                 </div>
+                <TextField
+                  select
+                  label="Status"
+                  value={selectedEvent.event.extendedProps.status}
+                  onChange={handleStatusChange}
+                  fullWidth
+                  SelectProps={{
+                    native: true,
+                  }}
+                  style={{ marginTop: "1em" }}
+                >
+                  <option value="pending">Em Espera</option>
+                  <option value="completed">Concluído</option>
+                  <option value="cancelled">Cancelado</option>
+                </TextField>
               </div>
             ) : (
               <>
                 <TextField
                   className="mt-4"
-                  label="Autor"
+                  label="Título"
                   name="title"
                   value={newEvent.title}
                   onChange={handleInputChange}
@@ -225,6 +306,22 @@ export default function Calendar({ events: initialEvents }: CalendarProps) {
                   required
                   style={{ marginTop: "1em" }}
                 />
+                <TextField
+                  select
+                  label="Status"
+                  name="status"
+                  value={newEvent.status}
+                  onChange={handleInputChange}
+                  fullWidth
+                  SelectProps={{
+                    native: true,
+                  }}
+                  style={{ marginTop: "1em" }}
+                >
+                  <option value="pending">Em Espera</option>
+                  <option value="completed">Concluído</option>
+                  <option value="cancelled">Cancelado</option>
+                </TextField>
               </>
             )}
           </DialogContent>
@@ -271,10 +368,3 @@ export default function Calendar({ events: initialEvents }: CalendarProps) {
   );
 }
 
-function renderEventContent(eventInfo: RenderEventContentProps) {
-  return (
-    <div className="flex">
-      <b className="m-2">{eventInfo.event.title}</b>
-    </div>
-  );
-}
