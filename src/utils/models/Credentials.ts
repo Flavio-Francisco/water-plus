@@ -37,3 +37,10 @@ export interface Chemist {
     postGraduation2?: string;
   
 }
+export interface Doctor{
+  name: string;
+  CRM?: string;
+  graduation?: string;
+  postGraduation?: string;
+  postGraduation2?: string;
+}

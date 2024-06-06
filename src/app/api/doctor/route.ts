@@ -1,7 +1,7 @@
 
 import prisma from "../../../../lib/db";
 import { NextRequest, NextResponse } from "next/server";
-import {CredentialsDoctor} from "@/utils/models/Credentials";
+import { Doctor} from "@/utils/models/Credentials";
 
 
 export async function GET(req: NextRequest) {
@@ -30,7 +30,7 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
     const url = new URL(req.nextUrl.href);
     const id = url.searchParams.get("id");
-    const { doctor }: CredentialsDoctor = await req.json();
+    const doctor : Doctor = await req.json();
     console.log(doctor);
     
     try {
@@ -63,7 +63,7 @@ export async function POST(req: NextRequest) {
 export async function PATCH(req: NextRequest) {
     const url = new URL(req.nextUrl.href);
     const id = url.searchParams.get("id");
-    const {doctor}: CredentialsDoctor = await req.json();
+    const doctor : Doctor = await req.json();
     console.log(doctor);
     
     try {
