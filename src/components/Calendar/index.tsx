@@ -23,7 +23,7 @@ export interface Event {
   title: string;
   date: string;
   description: string;
-  status: string;
+  status?: string;
   editable: boolean;
 }
 
