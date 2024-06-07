@@ -1,4 +1,5 @@
 export interface ApvisaModel {
+  id?: number;
   date?:string;
   name?: string;
   cianoBacteria?: string;
@@ -12,4 +13,5 @@ export interface ApvisaModel {
   freeChlorine?: string;
   pH?: string;
   potentiometry?: string;
+  system_id?:number
 }
