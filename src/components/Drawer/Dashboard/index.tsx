@@ -40,6 +40,11 @@ export default function Dashboard({ icon }: IProps) {
     setOpenModal3(true);
   };
 
+  const onSucess1 = (sucess: boolean) => {
+    if (sucess === true) {
+      setOpenModal1(false);
+    }
+  };
   const handlecloseModal1 = () => {
     setOpenModal1(false);
   };
@@ -105,14 +110,14 @@ export default function Dashboard({ icon }: IProps) {
           fullWidth={true}
           open={openModal1}
           onClose={handlecloseModal1}
-          maxWidth="xl"
+          maxWidth="sm"
         >
           <div className="">
             <h2 className="text-center text-lg font-bold">
               Resultados da Amostra do Reservatório{" "}
             </h2>
 
-            <ReservoirAnalysisForm />
+            <ReservoirAnalysisForm onSucess={onSucess1} />
           </div>
         </ModalTsx>
         <ModalTsx

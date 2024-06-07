@@ -1,926 +1,468 @@
 "use client";
-import React from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
-import { Formik, Field, FormikHelpers, FieldProps } from "formik";
-import { Container, Form } from "react-bootstrap";
-import { ReservoirAnalysis } from "@/utils/validation/ReservoirAnalysis";
-import { ReservoirAnalysisResults } from "@/utils/models/analysis";
-import { Button } from "@mui/material";
+import { createReservoirAnalisys } from "@/app/fecth/resevatorir";
+import { useUserContext } from "@/context/userContext";
+import { useMutation } from "@tanstack/react-query";
+// components/ReservoirAnalysisForm.tsx
+import React, { useState } from "react";
 
-// Define os valores iniciais do formulário
-const initialValues: ReservoirAnalysisResults = {
-  SampleDescription: {
+interface Iprops {
+  onSucess: (sucess: boolean) => void;
+}
+
+export interface ReservoirAnalysisResults {
+  date: string;
+  sampleName: string;
+  bicarbonateAlkalinity: string;
+  carbonateAlkalinity: string;
+  hydroxideAlkalinity: string;
+  totalAlkalinity: string;
+  aluminum: string;
+  ammonia: string;
+  calcium: string;
+  chlorides: string;
+  freeResidualChlorine: string;
+  electricalConductivity: string;
+  apparentColor: string;
+  carbonateHardness: string;
+  nonCarbonateHardness: string;
+  totalHardness: string;
+  totalIron: string;
+  magnesium: string;
+  manganese: string;
+  nitrate: string;
+  nitrite: string;
+  dissolvedOxygen: string;
+  pH: string;
+  potassium: string;
+  sodium: string;
+  totalDissolvedSolids: string;
+  sulfate: string;
+  hydrogenSulfide: string;
+  surfactants: string;
+  totalColiforms: string;
+  heterotrophicBacteriaCount: string;
+  endotoxins: string;
+}
+
+const ReservoirAnalysisForm: React.FC<Iprops> = ({ onSucess }) => {
+  const { user } = useUserContext();
+  const { mutate } = useMutation({
+    mutationKey: ["AnalyseForm"],
+    mutationFn: (values: ReservoirAnalysisResults) =>
+      createReservoirAnalisys(user?.system_id || 0, values),
+    onSuccess: () => {
+      onSucess(true);
+      alert("Dados Salvos com Sucesso!!!");
+    },
+    onError: () => {
+      onSucess(true);
+      alert("ERRO ao Salvar  Dados !!!");
+    },
+  });
+
+  const [formData, setFormData] = useState<ReservoirAnalysisResults>({
+    date: "",
     sampleName: "",
-    samplingAddress: "",
-    city: "",
-    state: "",
-    zipCode: "",
-    sampleMatrixAndOrigin: "",
-    samplingDate: "",
-    samplingResponsible: "",
-  },
-  bicarbonateAlkalinity: "",
-  carbonateAlkalinity: "",
-  hydroxideAlkalinity: "",
-  totalAlkalinity: "",
-  aluminum: "",
-  ammonia: "",
-  calcium: "",
-  chlorides: "",
-  freeResidualChlorine: "",
-  electricalConductivity: "",
-  apparentColor: "",
-  carbonateHardness: "",
-  nonCarbonateHardness: "",
-  totalHardness: "",
-  totalIron: "",
-  magnesium: "",
-  manganese: "",
-  nitrate: "",
-  nitrite: "",
-  dissolvedOxygen: "",
-  pH: "",
-  potassium: "",
-  sodium: "",
-  totalDissolvedSolids: "",
-  sulfate: "",
-  hydrogenSulfide: "",
-  surfactants: "",
-  totalColiforms: "",
-  heterotrophicBacteriaCount: "",
-  endotoxins: "",
-};
+    bicarbonateAlkalinity: "",
+    carbonateAlkalinity: "",
+    hydroxideAlkalinity: "",
+    totalAlkalinity: "",
+    aluminum: "",
+    ammonia: "",
+    calcium: "",
+    chlorides: "",
+    freeResidualChlorine: "",
+    electricalConductivity: "",
+    apparentColor: "",
+    carbonateHardness: "",
+    nonCarbonateHardness: "",
+    totalHardness: "",
+    totalIron: "",
+    magnesium: "",
+    manganese: "",
+    nitrate: "",
+    nitrite: "",
+    dissolvedOxygen: "",
+    pH: "",
+    potassium: "",
+    sodium: "",
+    totalDissolvedSolids: "",
+    sulfate: "",
+    hydrogenSulfide: "",
+    surfactants: "",
+    totalColiforms: "",
+    heterotrophicBacteriaCount: "",
+    endotoxins: "",
+  });
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    const { name, value } = e.target;
 
-const ReservoirAnalysisForm = () => {
-  const handleSubmit = (
-    values: ReservoirAnalysisResults,
-    { resetForm }: FormikHelpers<ReservoirAnalysisResults>,
-  ) => {
-    // Lógica de submissão do formulário
+    // Atualiza diretamente o campo no estado
+    setFormData((prevData: ReservoirAnalysisResults) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
 
-    console.log(values);
-    resetForm();
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
+    e.preventDefault();
+    console.log(formData);
+    mutate(formData);
   };
 
   return (
-    <Container>
-      <Formik
-        initialValues={initialValues}
-        validationSchema={ReservoirAnalysis}
-        onSubmit={handleSubmit}
+    <form onSubmit={handleSubmit} className="w-full max-w-lg mx-auto mt-8">
+      <label className="block mb-4">
+        <div className="flex sm:flex-row w-full justify-center items-center gap-3 max-sm:flex-col max-sm:w-full ">
+          <span className="text-gray-700">Data da Coleta:</span>
+          <input
+            type="date"
+            name="date"
+            value={formData.date}
+            onChange={handleChange}
+            className="mt-1 block w-2/5  max-sm:w-full p-3 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+          />
+        </div>
+      </label>
+      <label className="block mb-4">
+        <span className="text-gray-700">Nome da amostra:</span>
+        <input
+          type="text"
+          name="sampleName"
+          value={formData.sampleName}
+          onChange={handleChange}
+          className="mt-1 block w-full p-3 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+        />
+      </label>
+      <label className="block mb-4">
+        <span className="text-gray-700">Alcalinidade do Bicarbonato:</span>
+        <input
+          type="text"
+          name="bicarbonateAlkalinity"
+          value={formData.bicarbonateAlkalinity}
+          onChange={handleChange}
+          className="mt-1 block w-full p-3 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+        />
+      </label>
+      <label className="block mb-4">
+        <span className="text-gray-700">Alcalinidade do Total:</span>
+        <input
+          type="text"
+          name="totalAlkalinity"
+          value={formData.totalAlkalinity}
+          onChange={handleChange}
+          className="mt-1 block w-full p-3 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+        />
+      </label>
+      <label className="block mb-4">
+        <span className="text-gray-700">Alcalinidade de Carbonato:</span>
+        <input
+          type="text"
+          name="carbonateAlkalinity"
+          value={formData.carbonateAlkalinity}
+          onChange={handleChange}
+          className="mt-1 block w-full p-3 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+        />
+      </label>
+
+      <label className="block mb-4">
+        <span className="text-gray-700">Alumínio:</span>
+        <input
+          type="text"
+          name="aluminum"
+          value={formData.aluminum}
+          onChange={handleChange}
+          className="mt-1 block w-full p-3 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+        />
+      </label>
+      <label className="block mb-4">
+        <span className="text-gray-700">Amônia:</span>
+        <input
+          type="text"
+          name="ammonia"
+          value={formData.ammonia}
+          onChange={handleChange}
+          className="mt-1 block w-full p-3 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+        />
+      </label>
+
+      <label className="block mb-4">
+        <span className="text-gray-700">Cálcio:</span>
+        <input
+          type="text"
+          name="calcium"
+          value={formData.calcium}
+          onChange={handleChange}
+          className="mt-1 block w-full p-3 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+        />
+      </label>
+      <label className="block mb-4">
+        <span className="text-gray-700">Cloreto:</span>
+        <input
+          type="text"
+          name="chlorides"
+          value={formData.chlorides}
+          onChange={handleChange}
+          className="mt-1 block w-full p-3 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+        />
+      </label>
+
+      <label className="block mb-4">
+        <span className="text-gray-700">Cloro Residual Livre:</span>
+        <input
+          type="text"
+          name="freeResidualChlorine"
+          value={formData.freeResidualChlorine}
+          onChange={handleChange}
+          className="mt-1 block w-full p-3 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+        />
+      </label>
+
+      <label className="block mb-4">
+        <span className="text-gray-700">Condutividade Elétrica:</span>
+        <input
+          type="text"
+          name="electricalConductivity"
+          value={formData.electricalConductivity}
+          onChange={handleChange}
+          className="mt-1 block w-full p-3 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+        />
+      </label>
+
+      <label className="block mb-4">
+        <span className="text-gray-700">Cor Aparente:</span>
+        <input
+          type="text"
+          name="apparentColor"
+          value={formData.apparentColor}
+          onChange={handleChange}
+          className="mt-1 block w-full p-3 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+        />
+      </label>
+      <label className="block mb-4">
+        <span className="text-gray-700">Dureza do Carbonato:</span>
+        <input
+          type="text"
+          name="carbonateHardness"
+          value={formData.carbonateHardness}
+          onChange={handleChange}
+          className="mt-1 block w-full p-3 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+        />
+      </label>
+
+      <label className="block mb-4">
+        <span className="text-gray-700">Dureza Não-Carbonato:</span>
+        <input
+          type="text"
+          name="nonCarbonateHardness"
+          value={formData.nonCarbonateHardness}
+          onChange={handleChange}
+          className="mt-1 block w-full p-3 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+        />
+      </label>
+      <label className="block mb-4">
+        <span className="text-gray-700">Dureza Total:</span>
+        <input
+          type="text"
+          name="totalHardness"
+          value={formData.totalHardness}
+          onChange={handleChange}
+          className="mt-1 block w-full p-3 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+        />
+      </label>
+
+      <label className="block mb-4">
+        <span className="text-gray-700">Ferro Total:</span>
+        <input
+          type="text"
+          name="totalIron"
+          value={formData.totalIron}
+          onChange={handleChange}
+          className="mt-1 block w-full p-3 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+        />
+      </label>
+      <label className="block mb-4">
+        <span className="text-gray-700">Magnésio:</span>
+        <input
+          type="text"
+          name="magnesium"
+          value={formData.magnesium}
+          onChange={handleChange}
+          className="mt-1 block w-full p-3 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+        />
+      </label>
+
+      <label className="block mb-4">
+        <span className="text-gray-700">Manganês:</span>
+        <input
+          type="text"
+          name="manganese"
+          value={formData.manganese}
+          onChange={handleChange}
+          className="mt-1 block w-full p-3 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+        />
+      </label>
+      <label className="block mb-4">
+        <span className="text-gray-700">Nitrato:</span>
+        <input
+          type="text"
+          name="nitrate"
+          value={formData.nitrate}
+          onChange={handleChange}
+          className="mt-1 block w-full p-3 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+        />
+      </label>
+
+      <label className="block mb-4">
+        <span className="text-gray-700">Nitrito:</span>
+        <input
+          type="text"
+          name="nitrite"
+          value={formData.nitrite}
+          onChange={handleChange}
+          className="mt-1 block w-full p-3 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+        />
+      </label>
+      <label className="block mb-4">
+        <span className="text-gray-700">Oxigênio Dissolvido:</span>
+        <input
+          type="text"
+          name="dissolvedOxygen"
+          value={formData.dissolvedOxygen}
+          onChange={handleChange}
+          className="mt-1 block w-full p-3 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+        />
+      </label>
+
+      <label className="block mb-4">
+        <span className="text-gray-700">pH:</span>
+        <input
+          type="text"
+          name="pH"
+          value={formData.pH}
+          onChange={handleChange}
+          className="mt-1 block w-full p-3 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+        />
+      </label>
+
+      <label className="block mb-4">
+        <span className="text-gray-700">Potássio:</span>
+        <input
+          type="text"
+          name="potassium"
+          value={formData.potassium}
+          onChange={handleChange}
+          className="mt-1 block w-full p-3 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+        />
+      </label>
+      <label className="block mb-4">
+        <span className="text-gray-700">Sódio:</span>
+        <input
+          type="text"
+          name="sodium"
+          value={formData.sodium}
+          onChange={handleChange}
+          className="mt-1 block w-full p-3 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+        />
+      </label>
+
+      <label className="block mb-4">
+        <span className="text-gray-700">Sólidos Dissolvidos Totais:</span>
+        <input
+          type="text"
+          name="totalDissolvedSolids"
+          value={formData.totalDissolvedSolids}
+          onChange={handleChange}
+          className="mt-1 block w-full p-3 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+        />
+      </label>
+
+      <label className="block mb-4">
+        <span className="text-gray-700">Sulfato:</span>
+        <input
+          type="text"
+          name="sulfate"
+          value={formData.sulfate}
+          onChange={handleChange}
+          className="mt-1 block w-full p-3 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+        />
+      </label>
+      <label className="block mb-4">
+        <span className="text-gray-700">Sulfeto de Hidrogênio:</span>
+        <input
+          type="text"
+          name="hydrogenSulfide"
+          value={formData.hydrogenSulfide}
+          onChange={handleChange}
+          className="mt-1 block w-full p-3 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+        />
+      </label>
+      <label className="block mb-4">
+        <span className="text-gray-700">hidróxido Alcalinidade:</span>
+        <input
+          type="text"
+          name="hydroxideAlkalinity"
+          value={formData.hydroxideAlkalinity}
+          onChange={handleChange}
+          className="mt-1 block w-full p-3 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+        />
+      </label>
+
+      <label className="block mb-4">
+        <span className="text-gray-700">Surfactantes:</span>
+        <input
+          type="text"
+          name="surfactants"
+          value={formData.surfactants}
+          onChange={handleChange}
+          className="mt-1 block w-full p-3 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+        />
+      </label>
+
+      <label className="block mb-4">
+        <span className="text-gray-700">Coliformes Totais:</span>
+        <input
+          type="text"
+          name="totalColiforms"
+          value={formData.totalColiforms}
+          onChange={handleChange}
+          className="mt-1 block w-full p-3 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+        />
+      </label>
+      <label className="block mb-4">
+        <span className="text-gray-700">
+          Contagem de Bactérias Heterotróficas:
+        </span>
+        <input
+          type="text"
+          name="heterotrophicBacteriaCount"
+          value={formData.heterotrophicBacteriaCount}
+          onChange={handleChange}
+          className="mt-1 block w-full p-3 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+        />
+      </label>
+
+      <label className="block mb-4">
+        <span className="text-gray-700">Endotoxinas:</span>
+        <input
+          type="text"
+          name="endotoxins"
+          value={formData.endotoxins}
+          onChange={handleChange}
+          className="mt-1 block w-full p-3 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+        />
+      </label>
+      <button
+        type="submit"
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
       >
-        {({ errors, touched }) => (
-          <Form>
-            {/* Campos da Descrição da Amostra */}
-
-            <div className="m-5 mb-5 d-flex justify-content-center align-items-center">
-              <h3 className="text-center">Descrição da Amostra</h3>
-            </div>
-
-            <div className="shadow rounded p-3">
-              <div className="flex flex-col w-full md:w-3/5 mt-1">
-                <Field name="SampleDescription.sampleName">
-                  {({ field }: FieldProps) => (
-                    <Form.Group
-                      className="mt-3 "
-                      controlId="SampleDescription.sampleName"
-                    >
-                      <Form.Label className="text-center">
-                        Nome da Amostra
-                      </Form.Label>
-                      <Form.Control
-                        {...field}
-                        type="text"
-                        placeholder="Nome da Amostra"
-                        isInvalid={
-                          touched.SampleDescription?.sampleName &&
-                          !!errors.SampleDescription?.sampleName
-                        }
-                      />
-                      <Form.Control.Feedback type="invalid">
-                        {errors.SampleDescription?.sampleName}
-                      </Form.Control.Feedback>
-                    </Form.Group>
-                  )}
-                </Field>
-              </div>
-              <div className="flex flex-col md:flex-row w-full md:w-4/5 gap-4 sm:gap-6 md:gap-8 lg:gap-10 xl:gap-12">
-                <div className="flex flex-col w-full md:w-3/5 mt-1">
-                  <Field name="SampleDescription.samplingAddress">
-                    {({ field }: FieldProps) => (
-                      <Form.Group
-                        className="mt-3 "
-                        controlId="SampleDescription.samplingAddress"
-                      >
-                        <Form.Label className="text-center">
-                          Endereço de Coleta
-                        </Form.Label>
-                        <Form.Control
-                          {...field}
-                          type="text"
-                          placeholder="Endereço de Coleta"
-                          isInvalid={
-                            touched.SampleDescription?.samplingAddress &&
-                            !!errors.SampleDescription?.samplingAddress
-                          }
-                        />
-                        <Form.Control.Feedback type="invalid">
-                          {errors.SampleDescription?.samplingAddress}
-                        </Form.Control.Feedback>
-                      </Form.Group>
-                    )}
-                  </Field>
-                </div>
-                <div className="flex flex-col w-full md:w-3/5 mt-1">
-                  <Field name="SampleDescription.city">
-                    {({ field }: FieldProps) => (
-                      <Form.Group
-                        className="mt-3 "
-                        controlId="SampleDescription.city"
-                      >
-                        <Form.Label className="text-center">Cidade</Form.Label>
-                        <Form.Control
-                          {...field}
-                          type="text"
-                          placeholder="Cidade"
-                          isInvalid={
-                            touched.SampleDescription?.city &&
-                            !!errors.SampleDescription?.city
-                          }
-                        />
-                        <Form.Control.Feedback type="invalid">
-                          {errors.SampleDescription?.city}
-                        </Form.Control.Feedback>
-                      </Form.Group>
-                    )}
-                  </Field>
-                </div>
-              </div>
-
-              <div className="flex flex-col md:flex-row w-full md:w-4/5 mt-1 gap-4 sm:gap-6 md:gap-8 lg:gap-10 xl:gap-12">
-                <div className="flex flex-col w-full md:w-3/5 mt-1">
-                  <Field name="SampleDescription.state">
-                    {({ field }: FieldProps) => (
-                      <Form.Group
-                        className="mt-3 "
-                        controlId="SampleDescription.state"
-                      >
-                        <Form.Label className="text-center">Estado</Form.Label>
-                        <Form.Control
-                          {...field}
-                          type="text"
-                          placeholder="Estado"
-                          isInvalid={
-                            touched.SampleDescription?.state &&
-                            !!errors.SampleDescription?.state
-                          }
-                        />
-                        <Form.Control.Feedback type="invalid">
-                          {errors.SampleDescription?.state}
-                        </Form.Control.Feedback>
-                      </Form.Group>
-                    )}
-                  </Field>
-                </div>
-                <div className="flex flex-col w-full md:w-3/5 mt-1">
-                  <Field name="SampleDescription.zipCode">
-                    {({ field }: FieldProps) => (
-                      <Form.Group
-                        className="mt-3 "
-                        controlId="SampleDescription.zipCode"
-                      >
-                        <Form.Label className="text-center">CEP</Form.Label>
-                        <Form.Control
-                          {...field}
-                          type="text"
-                          placeholder="CEP"
-                          isInvalid={
-                            touched.SampleDescription?.zipCode &&
-                            !!errors.SampleDescription?.zipCode
-                          }
-                        />
-                        <Form.Control.Feedback type="invalid">
-                          {errors.SampleDescription?.zipCode}
-                        </Form.Control.Feedback>
-                      </Form.Group>
-                    )}
-                  </Field>
-                </div>
-
-                <div className="flex flex-col w-full md:w-3/5 mt-1">
-                  <Field name="SampleDescription.samplingDate">
-                    {({ field }: FieldProps) => (
-                      <Form.Group
-                        className="mt-3 "
-                        controlId="SampleDescription.samplingDate"
-                      >
-                        <Form.Label className="text-center">
-                          Data da Coleta
-                        </Form.Label>
-                        <Form.Control
-                          {...field}
-                          type="date"
-                          placeholder="Data da Coleta"
-                          isInvalid={
-                            touched.SampleDescription?.samplingDate &&
-                            !!errors.SampleDescription?.samplingDate
-                          }
-                        />
-                        <Form.Control.Feedback type="invalid">
-                          {errors.SampleDescription?.samplingDate}
-                        </Form.Control.Feedback>
-                      </Form.Group>
-                    )}
-                  </Field>
-                </div>
-              </div>
-
-              <div className="flex flex-col md:flex-row w-full md:w-4/5 mt-1 gap-4 sm:gap-6 md:gap-8 lg:gap-10 xl:gap-12">
-                <div className="flex flex-col w-full md:w-3/5 mt-1">
-                  <Field name="SampleDescription.sampleMatrixAndOrigin">
-                    {({ field }: FieldProps) => (
-                      <Form.Group
-                        className="mt-3 "
-                        controlId="SampleDescription.sampleMatrixAndOrigin"
-                      >
-                        <Form.Label className="text-center">
-                          Matriz e Origem da Amostra
-                        </Form.Label>
-                        <Form.Control
-                          {...field}
-                          type="text"
-                          placeholder="Matriz e Origem da Amostra"
-                          isInvalid={
-                            touched.SampleDescription?.sampleMatrixAndOrigin &&
-                            !!errors.SampleDescription?.sampleMatrixAndOrigin
-                          }
-                        />
-                        <Form.Control.Feedback type="invalid">
-                          {errors.SampleDescription?.sampleMatrixAndOrigin}
-                        </Form.Control.Feedback>
-                      </Form.Group>
-                    )}
-                  </Field>
-                </div>
-                <div className="flex flex-col w-full md:w-3/5 mt-1">
-                  <Field name="SampleDescription.samplingResponsible">
-                    {({ field }: FieldProps) => (
-                      <Form.Group
-                        className="mt-3 "
-                        controlId="SampleDescription.samplingResponsible"
-                      >
-                        <Form.Label className="text-center">
-                          Responsável pela Coleta
-                        </Form.Label>
-                        <Form.Control
-                          {...field}
-                          type="text"
-                          placeholder="Responsável pela Coleta"
-                          isInvalid={
-                            touched.SampleDescription?.samplingResponsible &&
-                            !!errors.SampleDescription?.samplingResponsible
-                          }
-                        />
-                        <Form.Control.Feedback type="invalid">
-                          {errors.SampleDescription?.sampleMatrixAndOrigin}
-                        </Form.Control.Feedback>
-                      </Form.Group>
-                    )}
-                  </Field>
-                </div>
-              </div>
-            </div>
-            {/* Campos de Resultados da Análise */}
-            <div className="m-5 mb-5 d-flex justify-content-center align-items-center">
-              <h3 className="text-center"> Resultados da Análise</h3>
-            </div>
-            <div className="flex flex-col md:flex-row w-full gap-4 sm:gap-6 md:gap-8 lg:gap-10 xl:gap-12">
-              {/* Seu conteúdo aqui */}
-              <div className="shadow rounded flex flex-col w-full md:w-1/5 p-4">
-                <Field name="bicarbonateAlkalinity">
-                  {({ field }: FieldProps) => (
-                    <Form.Group
-                      className="mt-3 "
-                      controlId="bicarbonateAlkalinity"
-                    >
-                      <Form.Label className="text-center">
-                        A. de Bicarbonato
-                      </Form.Label>
-                      <Form.Control
-                        {...field}
-                        type="text"
-                        placeholder="A. de Bicarbonato"
-                        isInvalid={
-                          touched.bicarbonateAlkalinity &&
-                          !!errors.bicarbonateAlkalinity
-                        }
-                      />
-                      <Form.Control.Feedback type="invalid">
-                        {errors.bicarbonateAlkalinity}
-                      </Form.Control.Feedback>
-                    </Form.Group>
-                  )}
-                </Field>
-
-                <Field name="carbonateAlkalinity">
-                  {({ field }: FieldProps) => (
-                    <Form.Group
-                      className="mt-3 "
-                      controlId="carbonateAlkalinity"
-                    >
-                      <Form.Label className="text-center">
-                        Alcalinidade de Carbonato
-                      </Form.Label>
-                      <Form.Control
-                        {...field}
-                        type="text"
-                        placeholder=" Carbonato"
-                        isInvalid={
-                          touched.carbonateAlkalinity &&
-                          !!errors.carbonateAlkalinity
-                        }
-                      />
-                      <Form.Control.Feedback type="invalid">
-                        {errors.carbonateAlkalinity}
-                      </Form.Control.Feedback>
-                    </Form.Group>
-                  )}
-                </Field>
-
-                <Field name="hydroxideAlkalinity">
-                  {({ field }: FieldProps) => (
-                    <Form.Group
-                      className="mt-3 "
-                      controlId="hydroxideAlkalinity"
-                    >
-                      <Form.Label className="text-center">
-                        Alcalinidade deHidróxido
-                      </Form.Label>
-                      <Form.Control
-                        {...field}
-                        type="text"
-                        placeholder="Hidróxido"
-                        isInvalid={
-                          touched.hydroxideAlkalinity &&
-                          !!errors.hydroxideAlkalinity
-                        }
-                      />
-                      <Form.Control.Feedback type="invalid">
-                        {errors.hydroxideAlkalinity}
-                      </Form.Control.Feedback>
-                    </Form.Group>
-                  )}
-                </Field>
-
-                <Field name="totalAlkalinity">
-                  {({ field }: FieldProps) => (
-                    <Form.Group className="mt-3 " controlId="totalAlkalinity">
-                      <Form.Label className="text-center">
-                        Alcalinidade Total
-                      </Form.Label>
-                      <Form.Control
-                        {...field}
-                        type="text"
-                        placeholder="Alcalinidade Total"
-                        isInvalid={
-                          touched.totalAlkalinity && !!errors.totalAlkalinity
-                        }
-                      />
-                      <Form.Control.Feedback type="invalid">
-                        {errors.totalAlkalinity}
-                      </Form.Control.Feedback>
-                    </Form.Group>
-                  )}
-                </Field>
-
-                <Field name="aluminum">
-                  {({ field }: FieldProps) => (
-                    <Form.Group className="mt-3 " controlId="aluminum">
-                      <Form.Label className="text-center">Alumínio</Form.Label>
-                      <Form.Control
-                        {...field}
-                        type="text"
-                        placeholder="Alumínio"
-                        isInvalid={touched.aluminum && !!errors.aluminum}
-                      />
-                      <Form.Control.Feedback type="invalid">
-                        {errors.aluminum}
-                      </Form.Control.Feedback>
-                    </Form.Group>
-                  )}
-                </Field>
-
-                <Field name="ammonia">
-                  {({ field }: FieldProps) => (
-                    <Form.Group className="mt-3 " controlId="ammonia">
-                      <Form.Label className="text-center">Amônia</Form.Label>
-                      <Form.Control
-                        {...field}
-                        type="text"
-                        placeholder="Amônia"
-                        isInvalid={touched.ammonia && !!errors.ammonia}
-                      />
-                      <Form.Control.Feedback type="invalid">
-                        {errors.ammonia}
-                      </Form.Control.Feedback>
-                    </Form.Group>
-                  )}
-                </Field>
-              </div>
-              <div className="shadow rounded flex flex-col w-full md:w-1/5 p-4">
-                <Field name="calcium">
-                  {({ field }: FieldProps) => (
-                    <Form.Group className="mt-3 " controlId="calcium">
-                      <Form.Label className="text-center">Cálcio</Form.Label>
-                      <Form.Control
-                        {...field}
-                        type="text"
-                        placeholder="Cálcio"
-                        isInvalid={touched.calcium && !!errors.calcium}
-                      />
-                      <Form.Control.Feedback type="invalid">
-                        {errors.calcium}
-                      </Form.Control.Feedback>
-                    </Form.Group>
-                  )}
-                </Field>
-
-                <Field name="chlorides">
-                  {({ field }: FieldProps) => (
-                    <Form.Group className="mt-3 " controlId="chlorides">
-                      <Form.Label className="text-center">Cloreto</Form.Label>
-                      <Form.Control
-                        {...field}
-                        type="text"
-                        placeholder="Cloreto"
-                        isInvalid={touched.chlorides && !!errors.chlorides}
-                      />
-                      <Form.Control.Feedback type="invalid">
-                        {errors.chlorides}
-                      </Form.Control.Feedback>
-                    </Form.Group>
-                  )}
-                </Field>
-
-                <Field name="freeResidualChlorine">
-                  {({ field }: FieldProps) => (
-                    <Form.Group
-                      className="mt-3 "
-                      controlId="freeResidualChlorine"
-                    >
-                      <Form.Label className="text-center">
-                        Cloro Livre
-                      </Form.Label>
-                      <Form.Control
-                        {...field}
-                        type="text"
-                        placeholder="Cloro Livre"
-                        isInvalid={
-                          touched.freeResidualChlorine &&
-                          !!errors.freeResidualChlorine
-                        }
-                      />
-                      <Form.Control.Feedback type="invalid">
-                        {errors.freeResidualChlorine}
-                      </Form.Control.Feedback>
-                    </Form.Group>
-                  )}
-                </Field>
-
-                <Field name="electricalConductivity">
-                  {({ field }: FieldProps) => (
-                    <Form.Group
-                      className="mt-3 "
-                      controlId="electricalConductivity"
-                    >
-                      <Form.Label className="text-center">
-                        Condutividade
-                      </Form.Label>
-                      <Form.Control
-                        {...field}
-                        type="text"
-                        placeholder="Condutividade"
-                        isInvalid={
-                          touched.electricalConductivity &&
-                          !!errors.electricalConductivity
-                        }
-                      />
-                      <Form.Control.Feedback type="invalid">
-                        {errors.electricalConductivity}
-                      </Form.Control.Feedback>
-                    </Form.Group>
-                  )}
-                </Field>
-
-                <Field name="apparentColor">
-                  {({ field }: FieldProps) => (
-                    <Form.Group className="mt-3 " controlId="apparentColor">
-                      <Form.Label className="text-center">
-                        Cor Aparente
-                      </Form.Label>
-                      <Form.Control
-                        {...field}
-                        type="text"
-                        placeholder="Cor Aparente"
-                        isInvalid={
-                          touched.apparentColor && !!errors.apparentColor
-                        }
-                      />
-                      <Form.Control.Feedback type="invalid">
-                        {errors.apparentColor}
-                      </Form.Control.Feedback>
-                    </Form.Group>
-                  )}
-                </Field>
-
-                <Field name="carbonateHardness">
-                  {({ field }: FieldProps) => (
-                    <Form.Group className="mt-3 " controlId="carbonateHardness">
-                      <Form.Label className="text-center">
-                        Dureza de Carbonatos
-                      </Form.Label>
-                      <Form.Control
-                        {...field}
-                        type="text"
-                        placeholder="Carbonatos"
-                        isInvalid={
-                          touched.carbonateHardness &&
-                          !!errors.carbonateHardness
-                        }
-                      />
-                      <Form.Control.Feedback type="invalid">
-                        {errors.carbonateHardness}
-                      </Form.Control.Feedback>
-                    </Form.Group>
-                  )}
-                </Field>
-              </div>
-
-              <div className="shadow rounded flex flex-col w-full md:w-1/5 p-4">
-                <Field name="nonCarbonateHardness">
-                  {({ field }: FieldProps) => (
-                    <Form.Group
-                      className="mt-3 "
-                      controlId="nonCarbonateHardness"
-                    >
-                      <Form.Label className="text-center ">
-                        Dureza de N C
-                      </Form.Label>
-                      <Form.Control
-                        {...field}
-                        type="text"
-                        placeholder="Dureza de N C"
-                        isInvalid={
-                          touched.nonCarbonateHardness &&
-                          !!errors.nonCarbonateHardness
-                        }
-                      />
-                      <Form.Control.Feedback type="invalid">
-                        {errors.nonCarbonateHardness}
-                      </Form.Control.Feedback>
-                    </Form.Group>
-                  )}
-                </Field>
-
-                <Field name="totalHardness">
-                  {({ field }: FieldProps) => (
-                    <Form.Group className="mt-3 " controlId="totalHardness">
-                      <Form.Label className="text-center">
-                        Dureza Total
-                      </Form.Label>
-                      <Form.Control
-                        {...field}
-                        type="text"
-                        placeholder="Dureza Total"
-                        isInvalid={
-                          touched.totalHardness && !!errors.totalHardness
-                        }
-                      />
-                      <Form.Control.Feedback type="invalid">
-                        {errors.totalHardness}
-                      </Form.Control.Feedback>
-                    </Form.Group>
-                  )}
-                </Field>
-
-                <Field name="totalIron">
-                  {({ field }: FieldProps) => (
-                    <Form.Group className="mt-3 " controlId="totalIron">
-                      <Form.Label className="text-center">
-                        Ferro Total
-                      </Form.Label>
-                      <Form.Control
-                        {...field}
-                        type="text"
-                        placeholder="Ferro Total"
-                        isInvalid={touched.totalIron && !!errors.totalIron}
-                      />
-                      <Form.Control.Feedback type="invalid">
-                        {errors.totalIron}
-                      </Form.Control.Feedback>
-                    </Form.Group>
-                  )}
-                </Field>
-
-                <Field name="magnesium">
-                  {({ field }: FieldProps) => (
-                    <Form.Group className="mt-3 " controlId="magnesium">
-                      <Form.Label className="text-center">Magnésio</Form.Label>
-                      <Form.Control
-                        {...field}
-                        type="text"
-                        placeholder="Magnésio"
-                        isInvalid={touched.magnesium && !!errors.magnesium}
-                      />
-                      <Form.Control.Feedback type="invalid">
-                        {errors.magnesium}
-                      </Form.Control.Feedback>
-                    </Form.Group>
-                  )}
-                </Field>
-
-                <Field name="manganese">
-                  {({ field }: FieldProps) => (
-                    <Form.Group className="mt-3 " controlId="manganese">
-                      <Form.Label className="text-center">Manganês</Form.Label>
-                      <Form.Control
-                        {...field}
-                        type="text"
-                        placeholder="Magnésio"
-                        isInvalid={touched.manganese && !!errors.manganese}
-                      />
-                      <Form.Control.Feedback type="invalid">
-                        {errors.manganese}
-                      </Form.Control.Feedback>
-                    </Form.Group>
-                  )}
-                </Field>
-
-                <Field name="nitrate">
-                  {({ field }: FieldProps) => (
-                    <Form.Group className="mt-3 " controlId="nitrate">
-                      <Form.Label className="text-center">Nitrato</Form.Label>
-                      <Form.Control
-                        {...field}
-                        type="text"
-                        placeholder="Nitrato"
-                        isInvalid={touched.nitrate && !!errors.nitrate}
-                      />
-                      <Form.Control.Feedback type="invalid">
-                        {errors.nitrate}
-                      </Form.Control.Feedback>
-                    </Form.Group>
-                  )}
-                </Field>
-              </div>
-              <div className="shadow rounded flex flex-col w-full md:w-1/5 p-4">
-                <Field name="nitrite">
-                  {({ field }: FieldProps) => (
-                    <Form.Group className="mt-3 " controlId="nitrite">
-                      <Form.Label className="text-center">Nitrito</Form.Label>
-                      <Form.Control
-                        {...field}
-                        type="text"
-                        placeholder="Nitrito"
-                        isInvalid={touched.nitrite && !!errors.nitrite}
-                      />
-                      <Form.Control.Feedback type="invalid">
-                        {errors.nitrite}
-                      </Form.Control.Feedback>
-                    </Form.Group>
-                  )}
-                </Field>
-
-                <Field name="dissolvedOxygen">
-                  {({ field }: FieldProps) => (
-                    <Form.Group className="mt-3 " controlId="dissolvedOxygen">
-                      <Form.Label className="text-center">
-                        Oxigênio Dissolvido
-                      </Form.Label>
-                      <Form.Control
-                        {...field}
-                        type="text"
-                        placeholder="Oxigênio Dissolvido"
-                        isInvalid={
-                          touched.dissolvedOxygen && !!errors.dissolvedOxygen
-                        }
-                      />
-                      <Form.Control.Feedback type="invalid">
-                        {errors.dissolvedOxygen}
-                      </Form.Control.Feedback>
-                    </Form.Group>
-                  )}
-                </Field>
-
-                <Field name="pH">
-                  {({ field }: FieldProps) => (
-                    <Form.Group className="mt-3 " controlId="pH">
-                      <Form.Label className="text-center">pH</Form.Label>
-                      <Form.Control
-                        {...field}
-                        type="text"
-                        placeholder="pH"
-                        isInvalid={touched.pH && !!errors.pH}
-                      />
-                      <Form.Control.Feedback type="invalid">
-                        {errors.pH}
-                      </Form.Control.Feedback>
-                    </Form.Group>
-                  )}
-                </Field>
-
-                <Field name="potassium">
-                  {({ field }: FieldProps) => (
-                    <Form.Group className="mt-3 " controlId="potassium">
-                      <Form.Label className="text-center">Potássio</Form.Label>
-                      <Form.Control
-                        {...field}
-                        type="text"
-                        placeholder="Potássio"
-                        isInvalid={touched.potassium && !!errors.potassium}
-                      />
-                      <Form.Control.Feedback type="invalid">
-                        {errors.potassium}
-                      </Form.Control.Feedback>
-                    </Form.Group>
-                  )}
-                </Field>
-
-                <Field name="sodium">
-                  {({ field }: FieldProps) => (
-                    <Form.Group className="mt-3 " controlId="sodium">
-                      <Form.Label className="text-center">Sódio</Form.Label>
-                      <Form.Control
-                        {...field}
-                        type="text"
-                        placeholder="Sódio"
-                        isInvalid={touched.sodium && !!errors.sodium}
-                      />
-                      <Form.Control.Feedback type="invalid">
-                        {errors.sodium}
-                      </Form.Control.Feedback>
-                    </Form.Group>
-                  )}
-                </Field>
-
-                <Field name="totalDissolvedSolids">
-                  {({ field }: FieldProps) => (
-                    <Form.Group
-                      className="mt-3 "
-                      controlId="totalDissolvedSolids"
-                    >
-                      <Form.Label className="text-center">
-                        Sólidos Totais
-                      </Form.Label>
-                      <Form.Control
-                        {...field}
-                        type="text"
-                        placeholder="Sólidos Totais"
-                        isInvalid={
-                          touched.totalDissolvedSolids &&
-                          !!errors.totalDissolvedSolids
-                        }
-                      />
-                      <Form.Control.Feedback type="invalid">
-                        {errors.totalDissolvedSolids}
-                      </Form.Control.Feedback>
-                    </Form.Group>
-                  )}
-                </Field>
-              </div>
-              <div className="shadow rounded flex flex-col w-full md:w-1/5 p-4">
-                <Field name="sulfate">
-                  {({ field }: FieldProps) => (
-                    <Form.Group className="mt-3 " controlId="sulfate">
-                      <Form.Label className="text-center">Sulfato</Form.Label>
-                      <Form.Control
-                        {...field}
-                        type="text"
-                        placeholder="Sulfato"
-                        isInvalid={touched.sulfate && !!errors.sulfate}
-                      />
-                      <Form.Control.Feedback type="invalid">
-                        {errors.sulfate}
-                      </Form.Control.Feedback>
-                    </Form.Group>
-                  )}
-                </Field>
-
-                <Field name="hydrogenSulfide">
-                  {({ field }: FieldProps) => (
-                    <Form.Group className="mt-3 " controlId="hydrogenSulfide">
-                      <Form.Label className="text-center">
-                        Sulfeto de hidrogênio
-                      </Form.Label>
-                      <Form.Control
-                        {...field}
-                        type="text"
-                        placeholder="hidrogênio"
-                        isInvalid={
-                          touched.hydrogenSulfide && !!errors.hydrogenSulfide
-                        }
-                      />
-                      <Form.Control.Feedback type="invalid">
-                        {errors.hydrogenSulfide}
-                      </Form.Control.Feedback>
-                    </Form.Group>
-                  )}
-                </Field>
-                <Field name="surfactants">
-                  {({ field }: FieldProps) => (
-                    <Form.Group className="mt-3 " controlId="surfactants">
-                      <Form.Label className="text-center">
-                        Surfactantes
-                      </Form.Label>
-                      <Form.Control
-                        {...field}
-                        type="text"
-                        placeholder="Surfactantes"
-                        isInvalid={touched.surfactants && !!errors.surfactants}
-                      />
-                      <Form.Control.Feedback type="invalid">
-                        {errors.surfactants}
-                      </Form.Control.Feedback>
-                    </Form.Group>
-                  )}
-                </Field>
-
-                <Field name="totalColiforms">
-                  {({ field }: FieldProps) => (
-                    <Form.Group className="mt-3 " controlId="totalColiforms">
-                      <Form.Label className="text-center">
-                        Coliformes totais
-                      </Form.Label>
-                      <Form.Control
-                        {...field}
-                        type="text"
-                        placeholder="Coliformes totais"
-                        isInvalid={
-                          touched.totalColiforms && !!errors.totalColiforms
-                        }
-                      />
-                      <Form.Control.Feedback type="invalid">
-                        {errors.totalColiforms}
-                      </Form.Control.Feedback>
-                    </Form.Group>
-                  )}
-                </Field>
-
-                <Field name="heterotrophicBacteriaCount">
-                  {({ field }: FieldProps) => (
-                    <Form.Group
-                      className="mt-3 "
-                      controlId="heterotrophicBacteriaCount"
-                    >
-                      <Form.Label className="text-center">
-                        Heterotróficas
-                      </Form.Label>
-                      <Form.Control
-                        {...field}
-                        type="text"
-                        placeholder="Heterotróficas"
-                        isInvalid={
-                          touched.heterotrophicBacteriaCount &&
-                          !!errors.heterotrophicBacteriaCount
-                        }
-                      />
-                      <Form.Control.Feedback type="invalid">
-                        {errors.heterotrophicBacteriaCount}
-                      </Form.Control.Feedback>
-                    </Form.Group>
-                  )}
-                </Field>
-
-                <Field name="endotoxins">
-                  {({ field }: FieldProps) => (
-                    <Form.Group className="mt-3 " controlId="endotoxins">
-                      <Form.Label className="text-center">
-                        Endotoxinas
-                      </Form.Label>
-                      <Form.Control
-                        {...field}
-                        type="text"
-                        placeholder="Endotoxinas"
-                        isInvalid={touched.endotoxins && !!errors.endotoxins}
-                      />
-                      <Form.Control.Feedback type="invalid">
-                        {errors.endotoxins}
-                      </Form.Control.Feedback>
-                    </Form.Group>
-                  )}
-                </Field>
-              </div>
-            </div>
-            <div className="m-auto  d-flex align-items-center justify-content-center mt-5 mb-5">
-              <Button variant="contained" type="submit">
-                Salvar
-              </Button>
-            </div>
-          </Form>
-        )}
-      </Formik>
-    </Container>
+        Enviar
+      </button>
+    </form>
   );
 };
 
 export default ReservoirAnalysisForm;
+
+
+

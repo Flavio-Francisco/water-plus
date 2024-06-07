@@ -1,3 +1,4 @@
+import { ReservoirAnalysisResults } from "@/components/analysis/resevoirForm";
 import { CredentialsOperator } from "@/utils/models/Credentials"
 import axios from "axios"
 
@@ -13,9 +14,18 @@ export async function createReservoir(system_id:number|null, data:string) {
    
 
 }
-export async function updateReservoir(system_id:number|null, data:CredentialsOperator) {
+export async function createReservoirAnalisys(system_id:number|null, data:ReservoirAnalysisResults) {
     console.log("dados ",data);
     
+    const resevatorir = await axios.post(`api/reservoir/analysis?id=${system_id}`,data)
+   
+
+   return resevatorir.data
+   
+
+}
+export async function updateReservoir(system_id:number|null, data:CredentialsOperator) {
+    console.log("dados ",data);
     const operator= await axios.patch(`api/reservoir?id=${system_id}`,data)
    
 
