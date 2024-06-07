@@ -13,15 +13,15 @@ interface Microbiological{
 }
 
 export interface UnifiedData {
-    samplingDate: string[];
-    sampleMatrixAndOrigin: string | null;
+    id?: number;
+    date: string[];
+    sampleName:string | null;
     eColiPresence: number[];
     totalColiformsPresence: number[];
     heterotrophicBacteriaCount: number[];
     endotoxins:number[];
-    system_id: number;
+    system_id?: number;
 }
-
 
 export async function GET(req: NextRequest) {
     const url = new URL(req.nextUrl.href);
@@ -51,8 +51,8 @@ export async function GET(req: NextRequest) {
             for (const origin in groupedData) {
                 const group = groupedData[origin];
                 const unifiedData: UnifiedData = {
-                    samplingDate: [],
-                    sampleMatrixAndOrigin: origin,
+                   date: [],
+                    sampleName: origin,
                     eColiPresence: [],
                     totalColiformsPresence: [],
                     heterotrophicBacteriaCount: [],
@@ -62,7 +62,7 @@ export async function GET(req: NextRequest) {
     
                 // Preencha os arrays de dados unificados
                 group.forEach(record => {
-                    unifiedData.samplingDate.push(record.samplingDate);
+                    unifiedData.date.push(record.samplingDate);
                     unifiedData.eColiPresence.push(Number(record.eColiPresence || 0));
                     unifiedData.totalColiformsPresence.push(Number(record.totalColiformsPresence || 0));
                     unifiedData.heterotrophicBacteriaCount.push(Number(record.heterotrophicBacteriaCount || 0));

@@ -14,15 +14,13 @@ const GraficPage = () => {
   const [select, setSelect] = useState<number>(100);
   const [arryData, setArryData] = useState<Props | null>(null);
   const { dataFull } = useDataFull();
-  const ButtonText = (dataFull || [])
-    .filter((_, index) => index !== 0 && index !== 28)
-    .map((item) => item.title);
+  const ButtonText = (dataFull?.slice(1, -1) || []).map((item) => item.title);
 
   useEffect(() => {
     const fetchData = async () => {
       // Esperar até que dataFull não seja nulo
       if (dataFull !== null) {
-        const arry = getItemByIndex(select, dataFull);
+        const arry = getItemByIndex(select, dataFull?.slice(1, -1));
         setArryData(arry);
       }
     };

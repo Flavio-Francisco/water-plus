@@ -42,22 +42,15 @@ export interface ReservoirAnalysisResults {
 }
 
 export interface AnalysisResult {
-  SampleDescription: {
+    id?: number;
+    date: string;
     sampleName: string;
-    samplingAddress: string;
-    city: string;
-    state: string;
-    zipCode: string;
-    sampleMatrixAndOrigin: string;
-    samplingDate: string;
-    samplingResponsible: string;
-  };
-  MicrobiologigoAssays: {
     eColiPresence: string;
     totalColiformsPresence: string;
     heterotrophicBacteriaCount: string;
-    endotoxins:string
-  };
+  endotoxins: string;
+  system_id?: number;
+
 }
 
 export interface Systems{

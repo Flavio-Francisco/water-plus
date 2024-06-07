@@ -1,3 +1,4 @@
+import { AnalysisResult } from "@/utils/models/analysis"
 import axios from "axios"
 
 
@@ -10,3 +11,13 @@ export async function GetAnalys(system_id:number|null) {
    
 
 }
+export async function createAnalisysEta(system_id:number|null,values:AnalysisResult) {
+    
+    const data = await axios.post(`api/eta?id=${system_id}`,values)
+   
+
+   return data.data
+   
+
+}
+

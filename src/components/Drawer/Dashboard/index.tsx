@@ -45,6 +45,11 @@ export default function Dashboard({ icon }: IProps) {
       setOpenModal1(false);
     }
   };
+  const onSucess2 = (sucess: boolean) => {
+    if (sucess === true) {
+      setOpenModal2(false);
+    }
+  };
   const handlecloseModal1 = () => {
     setOpenModal1(false);
   };
@@ -124,14 +129,14 @@ export default function Dashboard({ icon }: IProps) {
           fullWidth={true}
           open={openModal2}
           onClose={handlecloseModal2}
-          maxWidth="xl"
+          maxWidth="xs"
         >
-          <div className="">
+          <div className="w-full">
             <h1 className="text-center font-bold">
-              Resultados das Amostras dos Purificadores
+              Resultados das Amostras dos ETA
             </h1>
 
-            <ResultForm />
+            <ResultForm onSucess={onSucess2} />
           </div>
         </ModalTsx>
         <ModalTsx

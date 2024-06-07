@@ -11,8 +11,6 @@ import ListAnalys from "../listAnalys";
 
 export default function AnalysList() {
   const { analys } = useDataFull();
-  console.log(analys);
-  
   const [selectedAnalys, setSelectedAnalys] =
     React.useState<UnifiedData | null>(null);
 
@@ -23,7 +21,7 @@ export default function AnalysList() {
     if (typeof newValue === "string") {
       // Se o valor selecionado for uma string (nome do paciente), encontre o paciente correspondente nos dados falsos
       const foundAnalys =
-        analys?.find((a) => a.sampleMatrixAndOrigin === newValue) || null;
+        analys?.find((a) => a.sampleName === newValue) || null;
 
       setSelectedAnalys(foundAnalys);
     } else {
@@ -44,7 +42,7 @@ export default function AnalysList() {
           handleHomeEndKeys
           id="free-solo-with-text-demo"
           options={analys || []} // Use array vazio se `pacientData` for `undefined`
-          getOptionLabel={(option) => option.sampleMatrixAndOrigin || ""}
+          getOptionLabel={(option) => option.sampleName || ""}
           renderInput={(params) => (
             <TextField {...params} label="Selecione o Ponto da Coleta" />
           )}
@@ -54,8 +52,8 @@ export default function AnalysList() {
             <div>
               <div className="w-11/12 ">
                 <GraficAnalys
-                  samplingDate={selectedAnalys?.samplingDate}
-                  sampleMatrixAndOrigin={selectedAnalys?.sampleMatrixAndOrigin}
+                  samplingDate={selectedAnalys?.date}
+                  sampleMatrixAndOrigin={selectedAnalys?.sampleName}
                   eColiPresence={selectedAnalys?.eColiPresence}
                   totalColiformsPresence={
                     selectedAnalys?.totalColiformsPresence
@@ -64,13 +62,13 @@ export default function AnalysList() {
                     selectedAnalys?.heterotrophicBacteriaCount
                   }
                   endotoxins={selectedAnalys?.endotoxins}
-                  system_id={selectedAnalys?.system_id}
+                  system_id={selectedAnalys?.system_id || 0}
                 />
               </div>
               <div className=" w-11/12">
                 <ListAnalys
-                  samplingDate={selectedAnalys?.samplingDate}
-                  sampleMatrixAndOrigin={selectedAnalys?.sampleMatrixAndOrigin}
+                  samplingDate={selectedAnalys?.date}
+                  sampleMatrixAndOrigin={selectedAnalys?.sampleName}
                   eColiPresence={selectedAnalys?.eColiPresence}
                   totalColiformsPresence={
                     selectedAnalys?.totalColiformsPresence
@@ -79,7 +77,7 @@ export default function AnalysList() {
                     selectedAnalys?.heterotrophicBacteriaCount
                   }
                   endotoxins={selectedAnalys?.endotoxins}
-                  system_id={selectedAnalys?.system_id}
+                  system_id={selectedAnalys?.system_id || 0}
                 />
               </div>
             </div>
