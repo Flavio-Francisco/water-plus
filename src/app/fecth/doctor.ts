@@ -1,9 +1,9 @@
-import { CredentialsDoctor, Doctor } from "@/utils/models/Credentials"
+import { Doctor } from "@/utils/models/Credentials"
 import axios from "axios"
 
 
 
-export async function createDoctor(system_id:number|null, data:CredentialsDoctor) {
+export async function createDoctor(system_id:number|null, data:Doctor) {
     console.log("dados ",data);
     
     const doctor = await axios.post(`api/doctor?id=${system_id}`,data)

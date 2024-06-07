@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { Formik } from "formik";
 import { SchemaDoctor } from "@/utils/validation/CredentialsForm";
-import { CredentialsDoctor } from "@/utils/models/Credentials";
+import { CredentialsDoctor, Doctor } from "@/utils/models/Credentials";
 import Loader from "@/components/loader/page";
 import { useMutation } from "@tanstack/react-query";
 import { useUserContext } from "@/context/userContext";
@@ -40,7 +40,7 @@ const DoctorFormNew = ({ data, refech, onUpdate }: Ipros) => {
   console.log("médico", data);
   const { mutate } = useMutation({
     mutationKey: ["doctor"],
-    mutationFn: async (values: CredentialsDoctor) => {
+    mutationFn: async (values: Doctor) => {
       await (data === undefined ? createDoctor : updateDoctor)(
         user?.system_id || 0,
         values
@@ -82,7 +82,7 @@ const DoctorFormNew = ({ data, refech, onUpdate }: Ipros) => {
       validationSchema={SchemaDoctor}
       onSubmit={(values: CredentialsDoctor, { setSubmitting }) => {
         console.log(values);
-        mutate(values);
+        mutate(values.doctor);
         setSubmitting(false);
       }}
     >
