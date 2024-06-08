@@ -267,22 +267,15 @@ export const fakeReservoirCleaning: ReservoirCleaning = {
   nextCleaning: "2024-03-12",
 };
 export const FormInitialValues: AnalysisResult = {
-  SampleDescription: {
-    sampleName: "",
-    samplingAddress: "",
-    city: "",
-    state: "",
-    zipCode: "",
-    sampleMatrixAndOrigin: "",
-    samplingDate: "",
-    samplingResponsible: "",
-  },
-  MicrobiologigoAssays: {
-    eColiPresence: "",
-    totalColiformsPresence: "",
-    heterotrophicBacteriaCount: "",
-    endotoxins:''
-  },
+
+  sampleName: "",
+  date: "",
+  eColiPresence: "",
+  endotoxins: "",
+  heterotrophicBacteriaCount: "",
+  totalColiformsPresence: "",
+
+
 };
 export function calcularPorcentagem(
   data:number[] | undefined
