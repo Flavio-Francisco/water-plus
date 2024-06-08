@@ -10,7 +10,7 @@ export default function Purifiers() {
           Resultados das Amostras dos Purificadores
         </h1>
       </Row>
-      <ResultForm />
+      <ResultForm onSucess={() => {}} />
     </div>
   );
 }
