@@ -59,16 +59,16 @@ export async function DELETE(req: NextRequest) {
     console.log(id);
     
     try {
-        const data = await prisma.events.delete({
+         await prisma.events.delete({
             where: {
          id:Number(id)
      }
         })
 
-        return NextResponse.json(data);
+        return NextResponse.json("Evento Deletado com Sucesso!!!");
     } catch (error) {
         return NextResponse.json({
-            message: "erro deletar dados"
+            message: "Erro Deletar dados"
         },
         {
             status: 500

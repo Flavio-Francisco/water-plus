@@ -60,6 +60,7 @@ export default function Calendar({ events: initialEvents }: CalendarProps) {
     window.innerWidth < 500 ? 300 : 500
   );
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [dialogOpenDelete, setDialogOpenDelete] = useState(false);
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [selectedEvent, setSelectedEvent] =
     useState<RenderEventContentProps | null>(null);
@@ -121,10 +122,12 @@ export default function Calendar({ events: initialEvents }: CalendarProps) {
     }
   };
 
+  //criara uma função que abra um alertr de confirmação
   const handleDeleteEvent = () => {
     if (selectedEvent) {
       const eventId = selectedEvent.event.id;
       deleteEvents(selectedEvent.event.id);
+      alert("Evento Deletado com Sucesso!!!");
       setEvents((prevEvents) =>
         prevEvents.filter((event) => event.id !== eventId)
       );
@@ -136,7 +139,18 @@ export default function Calendar({ events: initialEvents }: CalendarProps) {
         }
       }
       setDialogOpen(false);
+      setDialogOpenDelete(false);
     }
+  };
+  const handleCloseDelete = () => {
+    setDialogOpenDelete(false);
+  };
+  const handleDelete = () => {
+    handleDeleteEvent();
+    setDialogOpenDelete(false);
+  };
+  const handleOpenDelete = () => {
+    setDialogOpenDelete(true);
   };
 
   const handleStatusChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -145,7 +159,6 @@ export default function Calendar({ events: initialEvents }: CalendarProps) {
 
       try {
         await updateEventStatus(selectedEvent.event.id, value);
-     
 
         if (calendarRef.current) {
           const calendarApi = calendarRef.current.getApi();
@@ -190,7 +203,7 @@ export default function Calendar({ events: initialEvents }: CalendarProps) {
   function renderEventContent(eventInfo: RenderEventContentProps) {
     const status = eventInfo.event.extendedProps.status;
     const color = getStatusColor(status);
-  
+
     return (
       <div className="flex items-center">
         <div
@@ -327,13 +340,13 @@ export default function Calendar({ events: initialEvents }: CalendarProps) {
           </DialogContent>
           <DialogActions>
             {selectedEvent ? (
-              <>
+              <div className="flex justify-between w-full">
                 <Button
                   variant="contained"
-                  color="secondary"
-                  onClick={handleDeleteEvent}
+                  color="error"
+                  onClick={handleOpenDelete}
                 >
-                  Excluir Evento
+                  Excluir
                 </Button>
                 <Button
                   variant="contained"
@@ -342,7 +355,7 @@ export default function Calendar({ events: initialEvents }: CalendarProps) {
                 >
                   Fechar
                 </Button>
-              </>
+              </div>
             ) : (
               <>
                 <Button
@@ -364,7 +377,32 @@ export default function Calendar({ events: initialEvents }: CalendarProps) {
           </DialogActions>
         </Dialog>
       </div>
+      <Dialog
+        fullWidth={false}
+        maxWidth="sm"
+        open={dialogOpenDelete}
+        onClose={handleCloseDelete}
+      >
+        <DialogTitle>Excluir Evento</DialogTitle>
+        <DialogContent>
+          <div className="p-2 mt-2 bg-gray-100 rounded">
+            <p>Quer Apagar o Evento {selectedEvent?.event.title}</p>
+          </div>
+        </DialogContent>
+        <div className="flex justify-around items-center flex-row mb-2">
+          <Button variant="contained" color="error" onClick={handleDelete}>
+            Exluir
+          </Button>
+          <Button
+            variant="contained"
+            color="success"
+            onClick={handleCloseDelete}
+            className="text-white bg-slate-700"
+          >
+            Cancelar
+          </Button>
+        </div>
+      </Dialog>
     </div>
   );
 }
-

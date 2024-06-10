@@ -8,8 +8,8 @@ interface Props {
 
 const ButtonList: React.FC<Props> = ({ buttonTexts, getBayIndex }) => {
   return (
-    <div className="overflow-x-auto ">
-      <div className="flex gap-2 p-2">
+    <div className="overflow-y-auto ">
+      <div className="flex flex-row gap-2 p-2">
         {buttonTexts.map((text, index) => (
           <div
             key={index}

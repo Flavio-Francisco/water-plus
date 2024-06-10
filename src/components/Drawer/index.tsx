@@ -266,7 +266,7 @@ export default function Drawer({
                 justifyContent: open ? "initial" : "center",
                 px: 2.5,
               }}
-              onClick={() => push("/Home/grafic ")}
+              onClick={() => push("/grafic ")}
             >
               <ListItemIcon
                 title="Grafico dos Parametros"
@@ -294,7 +294,7 @@ export default function Drawer({
                 justifyContent: open ? "initial" : "center",
                 px: 2.5,
               }}
-              onClick={() => push("/Home/pretreatment")}
+              onClick={() => push("/pretreatment")}
             >
               <ListItemIcon
                 title="Dados das Analíses"
@@ -322,7 +322,7 @@ export default function Drawer({
                 justifyContent: open ? "initial" : "center",
                 px: 2.5,
               }}
-              onClick={() => push("/Home/production")}
+              onClick={() => push("/production")}
             >
               <ListItemIcon
                 title="Consumo de Água"
