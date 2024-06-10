@@ -2,7 +2,7 @@
 import React from "react";
 import { AnalysisResult } from "@/utils/models/analysis";
 import { FormAnalysis } from "@/utils/validation/FormAnalysisReselt";
-import { Formik, Field, ErrorMessage } from "formik";
+import { Formik, Field, ErrorMessage, FieldProps } from "formik";
 import {
   Form,
   FormGroup,
@@ -19,7 +19,15 @@ import { createAnalisysEta } from "@/app/fecth/analys";
 interface Iprops {
   onSucess: (sucess: boolean) => void;
 }
-
+const options = [
+  { value: "", label: "Selecione um ponto " },
+  { value: "Pré-Tratamento", label: "Pré-Tratamento" },
+  { value: "1º Passo", label: "1º Passo" },
+  { value: "2º Passo", label: "2º Passo" },
+  { value: "Entrata do Looping", label: "Entrata do Looping" },
+  { value: "Saída do Looping", label: "Saída do Looping" },
+  { value: "Retorno do Looping", label: "Retorno do Looping" },
+];
 export const FormInitialValues: AnalysisResult = {
   date: "",
   sampleName: "",
@@ -45,19 +53,18 @@ const ResultForm = ({ onSucess }: Iprops) => {
     },
   });
 
-
   return (
     <div className="flex justify-center items-center">
       <Formik
         initialValues={FormInitialValues}
         validationSchema={FormAnalysis}
-        onSubmit={(values: AnalysisResult,{resetForm}) => {
+        onSubmit={(values: AnalysisResult, { resetForm }) => {
           mutate(values);
           console.log("Dados do formulário submetidos:", values);
-          resetForm()
+          resetForm();
         }}
       >
-        {({ errors, touched, handleSubmit}) => (
+        {({ errors, touched, handleSubmit }) => (
           <Form
             onSubmit={handleSubmit}
             className="flex flex-col justify-center items-center w-full"
@@ -84,14 +91,27 @@ const ResultForm = ({ onSucess }: Iprops) => {
             <Col xs={12} md={10}>
               <FormGroup>
                 <FormLabel htmlFor="sampleName">Ponto da Coleta:</FormLabel>
-                <Field
-                  id="sampleName"
-                  as={FormControl}
-                  type="text"
+                <Field name="sampleName">
+                  {({ field }: FieldProps) => (
+                    <FormControl
+                      as="select"
+                      id="sampleName"
+                      {...field}
+                      isInvalid={!!errors.sampleName && touched.sampleName}
+                    >
+                      {options.map((option) => (
+                        <option key={option.value} value={option.value}>
+                          {option.label}
+                        </option>
+                      ))}
+                    </FormControl>
+                  )}
+                </Field>
+                <ErrorMessage
                   name="sampleName"
-                  isInvalid={!!errors?.sampleName && touched?.sampleName}
+                  component="div"
+                  className="invalid-feedback"
                 />
-                <ErrorMessage name="SampleDescription.sampleName" />
               </FormGroup>
             </Col>
 
