@@ -9,6 +9,7 @@ import {
 import { styled } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
 import React from "react";
+import { formatDate } from "@/utils/functions/FormateDate";
 
 interface UnifiedData {
   samplingDate: string[];
@@ -44,9 +45,9 @@ const ListAnalys = (data: UnifiedData) => {
       <TableContainer component={Paper}>
         <Table aria-label="customized table">
           <TableHead>
-            <TableRow>
-              <StyledTableCell className="whitespace-nowrap">
-                Dia
+            <TableRow className="flex flex-row justify-center">
+              <StyledTableCell className="whitespace-nowrap max-sm:w-8/12 ">
+                {"    "} Dia
               </StyledTableCell>
               <StyledTableCell className="whitespace-nowrap">
                 Bactérias heterotróficas
@@ -66,8 +67,12 @@ const ListAnalys = (data: UnifiedData) => {
             {data &&
               data.samplingDate.map((dayItem, index) => (
                 <StyledTableRow key={index}>
-                  <StyledTableCell component="th" scope="row">
-                    {dayItem}
+                  <StyledTableCell
+                    component="th"
+                    scope="row"
+                    className="max-sm:w-50"
+                  >
+                    {formatDate(new Date(dayItem))}
                   </StyledTableCell>
                   <StyledTableCell>{data.eColiPresence[index]}</StyledTableCell>
                   <StyledTableCell>

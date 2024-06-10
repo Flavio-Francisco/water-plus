@@ -12,11 +12,16 @@ const ListParamets: React.FC<Iprops> = ({ data, day }) => {
   }
 
   return (
-    <div className="w-4/5 flex flex-col items-center">
-      <h1 className="text-center mt-8 mb-8 text-xl font-bold">
+    <div className="w-full flex flex-col items-center">
+      <h1 className="text-center mt-8 mb-8 text-sm font-bold">
         Dados Diários:
       </h1>
-      <Table striped bordered hover className="m-auto w-4/5">
+      <Table
+        striped
+        bordered
+        hover
+        className="flex justify-center items-center w-full max-sm:ml-20"
+      >
         <thead>
           <tr>
             <th style={{ width: "40%", textAlign: "center" }}>Dia</th>

@@ -8,16 +8,16 @@ interface Props {
 
 const ButtonList: React.FC<Props> = ({ buttonTexts, getBayIndex }) => {
   return (
-    <div className="overflow-y-auto ">
-      <div className="flex flex-row gap-2 p-2">
+    <div className="sm:fixed sm:top-4 sm:left-16 sm:h-full sm:w-40 bg-gray-100 overflow-y-auto shadow-lg max-w-xs md:max-w-sm lg:max-w-md">
+      <div className="flex sm:flex-col max-sm:flex-row gap-2 p-2">
         {buttonTexts.map((text, index) => (
           <div
             key={index}
             style={{ background: Thema.Colors.blue3 }}
-            className="flex-shrink-0 rounded mb-2"
+            className="rounded mb-2 cursor-pointer"
             onClick={() => getBayIndex(index)}
           >
-            <button className="whitespace-nowrap p-2 max-[580px]:text-lg">
+            <button className="whitespace-nowrap text-xs p-2 w-full text-left">
               {text}
             </button>
           </div>
@@ -28,3 +28,7 @@ const ButtonList: React.FC<Props> = ({ buttonTexts, getBayIndex }) => {
 };
 
 export default ButtonList;
+
+
+
+
