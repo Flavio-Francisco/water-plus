@@ -11,11 +11,15 @@ import {
   Form as BootstrapForm,
   Row,
 } from "react-bootstrap";
-import Line from "../line";
+
 import { Button } from "@mui/material";
+import { useUserContext } from "@/context/userContext";
+import { useMutation } from "@tanstack/react-query";
+import { createAnalysisApevisa } from "@/app/fecth/apevisa";
 
 const initialValues: ApvisaModel = {
   name: "",
+  date: "",
   cianoBacteria: "",
   escherichaColi: "",
   conductivity: "",
@@ -29,65 +33,109 @@ const initialValues: ApvisaModel = {
   seedingOnSurface: "",
 };
 
-const FormApvisa: React.FC = () => {
-  const handleSubmit = (
-    values: ApvisaModel,
-    { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
-  ) => {
-    console.log(values);
-    setSubmitting(false);
-  };
+interface Iprops {
+  onSucess: (sucess: boolean) => void;
+}
+
+const FormApvisa: React.FC<Iprops> = ({ onSucess }) => {
+  const { user } = useUserContext();
+  const { mutate } = useMutation({
+    mutationKey: ["AnalyseForm"],
+    mutationFn: (values: ApvisaModel) =>
+      createAnalysisApevisa(user?.system_id || 0, values),
+    onSuccess: () => {
+      onSucess(true);
+      alert("Dados Salvos com Sucesso!!!");
+    },
+    onError: () => {
+      onSucess(true);
+      alert("ERRO ao Salvar  Dados !!!");
+    },
+  });
 
   return (
     <Container
       style={{
-        width: "90%",
         display: "flex",
         justifyContent: "center",
         flexDirection: "column",
       }}
-      className=" p-5"
+      className=" sm:p-5 max-sm:p-0 max-sm:w-full sm:w-11/12 "
     >
-      <Row className="m-5 mb-5 d-flex justify-content-center align-items-center">
-        <h1 className="text-center text-lg font-bold">Coleta Apevisa</h1>
+      <Row className="mb-5 d-flex justify-content-center align-items-center">
+        <h1 className="text-center text-lg font-bold whitespace-nowrap">
+          Coleta Apevisa
+        </h1>
       </Row>
 
       <Formik
         initialValues={initialValues}
         validationSchema={validationApvisa}
-        onSubmit={handleSubmit}
+        onSubmit={(values: ApvisaModel, { resetForm, setSubmitting }) => {
+          mutate(values);
+          console.log("Dados do formulário submetidos:", values);
+
+          setSubmitting(false);
+          resetForm();
+        }}
       >
         {({ isSubmitting }) => (
           <Form className=" w-full">
-            <BootstrapForm.Group as={Row} controlId="formName">
-              <BootstrapForm.Label column sm={2} className="font-bold">
-                Ponto da Coleta:
-              </BootstrapForm.Label>
-              <Col sm={10} className="mb-4 sm:w-1/5">
-                <Field name="name" as="select" className="form-control">
-                  <option value="">Selecione...</option>
-                  <option value="Água de Alimentação">
-                    Água de Alimentação
-                  </option>
-                  <option value="Pós-Carvão">Pós-Carvão</option>
-                  <option value="Osmose 1º Passo">Osmose 1º Passo</option>
-                  <option value="Osmose 2º Passo">Osmose 2º Passo</option>
-                  <option value="Saída do Looping">Saída do Looping</option>
-                  <option value="Entrada do Looping">Entrada do Looping</option>
-                  <option value="Osmose Portatio 1">Osmose Portatio 1</option>
-                  <option value="Osmose Portatio 2">Osmose Portatio 2</option>
-                  <option value="Osmose Portatio 3">Osmose Portatio 3</option>
-                  <option value="Osmose Portatio 4">Osmose Portatio 4</option>
-                </Field>
+            <div className="sm:w-full flex sm:flex-row max-sm:flex-col max-sm:gap-2">
+              <BootstrapForm.Group
+                as={Row}
+                controlId="formName"
+                className="w-full "
+              >
+                <div className="sm:w-full max-sm:w-full sm:flex-row max-sm:flex-col ">
+                  <BootstrapForm.Label className="font-bold whitespace-nowrap sm:mr-2 ">
+                    Ponto da Coleta:
+                  </BootstrapForm.Label>
+                  <Field
+                    name="name"
+                    as="select"
+                    className="sm:w-3/6  border rounded border-l-stone-600 p-2 mb-2"
+                  >
+                    <option value="">Selecione...</option>
+                    <option value="Água de Alimentação">
+                      Água de Alimentação
+                    </option>
+                    <option value="Pós-Carvão">Pós-Carvão</option>
+                    <option value="Osmose 1º Passo">Osmose 1º Passo</option>
+                    <option value="Osmose 2º Passo">Osmose 2º Passo</option>
+                    <option value="Saída do Looping">Saída do Looping</option>
+                    <option value="Entrada do Looping">
+                      Entrada do Looping
+                    </option>
+                    <option value="Osmose Portatio 1">Osmose Portatio 1</option>
+                    <option value="Osmose Portatio 2">Osmose Portatio 2</option>
+                    <option value="Osmose Portatio 3">Osmose Portatio 3</option>
+                    <option value="Osmose Portatio 4">Osmose Portatio 4</option>
+                  </Field>
+                  <div className="text-danger"></div>
+                </div>
+              </BootstrapForm.Group>
+              <BootstrapForm.Group
+                as={Row}
+                controlId="formDate"
+                className="w-full "
+              >
+                <div className="max-sm:w-4/6   sm:full   max-sm:order-none max-sm:mb-2">
+                  <BootstrapForm.Label className="font-bold">
+                    Data:
+                  </BootstrapForm.Label>
+                  <Field
+                    id="date"
+                    type="date"
+                    name="date"
+                    className="max-sm:w-full sm:w-3/6 border rounded border-l-stone-600 p-2 "
+                  />
+                </div>
+              </BootstrapForm.Group>
+            </div>
 
-                <ErrorMessage
-                  name="name"
-                  component="div"
-                  className="text-danger "
-                />
-              </Col>
-              <Line />
-            </BootstrapForm.Group>
+            <hr className="max-sm:w-full" />
+
             <BootstrapForm.Group
               as={Row}
               controlId="formCianoBacteria"
@@ -135,7 +183,7 @@ const FormApvisa: React.FC = () => {
                   className="text-danger"
                 />
               </Col>
-              <Line />
+              <hr className="max-sm:w-full max-sm:mt-2" />
             </BootstrapForm.Group>
 
             <BootstrapForm.Group
@@ -185,7 +233,7 @@ const FormApvisa: React.FC = () => {
                   className="text-danger"
                 />
               </Col>
-              <Line />
+              <hr className="max-sm:w-full max-sm:mt-2" />
             </BootstrapForm.Group>
             <BootstrapForm.Group
               as={Row}
@@ -234,7 +282,7 @@ const FormApvisa: React.FC = () => {
                   className="text-danger"
                 />
               </Col>
-              <Line />
+              <hr className="max-sm:w-full max-sm:mt-2" />
             </BootstrapForm.Group>
             <BootstrapForm.Group
               as={Row}
@@ -283,7 +331,7 @@ const FormApvisa: React.FC = () => {
                   className="text-danger"
                 />
               </Col>
-              <Line />
+              <hr className="max-sm:w-full max-sm:mt-2" />
             </BootstrapForm.Group>
 
             <BootstrapForm.Group
@@ -333,7 +381,7 @@ const FormApvisa: React.FC = () => {
                   className="text-danger"
                 />
               </Col>
-              <Line />
+              <hr className="max-sm:w-full max-sm:mt-2" />
             </BootstrapForm.Group>
             <BootstrapForm.Group
               as={Row}
@@ -382,7 +430,7 @@ const FormApvisa: React.FC = () => {
                   className="text-danger"
                 />
               </Col>
-              <Line />
+              <hr className="max-sm:w-full max-sm:mt-2" />
             </BootstrapForm.Group>
 
             <BootstrapForm.Group
@@ -437,7 +485,7 @@ const FormApvisa: React.FC = () => {
                   className="text-danger"
                 />
               </Col>
-              <Line />
+              <hr className="max-sm:w-full max-sm:mt-2" />
             </BootstrapForm.Group>
             <BootstrapForm.Group
               as={Row}
@@ -486,7 +534,7 @@ const FormApvisa: React.FC = () => {
                   className="text-danger"
                 />
               </Col>
-              <Line />
+              <hr className="max-sm:w-full max-sm:mt-2" />
             </BootstrapForm.Group>
 
             <BootstrapForm.Group
@@ -536,7 +584,7 @@ const FormApvisa: React.FC = () => {
                   className="text-danger"
                 />
               </Col>
-              <Line />
+              <hr className="max-sm:w-full max-sm:mt-2" />
             </BootstrapForm.Group>
             <BootstrapForm.Group
               as={Row}
@@ -585,7 +633,7 @@ const FormApvisa: React.FC = () => {
                   className="text-danger"
                 />
               </Col>
-              <Line />
+              <hr className="max-sm:w-full max-sm:mt-2" />
             </BootstrapForm.Group>
 
             <BootstrapForm.Group
@@ -635,11 +683,11 @@ const FormApvisa: React.FC = () => {
                   className="text-danger"
                 />
               </Col>
-              <Line />
+              <hr className="max-sm:w-full max-sm:mt-2" />
             </BootstrapForm.Group>
             <div className=" mt-8">
               <Button variant="contained" type="submit" disabled={isSubmitting}>
-                Salvar
+                {isSubmitting ? "Salvando..." : " Salvar"}
               </Button>
             </div>
           </Form>

@@ -50,6 +50,11 @@ export default function Dashboard({ icon }: IProps) {
       setOpenModal2(false);
     }
   };
+  const onSucess3 = (sucess: boolean) => {
+    if (sucess === true) {
+      setOpenModal3(false);
+    }
+  };
   const handlecloseModal1 = () => {
     setOpenModal1(false);
   };
@@ -146,7 +151,7 @@ export default function Dashboard({ icon }: IProps) {
           maxWidth="xl"
         >
           <div>
-            <FormApvisa />
+            <FormApvisa onSucess={onSucess3} />
           </div>
         </ModalTsx>
       </div>

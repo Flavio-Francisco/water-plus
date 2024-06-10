@@ -1,6 +1,7 @@
 import * as Yup from "yup";
 
 export const validationApvisa = Yup.object().shape({
+  date: Yup.string().required("Required"),
   cianoBacteria: Yup.string().required("Required"),
   escherichaColi: Yup.string().required("Required"),
   endotoxin: Yup.string().required("Required"),

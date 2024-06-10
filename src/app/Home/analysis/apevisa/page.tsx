@@ -6,9 +6,9 @@ import React from 'react'
 
 export default function Apevisa(){
     
-    return(
-        <div>
-            <FormApvisa/>
-        </div>
-    )
+    return (
+      <div>
+        <FormApvisa onSucess={() => {}} />
+      </div>
+    );
 }
