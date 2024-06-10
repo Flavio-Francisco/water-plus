@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import ResultForm from "@/components/formAnalysis";
 import { Row } from "react-bootstrap";

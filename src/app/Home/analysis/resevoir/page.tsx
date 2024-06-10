@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import ReservoirAnalysisForm from "@/components/analysis/resevoirForm";
 import { Row } from "react-bootstrap";
