@@ -148,7 +148,7 @@ export default function Dashboard({ icon }: IProps) {
           fullWidth={true}
           open={openModal3}
           onClose={handlecloseModal3}
-          maxWidth="xl"
+          maxWidth="md"
         >
           <div>
             <FormApvisa onSucess={onSucess3} />
