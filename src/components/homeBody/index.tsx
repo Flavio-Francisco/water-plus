@@ -21,6 +21,7 @@ import { getDoctorDB } from "@/app/fecth/doctor";
 import { useDoctor } from "@/context/useDoctor";
 import { getOperatorDB } from "@/app/fecth/operator";
 import { useOperator } from "@/context/useOperator";
+import { getData } from "@/app/fecth/data";
 
 const HomeBody: React.FC = () => {
   const { user } = useUserContext();
@@ -29,6 +30,18 @@ const HomeBody: React.FC = () => {
   const { getChemist, refetchChemist } = useChemist();
   const { getDoctor, refetchDoctor } = useDoctor();
   const { getOperator, refetchOperator } = useOperator();
+
+  const { data: electrogram } = useQuery({
+    queryKey: ["Electrogram"],
+    queryFn: () => {
+      if (user) {
+        return getData(user?.system_id || 0);
+      } else {
+        return null;
+      }
+    },
+  });
+  console.log(electrogram);
 
   const { data: chemist, refetch: refetchchemist } = useQuery({
     queryKey: ["chemicalDB"],

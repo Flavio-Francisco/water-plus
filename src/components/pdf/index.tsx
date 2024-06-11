@@ -1,11 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Page, Text, View, Document } from "@react-pdf/renderer";
-import {
-  returnMinthly,
-  fackreport,
-
-} from "@/utils/models/Data";
+import { Page, Text, View, Document, Image } from "@react-pdf/renderer";
+import { returnMinthly, fackreport } from "@/utils/models/Data";
 import { ReportModel } from "../../utils/models/report";
 import { styles } from "./styles";
 import { CredentialsChemistdb } from "../modals/modalChemist/editForm";
@@ -29,13 +25,15 @@ const Pdf = ({ Chemist, doctor, operator, data }: Iprops) => {
 
   useEffect(() => {
     setReport(fackreport);
-    console.log("PDF doctor", doctor);
   }, [Chemist]);
-  console.log("PDF Chemist", Chemist);
 
   return (
     <Document pageLayout="singlePage">
       <Page size="A4" style={styles.body}>
+        <Image
+          src="https://i1.sndcdn.com/artworks-000065614465-rlhmbv-t500x500.jpg"
+          style={styles.image}
+        />
         <View style={styles.header}>
           <Text style={styles.date}> Caruaru, {date.toLocaleDateString()}</Text>
         </View>

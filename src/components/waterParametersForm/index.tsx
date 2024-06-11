@@ -137,7 +137,7 @@ const WaterParametersForm = () => {
                                 className="form-control mb-2"
                               >
                                 <option value="">Selecione</option>
-                                <option value="Incolor">Incolor</option>
+                                <option value="Inc">Incolor</option>
                                 <option value="Turva">Tuvar</option>
                               </Field>
                               <ErrorMessage
@@ -158,9 +158,7 @@ const WaterParametersForm = () => {
                                 className="form-control mb-2"
                               >
                                 <option value="">Selecione</option>
-                                <option value="Transparente">
-                                  Transparente
-                                </option>
+                                <option value="Trans">Transparente</option>
                                 <option value="Turva">Tuvar</option>
                               </Field>
                               <ErrorMessage
@@ -183,8 +181,8 @@ const WaterParametersForm = () => {
                                 className="form-control mb-2"
                               >
                                 <option value="">Selecioner</option>
-                                <option value="Saboroso">Saboroso</option>
-                                <option value="Insípido">Insípido</option>
+                                <option value="Sip">Sípidoso</option>
+                                <option value="Ins">Insípido</option>
                                 {/* Adicione outras opções conforme necessário */}
                               </Field>
                               <ErrorMessage

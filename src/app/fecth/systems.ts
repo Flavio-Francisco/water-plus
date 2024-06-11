@@ -18,3 +18,18 @@ export async function getSystems() {
         })
     }
 }
+
+export async function getSystemId(id:number) {
+    try {
+        const data = await axios.get(`api/systems/unique?id=${id}`)
+        const systems: Systems  = data.data;
+        return systems
+    } catch (error) {
+        return  NextResponse.json({
+            message:"dados não encontados"
+        },
+            {
+            status:500
+        })
+    }
+}

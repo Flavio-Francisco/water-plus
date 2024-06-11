@@ -23,6 +23,10 @@ import { useUserContext } from "@/context/userContext";
 import { createReservoir } from "@/app/fecth/resevatorir";
 import { formatDateResevatorir } from "@/utils/functions/FormateDate";
 import { DesinfectionModel } from "@/utils/models/desifection";
+import Electrogram from "@/components/Electrogram";
+import { ParametersDB } from "@/utils/models/WaterParametersModel";
+import { getSystemId } from "@/app/fecth/systems";
+import { Systems } from "@/utils/models/analysis";
 
 interface IProps {
   icon: React.ReactNode;
@@ -33,6 +37,7 @@ export default function DashboardTSX({ icon }: IProps) {
   const { operator } = useOperator();
   const { doctor } = useDoctor();
   const { Chemist } = useChemist();
+  const queryClient = useQueryClient();
   const [value, setValue] = React.useState<Dayjs | null>(null);
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -41,21 +46,28 @@ export default function DashboardTSX({ icon }: IProps) {
   const [openModal2, setOpenModal2] = React.useState(false);
   const [openModal3, setOpenModal3] = React.useState(false);
   const [openModal4, setOpenModal4] = React.useState(false);
+  const [openModal5, setOpenModal5] = React.useState(false);
 
   const { data } = useQuery({
     queryKey: ["diasafe"],
     queryFn: () => getMachines(user?.system_id || 0),
   });
+  const { data: system } = useQuery({
+    queryKey: ["systemId"],
+    queryFn: () => getSystemId(user?.system_id || 0),
+  });
+  const systems = (system as Systems) || [];
 
   const { mutate, data: i } = useMutation({
     mutationKey: ["resevatorirForm"],
     mutationFn: (date: string) => createReservoir(user?.system_id || 0, date),
   });
-  const queryClient = useQueryClient();
   const date: DesinfectionModel | undefined = queryClient.getQueryData([
     "desinfection",
   ]);
 
+  const electrogram: ParametersDB[] =
+    queryClient.getQueryData(["Electrogram"]) || [];
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -71,7 +83,9 @@ export default function DashboardTSX({ icon }: IProps) {
   const handleOpenModal4 = () => {
     setOpenModal4(true);
   };
-
+  const handleOpenModal5 = () => {
+    setOpenModal5(true);
+  };
   const handlecloseModal1 = () => {
     setOpenModal1(false);
   };
@@ -83,6 +97,9 @@ export default function DashboardTSX({ icon }: IProps) {
   };
   const handlecloseModal4 = () => {
     setOpenModal4(false);
+  };
+  const handlecloseModal5 = () => {
+    setOpenModal5(false);
   };
 
   const handleClose = () => {
@@ -147,6 +164,14 @@ export default function DashboardTSX({ icon }: IProps) {
           }}
         >
           Apevisa
+        </MenuItem>
+        <MenuItem
+          onClick={() => {
+            handleClose();
+            handleOpenModal5();
+          }}
+        >
+          Eletrograma
         </MenuItem>
       </Menu>
 
@@ -221,6 +246,18 @@ export default function DashboardTSX({ icon }: IProps) {
           maxWidth="xl"
         >
           <ReportApevisa reports={ArrayApavise} />
+        </ModalTsx>
+        <ModalTsx
+          fullWidth={true}
+          open={openModal5}
+          onClose={handlecloseModal5}
+          maxWidth="xl"
+        >
+          <div className="w-full h-screen">
+            <PDFViewer className="w-full h-full">
+              <Electrogram data={electrogram} system={systems.name || ""} />
+            </PDFViewer>
+          </div>
         </ModalTsx>
       </div>
     </div>

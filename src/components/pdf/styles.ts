@@ -91,4 +91,12 @@ export const styles = StyleSheet.create({
     marginTop: 30,
     marginBottom: 30,
   },
+  image: {
+    width: 100,
+    height: 100,
+    marginBottom: 10,
+    position: 'absolute',
+    left: 10,
+    top:-10
+  },
 });
