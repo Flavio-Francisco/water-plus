@@ -22,6 +22,7 @@ interface Iprops {
 const options = [
   { value: "", label: "Selecione um ponto " },
   { value: "Pré-Tratamento", label: "Pré-Tratamento" },
+  { value: "Pós Carvão", label: "Pós Carvão" },
   { value: "1º Passo", label: "1º Passo" },
   { value: "2º Passo", label: "2º Passo" },
   { value: "Entrata do Looping", label: "Entrata do Looping" },
