@@ -27,6 +27,7 @@ import Electrogram from "@/components/Electrogram";
 import { ParametersDB } from "@/utils/models/WaterParametersModel";
 import { getSystemId } from "@/app/fecth/systems";
 import { Systems } from "@/utils/models/analysis";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
 
 interface IProps {
   icon: React.ReactNode;
@@ -42,6 +43,7 @@ export default function DashboardTSX({ icon }: IProps) {
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+  const [selectedMonth, setSelectedMonth] = React.useState<string>("");
   const [openModal1, setOpenModal1] = React.useState(false);
   const [openModal2, setOpenModal2] = React.useState(false);
   const [openModal3, setOpenModal3] = React.useState(false);
@@ -68,6 +70,35 @@ export default function DashboardTSX({ icon }: IProps) {
 
   const electrogram: ParametersDB[] =
     queryClient.getQueryData(["Electrogram"]) || [];
+  const uniqueMonths = Array.from(
+    new Set(
+      electrogram.map((item) => {
+        if (!item.date) return "";
+        const itemDate = new Date(item.date);
+        const month = itemDate.getMonth() + 2; // getMonth() retorna 0-11
+        const year = itemDate.getFullYear();
+        return `${year}-${month.toString().padStart(2, "0")}`;
+      })
+    )
+  ).filter((item) => item !== "");
+
+  // Ordenar os meses
+  uniqueMonths.sort();
+  const filteredData = electrogram.filter((item) => {
+    if (!item.date) return false;
+    const itemDate = new Date(item.date);
+    const month = itemDate.getMonth() + 2; // getMonth() retorna 0-11
+    const year = itemDate.getFullYear();
+    const [selectedYear, selectedMonthNumber] = selectedMonth
+      .split("-")
+      .map(Number);
+    return year === selectedYear && month === selectedMonthNumber;
+  });
+
+  const handleChange = (event: SelectChangeEvent) => {
+    setSelectedMonth(event.target.value as string);
+  };
+
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -248,16 +279,39 @@ export default function DashboardTSX({ icon }: IProps) {
           <ReportApevisa reports={ArrayApavise} />
         </ModalTsx>
         <ModalTsx
-          fullWidth={true}
+          fullWidth={selectedMonth ? true : false}
           open={openModal5}
           onClose={handlecloseModal5}
           maxWidth="xl"
         >
-          <div className="w-full h-screen">
-            <PDFViewer className="w-full h-full">
-              <Electrogram data={electrogram} system={systems.name || ""} />
-            </PDFViewer>
+          <div className="p-4" style={{ display: selectedMonth && "none" }}>
+            <Select
+              value={selectedMonth}
+              onChange={handleChange}
+              displayEmpty
+              className="w-full mb-4"
+            >
+              <MenuItem value="">
+                <p>Selecione o Mês</p>
+              </MenuItem>
+              {uniqueMonths.map((month) => (
+                <MenuItem key={month} value={month}>
+                  {new Date(`${month}-01`).toLocaleString("default", {
+                    month: "long",
+                    year: "numeric",
+                  })}
+                </MenuItem>
+              ))}
+            </Select>
           </div>
+
+          {selectedMonth && (
+            <div className="w-full h-screen">
+              <PDFViewer className="w-full h-full">
+                <Electrogram data={filteredData} system={systems.name || ""} />
+              </PDFViewer>
+            </div>
+          )}
         </ModalTsx>
       </div>
     </div>
