@@ -28,13 +28,13 @@ const GraficPage = () => {
   }, [select, dataFull]);
 
   return (
-    <div className=" flex flex-col justify-center items-center w-10/12  max-sm:w-[300px] max-sm:left-11 absolute">
-      <div className="mt-8 w-full">
-        <h1 className="text-center mt-8 mb-8 text-3xl font-bold max-[580px]:text-lg max-sm:ml-20 ">
+    <div className=" flex flex-col justify-center items-center w-10/12  max-sm:w-[250px] max-sm:ml-1">
+      <div className="mt-8 w-full max-sm:ml-24">
+        <h1 className="text-center mt-8 mb-8 text-3xl font-bold max-[580px]:text-lg ">
           Parâmetros
         </h1>
       </div>
-      <div className=" max-sm:ml-14 w-9/12   max-sm:w-[300px]">
+      <div className=" max-sm:ml-24 w-9/12   max-sm:w-[300px]">
         <ButtonList
           buttonTexts={ButtonText}
           getBayIndex={(index) => {
@@ -47,29 +47,29 @@ const GraficPage = () => {
           <Image src={Logo} alt="Logo" width={250} height={250} />
         </div>
       ) : (
-        <div className="sm:w-10/12 max-sm:w-10/12 ">
+        <div className="sm:w-10/12 max-sm:w-9/12 max-sm:mr-20 ">
           <hr className=" max-sm:ml-14 ml-10 w-full max-sm:w-10/12 " />
-          <div className="m:flex sm:flex-row max-sm:flex-col">
-            {arryData ? (
-              <div className="flex sm:flex-row max-sm:flex-col  w-full ">
-                <div className="flex justify-center flex-col items-center max-sm:w-[360px] sm:w-3/4 ">
-                  <div className="flex justify-center items-center ">
-                    <p className="mt-8 text-base font-bold max-[580px]:text-lg text-center">
-                      {arryData.title}
-                    </p>
-                  </div>
-                  <GraficLineAnimedPages
-                    day={arryData.day}
-                    title={arryData.title}
-                    data={arryData.data}
-                  />
+
+          {arryData ? (
+            <div className="flex sm:flex-row max-sm:flex-col  w-full max-sm:w-[360px] ">
+              <div className="flex justify-center   flex-col items-center max-sm:w-[360px] sm:w-3/4 ">
+                <div className="flex justify-center items-center ">
+                  <p className="mt-8 text-base font-bold max-[580px]:text-lg text-center">
+                    {arryData.title}
+                  </p>
                 </div>
-                <div className="flex justify-center items-center  max-sm:w-full sm:w-2/4">
-                  <ListParamets data={arryData.data} day={arryData.day} />
-                </div>
+                <GraficLineAnimedPages
+                  day={arryData.day}
+                  title={arryData.title}
+                  data={arryData.data}
+                />
               </div>
-            ) : null}
-          </div>
+              <div className="flex justify-center items-center  max-sm:w-3/4 sm:w-2/4">
+                <ListParamets data={arryData.data} day={arryData.day} />
+              </div>
+            </div>
+          ) : null}
+
           <hr className=" max-sm:ml-14 ml-10 w-full max-sm:hidden" />
         </div>
       )}

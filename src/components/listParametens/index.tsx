@@ -13,7 +13,7 @@ const ListParamets: React.FC<Iprops> = ({ data, day }) => {
 
   return (
     <div className="w-full flex flex-col items-center">
-      <h1 className="text-center mt-8 mb-8 text-sm font-bold">
+      <h1 className="text-center mt-8 mb-8 text-sm font-bold max-sm:ml-24">
         Dados Diários:
       </h1>
       <Table

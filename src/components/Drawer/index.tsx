@@ -141,7 +141,7 @@ export default function Drawer({
 
   return (
     <div
-      className="conteiner max-sm:w-9/12 max-sm:mx-auto"
+      className="conteiner max-sm:w-11/12 max-sm:ml-0"
       style={{
         display: user === null ? "none" : "flex",
         overflow: "hidden",
@@ -453,9 +453,9 @@ export default function Drawer({
           </ListItem>
         </List>
       </ActionDrawer>
-      <div className=" w-full max-sm:w-2/4  max-sm:m-auto">
+      <div className=" container ">
         <DrawerHeader />
-        <div className=" container max-sm:mx-auto ">{children}</div>
+        {children}
       </div>
     </div>
   );
