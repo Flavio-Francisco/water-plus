@@ -203,8 +203,8 @@ const WaterParametersForm = () => {
                                 className="form-control mb-2"
                               >
                                 <option value="">Selecioner</option>
-                                <option value="Inodoro">Inodoro</option>
-                                <option value="Nodoro">Nodoro</option>
+                                <option value="Ino">Inodoro</option>
+                                <option value="Nodo">Nodoro</option>
                                 {/* Adicione outras opções conforme necessário */}
                               </Field>
                               <ErrorMessage
