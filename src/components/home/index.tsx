@@ -4,6 +4,7 @@ import HomeBody from "@/components/homeBody";
 import GraficPizzaProduction from "@/components/GraficPizzaProduction";
 import GraficPizzaRegection from "@/components/GraficPizzaRegection";
 
+
 function Home() {
   return (
     <div className="w-full  conteiner flex flex-col justify-center items-center  max-sm:w-7/12 max-sm:m-auto ">

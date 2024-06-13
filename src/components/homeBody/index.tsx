@@ -31,7 +31,7 @@ const HomeBody: React.FC = () => {
   const { getDoctor, refetchDoctor } = useDoctor();
   const { getOperator, refetchOperator } = useOperator();
 
-  const { data: electrogram } = useQuery({
+  useQuery({
     queryKey: ["Electrogram"],
     queryFn: () => {
       if (user) {
@@ -41,7 +41,6 @@ const HomeBody: React.FC = () => {
       }
     },
   });
-  console.log(electrogram);
 
   const { data: chemist, refetch: refetchchemist } = useQuery({
     queryKey: ["chemicalDB"],
@@ -136,10 +135,12 @@ const HomeBody: React.FC = () => {
     console.error("refetchChemist is not defined");
   }
 
-  const Abrandador = getObjects(dataFull, "Pressão de Entrada do Abrandador")!;
-  const Zeolica = getObjects(dataFull, "Pressão de Entrada Multimídia")!;
-  const Carvao = getObjects(dataFull, "Pressão de Entrada de Carvão")!;
+  const Abrandador = getObjects(dataFull, " Abrandador")!;
+  const Zeolica = getObjects(dataFull, "Multimídia")!;
+  const Carvao = getObjects(dataFull, " Saída de Carvão")!;
   const [selectData, setSelectData] = useState<Props>(Abrandador);
+  
+  
   const dataSelect = async (grafic: string) => {
     switch (grafic) {
       case "abrandador":

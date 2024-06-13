@@ -25,7 +25,6 @@ const GraficPage = () => {
       }
     };
     fetchData();
-    console.log(arryData?.day);
   }, [select, dataFull]);
 
   return (
@@ -44,7 +43,7 @@ const GraficPage = () => {
         />
       </div>
       {select === 100 ? (
-        <div className="flex justify-center items-center max-sm:ml-24 mt-5">
+        <div className="flex justify-center items-center sm:ml-72  max-sm:ml-24 mt-5">
           <Image src={Logo} alt="Logo" width={250} height={250} />
         </div>
       ) : (
