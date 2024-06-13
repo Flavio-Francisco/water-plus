@@ -8,7 +8,7 @@ interface Props {
 
 const ButtonList: React.FC<Props> = ({ buttonTexts, getBayIndex }) => {
   return (
-    <div className="sm:fixed sm:top-4 sm:left-16 sm:h-full sm:w-40 bg-gray-100 overflow-y-auto shadow-lg max-w-xs md:max-w-sm lg:max-w-md">
+    <div className="sm:fixed sm:top-4 sm:left-16 sm:h-full sm:w-60 bg-gray-100 overflow-y-auto shadow-lg max-w-xs md:max-w-sm lg:max-w-md">
       <div className="flex sm:flex-col max-sm:flex-row gap-2 p-2">
         {buttonTexts.map((text, index) => (
           <div
@@ -17,7 +17,7 @@ const ButtonList: React.FC<Props> = ({ buttonTexts, getBayIndex }) => {
             className="rounded mb-2 cursor-pointer"
             onClick={() => getBayIndex(index)}
           >
-            <button className="whitespace-nowrap text-xs p-2 w-full text-left">
+            <button className="whitespace-nowrap text-xs max-sm:text-base p-2 w-full text-left">
               {text}
             </button>
           </div>
