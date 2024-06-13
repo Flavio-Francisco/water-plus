@@ -13,8 +13,8 @@ import {
 
 interface UserData {
   user: UserModel | null;
-  getUser: (user: UserModel | null) => void;
-  signOut: () => void;
+  getUser: (user: UserModel | null) => UserModel | null;
+  signOutUser: () => void;
   clearCache: () => void;
   updateUser: (updatedUser: UserModel) => void;
 }
@@ -39,7 +39,7 @@ export const UserProvider: React.FC<UserContextType> = ({ children }) => {
     }
   }
 
-  function signOut() {
+  function signOutUser() {
     setUser(null);
     router.push("/");
     localStorage.setItem("userData", JSON.stringify(null));
@@ -48,6 +48,7 @@ export const UserProvider: React.FC<UserContextType> = ({ children }) => {
   function getUser(user: UserModel | null) {
     setUser(user);
     localStorage.setItem("userData", JSON.stringify(user));
+    return user || null;
   }
   function clearCache() {
     setUser(null);
@@ -67,7 +68,7 @@ export const UserProvider: React.FC<UserContextType> = ({ children }) => {
 
   return (
     <UserContext.Provider
-      value={{ getUser, user, signOut, updateUser, clearCache }}
+      value={{ getUser, user, signOutUser, updateUser, clearCache }}
     >
       {children}
     </UserContext.Provider>

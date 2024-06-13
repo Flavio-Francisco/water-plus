@@ -28,7 +28,7 @@ model apevisa {
   seedingInDepth   String?
   seedingOnSurface String?
   conductivity     String?
-  freeChlorine_    String?  @map("freeChlorine?")
+  freeChlorine     String?
   pH               String?
   potentiometry    String?
   system_id        Int?

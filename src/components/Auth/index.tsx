@@ -4,7 +4,6 @@ import Image from "next/image";
 import Logo from "../../app/logo-Transparente.png";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
-import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { getSystems } from "@/app/fecth/systems";
 import { Systems } from "@/utils/models/analysis";
@@ -12,9 +11,9 @@ import { auth } from "@/app/fecth/auth";
 import { useUserContext } from "@/context/userContext";
 import { useDataFull } from "@/context/userDataFull";
 import Loader from "../loader/page";
+import { signIn } from "next-auth/react";
 
 export default function Auth() {
-  const { push } = useRouter();
   const { getUser, clearCache } = useUserContext();
   const { clearCacheDataFull } = useDataFull();
   const [selectedValue, setSelectedValue] = useState<Systems | null>(null);
@@ -70,6 +69,7 @@ export default function Auth() {
       </div>
     );
   }
+
   const handleSubmit = async () => {
     setSubmitting(true);
 
@@ -84,7 +84,11 @@ export default function Auth() {
       });
       if (dados != null) {
         getUser(dados);
-        push("/Home");
+        signIn("credentials", {
+          ...dados,
+
+          callbackUrl: "/Home",
+        });
         setSubmitting(false);
         resetForm();
       } else {
@@ -92,7 +96,6 @@ export default function Auth() {
         setSubmitting(false);
         resetForm();
       }
-      console.log("valores do formulario", dados);
     }
   };
 

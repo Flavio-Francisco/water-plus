@@ -4,17 +4,20 @@ import Provider from "@/components/Providers";
 import { UserProvider } from "@/context/userContext";
 import { DataFullProvider } from "@/context/userDataFull";
 import { EventsProvider } from "@/context/eventContext";
+import { AuthProvider } from "@/components/Providers/nextProviser";
 
 export default function LogimPage() {
   return (
-    <Provider>
-      <DataFullProvider>
-        <UserProvider>
-          <EventsProvider>
-            <Auth />
-          </EventsProvider>
-        </UserProvider>
-      </DataFullProvider>
-    </Provider>
+    <AuthProvider>
+      <Provider>
+        <DataFullProvider>
+          <UserProvider>
+            <EventsProvider>
+              <Auth />
+            </EventsProvider>
+          </UserProvider>
+        </DataFullProvider>
+      </Provider>
+    </AuthProvider>
   );
 }

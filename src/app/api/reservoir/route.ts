@@ -17,7 +17,7 @@ export async function GET(req: NextRequest) {
         return NextResponse.json({data});
     } catch (error) {
         return NextResponse.json({
-            message: "erro ao registrar"
+            message: "erro ao Buscar Dados!!"
         },
         {
             status: 500

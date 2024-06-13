@@ -13,6 +13,7 @@ import { EventsProvider } from "@/context/eventContext";
 import { ChemistProvider } from "@/context/useChermist";
 import { DoctortProvider } from "@/context/useDoctor";
 import { OperatorProvider } from "@/context/useOperator";
+import { AuthProvider } from "@/components/Providers/nextProviser";
 
 const roboto = Roboto({
   weight: "400",
@@ -30,21 +31,23 @@ export default function RootLayout({
   return (
     <html lang="pt-br">
       <body className={roboto.className}>
-        <Provider>
-          <UserProvider>
-            <OperatorProvider>
-              <DoctortProvider>
-                <ChemistProvider>
-                  <DataFullProvider>
-                    <EventsProvider>
-                      <Drawer>{children}</Drawer>
-                    </EventsProvider>
-                  </DataFullProvider>
-                </ChemistProvider>
-              </DoctortProvider>
-            </OperatorProvider>
-          </UserProvider>
-        </Provider>
+        <AuthProvider>
+          <Provider>
+            <UserProvider>
+              <OperatorProvider>
+                <DoctortProvider>
+                  <ChemistProvider>
+                    <DataFullProvider>
+                      <EventsProvider>
+                        <Drawer>{children}</Drawer>
+                      </EventsProvider>
+                    </DataFullProvider>
+                  </ChemistProvider>
+                </DoctortProvider>
+              </OperatorProvider>
+            </UserProvider>
+          </Provider>
+        </AuthProvider>
       </body>
     </html>
   );

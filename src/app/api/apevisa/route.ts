@@ -3,6 +3,35 @@ import prisma from "../../../../lib/db";
 import { NextRequest, NextResponse } from "next/server";
 
 
+
+
+export async function GET(req: NextRequest) { 
+    const url = new URL(req.nextUrl.href);
+    const system_id = url.searchParams.get("id");
+try{
+    const data = await prisma.apevisa.findMany({
+        where: {
+            system_id:Number(system_id)
+        }
+ 
+    })
+    return NextResponse.json(data);
+} catch (error) {
+    return NextResponse.json({
+        message: "erro ao buscar dados!!"
+    },
+    {
+        status: 500
+    });
+}
+
+}
+
+
+
+
+
+
 export async function POST(req: NextRequest) {
     const url = new URL(req.nextUrl.href);
     const id = url.searchParams.get("id");
@@ -19,7 +48,7 @@ export async function POST(req: NextRequest) {
                 date: apevisa.date  ||"",
                 endotoxin: apevisa.endotoxin,
                 escherichaColi: apevisa.escherichaColi,
-                freeChlorine_: apevisa.freeChlorine,
+                freeChlorine: apevisa.freeChlorine,
                 heterotrophic: apevisa.heterotrophic,
                 name: apevisa.name,
                 pH: apevisa.pH,

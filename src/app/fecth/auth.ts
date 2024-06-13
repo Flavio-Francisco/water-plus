@@ -7,7 +7,7 @@ import axios from "axios";
 export async function auth(user:UserAuth) {
     
     
-        const data:UserModel= await axios.post("api/auth", {
+        const data:UserModel= await axios.post("api/auth1", {
             name: user.name,
             password: user.password,
             system_id: user.system_id

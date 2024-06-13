@@ -8,7 +8,6 @@ import Pdf from "@/components/pdf";
 import ReservoirClearning from "@/components/reportReservoirClearning";
 import ReportDiasafe from "@/components/reportDiasafe";
 import ReportApevisa from "@/components/reportApvisa";
-import { ArrayApavise } from "@/utils/models/Data";
 import { useDoctor } from "@/context/useDoctor";
 import { useChemist } from "@/context/useChermist";
 import { useOperator } from "@/context/useOperator";
@@ -28,6 +27,8 @@ import { ParametersDB } from "@/utils/models/WaterParametersModel";
 import { getSystemId } from "@/app/fecth/systems";
 import { Systems } from "@/utils/models/analysis";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
+import { getAnalysisApevisa } from "@/app/fecth/apevisa";
+import { ApvisaModel } from "@/utils/models/Apvisa";
 
 interface IProps {
   icon: React.ReactNode;
@@ -58,9 +59,15 @@ export default function DashboardTSX({ icon }: IProps) {
     queryKey: ["systemId"],
     queryFn: () => getSystemId(user?.system_id || 0),
   });
+
+  const { data: arrayApavise } = useQuery({
+    queryKey: ["GetapevisaAnalysi"],
+    queryFn: () => getAnalysisApevisa(user?.system_id || 0),
+  });
+  const apevisa: ApvisaModel[] = arrayApavise;
   const systems = (system as Systems) || [];
 
-  const { mutate, data: i } = useMutation({
+  const { mutate } = useMutation({
     mutationKey: ["resevatorirForm"],
     mutationFn: (date: string) => createReservoir(user?.system_id || 0, date),
   });
@@ -138,10 +145,9 @@ export default function DashboardTSX({ icon }: IProps) {
   };
   React.useEffect(() => {
     const date = formatDateResevatorir(new Date(value?.toString() || ""));
-    console.log(date);
+
     mutate(date);
     //console.log(formatDate(new Date());
-    console.log(i);
   }, [value]);
 
   return (
@@ -274,9 +280,9 @@ export default function DashboardTSX({ icon }: IProps) {
           fullWidth={true}
           open={openModal4}
           onClose={handlecloseModal4}
-          maxWidth="xl"
+          maxWidth="sm"
         >
-          <ReportApevisa reports={ArrayApavise} />
+          <ReportApevisa reports={apevisa} />
         </ModalTsx>
         <ModalTsx
           fullWidth={selectedMonth ? true : false}
