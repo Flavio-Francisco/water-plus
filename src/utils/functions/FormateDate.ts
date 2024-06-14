@@ -39,6 +39,14 @@ export function formatTable(date :Date): string {
 
   return `${day}`;
 }
+
+export function formatEletro(dataString: string): number {
+    
+  const partes = dataString.split('/');
+
+  const data = new Date(parseInt(partes[2]), parseInt(partes[1]) - 1, parseInt(partes[0]));
+  return data.getDate()+1;
+}
 export function formatMonth(date :Date): string {
     
   //const day = String(date.getUTCDate()).padStart(2, '0');

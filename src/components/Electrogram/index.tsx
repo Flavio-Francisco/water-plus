@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { Page, Text, View, Document, Image } from "@react-pdf/renderer";
 import { styles } from "./styles";
 import { ParametersDB } from "@/utils/models/WaterParametersModel";
-import { formatMonth, formatTable } from "@/utils/functions/FormateDate";
+import { formatEletro, formatMonth } from "@/utils/functions/FormateDate";
 
 interface Iprops {
   data: ParametersDB[];
@@ -36,6 +36,7 @@ const Electrogram: React.FC<Iprops> = ({ data, system }) => {
   const keys = Object.keys(data[0]).filter(
     (key) => key !== "date" && key !== "id" && key !== "system_id"
   );
+  console.log(dates);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const renderCellContent = (value: any): string => {
@@ -68,7 +69,7 @@ const Electrogram: React.FC<Iprops> = ({ data, system }) => {
               .sort((a, b) => new Date(a).getTime() - new Date(b).getTime())
               .map((date) => (
                 <View key={date} style={styles.tableCellHeader}>
-                  <Text>{formatTable(new Date(date))}</Text>
+                  <Text>{formatEletro(date)}</Text>
                 </View>
               ))}
           </View>
