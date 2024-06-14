@@ -6,6 +6,7 @@ import ListParametsProduction from "@/components/listParametensProduction";
 import { useDataFull } from "@/context/userDataFull";
 import CardProduction from "./CardPoduction";
 import CardModal from "./CardPoduction/CardModal";
+import { ordeData } from "@/utils/functions/ordeData";
 
 export interface WaterData {
   day: number[];
@@ -19,6 +20,8 @@ export interface WaterData {
 
 export default function Production() {
   const { production } = useDataFull();
+
+  const data = production != null ? ordeData(production) : production;
 
   return (
     <div className=" flex flex-col justify-center items-center mt-4 w-11/12  max-sm:w-[390px] max-sm:left-10 absolute">
@@ -44,20 +47,12 @@ export default function Production() {
 
       <Line />
 
-      <GraficProduction
-        data={production?.data}
-        title={""}
-        day={production?.day}
-      />
+      <GraficProduction data={data?.data} title={""} day={data?.day} />
 
       <Line />
 
       <div className="w-100">
-        <ListParametsProduction
-          data={production?.data}
-          title={""}
-          day={production?.day}
-        />
+        <ListParametsProduction data={data?.data} title={""} day={data?.day} />
       </div>
     </div>
   );

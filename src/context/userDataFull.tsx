@@ -52,12 +52,10 @@ export const DataFullProvider: React.FC<DataFullContextType> = ({
     }
   }
   async function getDataFull(data: Props[] | null) {
-
     if (data != null) {
       localStorage.setItem("DataFull", JSON.stringify(data));
       setDataFull(data);
     }
-
   }
   async function getProduction(data: WaterData | null) {
     if (data != null) {
