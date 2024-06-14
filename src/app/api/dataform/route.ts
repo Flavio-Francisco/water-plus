@@ -106,7 +106,7 @@ for (const item of data) {
             
                 // Itera sobre a matriz temporária ordenada e monta os dados correspondentes para o campo atual
                 for (const tempData of tempFieldDataArray) {
-                    day.push(tempData.date.getDate()+1);
+                    day.push(tempData.date.getDate());
                     fieldData.push(tempData.fieldData.shift() || 0); // Remove o primeiro elemento da matriz fieldData e adiciona ao fieldData do campo atual
                 }
             
