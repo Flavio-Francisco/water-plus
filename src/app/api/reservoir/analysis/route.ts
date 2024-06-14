@@ -30,7 +30,9 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
     const url = new URL(req.nextUrl.href);
     const id = url.searchParams.get("id");
-    const analysis:ReservoirAnalysisResults = await req.json();
+    const analysis: ReservoirAnalysisResults = await req.json();
+    console.log(analysis);
+    
     try {
         const data = await prisma.reservoir_analysis.create({
         
@@ -75,6 +77,7 @@ export async function POST(req: NextRequest) {
           }
 
         });
+console.log(data);
 
         return NextResponse.json(data);
     } catch (error) {
