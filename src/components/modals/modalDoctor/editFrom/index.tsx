@@ -42,70 +42,79 @@ const DoctorFormEdit: React.FC = () => {
 
   return (
     <Form noValidate onSubmit={handleSubmit}>
-      <Form.Group controlId="formName">
-        <Form.Label style={{ marginTop: 10, marginBottom: 2 }}>Nome</Form.Label>
-        <Form.Control
-          type="text"
-          name="name"
-          placeholder="Digite o nome do médico"
-          value={formData.name}
-          onChange={handleChange}
-        />
-      </Form.Group>
+      <div className="flex flex-col justify-center items-center">
+        <div className="flex  justify-center items-center  text-lg font-bold">
+          <h1>Dados do Médico</h1>
+        </div>
+        <Form.Group controlId="formName" className="w-10/12">
+          <Form.Label style={{ marginTop: 10, marginBottom: 2 }}>
+            Nome
+          </Form.Label>
+          <Form.Control
+            type="text"
+            name="name"
+            placeholder="Digite o nome do médico"
+            value={doctor?.name}
+            onChange={handleChange}
+          />
+        </Form.Group>
 
-      <Form.Group controlId="formCRM">
-        <Form.Label style={{ marginTop: 10, marginBottom: 2 }}>CRM</Form.Label>
-        <Form.Control
-          type="text"
-          name="CRM"
-          placeholder="Digite o CRM do médico"
-          value={formData.CRM}
-          onChange={handleChange}
-        />
-      </Form.Group>
+        <Form.Group controlId="formCRM" className="w-10/12">
+          <Form.Label style={{ marginTop: 10, marginBottom: 2 }}>
+            CRM
+          </Form.Label>
+          <Form.Control
+            type="text"
+            name="CRM"
+            placeholder="Digite o CRM do médico"
+            value={doctor?.CRM}
+            onChange={handleChange}
+          />
+        </Form.Group>
 
-      <Form.Group controlId="formGraduation">
-        <Form.Label style={{ marginTop: 10, marginBottom: 2 }}>
-          Graduação
-        </Form.Label>
-        <Form.Control
-          type="text"
-          name="graduation"
-          placeholder="Digite a graduação do médico"
-          value={formData.graduation}
-          onChange={handleChange}
-        />
-      </Form.Group>
+        <Form.Group controlId="formGraduation" className="w-10/12">
+          <Form.Label style={{ marginTop: 10, marginBottom: 2 }}>
+            Graduação
+          </Form.Label>
+          <Form.Control
+            type="text"
+            name="graduation"
+            placeholder="Digite a graduação do médico"
+            value={doctor?.graduation}
+            onChange={handleChange}
+          />
+        </Form.Group>
 
-      <Form.Group controlId="formPostGraduation">
-        <Form.Label style={{ marginTop: 10, marginBottom: 2 }}>
-          Pós-Graduação
-        </Form.Label>
-        <Form.Control
-          type="text"
-          name="postGraduation"
-          placeholder="Digite a pós-graduação do médico"
-          value={formData.postGraduation}
-          onChange={handleChange}
-        />
-      </Form.Group>
+        <Form.Group controlId="formPostGraduation" className="w-10/12">
+          <Form.Label style={{ marginTop: 10, marginBottom: 2 }}>
+            Pós-Graduação
+          </Form.Label>
+          <Form.Control
+            type="text"
+            name="postGraduation"
+            placeholder="Digite a pós-graduação do médico"
+            value={doctor?.postGraduation}
+            onChange={handleChange}
+          />
+        </Form.Group>
 
-      <Form.Group controlId="formSecondPostGraduation">
-        <Form.Label style={{ marginTop: 10, marginBottom: 2 }}>
-          Segunda Pós-Graduação
-        </Form.Label>
-        <Form.Control
-          type="text"
-          name="postGraduation2"
-          placeholder="Digite a segunda pós-graduação do médico"
-          value={formData.postGraduation2}
-          onChange={handleChange}
-        />
-      </Form.Group>
+        <Form.Group controlId="formSecondPostGraduation" className="w-10/12">
+          <Form.Label style={{ marginTop: 10, marginBottom: 2 }}>
+            Segunda Pós-Graduação
+          </Form.Label>
+          <Form.Control
+            type="text"
+            name="postGraduation2"
+            placeholder="Digite a segunda pós-graduação do médico"
+            value={doctor?.postGraduation2}
+            onChange={handleChange}
+          />
+        </Form.Group>
 
-      <Button variant="contained" type="submit" style={{ marginTop: 20 }}>
-        Enviar
-      </Button>
+        <Button variant="contained" type="submit" style={{ marginTop: 20 }}>
+          Salvar
+        </Button>
+      </div>
     </Form>
   );
 };

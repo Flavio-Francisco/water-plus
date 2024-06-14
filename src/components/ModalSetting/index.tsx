@@ -21,6 +21,8 @@ export default function ModalSetting({ icon }: IProps) {
   const { Chemist, refetch } = useChemist();
   const { user } = useUserContext();
   const { operator, refetchOpetor } = useOperator();
+  console.log(operator);
+
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const [openModal1, setOpenModal1] = React.useState(false);
@@ -125,22 +127,20 @@ export default function ModalSetting({ icon }: IProps) {
           onClose={handlecloseModal1}
           maxWidth="sm"
         >
-          <div className="w-full h-screen max-sm:h-4/6">
-            <ChemistFormEdit
-              data={
-                Chemist || {
-                  CRM: "",
-                  graduation: "",
-                  id: 0,
-                  name: "",
-                  postGraduation: "",
-                  postGraduation2: "",
-                  system_id: 0,
-                }
+          <ChemistFormEdit
+            data={
+              Chemist || {
+                CRM: "",
+                graduation: "",
+                id: 0,
+                name: "",
+                postGraduation: "",
+                postGraduation2: "",
+                system_id: 0,
               }
-              refech={refetch}
-            />
-          </div>
+            }
+            refech={refetch}
+          />
         </ModalTsx>
         <ModalTsx
           fullWidth={true}

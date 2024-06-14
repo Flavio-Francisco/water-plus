@@ -7,7 +7,7 @@ import axios from "axios";
 export async function getUserDB(system_id:number) {
     
     
-    const data:UserModel[]= await axios.get(`api/auth/user?id=${system_id}` ).then(res => {
+    const data:UserModel[]= await axios.get(`api/auth1/user?id=${system_id}` ).then(res => {
         return res.data
     })
         .catch(error => {
@@ -22,7 +22,7 @@ console.log("rota de users",data);
 
 export async function updateUserForm(id: number, user: UserModel) {
     try {
-        const data = await axios.patch(`api/auth/user?id=${id}`, user);
+        const data = await axios.patch(`api/auth1/user?id=${id}`, user);
         console.log("retorno da rota de update", data);
         return data.data;
     } catch (error) {
@@ -34,7 +34,7 @@ export async function updateUserForm(id: number, user: UserModel) {
 
 export async function createUserForm(system_id: number, user: UserModel) {
     try {
-        const data = await axios.post(`api/auth/user?id=${system_id}`, user);
+        const data = await axios.post(`api/auth1/user?id=${system_id}`, user);
         console.log("retorno da rota de create", data);
         return data.data;
     } catch (error) {

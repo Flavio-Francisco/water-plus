@@ -1,6 +1,6 @@
 'use client'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Button, Card, Col, Modal, Row } from "react-bootstrap";
+import { Card, Col, Modal, Row } from "react-bootstrap";
 import React, { useState } from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import AddchartIcon from "@mui/icons-material/Addchart";
@@ -11,6 +11,7 @@ import { createParamets } from "@/app/fecth/dataform";
 import { useUserContext } from "@/context/userContext";
 
 import ModalForm from "./ModalForm";
+import { Button } from "@mui/material";
 
 const WaterParametersForm = () => {
   const [showModalParm, setShowModalParm] = useState(false);
@@ -858,14 +859,15 @@ const WaterParametersForm = () => {
                   </div>
                 </Modal.Body>
                 <Modal.Footer>
-                  <Button
-                    className="bg-[#1976d2]"
-                    variant="primary"
-                    type="submit"
-                    disabled={isSubmitting}
-                  >
-                    {isSubmitting ? " Salvando..." : " Salvar"}
-                  </Button>
+                  <div className="flex justify-center items-center  w-full mt-5">
+                    <Button
+                      variant="contained"
+                      type="submit"
+                      disabled={isSubmitting}
+                    >
+                      {isSubmitting ? " Salvando..." : " Salvar"}
+                    </Button>
+                  </div>
                 </Modal.Footer>
               </Form>
             </>

@@ -8,6 +8,8 @@ import { getUserDB } from "@/app/fecth/user";
 import { useUserContext } from "@/context/userContext";
 import { UserModel } from "@/utils/models/userModel";
 import { useQuery } from "@tanstack/react-query";
+import Loader from "@/components/loader/page";
+
 interface Iprops {
   // refech: () => void;
   onUpdate: (success: boolean) => void;
@@ -22,18 +24,29 @@ export default function ModalLabUser({ onUpdate }: Iprops) {
 
   return (
     <Modal.Body>
-      <LabTabs
-        ComponetNew={
+      {!data ? (
+        <div className=" flex flex-col justify-around items-center gap-4 h-72 text-sky-600">
           <div>
-            <UserList data={data} onUpdate={onUpdate} refech={refetch} />
+            <p className="text-2xl font-bold">Carregando...</p>
           </div>
-        }
-        ComponetEdit={
           <div>
-            <OperatorFormEdit />
+            <Loader />
           </div>
-        }
-      />
+        </div>
+      ) : (
+        <LabTabs
+          ComponetNew={
+            <div>
+              <UserList data={data} onUpdate={onUpdate} refech={refetch} />
+            </div>
+          }
+          ComponetEdit={
+            <div>
+              <OperatorFormEdit />
+            </div>
+          }
+        />
+      )}
     </Modal.Body>
   );
 }

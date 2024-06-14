@@ -54,7 +54,7 @@ export default function Auth() {
       </div>
     );
   }
-  if (isLoading) {
+  if (isLoading && systems.length < 1) {
     return (
       <div
         className="flex justify-center items-center h-screen"
