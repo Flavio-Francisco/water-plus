@@ -11,8 +11,6 @@ import ListAnalys from "../listAnalys";
 
 export default function AnalysList() {
   const { analys } = useDataFull();
-  console.log(analys);
-  
   const [selectedAnalys, setSelectedAnalys] =
     React.useState<UnifiedData | null>(null);
 

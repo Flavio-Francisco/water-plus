@@ -11,7 +11,7 @@ import {
   Row,
   Col,
 } from "react-bootstrap";
-import { Button, Dialog, DialogTitle } from "@mui/material";
+import { Button } from "@mui/material";
 import { useUserContext } from "@/context/userContext";
 import { useMutation } from "@tanstack/react-query";
 import { createAnalisysEta } from "@/app/fecth/analys";
@@ -22,29 +22,12 @@ interface Iprops {
 const options = [
   { value: "", label: "Selecione um ponto " },
   { value: "Pré-Tratamento", label: "Pré-Tratamento" },
-  { value: "Pós Multimeios", label: "Pós Multimeios" },
-  { value: "Pós Abrandador", label: "Pós Abrandador" },
   { value: "Pós Carvão", label: "Pós Carvão" },
   { value: "1º Passo", label: "1º Passo" },
   { value: "2º Passo", label: "2º Passo" },
   { value: "Entrata do Looping", label: "Entrata do Looping" },
-  { value: "E. Filtro Endotoxina", label: "E. Filtro Endotoxina" },
-  { value: "S. Filtro Endotoxina", label: "S. Filtro Endotoxina" },
+  { value: "Saída do Looping", label: "Saída do Looping" },
   { value: "Retorno do Looping", label: "Retorno do Looping" },
-  { value: "Máquina HD 1", label: "Máquina HD 1" },
-  { value: "Máquina HD 2", label: "Máquina HD 2" },
-  { value: "Máquina HD 3", label: "Máquina HD 3" },
-  { value: "Máquina HD 4", label: "Máquina HD 4" },
-  { value: "Máquina HD 5", label: "Máquina HD 5" },
-  { value: "Máquina HD 6", label: "Máquina HD 6" },
-  { value: "Máquina HD 7", label: "Máquina HD 7" },
-  { value: "Máquina HD 8", label: "Máquina HD 8" },
-  { value: "Máquina HD 9", label: "Máquina HD 9" },
-  { value: "Máquina HD 10", label: "Máquina HD 10" },
-  { value: "Máquina HD 11", label: "Máquina HD 11" },
-  { value: "Máquina HD 12", label: "Máquina HD 12" },
-  { value: "Máquina HD 13", label: "Máquina HD 13" },
-  { value: "Máquina HD 14", label: "Máquina HD 14" },
 ];
 export const FormInitialValues: AnalysisResult = {
   date: "",
@@ -57,32 +40,19 @@ export const FormInitialValues: AnalysisResult = {
 
 const ResultForm = ({ onSucess }: Iprops) => {
   const { user } = useUserContext();
-  const [open, setOpen] = React.useState(false);
   const { mutate } = useMutation({
     mutationKey: ["AnalyseForm"],
     mutationFn: (values: AnalysisResult) =>
       createAnalisysEta(user?.system_id || 0, values),
     onSuccess: () => {
+      onSucess(true);
       alert("Dados Salvos com Sucesso!!!");
-      handleClickOpen();
     },
     onError: () => {
       onSucess(true);
       alert("ERRO ao Salvar  Dados !!!");
     },
   });
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
-  const handleCloseButtom = (parms: boolean) => {
-    setOpen(false);
-    if (parms === true) {
-      onSucess(true);
-    }
-  };
 
   return (
     <div className="flex justify-center items-center">
@@ -116,10 +86,7 @@ const ResultForm = ({ onSucess }: Iprops) => {
                 name="date"
                 isInvalid={!!errors?.date && touched?.date}
               />
-              <ErrorMessage
-                className="text-red-600"
-                name="SampleDescription.samplingDate"
-              />
+              <ErrorMessage name="SampleDescription.samplingDate" />
             </div>
 
             <Col xs={12} md={10}>
@@ -144,7 +111,7 @@ const ResultForm = ({ onSucess }: Iprops) => {
                 <ErrorMessage
                   name="sampleName"
                   component="div"
-                  className="text-red-600"
+                  className="invalid-feedback"
                 />
               </FormGroup>
             </Col>
@@ -159,7 +126,7 @@ const ResultForm = ({ onSucess }: Iprops) => {
                   name="eColiPresence"
                   isInvalid={!!errors?.eColiPresence && touched?.eColiPresence}
                 />
-                <ErrorMessage name="eColiPresence" className="text-red-600" />
+                <ErrorMessage name="eColiPresence" />
               </FormGroup>
             </Col>
             <Col xs={12} md={10} className="mb-3 mb-sm-0">
@@ -177,10 +144,7 @@ const ResultForm = ({ onSucess }: Iprops) => {
                     touched?.totalColiformsPresence
                   }
                 />
-                <ErrorMessage
-                  name="totalColiformsPresence"
-                  className="text-red-600"
-                />
+                <ErrorMessage name="totalColiformsPresence" />
               </FormGroup>
             </Col>
             <Col xs={12} md={10}>
@@ -198,16 +162,13 @@ const ResultForm = ({ onSucess }: Iprops) => {
                     touched?.heterotrophicBacteriaCount
                   }
                 />
-                <ErrorMessage
-                  name="heterotrophicBacteriaCount"
-                  className="text-red-600"
-                />
+                <ErrorMessage name="heterotrophicBacteriaCount" />
               </FormGroup>
             </Col>
             <Col xs={12} md={10}>
               <FormGroup>
                 <FormLabel htmlFor="heterotrophicBacteriaCount">
-                  Endotoxinas
+                  Heterotróficas
                 </FormLabel>
                 <Field
                   id="heterotrophicBacteriaCount"
@@ -216,7 +177,7 @@ const ResultForm = ({ onSucess }: Iprops) => {
                   name="endotoxins"
                   isInvalid={!!errors?.endotoxins && touched?.endotoxins}
                 />
-                <ErrorMessage name="endotoxins" className="text-red-600" />
+                <ErrorMessage name="endotoxins" />
               </FormGroup>
             </Col>
 
@@ -230,25 +191,6 @@ const ResultForm = ({ onSucess }: Iprops) => {
           </Form>
         )}
       </Formik>
-      <Dialog onClose={handleClose} open={open}>
-        <DialogTitle>Deseja Adicionar Mais Dados?</DialogTitle>
-        <div className="flex flex-row justify-around mb-4">
-          <Button
-            variant="contained"
-            color="success"
-            onClick={() => handleCloseButtom(false)}
-          >
-            Sim
-          </Button>
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={() => handleCloseButtom(true)}
-          >
-            Não
-          </Button>
-        </div>
-      </Dialog>
     </div>
   );
 };

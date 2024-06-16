@@ -27,8 +27,6 @@ interface DataFull {
   getDataFull: (data: Props[] | null) => void;
   getProduction: (data: WaterData | null) => void;
   getAnalys: (data: UnifiedData[] | null) => void;
-  setRefretch: (refretch: () => void) => void;
-  refretch: () => void;
 }
 
 interface DataFullContextType {
@@ -43,7 +41,6 @@ export const DataFullProvider: React.FC<DataFullContextType> = ({
   children,
 }) => {
   const [production, setProduction] = useState<WaterData | null>(null);
-  const [refretch, setRefretchDataFull] = useState<() => void>(() => {});
   const [dataFull, setDataFull] = useState<Props[] | null>(null);
   const [analys, setAnalys] = useState<UnifiedData[] | null>(null);
   const { user } = useUserContext();
@@ -111,9 +108,7 @@ export const DataFullProvider: React.FC<DataFullContextType> = ({
     setDataFull(null);
     localStorage.setItem("DataFull", JSON.stringify(null));
   }
-  function setRefretch(refretch: () => void) {
-    setRefretchDataFull(refretch);
-  }
+
   useEffect(() => {
     restoreDataFullFromCache();
     restoreProductionFromCache();
@@ -129,8 +124,6 @@ export const DataFullProvider: React.FC<DataFullContextType> = ({
         getDataFull,
         getProduction,
         getAnalys,
-        setRefretch,
-        refretch,
         production,
         analys,
       }}

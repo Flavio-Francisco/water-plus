@@ -26,7 +26,7 @@ import { getData } from "@/app/fecth/data";
 const HomeBody: React.FC = () => {
   const { user } = useUserContext();
   const { getEvents } = useEventInput();
-  const { getDataFull, getProduction, getAnalys, setRefretch } = useDataFull();
+  const { getDataFull, getProduction, getAnalys } = useDataFull();
   const { getChemist, refetchChemist } = useChemist();
   const { getDoctor, refetchDoctor } = useDoctor();
   const { getOperator, refetchOperator } = useOperator();
@@ -99,7 +99,7 @@ const HomeBody: React.FC = () => {
     },
   });
 
-  const { data: dataFull, refetch } = useQuery({
+  const { data: dataFull } = useQuery({
     queryKey: ["dataFull"],
     queryFn: () => GetDataFull(user?.system_id || null),
   });
@@ -119,7 +119,6 @@ const HomeBody: React.FC = () => {
   getDoctor(doctor);
   getAnalys(analys);
   getEvents(events);
-  setRefretch(refetch);
   getOperator(operator);
   getDataFull(dataFull);
   getProduction(production);
