@@ -2,8 +2,7 @@
 import axios from "axios";
 import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { config } from 'dotenv';
-config();
+
 
 
 
