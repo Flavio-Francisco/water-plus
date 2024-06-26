@@ -31,8 +31,11 @@ export default function Auth() {
     queryKey: ["systems"],
     queryFn: () => getSystems(),
   });
-
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const config: any = data || [];
   const systems = (data as Systems[]) || [];
+  console.log("status", config.status);
+  console.log("systems", systems);
   useEffect(() => {
     if (isLoading === true) {
       resetForm();
@@ -54,7 +57,7 @@ export default function Auth() {
       </div>
     );
   }
-  if (isLoading && systems.length < 1) {
+  if (isLoading && systems.length === 0) {
     return (
       <div
         className="flex justify-center items-center h-screen"
@@ -83,6 +86,8 @@ export default function Auth() {
         system_id: selectedValue?.id || 0,
       });
       if (dados != null) {
+        console.log("dados do usuario", dados);
+
         getUser(dados);
         signIn("credentials", {
           ...dados,
