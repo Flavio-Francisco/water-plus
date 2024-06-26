@@ -79,17 +79,9 @@ const WaterParametersForm = () => {
       setShowModalParm(false);
     },
     onError() {
-      alert("Esse formulario deve ser preenchido na tela inicial!!!");
+      alert("Erro em Salvar dadosl!!!");
     },
   });
-
-  const handleSubmit = (values: WaterTreatmentParameters) => {
-    if (values) {
-      mutate({ ...values });
-    }
-
-    console.log("valor formulario", values);
-  };
 
   return (
     <div className="">
@@ -111,7 +103,18 @@ const WaterParametersForm = () => {
         <Formik
           initialValues={initialValues}
           validationSchema={waterTreatmentParametersSchema}
-          onSubmit={handleSubmit}
+          onSubmit={(
+            values: WaterTreatmentParameters,
+            { setSubmitting, resetForm }
+          ) => {
+            setSubmitting(true);
+            if (values) {
+              mutate({ ...values });
+            }
+            setSubmitting(false);
+            resetForm();
+            console.log("valor formulario", values);
+          }}
         >
           {({ isSubmitting }) => (
             <>
@@ -348,7 +351,7 @@ const WaterParametersForm = () => {
                           <Col>
                             <div className="mb-2">
                               <p className="block text-sm font-medium text-gray-700">
-                                Pressão de Entrada do Carvão{" "}
+                                Pressão de E. do Carvão{" "}
                               </p>
                               <Field
                                 type="number"
@@ -491,7 +494,7 @@ const WaterParametersForm = () => {
                           <Col>
                             <div className="mb-2">
                               <p className="block text-sm font-medium text-gray-700">
-                                Pressão de Entrada da Membrana
+                                Pressão de E. da Membrana
                               </p>
                               <Field
                                 type="number"
@@ -645,7 +648,7 @@ const WaterParametersForm = () => {
                           <Col>
                             <div className="mb-2">
                               <p className="block text-sm font-medium text-gray-700">
-                                Pressão de Entrada da Membrana
+                                Pressão de E. da Membrana
                               </p>
                               <Field
                                 type="number"
