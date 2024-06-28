@@ -111,6 +111,7 @@ export default function Calendar({ events: initialEvents }: CalendarProps) {
 
         setEvents((prevEvents) => [...prevEvents, newEventObj]);
         setNewEvent({ title: "", description: "", id: 0, status: "pending" });
+        alert("novo evento adicionado!!");
         setDialogOpen(false);
         if (calendarRef.current) {
           const calendarApi = calendarRef.current.getApi();

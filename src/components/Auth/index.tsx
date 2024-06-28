@@ -35,7 +35,7 @@ export default function Auth() {
   const config: any = data || [];
   const systems = (data as Systems[]) || [];
   console.log("status", config.status);
-  console.log("systems", systems);
+  console.log("systems");
   useEffect(() => {
     if (isLoading === true) {
       resetForm();
@@ -57,7 +57,7 @@ export default function Auth() {
       </div>
     );
   }
-  if (isLoading && systems.length === 0) {
+  if (isLoading && systems.length === 0 && config.status === 500) {
     return (
       <div
         className="flex justify-center items-center h-screen"

@@ -3,19 +3,24 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import React, { useState } from "react";
 import { Modal } from "react-bootstrap";
 import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
-import { useEventInput } from "@/context/eventContext";
+//import { useEventInput } from "@/context/eventContext";
 import Calendar from "..";
 import { Dialog } from "@mui/material";
+import { useQueryClient } from "@tanstack/react-query";
+import { Event } from "..";
 
 function CalendarModal() {
   const [show, setShow] = useState(false);
   const [isActive, setActive] = useState(false);
-  const { events } = useEventInput();
+ // const { events } = useEventInput();
   const handleClose = () => {
     setShow(false);
     setActive(false);
   };
-
+  const queryClient = useQueryClient();
+  const events: Event[] | undefined = queryClient.getQueryData(["events"]);
+ 
+  
   const handleShow = () => setShow(true);
 
   const active = () => setActive(!isActive);
