@@ -30,7 +30,7 @@ const GraficPage = () => {
   return (
     <div className=" flex flex-col justify-center items-center w-10/12  max-sm:w-[250px] max-sm:ml-1">
       <div className="mt-8 w-full sm:ml-72 max-sm:ml-24">
-        <h1 className="text-center  mt-8 mb-8 text-3xl font-bold max-[580px]:text-lg ">
+        <h1 className="text-center  mt-6 mb-8 text-3xl font-bold max-[580px]:text-lg ">
           Parâmetros
         </h1>
       </div>
