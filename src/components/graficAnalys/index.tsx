@@ -2,6 +2,7 @@
 
 import React, { useEffect } from "react";
 import { LineChart } from "@mui/x-charts/LineChart";
+import { formatDateGrafic } from "@/utils/functions/FormateDate";
 
 interface UnifiedData {
   samplingDate: string[];
@@ -13,7 +14,10 @@ interface UnifiedData {
   system_id: number;
 }
 const GraficAnalys = (data: UnifiedData) => {
-  useEffect(() => {}, [data]);
+  useEffect(() => {
+    console.log(formatDateGrafic(new Date(data.samplingDate[0])));
+    console.log(data.samplingDate[0]);
+  }, [data]);
   const customize = {
     legend: { hidden: true },
     stackingOrder: "descending",
@@ -37,7 +41,8 @@ const GraficAnalys = (data: UnifiedData) => {
             data: data.samplingDate,
 
             scaleType: "point",
-            valueFormatter: (samplingDate) => samplingDate.toString(),
+            valueFormatter: (samplingDate) =>
+              formatDateGrafic(new Date(samplingDate.toString())),
           },
         ]}
         series={[

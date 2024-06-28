@@ -47,12 +47,12 @@ const GraficPage = () => {
           <Image src={Logo} alt="Logo" width={250} height={250} />
         </div>
       ) : (
-        <div className="sm:w-full sm:ml-72 max-sm:w-9/12 max-sm:mr-20 ">
+        <div className="sm:w-full sm:ml-72 max-sm:w-9/12 max-sm:mr-24 ">
           <hr className=" max-sm:ml-14 sm:ml-24 w-full max-sm:w-10/12 " />
 
           {arryData ? (
-            <div className="flex sm:flex-row max-sm:flex-col  sm:ml-10 w-full max-sm:w-[360px] ">
-              <div className="flex justify-center   flex-col items-center max-sm:w-[360px] sm:w-full ">
+            <div className="flex sm:flex-row max-sm:flex-col  sm:ml-10 w-full max-sm:w-[400px] ">
+              <div className="flex justify-center   flex-col items-center max-sm:w-[400px] sm:w-full ">
                 <div className="flex justify-center items-center ">
                   <p className="mt-8 text-base font-bold max-[580px]:text-lg text-center">
                     {arryData.title}
