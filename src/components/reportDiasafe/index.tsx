@@ -18,7 +18,7 @@ const ReportDiasafe = ({ data }: Iprops) => {
   const date = new Date();
 
   return (
-    <Document>
+    <Document title="Relatorio de Troca de Diasafe">
       <Page size="A4" style={styles.body}>
         <View style={styles.header}>
           <Text style={styles.date}> Caruaru, {date.toLocaleDateString()}</Text>

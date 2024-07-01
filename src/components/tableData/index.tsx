@@ -1,6 +1,8 @@
 import React from "@react-pdf/renderer";
 import { FC } from "react";
 import { Machines } from "../reportDiasafe";
+import { formatDate } from "@/utils/functions/FormateDate";
+
 const { View, Text, StyleSheet } = React;
 
 const styles = StyleSheet.create({
@@ -11,6 +13,7 @@ const styles = StyleSheet.create({
     padding: 5,
     width: "50%",
     alignItems: "center",
+    borderCollapse: "collapse",
   },
   headerCell: { backgroundColor: "#EEE" },
   text: { fontSize: 10, textAlig: "center" },
@@ -40,7 +43,7 @@ const TableData: FC<IProps> = ({ data }) => {
       {data.map((item, index) => (
         <View style={styles.row} key={index}>
           <View style={styles.cell}>
-            <Text style={styles.text}>{item.date}</Text>
+            <Text style={styles.text}>{formatDate(new Date(item.date))}</Text>
           </View>
           <View style={styles.cell}>
             <Text style={styles.text}>{item.machine}</Text>

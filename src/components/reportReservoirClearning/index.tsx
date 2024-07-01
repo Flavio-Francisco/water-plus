@@ -15,7 +15,7 @@ const ReservoirClearning = ({ Chemist, lastCleaning }: IProps) => {
   const date = new Date();
   const dateCleaing = formatDate(new Date(lastCleaning));
   return (
-    <Document>
+    <Document title=" LIMPEZA E DESINFECÇÃO DE RESERVATÓRIO HEMODIALISE TERREO">
       <Page size="A4" style={styles.body}>
         <View style={styles.header}>
           <Text style={styles.date}> Caruaru, {date.toLocaleDateString()}</Text>

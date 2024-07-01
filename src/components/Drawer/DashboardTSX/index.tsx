@@ -74,33 +74,75 @@ export default function DashboardTSX({ icon }: IProps) {
   const date: DesinfectionModel | undefined = queryClient.getQueryData([
     "desinfection",
   ]);
-
   const electrogram: ParametersDB[] =
     queryClient.getQueryData(["Electrogram"]) || [];
-  const uniqueMonths = Array.from(
-    new Set(
-      electrogram.map((item) => {
-        if (!item.date) return "";
-        const itemDate = new Date(item.date);
-        const month = itemDate.getMonth() + 2; // getMonth() retorna 0-11
-        const year = itemDate.getFullYear();
-        return `${year}-${month.toString().padStart(2, "0")}`;
-      })
-    )
-  ).filter((item) => item !== "");
 
-  // Ordenar os meses
-  uniqueMonths.sort();
-  const filteredData = electrogram.filter((item) => {
-    if (!item.date) return false;
-    const itemDate = new Date(item.date);
-    const month = itemDate.getMonth() + 2; // getMonth() retorna 0-11
-    const year = itemDate.getFullYear();
-    const [selectedYear, selectedMonthNumber] = selectedMonth
-      .split("-")
-      .map(Number);
-    return year === selectedYear && month === selectedMonthNumber;
-  });
+  function getDataByMonth(data: ParametersDB[], month: string): ParametersDB[] {
+    console.log(data);
+
+    const monthNames = [
+      "Janeiro",
+      "Fevereiro",
+      "Março",
+      "Abril",
+      "Maio",
+      "Junho",
+      "Julho",
+      "Agosto",
+      "Setembro",
+      "Outubro",
+      "Novembro",
+      "Dezembro",
+    ];
+
+    return data.filter((record) => {
+      if (record.date) {
+        const datei = new Date(record.date);
+        const monthName = monthNames[datei.getUTCMonth()];
+        const year = datei.getFullYear();
+        const monthYear = `${monthName} ${year}`;
+        console.log(monthYear);
+        console.log(month);
+
+        return monthYear === month;
+      }
+    });
+  }
+
+  function getMonthYearNames(data: ParametersDB[]): string[] {
+    const monthNames = [
+      "Janeiro",
+      "Fevereiro",
+      "Março",
+      "Abril",
+      "Maio",
+      "Junho",
+      "Julho",
+      "Agosto",
+      "Setembro",
+      "Outubro",
+      "Novembro",
+      "Dezembro",
+    ];
+    const monthYearMap = new Map<string, boolean>();
+
+    data.map((record) => {
+      if (record.date) {
+        const datei = new Date(record.date);
+
+        const monthName = monthNames[datei.getUTCMonth()];
+
+        const year = datei.getFullYear();
+        const monthYear = `${monthName} ${year}`;
+
+        monthYearMap.set(monthYear, true);
+      }
+    });
+
+    return Array.from(monthYearMap.keys());
+  }
+
+  const uniqueMonths = getMonthYearNames(electrogram);
 
   const handleChange = (event: SelectChangeEvent) => {
     setSelectedMonth(event.target.value as string);
@@ -314,7 +356,10 @@ export default function DashboardTSX({ icon }: IProps) {
           {selectedMonth && (
             <div className="w-full h-screen">
               <PDFViewer className="w-full h-full">
-                <Electrogram data={filteredData} system={systems.name || ""} />
+                <Electrogram
+                  data={getDataByMonth(electrogram, selectedMonth)}
+                  system={systems.name || ""}
+                />
               </PDFViewer>
             </div>
           )}

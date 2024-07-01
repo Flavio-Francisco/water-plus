@@ -1,9 +1,13 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Page, Text, View, Document, Image } from "@react-pdf/renderer";
 import { styles } from "./styles";
 import { ParametersDB } from "@/utils/models/WaterParametersModel";
-import { formatEletro, formatMonth } from "@/utils/functions/FormateDate";
+import {
+  formatDay,
+  formatMonth,
+  organizeData,
+} from "@/utils/functions/FormateDate";
 
 interface Iprops {
   data: ParametersDB[];
@@ -11,14 +15,11 @@ interface Iprops {
 }
 
 const Electrogram: React.FC<Iprops> = ({ data, system }) => {
+  const [datas, setDatas] = useState(organizeData(data));
   useEffect(() => {
-    console.log("PDF eletrograma", data);
-    console.log("PDF system", system);
+    setDatas(organizeData(data));
   }, [data]);
 
-  // Mapa de tradução das chaves para nomes em português
-
-  // Verify that data is not empty
   if (data.length === 0) {
     return (
       <Document>
@@ -32,11 +33,10 @@ const Electrogram: React.FC<Iprops> = ({ data, system }) => {
   }
 
   // Extract dates and keys
-  const dates = data.map((entry) => new Date(entry.date!).toLocaleDateString());
-  const keys = Object.keys(data[0]).filter(
+
+  const keys = Object.keys(datas[0]).filter(
     (key) => key !== "date" && key !== "id" && key !== "system_id"
   );
-  console.log(dates);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const renderCellContent = (value: any): string => {
@@ -47,7 +47,9 @@ const Electrogram: React.FC<Iprops> = ({ data, system }) => {
   };
 
   return (
-    <Document>
+    <Document
+      title={`Parâmetros ETA ${formatMonth(new Date(data[0].date || ""))}`}
+    >
       <Page size="A4" orientation="landscape" style={styles.body}>
         <View style={styles.header}>
           <Image
@@ -65,13 +67,11 @@ const Electrogram: React.FC<Iprops> = ({ data, system }) => {
             <View style={styles.tableCellHeaderParams}>
               <Text>Parâmetros</Text>
             </View>
-            {dates
-              .sort((a, b) => new Date(a).getTime() - new Date(b).getTime())
-              .map((date) => (
-                <View key={date} style={styles.tableCellHeader}>
-                  <Text>{formatEletro(date)}</Text>
-                </View>
-              ))}
+            {datas.map((date) => (
+              <View key={date.id} style={styles.tableCellHeader}>
+                <Text>{formatDay(new Date(date.date || ""))}</Text>
+              </View>
+            ))}
           </View>
 
           {/* Data Rows */}

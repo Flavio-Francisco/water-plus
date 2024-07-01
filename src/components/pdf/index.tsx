@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { Page, Text, View, Document, Image } from "@react-pdf/renderer";
-import { returnMinthly, fackreport } from "@/utils/models/Data";
+import {  fackreport, returnMonth } from "@/utils/models/Data";
 import { ReportModel } from "../../utils/models/report";
 import { styles } from "./styles";
 import { CredentialsChemistdb } from "../modals/modalChemist/editForm";
@@ -21,14 +21,17 @@ const Pdf = ({ Chemist, doctor, operator, data }: Iprops) => {
   const [report, setReport] = useState<ReportModel>();
 
   const date = new Date();
-  const minthly = returnMinthly(date);
 
+  const referenceMonth = returnMonth(date);
   useEffect(() => {
     setReport(fackreport);
   }, [Chemist]);
 
   return (
-    <Document pageLayout="singlePage">
+    <Document
+      pageLayout="singlePage"
+      title={`RELATÓRIO MENSAL ${referenceMonth}`}
+    >
       <Page size="A4" style={styles.body}>
         <Image
           src="https://i1.sndcdn.com/artworks-000065614465-rlhmbv-t500x500.jpg"
@@ -39,7 +42,7 @@ const Pdf = ({ Chemist, doctor, operator, data }: Iprops) => {
         </View>
         <View style={styles.h1}>
           <Text style={styles.title}>
-            RELATÓRIO MENSAL - MÊS DE REFERÊNCIA: {minthly}
+            RELATÓRIO MENSAL - MÊS DE REFERÊNCIA: {referenceMonth}
           </Text>
           <View style={styles.line} />
         </View>
