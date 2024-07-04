@@ -1,10 +1,12 @@
 import { ParametersDB, WaterTreatmentParameters } from "@/utils/models/WaterParametersModel";
 import prisma from "../../../../lib/db";
 import { NextRequest, NextResponse } from "next/server";
+import { formatDateGrafic } from "@/utils/functions/FormateDate";
+
 
 interface Props {
     title: string;
-    day: number[];
+    day: string[];
     data: (number | null)[];
 }
 
@@ -67,13 +69,16 @@ export async function GET(req: NextRequest) {
             const numericFields = fieldNames.filter(fieldName => typeof data[0][fieldName] === 'number');
 
             // Processa cada campo numérico
-            const tempFieldDataArray: TempFieldData[] = [];
-
+           
+            const tempFieldDataArray:TempFieldData[] = [];
             // Iterar sobre os dados e organizar por data
           // Iterar sobre os dados e organizar por data
 for (const item of data) {
     if (item.date != null) {
         const date = new Date(item.date);
+       
+        
+         
         date.setUTCHours(0, 0, 0, 0); // Definir hora para meia-noite no fuso horário UTC
         const existingData = tempFieldDataArray.find(tempData => tempData.date.getTime() === date.getTime());
         if (existingData) {
@@ -86,8 +91,12 @@ for (const item of data) {
             const newFieldData: (number | null)[] = [];
             for (const field of numericFields) {
                 newFieldData.push(parseNumericValue(item[field])); // Corrigindo aqui
+                
+                
             }
+            
             tempFieldDataArray.push({
+                
                 date: date,
                 fieldData: newFieldData
             });
@@ -101,12 +110,12 @@ for (const item of data) {
             
             // Agora, iteramos sobre numericFields e montamos os dados organizados
             for (const field of numericFields) {
-                const day: number[] = [];
+                const day: string[] = [];
                 const fieldData: (number | null)[] = [];
             
                 // Itera sobre a matriz temporária ordenada e monta os dados correspondentes para o campo atual
                 for (const tempData of tempFieldDataArray) {
-                    day.push(tempData.date.getDate());
+                    day.push(  formatDateGrafic(tempData.date));
                     fieldData.push(tempData.fieldData.shift() || 0); // Remove o primeiro elemento da matriz fieldData e adiciona ao fieldData do campo atual
                 }
             

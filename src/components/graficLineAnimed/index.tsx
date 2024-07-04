@@ -11,7 +11,9 @@ interface Props {
 }
 
 const GraficLineAnimed = ({ title, data, day }: Props) => {
-  useEffect(() => {}, [data, day]);
+  useEffect(() => {
+    console.log(day);
+  }, [data, day]);
 
   // Converter valores de `day` para instâncias de Date
 

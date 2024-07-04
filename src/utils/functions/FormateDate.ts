@@ -18,6 +18,7 @@ export function getCurrentDate() {
   
   
  export function formatDate(date :Date): string {
+    console.log(date);
     
     const day = String(date.getUTCDate()).padStart(2, '0');
     const month = String(date.getUTCMonth() + 1).padStart(2, '0'); // January is 0!
