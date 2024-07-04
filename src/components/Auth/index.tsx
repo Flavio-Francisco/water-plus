@@ -155,13 +155,13 @@ export default function Auth() {
               autoComplete="senha-atual"
               value={selectedPassword}
               onChange={(event) => handleSelectPassword(event.target.value)}
-              label="senha"
+              label="Senha"
               className="w-full p-2 "
             />
           </div>
-          <div className="mb-6 w-full">
+          <div className="mb-4 w-full flex justify-center ">
             <Autocomplete
-              className="w-full rounded"
+              className="w-[96%] max-sm:w-[95%] rounded"
               id="combo-box-demo"
               options={systems}
               value={selectedValue}
