@@ -6,6 +6,7 @@ import { DataFullProvider } from "@/context/userDataFull";
 import { EventsProvider } from "@/context/eventContext";
 import { AuthProvider } from "@/components/Providers/nextProviser";
 
+
 export default function LogimPage() {
   return (
     <AuthProvider>

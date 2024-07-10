@@ -209,6 +209,7 @@ model systems {
   reservoir_analysis_reservoir_analysis_system_idTosystems reservoir_analysis[]        @relation("reservoir_analysis_system_idTosystems")
   reservoir_cleaning_report                                reservoir_cleaning_report[]
   user                                                     user[]
+  whatsApp                                                 whatsApp[]
 }
 
 model user {
@@ -256,4 +257,22 @@ model acid {
   machine   String   @id
   system_id Int?
   systems   systems? @relation(fields: [system_id], references: [id], onDelete: Cascade)
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model whatsApp {
+  id                  Int      @id @default(autoincrement())
+  name                String?
+  number              String?
+  lowLevel            Boolean?
+  criticaLevel        Boolean?
+  Fueling             Boolean?
+  SendLowLevel        Boolean?
+  SendCriticaLevel    Boolean?
+  SendFueling         Boolean?
+  system_id           Int
+  messageLowLevel     String?
+  messageCriticaLevel String?
+  messageFueling      String?
+  systems             systems  @relation(fields: [system_id], references: [id], onDelete: Cascade)
 }
