@@ -146,11 +146,17 @@ const WhatsAppCard = () => {
               onClick={() => handleContactClick(contact)}
               className=" bg-sky-100 p-4 rounded shadow-lg hover:bg-sky-200 cursor-pointer mt-2"
             >
-              <Typography variant="body1" className="text-gray-700">
-                <strong>Nome:</strong> {contact.name}
+              <Typography
+                variant="body1"
+                className="text-gray-700 max-sm:flex max-sm:flex-col whitespace-nowrap"
+              >
+                <strong>Nome:</strong> <p>{contact.name}</p>
               </Typography>
-              <Typography variant="body1" className="text-gray-700">
-                <strong>Número:</strong> {contact.number}
+              <Typography
+                variant="body1"
+                className="text-gray-700 whitespace-nowrap max-sm:flex max-sm:flex-col"
+              >
+                <strong>Número:</strong> <p>{contact.number}</p>
               </Typography>
               <div className="flex flex-col gap-1 max-sm:flex-col max-sm:gap-1 max-sm:mt-1">
                 <Typography
@@ -194,7 +200,7 @@ const WhatsAppCard = () => {
                   </div>
                   <div>
                     <Typography>
-                      Em Abastecimento{" "}
+                      Abastecimento{" "}
                       {contact.Fueling ? (
                         <ModeStandbyOutlinedIcon
                           fontSize="small"
@@ -213,9 +219,11 @@ const WhatsAppCard = () => {
               <Typography
                 style={{ display: contact.lowLevel === false ? "none" : "" }}
                 variant="body1"
-                className="text-gray-700 mt-2"
+                className="text-gray-700 mt-2 "
               >
-                <strong>Mensagem Nível Baixo:</strong> {contact.messageLowLevel}
+                <strong>Mensagem Nível </strong>
+                <strong>Baixo:</strong>
+                <p>{contact.messageLowLevel}</p>
               </Typography>
               <Typography
                 style={{
@@ -224,16 +232,18 @@ const WhatsAppCard = () => {
                 variant="body1"
                 className="text-gray-700 mt-2"
               >
-                <strong>Mensagem Nível Crítico:</strong>{" "}
-                {contact.messageCriticaLevel}
+                <strong>Mensagem Nível </strong>
+                <strong>Crítico:</strong>
+                <p>{contact.messageCriticaLevel}</p>
               </Typography>
               <Typography
                 style={{ display: contact.Fueling === false ? "none" : "" }}
                 variant="body1"
                 className="text-gray-700 mt-2"
               >
-                <strong>Mensagem Em Abastecimento:</strong>{" "}
-                {contact.messageFueling}
+                <strong>Mensagem de </strong>
+                <strong className="max-sm:text-center">Abastecimento:</strong>
+                <p> {contact.messageFueling}</p>
               </Typography>
             </div>
           ))}
@@ -324,7 +334,7 @@ const WhatsAppCard = () => {
                           className="mr-1"
                         />
                         <Typography variant="body1" className="text-gray-700">
-                          Em Abastecimento
+                          Abastecimento
                         </Typography>
                       </div>
                     </div>
@@ -383,7 +393,7 @@ const WhatsAppCard = () => {
                     className="mb-4"
                     fullWidth
                   />
-                  <div className="flex justify-end gap-2">
+                  <div className="flex justify-end gap-2 max-sm:flex-col ">
                     <Button
                       variant="outlined"
                       color="secondary"

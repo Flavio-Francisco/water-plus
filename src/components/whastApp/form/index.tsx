@@ -97,7 +97,7 @@ const WhatsAppForm = () => {
   };
 
   return (
-    <div className="flex justify-center items-center">
+    <div className="flex justify-center items-center  max-sm:w-full ">
       <div className=" sm:max-w-11/12 max-sm:w-full rounded overflow-hidden bg-white">
         <div className=" max-sm:w-full">
           <Typography
@@ -107,7 +107,7 @@ const WhatsAppForm = () => {
           >
             Novo Contato
           </Typography>
-          <form className="bg-sky-100 p-4 rounded shadow-lg">
+          <form className="bg-sky-100 p-4 max-sm:p-1 rounded shadow-lg max-sm:w-full">
             <TextField
               id="name"
               label="Nome"
@@ -145,7 +145,7 @@ const WhatsAppForm = () => {
               >
                 Enviar Mensagem Quando:
               </Typography>
-              <div className="flex items-start mb-2 whitespace-nowrap max-sm:flex-col">
+              <div className="flex max-sm:flex-none items-start mb-2 whitespace-nowrap max-sm:flex-col">
                 <div className="flex flex-row justify-center items-center">
                   <Checkbox
                     id="lowLevel"
@@ -153,7 +153,7 @@ const WhatsAppForm = () => {
                     onChange={(e) => setLowLevel(e.target.checked)}
                     className="mr-1"
                   />
-                  <Typography variant="body1" className="text-gray-700 mr-3">
+                  <Typography variant="body1" className="text-gray-700 mr-10">
                     Nível Baixo
                   </Typography>
                 </div>
@@ -176,7 +176,7 @@ const WhatsAppForm = () => {
                     className="mr-1"
                   />
                   <Typography variant="body1" className="text-gray-700">
-                    Em Abastecimento
+                    Abastecimento
                   </Typography>
                 </div>
               </div>
@@ -227,7 +227,7 @@ const WhatsAppForm = () => {
               fullWidth
             />
 
-            <div className="flex justify-end ">
+            <div className="flex justify-center">
               <Button
                 variant="outlined"
                 color="primary"
