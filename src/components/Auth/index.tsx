@@ -35,7 +35,7 @@ export default function Auth() {
   const config: any = data || [];
   const systems = (data as Systems[]) || [];
   console.log("status", config.status);
-  console.log("systems");
+  console.log("systems", systems);
   useEffect(() => {
     if (isLoading === true) {
       resetForm();

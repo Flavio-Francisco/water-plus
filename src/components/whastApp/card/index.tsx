@@ -16,6 +16,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { useUserContext } from "@/context/userContext";
 import { deleteContat, getContact, updaSetContact } from "@/app/fecth/whatsApp";
 import { TextMaskCustom } from "../form";
+import Loader from "@/components/loader/page";
 
 const initialContactState: WhatsAppDB = {
   name: "",
@@ -34,7 +35,7 @@ export interface Mutacion {
 
 const WhatsAppCard = () => {
   const { user } = useUserContext();
-  const { data, refetch } = useQuery<WhatsAppDB[]>({
+  const { data, refetch, isLoading } = useQuery<WhatsAppDB[]>({
     queryKey: ["WhatsAppGet"],
     queryFn: () => getContact(user?.system_id || 0),
   });
@@ -100,6 +101,17 @@ const WhatsAppCard = () => {
       Fueling,
       lowLevel,
     });
+    if (isLoading) {
+      return (
+        <div className="h-screen flex justify-center items-center">
+          <div className="m-auto flex flex-col justify-center items-center">
+            <div className="m-auto">
+              <Loader />
+            </div>
+          </div>
+        </div>
+      );
+    }
     if (selectedContact.id) {
       mutate({
         id: selectedContact.id,
