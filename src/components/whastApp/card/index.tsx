@@ -140,9 +140,9 @@ const WhatsAppCard = () => {
           >
             Contatos
           </Typography>
-          {(data || [])?.map((contact, index) => (
+          {(data || [])?.map((contact) => (
             <div
-              key={index}
+              key={contact.id}
               onClick={() => handleContactClick(contact)}
               className=" bg-sky-100 p-4 rounded shadow-lg hover:bg-sky-200 cursor-pointer mt-2"
             >
