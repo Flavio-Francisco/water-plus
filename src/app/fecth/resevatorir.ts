@@ -6,11 +6,13 @@ import axios from "axios"
 
 export async function createReservoir(system_id:number|null, data:string) {
     console.log("dados ",data);
-    
-    const resevatorir = await axios.post(`api/reservoir?id=${system_id}`,data)
+    if (data != 'NaN-NaN-NaN') {
+        const resevatorir = await axios.post(`api/reservoir?id=${system_id}`,data)
    
 
-   return resevatorir.data
+   return resevatorir.data  
+    }
+  
    
 
 }
