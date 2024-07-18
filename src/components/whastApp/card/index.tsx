@@ -36,7 +36,7 @@ export interface Mutacion {
 
 const WhatsAppCard = () => {
   const { user } = useUserContext();
-  const { data, refetch, isLoading } = useQuery<WhatsAppDB[]>({
+  const { data, refetch, isLoading, error } = useQuery<WhatsAppDB[]>({
     queryKey: ["WhatsAppGet"],
     queryFn: () => getContact(user?.system_id || 0),
   });
@@ -102,7 +102,7 @@ const WhatsAppCard = () => {
       Fueling,
       lowLevel,
     });
-    if (isLoading) {
+    if (isLoading || error) {
       return (
         <div className="h-screen flex justify-center items-center">
           <div className="m-auto flex flex-col justify-center items-center">

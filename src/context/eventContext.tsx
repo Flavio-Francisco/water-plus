@@ -31,7 +31,7 @@ export const EventsProvider: React.FC<EventContextType> = ({ children }) => {
 
   async function restoreEventsFromCache() {
     const cachedUserData = localStorage.getItem("EventInput");
-    if (cachedUserData) {
+    if (cachedUserData && cachedUserData != undefined) {
       setEvents(JSON.parse(cachedUserData));
     }
   }
