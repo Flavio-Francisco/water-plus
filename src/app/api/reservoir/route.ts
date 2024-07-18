@@ -29,7 +29,9 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
     const url = new URL(req.nextUrl.href);
     const id = url.searchParams.get("id");
-    const date= await req.json();
+    const date = await req.json();
+    console.log(date);
+    
     try {
         const data = await prisma.reservoir_cleaning.create({
         
