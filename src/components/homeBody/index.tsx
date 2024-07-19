@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Batery from "../batery";
 import Logo from "@/app/logo.jpg";
 import { Props } from "@/utils/models/Data";
@@ -116,31 +116,48 @@ const HomeBody: React.FC = () => {
       }
     },
   });
-  getDoctor(doctor);
-  getAnalys(analys);
-  getEvents(events);
-  getOperator(operator);
-  getDataFull(dataFull);
-  getProduction(production);
-  refetchDoctor(refetchdoctor);
-  refetchOperator(refetchopertor);
-  if (getChemist) {
-    getChemist(chemist);
-  } else {
-    console.error("getChemist is not defined");
-  }
-  if (refetchChemist) {
-    refetchChemist(refetchchemist);
-  } else {
-    console.error("refetchChemist is not defined");
-  }
 
+  useEffect(() => {
+    getAnalys(analys);
+    getEvents(events);
+    getOperator(operator);
+    getDataFull(dataFull);
+    getProduction(production);
+    refetchDoctor(refetchdoctor);
+    refetchOperator(refetchopertor);
+    if (doctor) {
+      getDoctor(doctor);
+    } else {
+      console.error("getChemist is not defined");
+    }
+    if (getChemist) {
+      getChemist(chemist);
+    } else {
+      console.error("getChemist is not defined");
+    }
+    if (refetchChemist) {
+      refetchChemist(refetchchemist);
+    } else {
+      console.error("refetchChemist is not defined");
+    }
+  }, [
+    analys,
+    events,
+    operator,
+    dataFull,
+    production,
+    refetchdoctor,
+    refetchopertor,
+    doctor,
+    getChemist,
+    chemist,
+    refetchChemist,
+  ]);
   const Abrandador = getObjects(dataFull, " Abrandador")!;
   const Zeolica = getObjects(dataFull, "Multimídia")!;
   const Carvao = getObjects(dataFull, " Saída de Carvão")!;
   const [selectData, setSelectData] = useState<Props>(Abrandador);
-  
-  
+
   const dataSelect = async (grafic: string) => {
     switch (grafic) {
       case "abrandador":

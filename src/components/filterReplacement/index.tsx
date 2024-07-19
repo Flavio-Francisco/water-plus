@@ -50,7 +50,7 @@ export default function FilterReplacement({ onSucess, id }: Iprops) {
   if (cachedData) {
     console.log(cachedData[0].machine);
   }
-  const { mutate } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationKey: ["diasafeForm"],
     mutationFn: (machine: MachineData) => createMachines(id, machine),
     onSuccess: () => {
@@ -484,7 +484,7 @@ export default function FilterReplacement({ onSucess, id }: Iprops) {
                     onClick={() => handleSubmit}
                     style={{ marginTop: 20, width: 150 }}
                   >
-                    Salvar
+                    {isPending ? "Salvando..." : "Salvar"}
                   </Button>
                 </div>
               </Form>
@@ -494,18 +494,18 @@ export default function FilterReplacement({ onSucess, id }: Iprops) {
       </>
     );
   } else {
-    return(
-    <div
-    className="flex justify-center items-center h-screen"
-    style={{
-      background:
-        "linear-gradient(to bottom, rgba(25,118,210,1), rgba(255,255,255,1))",
-    }}
-  >
-   <h1>
+    return (
+      <div
+        className="flex justify-center items-center h-screen"
+        style={{
+          background:
+            "linear-gradient(to bottom, rgba(25,118,210,1), rgba(255,255,255,1))",
+        }}
+      >
+        <h1>
           <Loader />
         </h1>
-  </div>
-);
+      </div>
+    );
   }
 }
