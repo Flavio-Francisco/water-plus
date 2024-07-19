@@ -47,12 +47,11 @@ export default function FilterReplacement({ onSucess, id }: Iprops) {
   const cachedData: Machines[] | undefined = queryClient.getQueryData([
     "diasafe",
   ]);
-  if (cachedData) {
-    console.log(cachedData[0].machine);
-  }
+
   const { mutate, isPending } = useMutation({
     mutationKey: ["diasafeForm"],
     mutationFn: (machine: MachineData) => createMachines(id, machine),
+
     onSuccess: () => {
       onSucess(true);
       alert("Dados Salvos com Sucesso!!!");
@@ -79,7 +78,7 @@ export default function FilterReplacement({ onSucess, id }: Iprops) {
               data2: cachedData === undefined ? "" : cachedData[2]?.date,
               numeroMaquina3:
                 cachedData === undefined ? "" : cachedData[3]?.machine,
-              data3: cachedData === undefined ? "" : cachedData[4]?.date,
+              data3: cachedData === undefined ? "" : cachedData[3]?.date,
               numeroMaquina4:
                 cachedData === undefined ? "" : cachedData[4]?.machine,
               data4: cachedData === undefined ? "" : cachedData[4]?.date,
@@ -103,8 +102,10 @@ export default function FilterReplacement({ onSucess, id }: Iprops) {
               data10: cachedData === undefined ? "" : cachedData[10]?.date,
             }}
             validationSchema={validationSchema}
-            onSubmit={(values: MachineData) => {
+            onSubmit={(values: MachineData, { resetForm }) => {
+              console.log(values);
               mutate(values);
+              resetForm();
             }}
           >
             {({ handleSubmit, handleChange, values, errors }) => (

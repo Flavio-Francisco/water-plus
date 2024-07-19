@@ -128,12 +128,12 @@ const HomeBody: React.FC = () => {
     if (doctor) {
       getDoctor(doctor);
     } else {
-      console.error("getChemist is not defined");
+      console.log("doctor  ainda indidponivel");
     }
     if (getChemist) {
       getChemist(chemist);
     } else {
-      console.error("getChemist is not defined");
+      console.log(" Chemist ainda indidponivel");
     }
     if (refetchChemist) {
       refetchChemist(refetchchemist);
