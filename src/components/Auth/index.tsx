@@ -57,7 +57,7 @@ export default function Auth() {
       </div>
     );
   }
-  if (isLoading && systems.length === 0 && config.status === 500) {
+  if ((isLoading && systems.length === 0) || config.status === 500) {
     return (
       <div
         className="flex justify-center items-center h-screen"
@@ -66,6 +66,7 @@ export default function Auth() {
             "linear-gradient(to bottom, rgba(25,118,210,1), rgba(255,255,255,1))",
         }}
       >
+        {config.status === undefined && <h1>Sistemas não Encontrados</h1>}
         <h1>
           <Loader />
         </h1>

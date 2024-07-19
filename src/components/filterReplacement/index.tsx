@@ -46,6 +46,9 @@ export default function FilterReplacement({ onSucess, id }: Iprops) {
   const cachedData: Machines[] | undefined = queryClient.getQueryData([
     "diasafe",
   ]);
+  console.log(cachedData);
+  
+
   const { mutate } = useMutation({
     mutationKey: ["diasafeForm"],
     mutationFn: (machine: MachineData) => createMachines(id, machine),
