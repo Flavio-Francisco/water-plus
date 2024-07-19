@@ -66,7 +66,6 @@ export default function Auth() {
             "linear-gradient(to bottom, rgba(25,118,210,1), rgba(255,255,255,1))",
         }}
       >
-        {config.status === undefined && <h1>Sistemas não Encontrados</h1>}
         <h1>
           <Loader />
         </h1>
@@ -162,7 +161,7 @@ export default function Auth() {
           </div>
           <div className="mb-4 w-full flex justify-center ">
             <Autocomplete
-              className="w-[96%] max-sm:w-[95%] rounded"
+              className="w-full max-sm:w-[95%] rounded"
               id="combo-box-demo"
               options={systems}
               value={selectedValue}

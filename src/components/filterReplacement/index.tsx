@@ -9,6 +9,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Machines } from "../reportDiasafe";
 import { MachineData } from "@/utils/models/diasafe";
 import { createMachines } from "@/app/fecth/diasafe";
+import Loader from "../loader/page";
 
 interface Iprops {
   onSucess: (sucess: boolean) => void;
@@ -492,5 +493,19 @@ export default function FilterReplacement({ onSucess, id }: Iprops) {
         </Modal.Body>
       </>
     );
+  } else {
+    return(
+    <div
+    className="flex justify-center items-center h-screen"
+    style={{
+      background:
+        "linear-gradient(to bottom, rgba(25,118,210,1), rgba(255,255,255,1))",
+    }}
+  >
+   <h1>
+          <Loader />
+        </h1>
+  </div>
+);
   }
 }

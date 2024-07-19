@@ -142,6 +142,7 @@ const WhatsAppCard = () => {
     }
     setDialogOpen(false);
   };
+if (data) {
   return (
     <div className="flex justify-center items-center max-sm:w-full">
       <div className=" max-w-11/12 rounded overflow-hidden bg-white max-sm:w-full">
@@ -475,6 +476,21 @@ const WhatsAppCard = () => {
       </Dialog>
     </div>
   );
+} else {
+  return (
+    <div
+      className="flex justify-center items-center h-screen"
+      style={{
+        background:
+          "linear-gradient(to bottom, rgba(25,118,210,1), rgba(255,255,255,1))",
+      }}
+    >
+      <h1>
+        <Loader />
+      </h1>
+    </div>
+  );
+}
 };
 
 export default WhatsAppCard;
