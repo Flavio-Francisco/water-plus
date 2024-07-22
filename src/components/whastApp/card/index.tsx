@@ -40,7 +40,7 @@ const WhatsAppCard = () => {
     queryKey: ["WhatsAppGet"],
     queryFn: () => getContact(user?.system_id || 0),
   });
-console.log("data?.length WhatsAppCard", data?.length.toString());
+
 
 const { mutate } = useMutation({
   mutationKey: ["WhatsApp"],

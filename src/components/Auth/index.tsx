@@ -12,6 +12,7 @@ import { useUserContext } from "@/context/userContext";
 import { useDataFull } from "@/context/userDataFull";
 import Loader from "../loader/page";
 import { signIn } from "next-auth/react";
+import { AxiosError } from "axios";
 
 export default function Auth() {
   const { getUser, clearCache } = useUserContext();
@@ -85,17 +86,22 @@ export default function Auth() {
         password: selectedPassword || "",
         system_id: selectedValue?.id || 0,
       });
-      if (dados != null) {
-        console.log("dados do usuario", dados);
+      const status: AxiosError = dados;
 
-        getUser(dados);
-        signIn("credentials", {
-          ...dados,
+      if (status.status != 500 && status.status === undefined) {
+        if (dados) {
+          getUser(dados);
+          signIn("credentials", {
+            ...dados,
 
-          callbackUrl: "/Home",
-        });
-        setSubmitting(false);
-        resetForm();
+            callbackUrl: "/Home",
+          });
+          setSubmitting(false);
+          resetForm();
+        } else {
+          alert("Erro de Conexão");
+          setSubmitting(false);
+        }
       } else {
         alert("Dados não Encontrados!!!");
         setSubmitting(false);
