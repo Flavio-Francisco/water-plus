@@ -40,101 +40,101 @@ const WhatsAppCard = () => {
     queryKey: ["WhatsAppGet"],
     queryFn: () => getContact(user?.system_id || 0),
   });
+console.log("data?.length WhatsAppCard", data?.length);
 
-  const { mutate } = useMutation({
-    mutationKey: ["WhatsApp"],
-    mutationFn: ({ id, contact }: Mutacion) => updaSetContact(id || 0, contact),
-    onSuccess: () => {
-      alert("Contato Atualizado com Sucesso!!");
-      refetch();
-    },
-    onError: () => {
-      alert("Erro ao Atualizar dados!!");
-    },
+const { mutate } = useMutation({
+  mutationKey: ["WhatsApp"],
+  mutationFn: ({ id, contact }: Mutacion) => updaSetContact(id || 0, contact),
+  onSuccess: () => {
+    alert("Contato Atualizado com Sucesso!!");
+    refetch();
+  },
+  onError: () => {
+    alert("Erro ao Atualizar dados!!");
+  },
+});
+const { mutate: mutateDelete } = useMutation({
+  mutationKey: ["WhatsAppDelete"],
+  mutationFn: (id: number) => deleteContat(id || 0),
+  onSuccess: () => {
+    alert("Contato Apagado com Sucesso!!");
+    refetch();
+  },
+  onError: () => {
+    alert("Erro ao Apagado dados!!");
+  },
+});
+const [selectedContact, setSelectedContact] =
+  useState<WhatsAppDB>(initialContactState);
+const [lowLevel, setLowLevel] = useState<boolean | undefined>(undefined);
+const [criticaLevel, setCriticaLevel] = useState<boolean | undefined>(
+  undefined
+);
+const [Fueling, setFueling] = useState<boolean | undefined>(undefined);
+const [isEditing, setIsEditing] = useState(false);
+const [dialogOpen, setDialogOpen] = useState(false);
+
+const handleOpen = () => {
+  setDialogOpen(true);
+};
+const handleCloseDelete = () => {
+  setDialogOpen(false);
+};
+const handleContactClick = (contact: WhatsAppDB) => {
+  setSelectedContact(contact);
+  setIsEditing(true);
+  setLowLevel(contact.lowLevel);
+  setCriticaLevel(contact.criticaLevel);
+  setFueling(contact.Fueling);
+};
+
+const handleCancelEdit = () => {
+  setSelectedContact(initialContactState);
+  setIsEditing(false);
+  setLowLevel(undefined);
+  setCriticaLevel(undefined);
+  setFueling(undefined);
+};
+
+const handleSaveEdit = () => {
+  setSelectedContact({
+    ...selectedContact,
+    criticaLevel,
+    Fueling,
+    lowLevel,
   });
-  const { mutate: mutateDelete } = useMutation({
-    mutationKey: ["WhatsAppDelete"],
-    mutationFn: (id: number) => deleteContat(id || 0),
-    onSuccess: () => {
-      alert("Contato Apagado com Sucesso!!");
-      refetch();
-    },
-    onError: () => {
-      alert("Erro ao Apagado dados!!");
-    },
-  });
-  const [selectedContact, setSelectedContact] =
-    useState<WhatsAppDB>(initialContactState);
-  const [lowLevel, setLowLevel] = useState<boolean | undefined>(undefined);
-  const [criticaLevel, setCriticaLevel] = useState<boolean | undefined>(
-    undefined
-  );
-  const [Fueling, setFueling] = useState<boolean | undefined>(undefined);
-  const [isEditing, setIsEditing] = useState(false);
-  const [dialogOpen, setDialogOpen] = useState(false);
-
-  const handleOpen = () => {
-    setDialogOpen(true);
-  };
-  const handleCloseDelete = () => {
-    setDialogOpen(false);
-  };
-  const handleContactClick = (contact: WhatsAppDB) => {
-    setSelectedContact(contact);
-    setIsEditing(true);
-    setLowLevel(contact.lowLevel);
-    setCriticaLevel(contact.criticaLevel);
-    setFueling(contact.Fueling);
-  };
-
-  const handleCancelEdit = () => {
-    setSelectedContact(initialContactState);
-    setIsEditing(false);
-    setLowLevel(undefined);
-    setCriticaLevel(undefined);
-    setFueling(undefined);
-  };
-
-  const handleSaveEdit = () => {
-    setSelectedContact({
-      ...selectedContact,
-      criticaLevel,
-      Fueling,
-      lowLevel,
-    });
-    if (isLoading || error) {
-      return (
-        <div className="h-screen flex justify-center items-center">
-          <div className="m-auto flex flex-col justify-center items-center">
-            <div className="m-auto">
-              <Loader />
-            </div>
+  if (isLoading || error || data?.length === undefined) {
+    return (
+      <div className="h-screen flex justify-center items-center">
+        <div className="m-auto flex flex-col justify-center items-center">
+          <div className="m-auto">
+            <Loader />
           </div>
         </div>
-      );
-    }
-    if (selectedContact.id) {
-      mutate({
-        id: selectedContact.id,
-        contact: {
-          ...selectedContact,
-          messageLowLevel:
-            lowLevel === true ? selectedContact.messageLowLevel : "",
-          messageCriticaLevel:
-            criticaLevel === true ? selectedContact.messageCriticaLevel : "",
-          messageFueling:
-            Fueling === true ? selectedContact.messageFueling : "",
-          criticaLevel,
-          Fueling,
-          lowLevel,
-        },
-      });
-    }
+      </div>
+    );
+  }
+  if (selectedContact.id) {
+    mutate({
+      id: selectedContact.id,
+      contact: {
+        ...selectedContact,
+        messageLowLevel:
+          lowLevel === true ? selectedContact.messageLowLevel : "",
+        messageCriticaLevel:
+          criticaLevel === true ? selectedContact.messageCriticaLevel : "",
+        messageFueling: Fueling === true ? selectedContact.messageFueling : "",
+        criticaLevel,
+        Fueling,
+        lowLevel,
+      },
+    });
+  }
 
-    console.log("Salvando alterações:", selectedContact);
-    setSelectedContact(initialContactState);
-    setIsEditing(false);
-  };
+  console.log("Salvando alterações:", selectedContact);
+  setSelectedContact(initialContactState);
+  setIsEditing(false);
+};
 
   const handleDelete = () => {
     if (selectedContact.id) {
