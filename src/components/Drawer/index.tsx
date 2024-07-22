@@ -269,7 +269,7 @@ export default function Drawer({
               onClick={() => push("/grafic ")}
             >
               <ListItemIcon
-                title="Grafico dos Parametros"
+                title="Parametros"
                 sx={{
                   minWidth: 0,
                   mr: open ? 3 : "auto",
@@ -279,7 +279,7 @@ export default function Drawer({
                 <WaterDropOutlinedIcon />
               </ListItemIcon>
               <ListItemText
-                primary={"Grafico dos Parametros"}
+                primary={"Parametros"}
                 sx={{ opacity: open ? 1 : 0 }}
               />
             </ListItemButton>
