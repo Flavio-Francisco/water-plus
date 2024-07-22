@@ -138,6 +138,7 @@ export default function Auth() {
           <h1 className="my-2 text-2xl font-bold">Login</h1>
           <div className="mb-4">
             <TextField
+              InputProps={{ autoComplete: "false" }}
               id="outlined-basic"
               name="name"
               type="text"
@@ -150,6 +151,7 @@ export default function Auth() {
           </div>
           <div className="mb-4">
             <TextField
+              InputProps={{ autoComplete: "false" }}
               name="password"
               type="password"
               autoComplete="senha-atual"
