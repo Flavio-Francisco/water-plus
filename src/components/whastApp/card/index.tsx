@@ -160,18 +160,16 @@ if (data) {
               onClick={() => handleContactClick(contact)}
               className=" bg-sky-100 p-4 rounded shadow-lg hover:bg-sky-200 cursor-pointer mt-2"
             >
-              <Typography
-                variant="body1"
-                className="text-gray-700 max-sm:flex max-sm:flex-col whitespace-nowrap"
-              >
-                <strong>Nome:</strong> <p>{contact.name}</p>
-              </Typography>
-              <Typography
-                variant="body1"
-                className="text-gray-700 whitespace-nowrap max-sm:flex max-sm:flex-col"
-              >
-                <strong>Número:</strong> <p>{contact.number}</p>
-              </Typography>
+              <div className="text-gray-700 max-sm:flex max-sm:flex-col whitespace-nowrap">
+                <div className="flex flex-row">
+                  <strong>Nome:</strong> <p>{contact.name}</p>
+                </div>
+              </div>
+              <div className="text-gray-700 max-sm:flex max-sm:flex-col whitespace-nowrap">
+                <div className="flex flex-row">
+                  <strong>Número:</strong> <p>{contact.number}</p>
+                </div>
+              </div>
               <div className="flex flex-col gap-1 max-sm:flex-col max-sm:gap-1 max-sm:mt-1">
                 <Typography
                   variant="body1"
@@ -230,35 +228,32 @@ if (data) {
                   </div>
                 </div>
               </div>
-              <Typography
+              <div
                 style={{ display: contact.lowLevel === false ? "none" : "" }}
-                variant="body1"
                 className="text-gray-700 mt-2 "
               >
                 <strong>Mensagem Nível </strong>
                 <strong>Baixo:</strong>
                 <p>{contact.messageLowLevel}</p>
-              </Typography>
-              <Typography
+              </div>
+              <div
                 style={{
                   display: contact.criticaLevel === false ? "none" : "",
                 }}
-                variant="body1"
                 className="text-gray-700 mt-2"
               >
                 <strong>Mensagem Nível </strong>
                 <strong>Crítico:</strong>
                 <p>{contact.messageCriticaLevel}</p>
-              </Typography>
-              <Typography
+              </div>
+              <div
                 style={{ display: contact.Fueling === false ? "none" : "" }}
-                variant="body1"
                 className="text-gray-700 mt-2"
               >
                 <strong>Mensagem de </strong>
                 <strong className="max-sm:text-center">Abastecimento:</strong>
                 <p> {contact.messageFueling}</p>
-              </Typography>
+              </div>
             </div>
           ))}
         </div>

@@ -209,9 +209,9 @@ const Desinfection = ({ onSucess, id, refetch }: Iprops) => {
             <Form.Group controlId="quantity">
               <Form.Label>
                 Quantidade
-                <text style={{ marginLeft: 15, fontSize: 12, color: "red" }}>
+                <p style={{ marginLeft: 15, fontSize: 12, color: "red" }}>
                   (balde com 5 Lts.)
-                </text>
+                </p>
               </Form.Label>
               <Form.Control
                 type="number"
