@@ -8,7 +8,7 @@ import { Button } from "@mui/material";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Machines } from "../reportDiasafe";
 import { MachineData } from "@/utils/models/diasafe";
-import { createMachines } from "@/app/fecth/diasafe";
+import { updateMachines } from "@/app/fecth/diasafe";
 import Loader from "../loader/page";
 
 interface Iprops {
@@ -50,7 +50,7 @@ export default function FilterReplacement({ onSucess, id }: Iprops) {
 
   const { mutate, isPending } = useMutation({
     mutationKey: ["diasafeForm"],
-    mutationFn: (machine: MachineData) => createMachines(id, machine),
+    mutationFn: (machine: MachineData) => updateMachines(id, machine),
 
     onSuccess: () => {
       onSucess(true);

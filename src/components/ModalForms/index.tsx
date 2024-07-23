@@ -10,7 +10,7 @@ import ModalTsx from "../Drawer/DashboardTSX/ModalTsx";
 import { useQuery } from "@tanstack/react-query";
 import { getDesinfection } from "@/app/fecth/desinfection";
 import { useUserContext } from "@/context/userContext";
-import { getAcid } from "@/app/fecth/acid";
+
 
 interface IProps {
   icon: React.ReactNode;
@@ -18,18 +18,6 @@ interface IProps {
 
 export default function ModalForms({ icon }: IProps) {
   const { user } = useUserContext();
-
-  const { data: acid } = useQuery({
-    queryKey: ["acid"],
-    queryFn: () => {
-      if (user) {
-        return getAcid(user?.system_id || 0);
-      } else {
-        return null;
-      }
-    },
-  });
-  console.log(acid);
 
   const { refetch } = useQuery({
     queryKey: ["desinfection"],
@@ -41,8 +29,6 @@ export default function ModalForms({ icon }: IProps) {
       }
     },
   });
-
-
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);

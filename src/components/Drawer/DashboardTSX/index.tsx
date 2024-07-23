@@ -51,26 +51,38 @@ export default function DashboardTSX({ icon }: IProps) {
   const [openModal4, setOpenModal4] = React.useState(false);
   const [openModal5, setOpenModal5] = React.useState(false);
 
+  const queryOptions = {
+    enabled: !!user,
+    staleTime: 1000 * 60 * 10, // 10 minutos
+    cacheTime: 1000 * 60 * 60 * 24, // 24 horas
+  };
+
   const { data } = useQuery({
     queryKey: ["diasafe"],
     queryFn: () => getMachines(user?.system_id || 0),
+    ...queryOptions,
   });
+
   const { data: system } = useQuery({
     queryKey: ["systemId"],
     queryFn: () => getSystemId(user?.system_id || 0),
+    ...queryOptions,
   });
 
   const { data: arrayApavise } = useQuery({
     queryKey: ["GetapevisaAnalysi"],
     queryFn: () => getAnalysisApevisa(user?.system_id || 0),
+    ...queryOptions,
   });
-  const apevisa: ApvisaModel[] = arrayApavise;
+
+  const apevisa: ApvisaModel[] = arrayApavise || [];
   const systems = (system as Systems) || [];
 
   const { mutate } = useMutation({
     mutationKey: ["resevatorirForm"],
     mutationFn: (date: string) => createReservoir(user?.system_id || 0, date),
   });
+
   const date: DesinfectionModel | undefined = queryClient.getQueryData([
     "desinfection",
   ]);
@@ -78,8 +90,6 @@ export default function DashboardTSX({ icon }: IProps) {
     queryClient.getQueryData(["Electrogram"]) || [];
 
   function getDataByMonth(data: ParametersDB[], month: string): ParametersDB[] {
-    console.log(data);
-
     const monthNames = [
       "Janeiro",
       "Fevereiro",
@@ -101,9 +111,6 @@ export default function DashboardTSX({ icon }: IProps) {
         const monthName = monthNames[datei.getUTCMonth()];
         const year = datei.getFullYear();
         const monthYear = `${monthName} ${year}`;
-        console.log(monthYear);
-        console.log(month);
-
         return monthYear === month;
       }
     });
@@ -129,12 +136,9 @@ export default function DashboardTSX({ icon }: IProps) {
     data.map((record) => {
       if (record.date) {
         const datei = new Date(record.date);
-
         const monthName = monthNames[datei.getUTCMonth()];
-
         const year = datei.getFullYear();
         const monthYear = `${monthName} ${year}`;
-
         monthYearMap.set(monthYear, true);
       }
     });
@@ -151,6 +155,7 @@ export default function DashboardTSX({ icon }: IProps) {
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleOpenModal1 = () => {
     setOpenModal1(true);
   };
@@ -166,6 +171,7 @@ export default function DashboardTSX({ icon }: IProps) {
   const handleOpenModal5 = () => {
     setOpenModal5(true);
   };
+
   const handlecloseModal1 = () => {
     setOpenModal1(false);
   };
@@ -185,11 +191,10 @@ export default function DashboardTSX({ icon }: IProps) {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
   React.useEffect(() => {
     const date = formatDateResevatorir(new Date(value?.toString() || ""));
-
     mutate(date);
-    //console.log(formatDate(new Date());
   }, [value]);
 
   return (
