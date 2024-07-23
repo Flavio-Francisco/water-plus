@@ -26,29 +26,27 @@ const HomeBody: React.FC = () => {
   const { user } = useUserContext();
   const { getEvents } = useEventInput();
   const { getDataFull, getProduction, getAnalys } = useDataFull();
-  const { getChemist, refetchChemist } = useChemist();
-  const { getDoctor, refetchDoctor } = useDoctor();
-  const { getOperator, refetchOperator } = useOperator();
+  const { getChemist } = useChemist();
+  const { getDoctor } = useDoctor();
+  const { getOperator } = useOperator();
 
   const commonQueryOptions = {
     enabled: !!user,
-    staleTime: 1000 * 60 * 10, // 10 minutes
-    cacheTime: 1000 * 60 * 60 * 24, // 24 hours
   };
 
-  const { data: chemist, refetch: refetchchemist } = useQuery({
+  const { data: chemist } = useQuery({
     queryKey: ["chemicalDB", user?.system_id],
     queryFn: () => getChemical(user?.system_id || 0),
     ...commonQueryOptions,
   });
 
-  const { data: operator, refetch: refetchopertor } = useQuery({
+  const { data: operator } = useQuery({
     queryKey: ["operator", user?.system_id],
     queryFn: () => getOperatorDB(user?.system_id || 0),
     ...commonQueryOptions,
   });
 
-  const { data: doctor, refetch: refetchdoctor } = useQuery({
+  const { data: doctor } = useQuery({
     queryKey: ["doctorModal", user?.system_id],
     queryFn: () => getDoctorDB(user?.system_id || 0),
     ...commonQueryOptions,
@@ -92,10 +90,6 @@ const HomeBody: React.FC = () => {
     if (production) getProduction(production);
     if (doctor) getDoctor(doctor);
     if (chemist) getChemist(chemist);
-
-    refetchDoctor(refetchdoctor);
-    refetchOperator(refetchopertor);
-    refetchChemist(refetchchemist);
   }, [analys, events, operator, dataFull, production, doctor, chemist]);
 
   const Abrandador = useMemo(
