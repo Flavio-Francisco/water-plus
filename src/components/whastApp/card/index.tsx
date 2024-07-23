@@ -140,7 +140,7 @@ const handleSaveEdit = () => {
     if (selectedContact.id) {
       mutateDelete(selectedContact.id);
     }
-    setDialogOpen(false);
+    setIsEditing(false);
   };
 if (data) {
   return (
