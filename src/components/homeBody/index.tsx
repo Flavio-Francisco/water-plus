@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Batery from "../batery";
 import Logo from "@/app/logo.jpg";
 import { Props } from "@/utils/models/Data";
@@ -21,7 +21,6 @@ import { getDoctorDB } from "@/app/fecth/doctor";
 import { useDoctor } from "@/context/useDoctor";
 import { getOperatorDB } from "@/app/fecth/operator";
 import { useOperator } from "@/context/useOperator";
-import { getData } from "@/app/fecth/data";
 
 const HomeBody: React.FC = () => {
   const { user } = useUserContext();
@@ -31,156 +30,111 @@ const HomeBody: React.FC = () => {
   const { getDoctor, refetchDoctor } = useDoctor();
   const { getOperator, refetchOperator } = useOperator();
 
-  useQuery({
-    queryKey: ["Electrogram"],
-    queryFn: () => {
-      if (user) {
-        return getData(user?.system_id || 0);
-      } else {
-        return null;
-      }
-    },
-  });
+  const commonQueryOptions = {
+    enabled: !!user,
+    staleTime: 1000 * 60 * 10, // 10 minutes
+    cacheTime: 1000 * 60 * 60 * 24, // 24 hours
+  };
 
   const { data: chemist, refetch: refetchchemist } = useQuery({
-    queryKey: ["chemicalDB"],
-    queryFn: () => {
-      if (user) {
-        return getChemical(user?.system_id || 0);
-      } else {
-        return null;
-      }
-    },
+    queryKey: ["chemicalDB", user?.system_id],
+    queryFn: () => getChemical(user?.system_id || 0),
+    ...commonQueryOptions,
   });
 
   const { data: operator, refetch: refetchopertor } = useQuery({
-    queryKey: ["operator"],
+    queryKey: ["operator", user?.system_id],
     queryFn: () => getOperatorDB(user?.system_id || 0),
+    ...commonQueryOptions,
   });
+
   const { data: doctor, refetch: refetchdoctor } = useQuery({
-    queryKey: ["doctorModal"],
-    queryFn: () => {
-      if (user) {
-        return getDoctorDB(user?.system_id || 0);
-      } else {
-        return null;
-      }
-    },
+    queryKey: ["doctorModal", user?.system_id],
+    queryFn: () => getDoctorDB(user?.system_id || 0),
+    ...commonQueryOptions,
   });
 
   const { data: production } = useQuery({
-    queryKey: ["annual"],
-    queryFn: () => {
-      if (user) {
-        return GetAnnual(user.system_id || 0);
-      } else {
-        return null;
-      }
-    },
+    queryKey: ["annual", user?.system_id],
+    queryFn: () => GetAnnual(user?.system_id || 0),
+    ...commonQueryOptions,
   });
-  const { data } = useQuery({
-    queryKey: ["batery"],
-    queryFn: () => {
-      if (user) {
-        return GetBatery(user.system_id || 0);
-      } else {
-        return null;
-      }
-    },
+
+  const { data: data } = useQuery({
+    queryKey: ["batery", user?.system_id],
+    queryFn: () => GetBatery(user?.system_id || 0),
+    ...commonQueryOptions,
   });
+
   const { data: analys } = useQuery({
-    queryKey: ["analys"],
-    queryFn: () => {
-      if (user) {
-        return GetAnalys(user.system_id || 0);
-      } else {
-        return null;
-      }
-    },
+    queryKey: ["analys", user?.system_id],
+    queryFn: () => GetAnalys(user?.system_id || 0),
+    ...commonQueryOptions,
   });
 
   const { data: dataFull } = useQuery({
-    queryKey: ["dataFull"],
-    queryFn: () => GetDataFull(user?.system_id || null),
+    queryKey: ["dataFull", user?.system_id],
+    queryFn: () => GetDataFull(user?.system_id || 0),
+    ...commonQueryOptions,
   });
-  if (data != null) {
-    localStorage.setItem("DataFull", JSON.stringify(data));
-  }
+
   const { data: events } = useQuery({
-    queryKey: ["events"],
-    queryFn: () => {
-      if (user) {
-        return getEventsDB(user.system_id || 0);
-      } else {
-        return null;
-      }
-    },
+    queryKey: ["events", user?.system_id],
+    queryFn: () => getEventsDB(user?.system_id || 0),
+    ...commonQueryOptions,
   });
 
   useEffect(() => {
-    getAnalys(analys);
-    getEvents(events);
-    getOperator(operator);
-    getDataFull(dataFull);
-    getProduction(production);
+    if (analys) getAnalys(analys);
+    if (events) getEvents(events);
+    if (operator) getOperator(operator);
+    if (dataFull) getDataFull(dataFull);
+    if (production) getProduction(production);
+    if (doctor) getDoctor(doctor);
+    if (chemist) getChemist(chemist);
+
     refetchDoctor(refetchdoctor);
     refetchOperator(refetchopertor);
-    if (doctor) {
-      getDoctor(doctor);
-    } else {
-      console.log("doctor  ainda indidponivel");
-    }
-    if (getChemist) {
-      getChemist(chemist);
-    } else {
-      console.log(" Chemist ainda indidponivel");
-    }
-    if (refetchChemist) {
-      refetchChemist(refetchchemist);
-    } else {
-      console.error("refetchChemist is not defined");
-    }
-  }, [
-    analys,
-    events,
-    operator,
-    dataFull,
-    production,
-    refetchdoctor,
-    refetchopertor,
-    doctor,
-    getChemist,
-    chemist,
-    refetchChemist,
-  ]);
-  const Abrandador = getObjects(dataFull, " Abrandador")!;
-  const Zeolica = getObjects(dataFull, "Multimídia")!;
-  const Carvao = getObjects(dataFull, " Saída de Carvão")!;
+    refetchChemist(refetchchemist);
+  }, [analys, events, operator, dataFull, production, doctor, chemist]);
+
+  const Abrandador = useMemo(
+    () => getObjects(dataFull, "Abrandador")!,
+    [dataFull]
+  );
+  const Zeolica = useMemo(
+    () => getObjects(dataFull, "Multimídia")!,
+    [dataFull]
+  );
+  const Carvao = useMemo(
+    () => getObjects(dataFull, "Saída de Carvão")!,
+    [dataFull]
+  );
+
   const [selectData, setSelectData] = useState<Props>(Abrandador);
 
-  const dataSelect = async (grafic: string) => {
+  const dataSelect = (grafic: string) => {
     switch (grafic) {
       case "abrandador":
         setSelectData(Abrandador);
         break;
       case "zeolita":
-        await setSelectData(Zeolica);
+        setSelectData(Zeolica);
         break;
       case "carvao":
-        await setSelectData(Carvao);
+        setSelectData(Carvao);
         break;
       case "img":
-        return <Image src={Logo} alt={"logo"} />;
       default:
-        return <Image src={Logo} alt={"logo"} />;
+        return <Image src={Logo} alt="logo" />;
     }
   };
 
   return (
-    <div className=" conteiner w-full mt-5 ">
+    <div className="container w-full mt-5">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-sm:w-80">
-        <div className=" bg-white rounded-lg p-3  md:top-10 md:right-20">
-          <div className="flex flex-row md:flex-row  gap-3">
+        <div className="bg-white rounded-lg p-3 md:top-10 md:right-20">
+          <div className="flex flex-row md:flex-row gap-3">
             <div
               className="flex flex-col items-center"
               onClick={() => dataSelect("zeolita")}
@@ -204,11 +158,10 @@ const HomeBody: React.FC = () => {
             </div>
           </div>
         </div>
-
-        <div className=" bg-white rounded-lg  max-sm:w-full w-[450px]">
+        <div className="bg-white rounded-lg max-sm:w-full w-[450px]">
           {selectData?.title === "img" ? (
             <div className="flex justify-center items-center">
-              <Image priority={true} src={Logo} alt={"logo"} />
+              <Image priority={true} src={Logo} alt="logo" />
             </div>
           ) : (
             <div className="flex justify-center items-center">
