@@ -281,7 +281,7 @@ model whatsApp {
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model Level {
   id        Int      @id @default(autoincrement())
-  level     Int?
+  level     Float?   @db.Real
   system_id Int?
   systems   systems? @relation(fields: [system_id], references: [id], onDelete: Cascade)
 }
