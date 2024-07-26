@@ -3,8 +3,8 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "../../../../lib/db";
 
 interface Level{
-  id?: number;
-  level: number;
+  id?: string;
+  level: string;
   system: string
   
 }
@@ -50,7 +50,7 @@ export async function POST(req: NextRequest) {
       
       const level = await prisma.level.create({
           data: {
-              level: data.level,
+              level: Number(data.level),
               system_id: Number(id)
           }
       });
@@ -79,12 +79,12 @@ export async function PATCH(req: NextRequest) {
     const level = await prisma.level.update({
         
       where: {
-        id:data.id,
+        id:Number(data.id),
         system_id: Number(id)
       },
 
       data: {
-        level:data.level
+        level:Number(data.level)
       }
      
       });
@@ -111,7 +111,7 @@ export async function DELETE(req: NextRequest) {
       {
         where:
         {
-          id: data.id,
+          id: Number(data.id),
           system_id:Number(id)
         }
       })
