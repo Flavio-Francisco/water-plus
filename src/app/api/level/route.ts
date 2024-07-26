@@ -1,38 +1,71 @@
 
 import { NextRequest, NextResponse } from "next/server";
+import prisma from "../../../../lib/db";
+
+interface Level{
+  id?: number;
+  level: number;
+  system: string
+  
+}
+
 
 
 export async function POST(req: NextRequest) {
-    const url = new URL(req.nextUrl.href);
-    const id = url.searchParams.get("id");
-    
-    try {
-      // Espera pela resolução da promise retornada por req.json()
-      const jsonData = await req.json();
-      console.log(jsonData);
+  const url = new URL(req.nextUrl.href);
+  const id = url.searchParams.get("id");
+  
+  try {
+      const data: Level = await req.json();
+      console.log('Received Data:', data);
+      console.log('Parsed System ID:', Number(id));
       
-      // Verifica se 'id' é igual a "1"
-      if (id === "1") {
-        return NextResponse.json(jsonData,{status:200});
-      } else {
-        return NextResponse.json({
-          message: "ID não reconhecido",
-          id: id
-        },
-          {
-          status:200
-        });
+      if (!id || isNaN(Number(id))) {
+          throw new Error("ID inválido");
       }
       
-    } catch (error) {
+      const level = await prisma.level.create({
+          data: {
+              level: data.level,
+              system_id: Number(id)
+          }
+      });
+      
+      return NextResponse.json(level);
+  } catch (error) {
+      console.error('Error:', error);
       return NextResponse.json({
+          message: "Erro ao processar requisição",
+          error: error
+      }, {
+          status: 500
+      });
+  }
+}
+
+export async function DELETE(req: NextRequest) {
+  const url = new URL(req.nextUrl.href);
+  const id = url.searchParams.get("id");
+  type DataId = Pick<Level, 'id'>;
+  const data:DataId  = await req.json();
+  try {
+    const level = await prisma.level.delete(
+      {
+        where:
+        {
+          id: data.id,
+          system_id:Number(id)
+        }
+      })
+      return NextResponse.json(level);
+  } catch (error) {
+    console.error('Error:', error);
+    return NextResponse.json({
         message: "Erro ao processar requisição",
         error: error
-      },
-      {
+    }, {
         status: 500
-      });
-    }
+    });
   }
-  
-  
+
+}

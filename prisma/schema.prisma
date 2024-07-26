@@ -195,6 +195,7 @@ model systems {
   state                                                    String?
   zipCode                                                  String?
   number                                                   Int?
+  Level                                                    Level[]
   Reservoir_cleaning                                       Reservoir_cleaning[]
   acid                                                     acid[]
   apevisa                                                  apevisa[]
@@ -275,4 +276,12 @@ model whatsApp {
   messageCriticaLevel String?
   messageFueling      String?
   systems             systems  @relation(fields: [system_id], references: [id], onDelete: Cascade)
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model Level {
+  id        Int      @id @default(autoincrement())
+  level     Int?
+  system_id Int?
+  systems   systems? @relation(fields: [system_id], references: [id], onDelete: Cascade)
 }
