@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "../../../../lib/db";
-
+import { format } from "date-fns";
 interface Level {
   id?: string;
   level: string;
@@ -56,10 +56,11 @@ export async function POST(req: NextRequest) {
     if (!id || isNaN(Number(id))) {
       throw new Error("ID inválido");
     }
-
+    const currentTime = format(new Date(), 'HH:mm');
     const level = await prisma.level.create({
       data: {
         level: Number(data.level),
+        hourly:currentTime,
         system_id: Number(id)
       }
     });
