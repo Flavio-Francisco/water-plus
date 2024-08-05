@@ -11,7 +11,7 @@ const corsHeaders = {
 export async function GET(req: NextRequest) {
   const url = new URL(req.nextUrl.href);
   const id = url.searchParams.get("id");
-
+const pointName = await req.json()
   if (req.method === 'OPTIONS') {
     return new NextResponse(null, { headers: corsHeaders });
   }
@@ -20,6 +20,7 @@ export async function GET(req: NextRequest) {
     const levels = await prisma.level.findMany({
       where: {
         system_id: Number(id),
+        pointName:pointName,
         id: {
           not: 4
         }

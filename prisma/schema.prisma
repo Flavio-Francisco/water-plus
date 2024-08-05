@@ -284,5 +284,6 @@ model Level {
   level     Float?   @db.Real
   system_id Int?
   hourly    String?
+  pointName String?
   systems   systems? @relation(fields: [system_id], references: [id], onDelete: Cascade)
 }
