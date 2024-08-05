@@ -27,7 +27,7 @@ export async function GET(req: NextRequest) {
       orderBy: {
         id: 'desc'  // Ordenar por ID, assumindo que IDs maiores foram criados mais recentemente
       },
-      take: 24
+      take: 5
     });
     return NextResponse.json(levels, { headers: corsHeaders });
   } catch (error) {
