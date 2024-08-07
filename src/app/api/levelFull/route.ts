@@ -32,7 +32,7 @@ export async function GET(req: NextRequest) {
       },
      
       select: {
-        id:true,
+       
         pointName: true  // Selecionar apenas o campo `pointName`
       }
     });

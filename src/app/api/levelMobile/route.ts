@@ -34,7 +34,7 @@ export async function POST(req: NextRequest) {
   
     const level = await prisma.level.findUnique({
       where: {
-        id: Number(data.id),
+      
         pointName: data.pointName,
         system_id:Number(id),
       },
