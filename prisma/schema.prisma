@@ -195,7 +195,7 @@ model systems {
   state                                                    String?
   zipCode                                                  String?
   number                                                   Int?
-  Level                                                    Level[]
+ 
   Reservoir_cleaning                                       Reservoir_cleaning[]
   acid                                                     acid[]
   apevisa                                                  apevisa[]
@@ -279,6 +279,7 @@ model whatsApp {
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
 model Level {
   id        Int      @id @default(autoincrement())
   level     Float?   @db.Real
@@ -286,4 +287,6 @@ model Level {
   hourly    String?
   pointName String?
   systems   systems? @relation(fields: [system_id], references: [id], onDelete: Cascade)
+
+  @@ignore
 }

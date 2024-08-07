@@ -32,7 +32,7 @@ export async function POST(req: NextRequest) {
       throw new Error("ID inválido");
     }
   
-    const level = await prisma.level.findUnique({
+    const level = await prisma.level.findMany({
       where: {
       
         pointName: data.pointName,
