@@ -32,11 +32,12 @@ export async function GET(req: NextRequest) {
       },
      
       select: {
+        id:true,
         pointName: true  // Selecionar apenas o campo `pointName`
       }
     });
 
-    const uniquePointNames = Array.from(new Set(levels.map(level => level.pointName)));
+    const uniquePointNames = Array.from(new Set(levels.map(level => {level.pointName,level.id})));
 
     return NextResponse.json(uniquePointNames, { headers: corsHeaders });
   } catch (error) {
