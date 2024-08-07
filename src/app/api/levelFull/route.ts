@@ -37,9 +37,9 @@ export async function GET(req: NextRequest) {
       }
     });
 
-   
+    const uniquePointNames = Array.from(new Set(levels.map(level => level.pointName)));
 
-    return NextResponse.json(levels, { headers: corsHeaders });
+    return NextResponse.json(uniquePointNames, { headers: corsHeaders });
   } catch (error) {
     console.error('Error:', error);
     return NextResponse.json({
