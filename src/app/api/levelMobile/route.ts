@@ -42,7 +42,13 @@ export async function POST(req: NextRequest) {
         level: true,
         pointName: true,
         hourly:true
-      }
+      },
+      orderBy: {
+        // Supondo que você tenha um campo de data/hora chamado "createdAt" para ordenação
+       id: 'desc', // Modifique para o campo que reflete a ordem desejada
+      },
+      take: 5, // Limita a 5 registros
+   
     });
 
     return NextResponse.json(level, { headers: corsHeaders });
