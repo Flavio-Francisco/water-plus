@@ -7,7 +7,15 @@ datasource db {
   url      = env("PostgreSQL")
 }
 
-/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model Level {
+  id        Int      @id @default(autoincrement())
+  level     Float?   @db.Real
+  system_id Int?
+  hourly    String?
+  pointName String?
+  systems   systems? @relation(fields: [system_id], references: [id], onDelete: Cascade)
+}
+
 model Reservoir_cleaning {
   id           Int      @id @default(autoincrement())
   lastCleaning String
@@ -15,7 +23,15 @@ model Reservoir_cleaning {
   systems      systems? @relation(fields: [system_id], references: [id], onDelete: Cascade)
 }
 
-/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model acid {
+  id        Int      @default(autoincrement())
+  date      String
+  machine   String   @id
+  system_id Int?
+  systems   systems? @relation(fields: [system_id], references: [id], onDelete: Cascade)
+}
+
 model apevisa {
   id               Int      @id @default(autoincrement())
   date             String
@@ -35,7 +51,6 @@ model apevisa {
   systems          systems? @relation(fields: [system_id], references: [id], onDelete: Cascade)
 }
 
-/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model chemical {
   id              Int      @id(map: "chemist_pkey") @default(autoincrement())
   name            String?
@@ -48,6 +63,22 @@ model chemical {
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model desifection {
+  id        Int     @default(autoincrement())
+  step1     String
+  step2     String?
+  data1     String?
+  data2     String?
+  data3     String?
+  product   String?
+  quantity  String?
+  loop      String?
+  system_id Int
+  systems   systems @relation(fields: [system_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([id, system_id])
+}
+
 model diasefe {
   id        Int      @default(autoincrement())
   date      String
@@ -56,7 +87,6 @@ model diasefe {
   systems   systems? @relation(fields: [system_id], references: [id], onDelete: Cascade)
 }
 
-/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model doctor {
   id              Int      @id @default(autoincrement())
   name            String?
@@ -69,6 +99,17 @@ model doctor {
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model events {
+  id          Int      @id @default(autoincrement())
+  title       String?
+  date        String?
+  description String?
+  editable    Boolean?
+  systen_id   Int?
+  status      String?
+  systems     systems? @relation(fields: [systen_id], references: [id], onDelete: Cascade)
+}
+
 model microbiologigo_assays {
   id                         Int      @id @default(autoincrement())
   samplingDate               String
@@ -81,7 +122,6 @@ model microbiologigo_assays {
   systems                    systems? @relation(fields: [system_id], references: [id], onDelete: Cascade)
 }
 
-/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model operator {
   id           Int      @id @default(autoincrement())
   name         String
@@ -90,7 +130,6 @@ model operator {
   systems      systems? @relation(fields: [system_id], references: [id], onDelete: Cascade)
 }
 
-/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model parameters {
   id                            Int       @id @default(autoincrement())
   Color                         String
@@ -134,46 +173,44 @@ model parameters {
   systems                       systems?  @relation(fields: [system_id], references: [id], onDelete: Cascade)
 }
 
-/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model reservoir_analysis {
-  id                                            Int      @id @default(autoincrement())
-  bicarbonateAlkalinity                         String
-  carbonateAlkalinity                           String?
-  hydroxideAlkalinity                           String?
-  totalAlkalinity                               String?
-  aluminum                                      String?
-  ammonia                                       String?
-  calcium                                       String?
-  chlorides                                     String?
-  freeResidualChlorine                          String?
-  electricalConductivity                        String?
-  apparentColor                                 String?
-  carbonateHardness                             String?
-  nonCarbonateHardness                          String?
-  totalHardness                                 String?
-  totalIron                                     String?
-  magnesium                                     String?
-  manganese                                     String?
-  nitrate                                       String?
-  nitrite                                       String?
-  dissolvedOxygen                               String?
-  pH                                            String?
-  potassium                                     String?
-  sodium                                        String?
-  totalDissolvedSolids                          String?
-  sulfate                                       String?
-  hydrogenSulfide                               String?
-  surfactants                                   String?
-  totalColiforms                                String?
-  heterotrophicBacteriaCount                    String?
-  endotoxins                                    String?
-  samplingDate                                  String?
-  sampleMatrixAndOrigin                         String?
-  system_id                                     Int?
-  systems_reservoir_analysis_system_idTosystems systems? @relation("reservoir_analysis_system_idTosystems", fields: [system_id], references: [id], onDelete: Cascade)
+  id                         Int      @id @default(autoincrement())
+  bicarbonateAlkalinity      String
+  carbonateAlkalinity        String?
+  hydroxideAlkalinity        String?
+  totalAlkalinity            String?
+  aluminum                   String?
+  ammonia                    String?
+  calcium                    String?
+  chlorides                  String?
+  freeResidualChlorine       String?
+  electricalConductivity     String?
+  apparentColor              String?
+  carbonateHardness          String?
+  nonCarbonateHardness       String?
+  totalHardness              String?
+  totalIron                  String?
+  magnesium                  String?
+  manganese                  String?
+  nitrate                    String?
+  nitrite                    String?
+  dissolvedOxygen            String?
+  pH                         String?
+  potassium                  String?
+  sodium                     String?
+  totalDissolvedSolids       String?
+  sulfate                    String?
+  hydrogenSulfide            String?
+  surfactants                String?
+  totalColiforms             String?
+  heterotrophicBacteriaCount String?
+  endotoxins                 String?
+  samplingDate               String?
+  sampleMatrixAndOrigin      String?
+  system_id                  Int?
+  systems                    systems? @relation(fields: [system_id], references: [id], onDelete: Cascade)
 }
 
-/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model reservoir_cleaning_report {
   id               Int      @id @default(autoincrement())
   flushing         String
@@ -186,77 +223,39 @@ model reservoir_cleaning_report {
   systems          systems? @relation(fields: [system_id], references: [id], onDelete: Cascade)
 }
 
-/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model systems {
-  id                                                       Int                         @id @default(autoincrement())
-  name                                                     String
-  address                                                  String?
-  city                                                     String?
-  state                                                    String?
-  zipCode                                                  String?
-  number                                                   Int?
- 
-  Reservoir_cleaning                                       Reservoir_cleaning[]
-  acid                                                     acid[]
-  apevisa                                                  apevisa[]
-  chemical                                                 chemical[]
-  desifection                                              desifection[]
-  diasefe                                                  diasefe[]
-  doctor                                                   doctor[]
-  events                                                   events[]
-  microbiologigo_assays                                    microbiologigo_assays[]
-  operator                                                 operator[]
-  parameters                                               parameters[]
-  reservoir_analysis_reservoir_analysis_system_idTosystems reservoir_analysis[]        @relation("reservoir_analysis_system_idTosystems")
-  reservoir_cleaning_report                                reservoir_cleaning_report[]
-  user                                                     user[]
-  whatsApp                                                 whatsApp[]
+  id                        Int                         @id @default(autoincrement())
+  name                      String
+  address                   String?
+  city                      String?
+  state                     String?
+  zipCode                   String?
+  number                    Int?
+  Level                     Level[]
+  Reservoir_cleaning        Reservoir_cleaning[]
+  acid                      acid[]
+  apevisa                   apevisa[]
+  chemical                  chemical[]
+  desifection               desifection[]
+  diasefe                   diasefe[]
+  doctor                    doctor[]
+  events                    events[]
+  microbiologigo_assays     microbiologigo_assays[]
+  operator                  operator[]
+  parameters                parameters[]
+  reservoir_analysis        reservoir_analysis[]
+  reservoir_cleaning_report reservoir_cleaning_report[]
+  user                      user[]
+  whatsApp                  whatsApp[]
 }
 
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
 model user {
   id        Int      @id @default(autoincrement())
   name      String   @unique
   password  String?
   system_id Int?
   adm       Boolean?
-  systems   systems? @relation(fields: [system_id], references: [id], onDelete: Cascade)
-}
-
-/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
-model events {
-  id          Int      @id @default(autoincrement())
-  title       String?
-  date        String?
-  description String?
-  editable    Boolean?
-  systen_id   Int?
-  status      String?
-  systems     systems? @relation(fields: [systen_id], references: [id], onDelete: Cascade)
-}
-
-/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
-model desifection {
-  id        Int     @default(autoincrement())
-  step1     String
-  step2     String?
-  data1     String?
-  data2     String?
-  data3     String?
-  product   String?
-  quantity  String?
-  loop      String?
-  system_id Int
-  systems   systems @relation(fields: [system_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-
-  @@id([id, system_id])
-}
-
-/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
-model acid {
-  id        Int      @default(autoincrement())
-  date      String
-  machine   String   @id
-  system_id Int?
   systems   systems? @relation(fields: [system_id], references: [id], onDelete: Cascade)
 }
 
@@ -276,17 +275,4 @@ model whatsApp {
   messageCriticaLevel String?
   messageFueling      String?
   systems             systems  @relation(fields: [system_id], references: [id], onDelete: Cascade)
-}
-
-/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
-/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
-model Level {
-  id        Int      @id @default(autoincrement())
-  level     Float?   @db.Real
-  system_id Int?
-  hourly    String?
-  pointName String?
-  systems   systems? @relation(fields: [system_id], references: [id], onDelete: Cascade)
-
-  @@ignore
 }
