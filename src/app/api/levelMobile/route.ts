@@ -45,7 +45,7 @@ export async function POST(req: NextRequest) {
       },
       orderBy: {
         // Supondo que você tenha um campo de data/hora chamado "createdAt" para ordenação
-       id: 'desc', // Modifique para o campo que reflete a ordem desejada
+       hourly: 'desc', // Modifique para o campo que reflete a ordem desejada
       },
       take: 5, // Limita a 5 registros
    
