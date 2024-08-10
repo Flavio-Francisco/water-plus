@@ -56,7 +56,7 @@ export async function POST(req: NextRequest) {
     if (!id || isNaN(Number(id))) {
       throw new Error("ID inválido");
     }
-    const currentTime = format(new Date(), 'HH:mm');
+    const currentTime = format(new Date(), "HH:mm", { timeZone: "UTC" });
     const level = await prisma.level.create({
       data: {
         level: Number(data.level),
