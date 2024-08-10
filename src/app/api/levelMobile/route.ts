@@ -1,10 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "../../../../lib/db";
 
-interface Level {
 
+interface Level {
   pointName: string;
- 
 }
 
 const corsHeaders = {
@@ -12,8 +11,6 @@ const corsHeaders = {
   'Access-Control-Allow-Methods': 'GET, POST, PATCH, DELETE',
   'Access-Control-Allow-Headers': 'Content-Type, Authorization'
 };
-
-
 
 export async function POST(req: NextRequest) {
   const url = new URL(req.nextUrl.href);
@@ -24,7 +21,7 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const data:Level = await req.json();
+    const data: Level = await req.json();
     console.log('Received Data:', data);
     console.log('Parsed System ID:', Number(id));
 
@@ -32,26 +29,27 @@ export async function POST(req: NextRequest) {
       throw new Error("ID inválido");
     }
   
-    const level = await prisma.level.findMany({
+    const levels = await prisma.level.findMany({
       where: {
-      
         pointName: data.pointName,
-        system_id:Number(id),
+        system_id: Number(id),
       },
       select: {
         level: true,
         pointName: true,
-        hourly:true
+        hourly: true
       },
       orderBy: {
         // Supondo que você tenha um campo de data/hora chamado "createdAt" para ordenação
-       hourly: 'desc', // Modifique para o campo que reflete a ordem desejada
+        hourly: 'desc', // Modifique para o campo que reflete a ordem desejada
       },
       take: 5, // Limita a 5 registros
-   
     });
 
-    return NextResponse.json(level, { headers: corsHeaders });
+    // Ajusta a hora de cada registro
+ 
+
+    return NextResponse.json(levels, { headers: corsHeaders });
   } catch (error) {
     console.error('Error:', error);
     return NextResponse.json({
@@ -63,5 +61,6 @@ export async function POST(req: NextRequest) {
     });
   }
 }
+
 
 

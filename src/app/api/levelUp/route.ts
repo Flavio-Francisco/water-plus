@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "../../../../lib/db";
+import { format } from 'date-fns';
 
 interface Level {
   pointName: string;
@@ -28,14 +29,14 @@ export async function POST(req: NextRequest) {
       throw new Error("ID inválido");
     }
 
-    // Assumindo que "id" é o campo que você deseja ordenar
+    // Encontra o primeiro registro que corresponde ao critério
     const level = await prisma.level.findFirstOrThrow({
       where: {
         pointName: data.pointName,
         system_id: Number(id),
       },
       select: {
-        id:true,
+        id: true,
         level: true,
         pointName: true,
         hourly: true
@@ -43,16 +44,43 @@ export async function POST(req: NextRequest) {
       orderBy: {
         id: 'asc', // Ordena pelo campo "id" em ordem crescente
       },
-      take: 1, // Limita a 1 registro
-
     });
 
-    return NextResponse.json(level, { headers: corsHeaders });
+    // Log para verificar o valor de hourly
+    console.log('Raw Hourly Value:', level.hourly);
+
+    let adjustedHourly: string | null = null;
+
+    if (level.hourly) {
+      try {
+        // Converte a string de hora para um objeto Date com a data fictícia para manipulação
+        const [hours, minutes] = level.hourly.split(':').map(Number);
+        const date = new Date();
+        date.setHours(hours);
+        date.setMinutes(minutes);
+        date.setSeconds(0);
+        date.setMilliseconds(0);
+
+        // Subtrai 3 horas e formata a nova hora
+        date.setHours(date.getHours() - 3);
+        adjustedHourly = format(date, 'HH:mm');
+      } catch (error) {
+        console.error('Error adjusting hourly:', error);
+        adjustedHourly = null; // Define como null se não puder processar
+      }
+    }
+
+    // Retorna o registro ajustado
+    return NextResponse.json({
+      ...level,
+      hourly: adjustedHourly
+    }, { headers: corsHeaders });
+
   } catch (error) {
     console.error('Error:', error);
     return NextResponse.json({
       message: "Erro ao processar requisição",
-      error: error
+     
     }, {
       status: 500,
       headers: corsHeaders
