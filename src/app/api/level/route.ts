@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "../../../../lib/db";
-import { format } from "date-fns";
+import { format } from 'date-fns-tz'
 interface Level {
   id?: string;
   level: string;
@@ -88,7 +88,7 @@ export async function PATCH(req: NextRequest) {
 
   try {
     const data: Level = await req.json();
-    const currentTime = format(new Date(), 'HH:mm');
+    const currentTime = format(new Date(), "HH:mm", { timeZone: "UTC" });
     const level = await prisma.level.update({
       where: {
         id: Number(data.id),
