@@ -88,14 +88,15 @@ export async function PATCH(req: NextRequest) {
 
   try {
     const data: Level = await req.json();
-
+    const currentTime = format(new Date(), 'HH:mm');
     const level = await prisma.level.update({
       where: {
         id: Number(data.id),
         system_id: Number(id)
       },
       data: {
-        level: Number(data.level)
+        level: Number(data.level),
+        hourly:currentTime
       }
     });
 
