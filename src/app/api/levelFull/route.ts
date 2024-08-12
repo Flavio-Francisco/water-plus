@@ -20,9 +20,7 @@ export async function GET(req: NextRequest) {
     const levels = await prisma.level.findMany({
       where: {
         system_id: Number(id),
-        id: {
-          not: 4
-        },
+       
         pointName: {
           not: null  // Adicionado filtro para `pointName` não ser nulo
         }
