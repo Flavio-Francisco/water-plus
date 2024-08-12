@@ -5,6 +5,7 @@ interface Level {
   id?: string;
   level: string;
   system: string;
+  pointName: string;
 }
 
 const corsHeaders = {
@@ -61,7 +62,8 @@ export async function POST(req: NextRequest) {
       data: {
         level: Number(data.level),
         hourly:currentTime,
-        system_id: Number(id)
+        system_id: Number(id),
+        pointName:data.pointName
       }
     });
 
@@ -96,7 +98,8 @@ export async function PATCH(req: NextRequest) {
       },
       data: {
         level: Number(data.level),
-        hourly:currentTime
+        hourly: currentTime,
+        pointName:data.pointName
       }
     });
 
