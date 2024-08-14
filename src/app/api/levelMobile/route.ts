@@ -1,7 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "../../../../lib/db";
 
-
+interface Point{
+  pointName:string
+}
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*', // Ou especifique um domínio, por exemplo, 'https://example.com'
@@ -12,26 +14,26 @@ const corsHeaders = {
 export async function POST(req: NextRequest) {
   const url = new URL(req.nextUrl.href);
   const id = url.searchParams.get("id");
-  const { pointName } = await req.json();
+  const { pointName }:Point= await req.json();
 
   if (req.method === 'OPTIONS') {
     return new NextResponse(null, { headers: corsHeaders });
   }
+console.log(pointName);
 
   try {
     const levels = await prisma.level.findMany({
       where: {
         system_id: Number(id),
         pointName: pointName,
-        id: {
-          not: 4
-        }
+     
       },
       orderBy: {
         id: 'desc'  // Ordenar por ID, assumindo que IDs maiores foram criados mais recentemente
       },
       take: 5
     });
+console.log(levels );
 
     // Subtrair 3 horas do horário
     const adjustedLevels = levels.map(level => {

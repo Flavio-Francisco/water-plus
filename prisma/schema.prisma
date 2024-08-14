@@ -276,3 +276,14 @@ model whatsApp {
   messageFueling      String?
   systems             systems  @relation(fields: [system_id], references: [id], onDelete: Cascade)
 }
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model control {
+  id        Int      @id @default(autoincrement())
+  or1       Boolean?
+  or2       Boolean?
+  start     Boolean?
+  start1    Boolean?
+  start2    Boolean?
+  id_system Int?
+}
