@@ -68,7 +68,7 @@ export async function PATCH(req: NextRequest) {
         const control = await prisma.control.update({
         
             where: {
-              id:data.id,
+            id:data.id,
               id_system:Number(id)
           },
           data: {
