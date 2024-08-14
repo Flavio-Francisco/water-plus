@@ -53,3 +53,44 @@ export async function POST(req: NextRequest) {
     });
   }
 }
+
+export async function PATCH(req: NextRequest) {
+  
+    const url = new URL(req.nextUrl.href);
+    const id = url.searchParams.get("id");
+    const data:Control = await req.json();
+  
+    if (req.method === 'OPTIONS') {
+      return new NextResponse(null, { headers: corsHeaders });
+    }
+  
+    try {
+        const control = await prisma.control.update({
+        
+            where: {
+              id:data.id,
+              id_system:Number(id)
+          },
+          data: {
+              or1: data.or1,
+              or2: data.or2,
+              start: data.start,
+              start1: data.start1,
+              start2:data.start2
+       }
+      });
+  
+        
+  
+      return NextResponse.json(control);
+    } catch (error) {
+      console.error('Error:', error);
+      return NextResponse.json({
+        message: "Erro ao processar requisição",
+        error: error
+      }, {
+        status: 500,
+        headers: corsHeaders
+      });
+    }
+  }
