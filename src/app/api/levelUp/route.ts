@@ -40,7 +40,10 @@ export async function POST(req: NextRequest) {
         id: true,
         level: true,
         pointName: true,
-        hourly: true
+        hourly: true,
+        CriticalLevel: true,
+        LowLevel: true
+
       },
       orderBy: {
         id: 'asc', // Ordena pelo campo "id" em ordem crescente
