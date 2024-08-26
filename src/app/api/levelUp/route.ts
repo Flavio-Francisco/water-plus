@@ -32,6 +32,7 @@ export async function POST(req: NextRequest) {
     // Encontra o primeiro registro que corresponde ao critério
     const level = await prisma.level.findFirstOrThrow({
       where: {
+        id:4,
         pointName: data.pointName,
         system_id: Number(id),
       },
