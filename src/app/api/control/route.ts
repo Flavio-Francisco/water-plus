@@ -5,6 +5,7 @@ interface Control{
     id?: number,
     or1: boolean;   
     or2: boolean;   
+    system: boolean;
     start: boolean; 
     start2: boolean; 
     start1: boolean; 
@@ -41,6 +42,7 @@ export async function GET(req: NextRequest) {
           select: {
               or1: true,
               or2: true,
+              system:true,
               start:true,
               start1: true,
               start2:true,
@@ -81,7 +83,9 @@ export async function POST(req: NextRequest) {
             or2: data.or2,
             start: data.start,
             start1: data.start1,
-            start2:data.start2
+            start2: data.start2,
+            system: data.system
+   
      }
     });
 
@@ -122,7 +126,8 @@ export async function PATCH(req: NextRequest) {
               or2: data.or2,
               start: data.start,
               start1: data.start1,
-              start2:data.start2
+              start2: data.start2,
+              system: data.system
        }
       });
   
