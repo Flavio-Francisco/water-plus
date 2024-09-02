@@ -1,16 +1,25 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "../../../../lib/db";
 
-interface Control{
-    id?: number,
-    or1: boolean;   
-    or2: boolean;   
-    system: boolean;
-    start: boolean; 
-    start2: boolean; 
-    start1: boolean; 
-    id_system:number
-   
+export interface Control{
+  id?: number,
+  or1: boolean;   
+  or2: boolean;   
+  system: boolean;
+  start: boolean; 
+  start2: boolean; 
+  start1: boolean; 
+  lowPressureOr1: boolean;
+  lowPressureOr2: boolean;
+  pumpOr1: boolean;
+  pumpOr2: boolean;
+  conductivityOr1: boolean;
+  conductivityOr2: boolean;
+  loopingPump1: boolean;
+  loopingPump2: boolean;
+  criticalLevel: boolean;
+  id_system:number
+ 
 }
 
 const corsHeaders = {
@@ -45,7 +54,18 @@ export async function GET(req: NextRequest) {
               system:true,
               start:true,
               start1: true,
-              start2:true,
+              start2: true,
+              conductivityOr1: true,
+              conductivityOr2: true,
+              loopingPump1: true,
+              loopingPump2: true,
+              criticalLevel: true,
+              lowPressureOr1: true,
+              lowPressureOr2: true,
+              pumpOr1: true,
+              pumpOr2: true,
+            
+              
        }
       });
   
@@ -84,7 +104,18 @@ export async function POST(req: NextRequest) {
             start: data.start,
             start1: data.start1,
             start2: data.start2,
-            system: data.system
+            system: data.system,
+            conductivityOr1: data.conductivityOr1,
+            conductivityOr2: data.conductivityOr2,
+            loopingPump1: data.loopingPump1,
+            loopingPump2: data.loopingPump2,
+            criticalLevel: data.criticalLevel,
+            lowPressureOr1: data.lowPressureOr1,
+            lowPressureOr2: data.lowPressureOr2,
+            pumpOr1: data.pumpOr1,
+            pumpOr2: data.pumpOr2,
+            
+  
    
      }
     });
@@ -127,7 +158,16 @@ export async function PATCH(req: NextRequest) {
               start: data.start,
               start1: data.start1,
               start2: data.start2,
-              system: data.system
+              system: data.system,
+              conductivityOr1: data.conductivityOr1,
+              conductivityOr2: data.conductivityOr2,
+              loopingPump1: data.loopingPump1,
+              loopingPump2: data.loopingPump2,
+              criticalLevel: data.criticalLevel,
+              lowPressureOr1: data.lowPressureOr1,
+              lowPressureOr2: data.lowPressureOr2,
+              pumpOr1: data.pumpOr1,
+              pumpOr2: data.pumpOr2,
        }
       });
   
