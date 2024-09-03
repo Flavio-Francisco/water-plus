@@ -65,7 +65,9 @@ export async function GET(req: NextRequest) {
               lowPressureOr2: true,
               pumpOr1: true,
               pumpOr2: true,             
-              off:true
+              off: true,
+              id: true,
+              id_system:true
               
        }
       });
