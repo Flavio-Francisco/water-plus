@@ -84,6 +84,7 @@ model control {
   loopingPump1    Boolean?
   loopingPump2    Boolean?
   criticalLevel   Boolean?
+  off             Boolean?
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.

@@ -18,6 +18,7 @@ export interface Control{
   loopingPump1: boolean;
   loopingPump2: boolean;
   criticalLevel: boolean;
+  off: boolean;
   id_system:number
  
 }
@@ -63,8 +64,8 @@ export async function GET(req: NextRequest) {
               lowPressureOr1: true,
               lowPressureOr2: true,
               pumpOr1: true,
-              pumpOr2: true,
-            
+              pumpOr2: true,             
+              off:true
               
        }
       });
@@ -114,6 +115,8 @@ export async function POST(req: NextRequest) {
             lowPressureOr2: data.lowPressureOr2,
             pumpOr1: data.pumpOr1,
             pumpOr2: data.pumpOr2,
+            off: data.off
+       
             
   
    
@@ -168,6 +171,7 @@ export async function PATCH(req: NextRequest) {
               lowPressureOr2: data.lowPressureOr2,
               pumpOr1: data.pumpOr1,
               pumpOr2: data.pumpOr2,
+              off: data.off
        }
       });
   
