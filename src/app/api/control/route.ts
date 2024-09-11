@@ -101,7 +101,12 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const control = await prisma.control.create({
+    const control = await prisma.control.update({
+
+      where: {
+        id: data.id,
+        id_system:Number(data.id_system)
+      },
         data: {
             id_system: data.id_system,
             or1: data.or1,
