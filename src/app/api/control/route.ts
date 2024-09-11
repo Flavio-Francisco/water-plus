@@ -126,10 +126,6 @@ export async function POST(req: NextRequest) {
             pumpOr2: data.pumpOr2,
             off: data.off,
             state: data.state,
-       
-            
-  
-   
      }
     });
 
