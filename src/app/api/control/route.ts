@@ -20,6 +20,7 @@ export interface Control{
   criticalLevel: boolean;
   off: boolean;
   state: boolean;
+  status: boolean;
   id_system:number
  
 }
@@ -69,7 +70,8 @@ export async function GET(req: NextRequest) {
               off: true,
               id: true,
               id_system: true,
-              state:true
+            state: true,
+              status: true,
               
        }
       });
@@ -125,7 +127,9 @@ export async function POST(req: NextRequest) {
             pumpOr1: data.pumpOr1,
             pumpOr2: data.pumpOr2,
             off: data.off,
-            state: data.state,
+          state: data.state,
+          status:data.status
+            
      }
     });
 
@@ -178,7 +182,8 @@ export async function PATCH(req: NextRequest) {
               pumpOr1: data.pumpOr1,
               pumpOr2: data.pumpOr2,
               off: data.off,
-              state: data.state,
+            state: data.state,
+            status:data.status
        }
       });
   

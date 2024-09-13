@@ -86,6 +86,7 @@ model control {
   criticalLevel   Boolean?
   off             Boolean?
   state           Boolean?
+  status          Boolean?
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
@@ -273,7 +274,6 @@ model systems {
   reservoir_analysis        reservoir_analysis[]
   reservoir_cleaning_report reservoir_cleaning_report[]
   user                      user[]
-  whatsApp                  whatsApp[]
 }
 
 /// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
@@ -284,24 +284,6 @@ model user {
   system_id Int?
   adm       Boolean?
   systems   systems? @relation(fields: [system_id], references: [id], onDelete: Cascade)
-}
-
-/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
-model whatsApp {
-  id                  Int      @id @default(autoincrement())
-  name                String?
-  number              String?
-  lowLevel            Boolean?
-  criticaLevel        Boolean?
-  Fueling             Boolean?
-  SendLowLevel        Boolean?
-  SendCriticaLevel    Boolean?
-  SendFueling         Boolean?
-  system_id           Int
-  messageLowLevel     String?
-  messageCriticaLevel String?
-  messageFueling      String?
-  systems             systems  @relation(fields: [system_id], references: [id], onDelete: Cascade)
 }
 
 model Token {
