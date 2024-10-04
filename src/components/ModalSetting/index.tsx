@@ -12,8 +12,6 @@ import OperatorFormEdit from "../modals/modalOperator/newForm";
 import ModalLabUser from "../modals/modalUser/modalLabUser";
 import { useUserContext } from "@/context/userContext";
 import { useOperator } from "@/context/useOperator";
-import WhatsAppCard from "../whastApp/card";
-import WhatsAppForm from "../whastApp/form";
 
 interface IProps {
   icon: React.ReactNode;
@@ -30,7 +28,7 @@ export default function ModalSetting({ icon }: IProps) {
   const [openModal2, setOpenModal2] = React.useState(false);
   const [openModal3, setOpenModal3] = React.useState(false);
   const [openModal4, setOpenModal4] = React.useState(false);
-  const [openModal5, setOpenModal5] = React.useState(false);
+
   const handleUpdate = (success: boolean) => setOpenModal2(success);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -47,9 +45,6 @@ export default function ModalSetting({ icon }: IProps) {
   const handleOpenModal4 = () => {
     setOpenModal4(true);
   };
-  const handleOpenModal5 = () => {
-    setOpenModal5(true);
-  };
 
   const handlecloseModal1 = () => {
     setOpenModal1(false);
@@ -63,9 +58,7 @@ export default function ModalSetting({ icon }: IProps) {
   const handlecloseModal4 = () => {
     setOpenModal4(false);
   };
-  const handlecloseModal5 = () => {
-    setOpenModal5(false);
-  };
+
   const onUpdate = () => {
     setOpenModal4(false);
   };
@@ -126,14 +119,6 @@ export default function ModalSetting({ icon }: IProps) {
           }}
         >
           Usuários
-        </MenuItem>
-        <MenuItem
-          onClick={() => {
-            handleClose();
-            handleOpenModal5();
-          }}
-        >
-          Contatos
         </MenuItem>
       </Menu>
 
@@ -200,19 +185,6 @@ export default function ModalSetting({ icon }: IProps) {
           maxWidth="sm"
         >
           {user?.adm === true && <ModalLabUser onUpdate={onUpdate} />}
-        </ModalTsx>
-        <ModalTsx
-          fullWidth={true}
-          open={openModal5}
-          onClose={handlecloseModal5}
-          maxWidth="sm"
-        >
-          {user?.adm === true && (
-            <LabTabs
-              ComponetNew={<WhatsAppCard />}
-              ComponetEdit={<WhatsAppForm />}
-            />
-          )}
         </ModalTsx>
       </div>
     </div>
