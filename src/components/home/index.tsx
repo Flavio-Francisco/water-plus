@@ -9,7 +9,9 @@ function Home() {
   return (
     <div className="w-full  conteiner flex flex-col justify-center items-center  max-sm:w-7/12 max-sm:m-auto ">
       <div className=" max-sm:mt-10 sm:mt-[50px] text-center md:text-left ">
-        <h1 className="text-3xl font-bold whitespace-nowrap">Water Plus</h1>
+        <h1 className="text-3xl font-bold whitespace-nowrap translate-x-1">
+          Water Plus
+        </h1>
       </div>
 
       <div className=" conteiner md:gap-10 md:mb-10  grid sm:grid-cols-2 md:grid-cols-2 mt-10 justify-between">
