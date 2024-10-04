@@ -29,7 +29,7 @@ const UserCard: React.FC = () => {
 
   return (
     <div className="bg-transparent flex flex-col items-center justify-center ">
-      <p className="text-sm text-center text-white w-full mb-0">
+      <p className="text-sm text-center text-slate-50 w-full mb-0">
         {city}
         {"   "} {currentDate}
       </p>
