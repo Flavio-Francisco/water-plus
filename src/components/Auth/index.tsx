@@ -9,14 +9,13 @@ import { getSystems } from "@/app/fecth/systems";
 import { Systems } from "@/utils/models/analysis";
 import { auth } from "@/app/fecth/auth";
 import { useUserContext } from "@/context/userContext";
-import { useDataFull } from "@/context/userDataFull";
+
 import Loader from "../loader/page";
 import { signIn } from "next-auth/react";
 import { AxiosError } from "axios";
 
 export default function Auth() {
   const { getUser, clearCache } = useUserContext();
-  const { clearCacheDataFull } = useDataFull();
   const [selectedValue, setSelectedValue] = useState<Systems | null>(null);
   const [selectedPassword, setSelectPassword] = useState<string>("");
   const [selectedName, setSelectName] = useState<string>("");
@@ -35,13 +34,11 @@ export default function Auth() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const config: any = data || [];
   const systems = (data as Systems[]) || [];
-  console.log("status", config.status);
-  console.log("systems", systems);
+
   useEffect(() => {
     if (isLoading === true) {
       resetForm();
       clearCache();
-      clearCacheDataFull();
     }
   }, [isLoading]);
 

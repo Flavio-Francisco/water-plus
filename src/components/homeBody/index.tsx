@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Batery from "../batery";
 import Logo from "@/app/logo.jpg";
 import { Props } from "@/utils/models/Data";
@@ -7,12 +7,9 @@ import GraficLineAnimed from "../graficLineAnimed";
 import Image from "next/image";
 import { useUserContext } from "@/context/userContext";
 import { GetBatery } from "@/app/fecth/batery";
-import { useQuery } from "@tanstack/react-query";
-import { GetDataFull } from "@/app/fecth/dataform";
-import { useDataFull } from "@/context/userDataFull";
-import { getObjects } from "@/utils/functions/getObject";
+import { useMutation, useQuery } from "@tanstack/react-query";
+
 import { GetAnnual } from "@/app/fecth/annual";
-import { GetAnalys } from "@/app/fecth/analys";
 import { useEventInput } from "@/context/eventContext";
 import { getEventsDB } from "@/app/fecth/events";
 import { getChemical } from "@/app/fecth/chemical";
@@ -21,11 +18,11 @@ import { getDoctorDB } from "@/app/fecth/doctor";
 import { useDoctor } from "@/context/useDoctor";
 import { getOperatorDB } from "@/app/fecth/operator";
 import { useOperator } from "@/context/useOperator";
+import { fetchWaterParameters } from "@/app/fecth/bataBatery";
 
 const HomeBody: React.FC = () => {
   const { user } = useUserContext();
   const { getEvents } = useEventInput();
-  const { getDataFull, getProduction, getAnalys } = useDataFull();
   const { getChemist } = useChemist();
   const { getDoctor } = useDoctor();
   const { getOperator } = useOperator();
@@ -64,18 +61,6 @@ const HomeBody: React.FC = () => {
     ...commonQueryOptions,
   });
 
-  const { data: analys } = useQuery({
-    queryKey: ["analys", user?.system_id],
-    queryFn: () => GetAnalys(user?.system_id || 0),
-    ...commonQueryOptions,
-  });
-
-  const { data: dataFull } = useQuery({
-    queryKey: ["dataFull", user?.system_id],
-    queryFn: () => GetDataFull(user?.system_id || 0),
-    ...commonQueryOptions,
-  });
-
   const { data: events } = useQuery({
     queryKey: ["events", user?.system_id],
     queryFn: () => getEventsDB(user?.system_id || 0),
@@ -83,40 +68,38 @@ const HomeBody: React.FC = () => {
   });
 
   useEffect(() => {
-    if (analys) getAnalys(analys);
+    //  if (analys) getAnalys(analys);
     if (events) getEvents(events);
     if (operator) getOperator(operator);
-    if (dataFull) getDataFull(dataFull);
-    if (production) getProduction(production);
+    // if (production) getProduction(production);
     if (doctor) getDoctor(doctor);
     if (chemist) getChemist(chemist);
-  }, [analys, events, operator, dataFull, production, doctor, chemist]);
+  }, [events, operator, production, doctor, chemist]);
 
-  const Abrandador = useMemo(
-    () => getObjects(dataFull, "Abrandador")!,
-    [dataFull]
-  );
-  const Zeolica = useMemo(
-    () => getObjects(dataFull, "Multimídia")!,
-    [dataFull]
-  );
-  const Carvao = useMemo(
-    () => getObjects(dataFull, "Saída de Carvão")!,
-    [dataFull]
-  );
+  const [selectData, setSelectData] = useState<Props>();
 
-  const [selectData, setSelectData] = useState<Props>(Abrandador);
-
+  const { mutate } = useMutation({
+    mutationKey: ["dataBatery"],
+    mutationFn: (name: string) =>
+      fetchWaterParameters(user?.system_id || 0, name),
+    onSuccess(data) {
+      if (data) {
+        setSelectData(data);
+      } else {
+        alert("dados não encontrados!!");
+      }
+    },
+  });
   const dataSelect = (grafic: string) => {
     switch (grafic) {
       case "abrandador":
-        setSelectData(Abrandador);
+        mutate(grafic);
         break;
       case "zeolita":
-        setSelectData(Zeolica);
+        mutate(grafic);
         break;
-      case "carvao":
-        setSelectData(Carvao);
+      case "carvão":
+        mutate(grafic);
         break;
       case "img":
       default:
@@ -145,7 +128,7 @@ const HomeBody: React.FC = () => {
             </div>
             <div
               className="flex flex-col items-center"
-              onClick={() => dataSelect("carvao")}
+              onClick={() => dataSelect("carvão")}
             >
               <p className="text-center">Carvão</p>
               <Batery chargeLevel={data?.coal} />

@@ -8,7 +8,7 @@ import './style.css'
 import Drawer from '@/components/Drawer';
 import Provider from "@/components/Providers";
 import { UserProvider } from "@/context/userContext";
-import { DataFullProvider } from "@/context/userDataFull";
+
 import { EventsProvider } from "@/context/eventContext";
 import { ChemistProvider } from "@/context/useChermist";
 import { DoctortProvider } from "@/context/useDoctor";
@@ -37,11 +37,9 @@ export default function RootLayout({
               <OperatorProvider>
                 <DoctortProvider>
                   <ChemistProvider>
-                    <DataFullProvider>
-                      <EventsProvider>
-                        <Drawer>{children}</Drawer>
-                      </EventsProvider>
-                    </DataFullProvider>
+                    <EventsProvider>
+                      <Drawer>{children}</Drawer>
+                    </EventsProvider>
                   </ChemistProvider>
                 </DoctortProvider>
               </OperatorProvider>

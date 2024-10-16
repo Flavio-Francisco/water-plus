@@ -3,14 +3,18 @@ import { WaterTreatmentParameters } from "@/utils/models/WaterParametersModel"
 import axios from "axios"
 
 
+interface Ipros{
+    title: string[];
+  
+  }
 
 export async function GetDataFull(system_id:number|null) {
     
     const data = await axios.get(`api/dataform?id=${system_id}`)
    console.log(data.data);
    
-
-   return data.data
+   const result:Ipros = data.data
+   return result
    
 
 }

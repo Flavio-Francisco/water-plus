@@ -266,7 +266,7 @@ export default function Drawer({
                 justifyContent: open ? "initial" : "center",
                 px: 2.5,
               }}
-              onClick={() => push("/grafic ")}
+              onClick={() => push("/grafic")}
             >
               <ListItemIcon
                 title="Parametros"

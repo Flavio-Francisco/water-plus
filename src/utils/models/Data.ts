@@ -9,7 +9,7 @@ interface Porcentagens {
   reject: string;
 }
  export interface Props {
-  title: string;
+  title: string|undefined;
   day?: number[] ;
   data?: number[] ;
 }

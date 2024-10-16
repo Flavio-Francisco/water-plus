@@ -37,6 +37,10 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 const ListAnalys = (data: UnifiedData) => {
+  const samplingDates = Array.isArray(data.samplingDate)
+    ? data.samplingDate
+    : [data.samplingDate]; // Se for uma string, transforma em array
+
   return (
     <div className="">
       <h1 className="text-center mt-8 mb-8 text-base font-bold">
@@ -46,7 +50,7 @@ const ListAnalys = (data: UnifiedData) => {
         <Table aria-label="customized table">
           <TableHead>
             <TableRow className="flex flex-row justify-center">
-              <StyledTableCell className="whitespace-nowrap max-sm:w-8/12 ">
+              <StyledTableCell className="whitespace-nowrap max-sm:w-8/12">
                 {"    "} Dia
               </StyledTableCell>
               <StyledTableCell className="whitespace-nowrap">
@@ -64,26 +68,25 @@ const ListAnalys = (data: UnifiedData) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {data &&
-              data.samplingDate.map((dayItem, index) => (
-                <StyledTableRow key={index}>
-                  <StyledTableCell
-                    component="th"
-                    scope="row"
-                    className="max-sm:w-50"
-                  >
-                    {formatDate(new Date(dayItem))}
-                  </StyledTableCell>
-                  <StyledTableCell>{data.eColiPresence[index]}</StyledTableCell>
-                  <StyledTableCell>
-                    {data.totalColiformsPresence[index]}
-                  </StyledTableCell>
-                  <StyledTableCell>
-                    {data.heterotrophicBacteriaCount[index]}
-                  </StyledTableCell>
-                  <StyledTableCell>{data.endotoxins[index]}</StyledTableCell>
-                </StyledTableRow>
-              ))}
+            {samplingDates.map((dayItem, index) => (
+              <StyledTableRow key={index}>
+                <StyledTableCell
+                  component="th"
+                  scope="row"
+                  className="max-sm:w-50"
+                >
+                  {formatDate(new Date(dayItem))}
+                </StyledTableCell>
+                <StyledTableCell>{data.eColiPresence[index]}</StyledTableCell>
+                <StyledTableCell>
+                  {data.totalColiformsPresence[index]}
+                </StyledTableCell>
+                <StyledTableCell>
+                  {data.heterotrophicBacteriaCount[index]}
+                </StyledTableCell>
+                <StyledTableCell>{data.endotoxins[index]}</StyledTableCell>
+              </StyledTableRow>
+            ))}
           </TableBody>
         </Table>
       </TableContainer>

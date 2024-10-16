@@ -2,22 +2,18 @@ import React from "react";
 import Auth from "@/components/Auth";
 import Provider from "@/components/Providers";
 import { UserProvider } from "@/context/userContext";
-import { DataFullProvider } from "@/context/userDataFull";
 import { EventsProvider } from "@/context/eventContext";
 import { AuthProvider } from "@/components/Providers/nextProviser";
-
 
 export default function LogimPage() {
   return (
     <AuthProvider>
       <Provider>
-        <DataFullProvider>
-          <UserProvider>
-            <EventsProvider>
-              <Auth />
-            </EventsProvider>
-          </UserProvider>
-        </DataFullProvider>
+        <UserProvider>
+          <EventsProvider>
+            <Auth />
+          </EventsProvider>
+        </UserProvider>
       </Provider>
     </AuthProvider>
   );

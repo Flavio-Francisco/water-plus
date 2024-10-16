@@ -1,17 +1,6 @@
 import prisma from "../../../../lib/db";
 import { NextRequest, NextResponse } from "next/server";
 
-
-interface Microbiological{
-    id: number;
-    samplingDate: string;
-    sampleMatrixAndOrigin: string | null;
-    eColiPresence              :string | null;
-    totalColiformsPresence     :string | null;
-    heterotrophicBacteriaCount: string | null;
-    endotoxins:string | null;
-}
-
 export interface UnifiedData {
     id?: number;
     date: string[];
@@ -23,59 +12,25 @@ export interface UnifiedData {
     system_id?: number;
 }
 
-export async function GET(req: NextRequest) {
+export async function POST(req: NextRequest) {
     const url = new URL(req.nextUrl.href);
     const id = url.searchParams.get("id");
+    const {sampleMatrixAndOrigin} = await req.json();
 
     try {
         const data = await prisma.microbiologigo_assays.findMany({
             where: {
-                system_id: Number(id)
+                system_id: Number(id),
+                sampleMatrixAndOrigin:sampleMatrixAndOrigin
             }
         });
     
-        if (data && data.length > 0) {
-            const groupedData: Record<string, Microbiological[]> = {};
-    
-            // Agrupe os dados com base em sampleMatrixAndOrigin
-            data.forEach(record => {
-                const origin = record.sampleMatrixAndOrigin || 'Unknown'; // Use 'Unknown' se sampleMatrixAndOrigin for nulo
-                if (!groupedData[origin]) {
-                    groupedData[origin] = [];
-                }
-                groupedData[origin].push(record);
-            });
-    
-            // Crie um array de objetos UnifiedData para cada grupo
-            const unifiedDataArray: UnifiedData[] = [];
-            for (const origin in groupedData) {
-                const group = groupedData[origin];
-                const unifiedData: UnifiedData = {
-                   date: [],
-                    sampleName: origin,
-                    eColiPresence: [],
-                    totalColiformsPresence: [],
-                    heterotrophicBacteriaCount: [],
-                    endotoxins: [],
-                    system_id: 0 // Assume que é o mesmo para todos os registros
-                };
-    
-                // Preencha os arrays de dados unificados
-                group.forEach(record => {
-                    unifiedData.date.push(record.samplingDate);
-                    unifiedData.eColiPresence.push(Number(record.eColiPresence || 0));
-                    unifiedData.totalColiformsPresence.push(Number(record.totalColiformsPresence || 0));
-                    unifiedData.heterotrophicBacteriaCount.push(Number(record.heterotrophicBacteriaCount || 0));
-                    unifiedData.endotoxins.push(Number(record.endotoxins || 0));
-                });
-    
-                unifiedDataArray.push(unifiedData);
-            }
-    
-            return NextResponse.json(unifiedDataArray);
+        if ( data.length > 0) {
+            const transformedData = transformApiData(data);
+            return NextResponse.json(transformedData);
         } else {
             return NextResponse.json({
-                message: "Nenhum dado encontrado para o sistema com ID fornecido"
+                message: "Neuma Analise encontarda!!"
             });
         }
     } catch (error) {
@@ -86,3 +41,17 @@ export async function GET(req: NextRequest) {
         });
     }
 }
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const transformApiData = (apiData: any[]): UnifiedData => {
+    return {
+      id: apiData[0].id,
+      date: apiData.map((item) => item.samplingDate), // Convertendo as datas em um array
+      sampleName: apiData[0].sampleMatrixAndOrigin,
+      eColiPresence: apiData.map((item) => parseInt(item.eColiPresence, 10)), // Convertendo string para number
+      totalColiformsPresence: apiData.map((item) => parseInt(item.totalColiformsPresence, 10)),
+      heterotrophicBacteriaCount: apiData.map((item) => parseInt(item.heterotrophicBacteriaCount, 10)),
+      endotoxins: apiData.map((item) => parseInt(item.endotoxins, 10)),
+      system_id: apiData[0].system_id,
+    };
+  };

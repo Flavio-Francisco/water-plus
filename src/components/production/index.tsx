@@ -3,10 +3,14 @@ import React from "react";
 import GraficProduction from "@/components/graficProtution";
 import Line from "@/components/line";
 import ListParametsProduction from "@/components/listParametensProduction";
-import { useDataFull } from "@/context/userDataFull";
+
 import CardProduction from "./CardPoduction";
 import CardModal from "./CardPoduction/CardModal";
 import { ordeData } from "@/utils/functions/ordeData";
+import { useQuery } from "@tanstack/react-query";
+import { useUserContext } from "@/context/userContext";
+import { GetAnnual } from "@/app/fecth/annual";
+import Loader from "../loader/page";
 
 export interface WaterData {
   day: number[];
@@ -19,7 +23,11 @@ export interface WaterData {
 }
 
 export default function Production() {
-  const { production } = useDataFull();
+  const { user } = useUserContext();
+  const { data: production } = useQuery({
+    queryKey: ["annual", user?.system_id],
+    queryFn: () => GetAnnual(user?.system_id || 0),
+  });
 
   const data = production != null ? ordeData(production) : production;
 
@@ -45,15 +53,27 @@ export default function Production() {
         </div>
       </div>
 
-      <Line />
-
-      <GraficProduction data={data?.data} title={""} day={data?.day} />
-
-      <Line />
-
-      <div className="w-100">
-        <ListParametsProduction data={data?.data} title={""} day={data?.day} />
-      </div>
+      {data === undefined ? (
+        <div className="justify-center  h-56 gap-3">
+          <h3 className="text-center mt-8 mb-8 text-2xl font-bold max-sm:text-2xl">
+            Carregando...
+          </h3>
+          <Loader />
+        </div>
+      ) : (
+        <>
+          <Line />
+          <GraficProduction data={data?.data} title={""} day={data?.day} />
+          <div className="w-100">
+            <ListParametsProduction
+              data={data?.data}
+              title={""}
+              day={data?.day}
+            />
+            <Line />
+          </div>
+        </>
+      )}
     </div>
   );
 }

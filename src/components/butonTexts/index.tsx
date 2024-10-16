@@ -3,7 +3,7 @@ import { Thema } from "../../../thema";
 
 interface Props {
   buttonTexts: (string | null | undefined)[];
-  getBayIndex: (index: number) => void;
+  getBayIndex: (title: string) => void;
 }
 
 const ButtonList: React.FC<Props> = ({ buttonTexts, getBayIndex }) => {
@@ -15,7 +15,7 @@ const ButtonList: React.FC<Props> = ({ buttonTexts, getBayIndex }) => {
             key={index}
             style={{ background: Thema.Colors.blue3 }}
             className="rounded mb-2 cursor-pointer"
-            onClick={() => getBayIndex(index)}
+            onClick={() => getBayIndex(text || "")}
           >
             <button className="whitespace-nowrap text-xs max-sm:text-base p-2 w-full text-left">
               {text}

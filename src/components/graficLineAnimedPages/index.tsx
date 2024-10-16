@@ -11,7 +11,23 @@ interface Props {
 const GraficLineAnimedPages = ({ title, data, day }: Props) => {
   useEffect(() => {}, [data, day]);
   return (
-    <div className="flex justify-center items-center w-full  max-[580px]:max-w-[430px] ">
+    <div
+      style={{
+        display:
+          title === "Cor" ||
+          title === "Sabor" ||
+          title === "Turbidez" ||
+          title === "Odor" ||
+          title === "Hora do Carvão" ||
+          title === "Nível do Sal" ||
+          title === "Teste de Ozônio" ||
+          title === "Hora do Multimeios" ||
+          title === "Hora do Abrandador"
+            ? "none"
+            : "",
+      }}
+      className="flex justify-center items-center w-full  max-[580px]:max-w-[430px] "
+    >
       <div className="w-full sm:w-2/4 md:w-1/2 lg:w-4/5 ">
         <LineChart
           className=" max-[580px]:max-h-[130px]"
@@ -31,7 +47,6 @@ const GraficLineAnimedPages = ({ title, data, day }: Props) => {
           ]}
           grid={{ vertical: true, horizontal: true }}
           colors={["rgba(25,118,210,255)"]}
-          //width={1200}
           height={350}
           sx={{
             width: "95%",

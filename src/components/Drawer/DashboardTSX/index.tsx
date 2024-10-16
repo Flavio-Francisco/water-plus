@@ -23,12 +23,17 @@ import { createReservoir } from "@/app/fecth/resevatorir";
 import { formatDateResevatorir } from "@/utils/functions/FormateDate";
 import { DesinfectionModel } from "@/utils/models/desifection";
 import Electrogram from "@/components/Electrogram";
-import { ParametersDB } from "@/utils/models/WaterParametersModel";
 import { getSystemId } from "@/app/fecth/systems";
 import { Systems } from "@/utils/models/analysis";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { getAnalysisApevisa } from "@/app/fecth/apevisa";
 import { ApvisaModel } from "@/utils/models/Apvisa";
+import {
+  fetchDataByMonthAndYear,
+  fetchMonthYearData,
+} from "@/app/fecth/dateEletrograma";
+import { CircularProgress } from "@mui/material";
+import { ParametersDB } from "@/utils/models/WaterParametersModel";
 
 interface IProps {
   icon: React.ReactNode;
@@ -45,6 +50,7 @@ export default function DashboardTSX({ icon }: IProps) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const [selectedMonth, setSelectedMonth] = React.useState<string>("");
+  const [selected, setSelected] = React.useState<ParametersDB[]>();
   const [openModal1, setOpenModal1] = React.useState(false);
   const [openModal2, setOpenModal2] = React.useState(false);
   const [openModal3, setOpenModal3] = React.useState(false);
@@ -60,6 +66,11 @@ export default function DashboardTSX({ icon }: IProps) {
   const { data } = useQuery({
     queryKey: ["diasafe"],
     queryFn: () => getMachines(user?.system_id || 0),
+    ...queryOptions,
+  });
+  const { data: uniqueMonths, isLoading } = useQuery({
+    queryKey: ["nameMonth"],
+    queryFn: () => fetchMonthYearData(user?.system_id || 0),
     ...queryOptions,
   });
 
@@ -82,71 +93,18 @@ export default function DashboardTSX({ icon }: IProps) {
     mutationKey: ["resevatorirForm"],
     mutationFn: (date: string) => createReservoir(user?.system_id || 0, date),
   });
+  const { mutate: GetEletrograma } = useMutation({
+    mutationKey: ["Eletron"],
+    mutationFn: (month: string) =>
+      fetchDataByMonthAndYear(user?.system_id || 0, month),
+    onSuccess(data) {
+      setSelected(data);
+    },
+  });
 
   const date: DesinfectionModel | undefined = queryClient.getQueryData([
     "desinfection",
   ]);
-  const electrogram: ParametersDB[] =
-    queryClient.getQueryData(["Electrogram"]) || [];
-
-  function getDataByMonth(data: ParametersDB[], month: string): ParametersDB[] {
-    const monthNames = [
-      "Janeiro",
-      "Fevereiro",
-      "Março",
-      "Abril",
-      "Maio",
-      "Junho",
-      "Julho",
-      "Agosto",
-      "Setembro",
-      "Outubro",
-      "Novembro",
-      "Dezembro",
-    ];
-
-    return data.filter((record) => {
-      if (record.date) {
-        const datei = new Date(record.date);
-        const monthName = monthNames[datei.getUTCMonth()];
-        const year = datei.getFullYear();
-        const monthYear = `${monthName} ${year}`;
-        return monthYear === month;
-      }
-    });
-  }
-
-  function getMonthYearNames(data: ParametersDB[]): string[] {
-    const monthNames = [
-      "Janeiro",
-      "Fevereiro",
-      "Março",
-      "Abril",
-      "Maio",
-      "Junho",
-      "Julho",
-      "Agosto",
-      "Setembro",
-      "Outubro",
-      "Novembro",
-      "Dezembro",
-    ];
-    const monthYearMap = new Map<string, boolean>();
-
-    data.map((record) => {
-      if (record.date) {
-        const datei = new Date(record.date);
-        const monthName = monthNames[datei.getUTCMonth()];
-        const year = datei.getFullYear();
-        const monthYear = `${monthName} ${year}`;
-        monthYearMap.set(monthYear, true);
-      }
-    });
-
-    return Array.from(monthYearMap.keys());
-  }
-
-  const uniqueMonths = getMonthYearNames(electrogram);
 
   const handleChange = (event: SelectChangeEvent) => {
     setSelectedMonth(event.target.value as string);
@@ -196,6 +154,9 @@ export default function DashboardTSX({ icon }: IProps) {
     const date = formatDateResevatorir(new Date(value?.toString() || ""));
     mutate(date);
   }, [value]);
+  React.useEffect(() => {
+    GetEletrograma(selectedMonth);
+  }, [selectedMonth]);
 
   return (
     <div>
@@ -347,14 +308,17 @@ export default function DashboardTSX({ icon }: IProps) {
               <MenuItem value="">
                 <p>Selecione o Mês</p>
               </MenuItem>
-              {uniqueMonths.map((month) => (
-                <MenuItem key={month} value={month}>
-                  {new Date(`${month}-01`).toLocaleString("default", {
-                    month: "long",
-                    year: "numeric",
-                  })}
+              {isLoading ? (
+                <MenuItem value="">
+                  <CircularProgress />
                 </MenuItem>
-              ))}
+              ) : (
+                (uniqueMonths || [])?.map((month) => (
+                  <MenuItem key={month} value={month}>
+                    {month}
+                  </MenuItem>
+                ))
+              )}
             </Select>
           </div>
 
@@ -362,7 +326,7 @@ export default function DashboardTSX({ icon }: IProps) {
             <div className="w-full h-screen">
               <PDFViewer className="w-full h-full">
                 <Electrogram
-                  data={getDataByMonth(electrogram, selectedMonth)}
+                  data={selected || []}
                   system={systems.name || ""}
                 />
               </PDFViewer>

@@ -16,6 +16,7 @@ interface Iprops {
 
 const Electrogram: React.FC<Iprops> = ({ data, system }) => {
   const [datas, setDatas] = useState(organizeData(data));
+
   useEffect(() => {
     setDatas(organizeData(data));
   }, [data]);
@@ -32,8 +33,20 @@ const Electrogram: React.FC<Iprops> = ({ data, system }) => {
     );
   }
 
-  // Extract dates and keys
+  // Adiciona verificação para garantir que datas[0] existe
+  if (!datas || datas.length === 0 || !datas[0]) {
+    return (
+      <Document>
+        <Page size="A4" orientation="landscape" style={styles.body}>
+          <View style={styles.table}>
+            <Text>No valid data available</Text>
+          </View>
+        </Page>
+      </Document>
+    );
+  }
 
+  // Extract dates and keys
   const keys = Object.keys(datas[0]).filter(
     (key) => key !== "date" && key !== "id" && key !== "system_id"
   );
@@ -80,7 +93,7 @@ const Electrogram: React.FC<Iprops> = ({ data, system }) => {
               <View style={styles.tableCellParams}>
                 <Text>{translationMap[key as keyof ParametersDB]}</Text>
               </View>
-              {data.map((entry, index) => (
+              {datas.map((entry, index) => (
                 <View key={index} style={styles.tableCell}>
                   <Text>
                     {renderCellContent(entry[key as keyof ParametersDB])}
