@@ -80,13 +80,9 @@ export default function DashboardTSX({ icon }: IProps) {
     ...queryOptions,
   });
 
-  const { data: arrayApavise } = useQuery({
-    queryKey: ["GetapevisaAnalysi"],
-    queryFn: () => getAnalysisApevisa(user?.system_id || 0),
-    ...queryOptions,
-  });
 
-  const apevisa: ApvisaModel[] = arrayApavise || [];
+
+  
   const systems = (system as Systems) || [];
 
   const { mutate } = useMutation({
@@ -290,7 +286,7 @@ export default function DashboardTSX({ icon }: IProps) {
           onClose={handlecloseModal4}
           maxWidth="sm"
         >
-          <ReportApevisa reports={apevisa} />
+          <ReportApevisa />
         </ModalTsx>
         <ModalTsx
           fullWidth={selectedMonth ? true : false}

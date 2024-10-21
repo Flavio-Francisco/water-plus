@@ -4,7 +4,6 @@ import { NextRequest, NextResponse } from "next/server";
 
 
 
-
 export async function GET(req: NextRequest) { 
     const url = new URL(req.nextUrl.href);
     const system_id = url.searchParams.get("id");
@@ -12,6 +11,10 @@ try{
     const data = await prisma.apevisa.findMany({
         where: {
             system_id:Number(system_id)
+        },
+        select: {
+            name: true,
+            date:true
         }
  
     })

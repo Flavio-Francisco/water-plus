@@ -28,21 +28,7 @@ export default function AnalysList() {
     queryFn: () => GetAnalysPoint(user?.system_id || 0),
   });
 
-  // const handleAnalysChange = (
-  //   event: React.ChangeEvent<object>,
-  //   newValue: string | UnifiedData | null
-  // ) => {
-  //   if (typeof newValue === "string") {
-  //     // Se o valor selecionado for uma string (nome do paciente), encontre o paciente correspondente nos dados falsos
-  //     const foundAnalys =
-  //       analys?.find((a) => a.sampleName === newValue) || null;
-
-  //     setSelectedAnalys(foundAnalys);
-  //   } else {
-  //     //ecionado for um objeto EvolutionModel, use-o diretamente
-  //     setSelectedAnalys(newValue);
-  //   }
-  // };
+  
 
   return (
     <div className=" flex flex-col justify-center items-center mt-4 w-11/12  max-sm:w-[390px] max-sm:left-10 absolute">
@@ -60,7 +46,7 @@ export default function AnalysList() {
           clearOnBlur
           handleHomeEndKeys
           id="free-solo-with-text-demo"
-          options={analys || []} // Use array vazio se `pacientData` for `undefined`
+          options={analys || []}
           getOptionLabel={(option) => option}
           renderInput={(params) => (
             <TextField {...params} label="Selecione o Ponto da Coleta" />

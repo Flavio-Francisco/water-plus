@@ -1,11 +1,16 @@
 "use client"
+import { getAnalysis, getAnalysisApevisa } from "@/app/fecth/apevisa";
+import { useUserContext } from "@/context/userContext";
 import { formatDate } from "@/utils/functions/FormateDate";
 import { ApvisaModel } from "@/utils/models/Apvisa";
+import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
-import { Table, Form } from "react-bootstrap";
+import { Table } from "react-bootstrap";
 
-interface Props {
-  reports: ApvisaModel[];
+interface NameDate {
+  name: string;
+  date: string;
 }
 
 const translatedLabels: { [key in keyof ApvisaModel]: string } = {
@@ -24,28 +29,32 @@ const translatedLabels: { [key in keyof ApvisaModel]: string } = {
   potentiometry: "Potenciometria",
 };
 
-const ReportApevisa: React.FC<Props> = ({ reports }) => {
+const ReportApevisa: React.FC = () => {
+  const selected: NameDate | null = { date: "", name: "" };
   const [selectedReport, setSelectedReport] = useState<ApvisaModel | null>(
     null
   );
-  const [selectedDate, setSelectedDate] = useState<string>("");
+  const { user } = useUserContext();
+  const { data } = useQuery<NameDate[]>({
+    queryKey: ["NameDate"],
+    queryFn: () => getAnalysisApevisa(user?.system_id || 0),
+  });
 
-  const handleReportSelection = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const reportName = e.target.value;
-    const report = reports.find((report) => report.name === reportName);
-    setSelectedReport(report || null);
+  const { mutate } = useMutation({
+    mutationKey: ["updateAnalys"],
+    mutationFn: (point: NameDate) => getAnalysis(user?.system_id || 0, point),
+    onSuccess(response) {
+      console.log(response);
+
+      setSelectedReport(response);
+    },
+  });
+
+  const handleReportSelection = (selectedReport: NameDate | undefined) => {
+    if (selectedReport) {
+      mutate(selectedReport);
+    }
   };
-
-  const handleDateChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const date = e.target.value;
-    setSelectedDate(date);
-    setSelectedReport(null); // Reset selected report when date changes
-  };
-
-  // Filter reports based on selected date
-  const filteredReports = selectedDate
-    ? reports.filter((report) => report.date === selectedDate)
-    : [];
 
   return (
     <div>
@@ -76,46 +85,34 @@ const ReportApevisa: React.FC<Props> = ({ reports }) => {
           marginBottom: 40,
         }}
       >
-        <div>
-          <h2
-            style={{
-              marginBottom: 5,
-            }}
-          >
-            Selecione uma data:
-          </h2>
-          <Form.Select value={selectedDate} onChange={handleDateChange}>
-            <option value="">Selecione uma data</option>
-            {Array.from(new Set(reports?.map((report) => report.date))).map(
-              (date, index) => (
-                <option key={index} value={date}>
-                  {formatDate(new Date(date || ""))}
-                </option>
-              )
-            )}
-          </Form.Select>
-        </div>
-        <div>
-          <h2
-            style={{
-              marginBottom: 5,
-            }}
-          >
-            Selecione um relatório:
-          </h2>
-          <Form.Select
-            value={selectedReport ? selectedReport.name : ""}
-            onChange={handleReportSelection}
-          >
-            <option value="">Selecione um relatório</option>
-            {filteredReports.map((report, index) => (
-              <option key={index} value={report.name}>
-                {report.name}
-              </option>
-            ))}
-          </Form.Select>
+        <div className="w-10/12 h-full flex justify-center items-center">
+          <FormControl fullWidth sx={{ m: 1, width: "90%" }}>
+            <InputLabel id="demo-simple-select-label">
+              Selecione um relatório:
+            </InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={selected?.name || ""}
+              label="Selecione um relatório:"
+              onChange={(e) => {
+                const selectedReport = data?.find(
+                  (report) => report.name === e.target.value
+                ); // Buscar apenas o objeto selecionado
+                handleReportSelection(selectedReport); // Passar o objeto para a função
+              }}
+            >
+              {data?.map((report, index) => (
+                <MenuItem key={index} value={report.name}>
+                  Ponto: {report.name} &nbsp;&nbsp;|&nbsp;&nbsp; Data:{" "}
+                  {report.date}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
         </div>
       </div>
+
       {selectedReport && (
         <div>
           <div

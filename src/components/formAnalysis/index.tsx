@@ -92,7 +92,7 @@ const ResultForm = ({ onSucess }: Iprops) => {
               <h3 className="text-center">Dados da Amostras</h3>
             </Row>
 
-            <div className="flex flex-row max-sm:flex-col justify-center items-center max-sm:w-full  mb-2">
+            <div className="flex flex-row max-sm:flex-col justify-center items-center max-sm:w-full  mb-2 gap-2">
               <FormLabel htmlFor="samplingDate" className="w-2/6 max-sm:w-full">
                 Data
               </FormLabel>
@@ -129,7 +129,7 @@ const ResultForm = ({ onSucess }: Iprops) => {
                 <ErrorMessage
                   name="sampleName"
                   component="div"
-                  className="invalid-feedback"
+                  className="invalid-feedback text-red-600"
                 />
               </FormGroup>
             </Col>
@@ -185,11 +185,9 @@ const ResultForm = ({ onSucess }: Iprops) => {
             </Col>
             <Col xs={12} md={10}>
               <FormGroup>
-                <FormLabel htmlFor="heterotrophicBacteriaCount">
-                  Heterotróficas
-                </FormLabel>
+                <FormLabel htmlFor="endotoxins">Endotoxina</FormLabel>
                 <Field
-                  id="heterotrophicBacteriaCount"
+                  id="endotoxins"
                   as={FormControl}
                   type="text"
                   name="endotoxins"

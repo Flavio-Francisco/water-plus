@@ -2,19 +2,31 @@
 import { ApvisaModel } from "@/utils/models/Apvisa";
 import axios from "axios"
 
+interface NameDate {
+    name: string;
+    date: string;
+  }
 export async function getAnalysisApevisa(system_id:number|null) {
     
-    console.log(system_id);
     
     const resevatorir = await axios.get(`/api/apevisa?id=${system_id}`)
   
-    console.log(resevatorir.data)
    return resevatorir.data
    
 
 
 }
+export async function getAnalysis(system_id:number|null,data:NameDate) {
+    
+    
+    const resevatorir = await axios.post(`/api/apevisa/get?id=${system_id}`,data)
+    console.log(resevatorir.data);
+   return resevatorir.data
+  
+   
 
+
+}
 export async function createAnalysisApevisa(system_id:number|null, data:ApvisaModel) {
     
     
