@@ -22,7 +22,7 @@ const roboto = Roboto({
 
 export const metadata: Metadata = {
   title: "Water plus",
-  icons: [{ rel: "icon", url: "/logo.jpg", sizes: "16x16" }],
+  icons: [{ rel: "icon", url: "/logo1.jpg", sizes: "16x16" }],
 };
 export default function RootLayout({
   children,

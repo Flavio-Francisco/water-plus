@@ -19,7 +19,7 @@ const roboto = Roboto({
 
 export const metadata: Metadata = {
   title: "Dados de Produção",
-  icons: [{ rel: "icon", url: "/logo.jpg", sizes: "16x16" }],
+  icons: [{ rel: "icon", url: "/logo1jpg", sizes: "16x16" }],
 };
 export default function RootLayout({
   children,

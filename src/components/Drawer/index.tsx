@@ -30,7 +30,7 @@ import Maintenance from "../SideBar/manutecao";
 import LogOut from "../logOut";
 import UserCard from "../CardUser";
 import Image from "next/image";
-import Logo from "../SideBar/logo.jpg";
+import Logo from "../../../public/logo1.jpg";
 import { useUserContext } from "@/context/userContext";
 import Loader from "../loader/page";
 import CalendarModal from "../Calendar/CalendarModal";
@@ -163,17 +163,20 @@ export default function Drawer({
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap component="div">
-            <Image
-              style={{ borderRadius: 15 }}
-              priority
-              className="image"
-              src={Logo}
-              alt="Logo"
-              width={30}
-              height={30}
-            />
-          </Typography>
+          <div className="flex flex-row items-center gap-2">
+            <Typography variant="h6" noWrap component="div">
+              <Image
+                style={{ borderRadius: 15 }}
+                priority
+                className="image"
+                src={Logo}
+                alt="Logo"
+                width={30}
+                height={30}
+              />
+            </Typography>
+            <p>Water Plus</p>
+          </div>
           <div className="flex flex-row gap-8 m-auto ">
             <ListItemIcon
               title="Parametros"

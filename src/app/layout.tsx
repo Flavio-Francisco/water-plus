@@ -12,7 +12,7 @@ const roboto = Roboto({
 export const metadata: Metadata = {
   title: "Login",
 
-  icons: [{ rel: "icon", url: "/logo.jpg", sizes: "16x16" }],
+  icons: [{ rel: "icon", url: "/logo1.jpg", sizes: "16x16" }],
 };
 
 export default function Layout({ children }: { children: React.ReactNode }) {
