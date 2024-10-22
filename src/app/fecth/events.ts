@@ -66,12 +66,14 @@ export async function createEvents(system_id: number, events: EventInput) {
     }
 }
 export async function deleteEvents(id: number) {
+    console.log(id);
+    
     try {
         const data = await axios.delete(`api/events?id=${id}`);
-        console.log("retorno da rota de update", data);
+        console.log("retorno da rota de delete", data);
         return data.data;
     } catch (error) {
-        console.error("Erro ao atualizar usuário:", error);
+        console.error("Erro ao deletar:", error);
         throw error;
     }
 }

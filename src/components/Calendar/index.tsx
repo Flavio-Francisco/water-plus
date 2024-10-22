@@ -107,12 +107,16 @@ export default function Calendar({ events: initialEvents }: CalendarProps) {
         editable: true,
       };
       try {
-        await createEvents(user?.system_id || 0, newEventObj);
+      const data = await createEvents(user?.system_id || 0, newEventObj);
 
-        setEvents((prevEvents) => [...prevEvents, newEventObj]);
+      if (data) {
+        setEvents((prevEvents) => [...prevEvents, data]);
+        console.log(data);
+
         setNewEvent({ title: "", description: "", id: 0, status: "pending" });
         alert("novo evento adicionado!!");
         setDialogOpen(false);
+      }
         if (calendarRef.current) {
           const calendarApi = calendarRef.current.getApi();
           calendarApi.addEvent(newEventObj);
