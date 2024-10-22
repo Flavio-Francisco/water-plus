@@ -15,18 +15,17 @@ const GraficLineAnimed = ({ title, data, day }: Props) => {
     console.log(day);
   }, [data, day]);
 
-  // Converter valores de `day` para instâncias de Date
 
   return (
-    <div className="w-full ">
+    <div className="w-full">
       {data === null || data === undefined ? (
         <div className=" mt-12 flex justify-center items-center ">
           <Image priority src={Logo} alt="Logo" height={75} width={150} />
         </div>
       ) : (
-        <div className="flex justify-center items-center ">
+        <div className=" mb-4 w-full">
           <LineChart
-            margin={{ left: 70, right: 70 }}
+            margin={{ left: 40, right: 70 }}
             xAxis={[
               {
                 id: "day",
@@ -41,11 +40,10 @@ const GraficLineAnimed = ({ title, data, day }: Props) => {
                 data: data === undefined ? [1, 2, 3] : data,
               },
             ]}
-            dataset={[]}
             grid={{ vertical: true, horizontal: true }}
             colors={["rgba(25,118,210,255)"]}
             width={500}
-            height={300}
+            height={250}
           />
         </div>
       )}
