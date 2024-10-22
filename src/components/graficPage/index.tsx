@@ -24,7 +24,7 @@ const GraficPage = () => {
   });
   const ButtonText = (dataFull?.title || []).map((item) => item);
 
-  const { mutate, isIdle } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationKey: ["dataGrafic"],
     mutationFn: (title: string) => fetchData(user?.system_id || 0, title),
     onSuccess: (arry) => {
@@ -68,8 +68,10 @@ const GraficPage = () => {
             <div className="sm:w-full sm:ml-72 max-sm:w-9/12 max-sm:mr-24 ">
               <hr className=" max-sm:ml-14 sm:ml-24 w-full max-sm:w-10/12 " />
 
-              {isIdle ? (
-                <Loader />
+              {isPending ? (
+                <div className=" h-20 justify-end items-center">
+                  <Loader marginLeft={50} />
+                </div>
               ) : arryData ? (
                 <div
                   style={{
@@ -116,7 +118,26 @@ const GraficPage = () => {
                       data={arryData.data}
                     />
                   </div>
-                  <div className="flex justify-center items-center  max-sm:w-3/4 sm:w-2/4">
+                  <div className="flex flex-col justify-center items-center  max-sm:w-3/4 sm:w-2/4">
+                    <div
+                      style={{
+                        display:
+                          arryData.title === "Odor" ||
+                          arryData.title === "Cor" ||
+                          arryData.title === "Sabor" ||
+                          arryData.title === "Turbidez" ||
+                          arryData.title === "Hora do Carvão" ||
+                          arryData.title === "Nível do Sal" ||
+                          arryData.title === "Teste de Ozônio" ||
+                          arryData.title === "Hora do Multimeios" ||
+                          arryData.title === "Hora do Abrandador"
+                            ? ""
+                            : "none",
+                      }}
+                      className="h-6 mt-3"
+                    >
+                      <p className="font-semibold text-xl">{arryData.title}</p>
+                    </div>
                     <ListParamets data={arryData.data} day={arryData.day} />
                   </div>
                 </div>
