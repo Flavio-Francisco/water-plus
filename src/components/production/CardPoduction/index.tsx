@@ -25,23 +25,23 @@ export default function CardProduction({
       </ListItem>
       <Divider component="p" />
       <ListItem>
+        <ListItemText primary={`Produção Atual Permeado: ${produtic}`} />
+      </ListItem>
+      <Divider component="p" />
+      <ListItem>
+        <ListItemText primary={`Produção Atual Rejeito:  ${reject}`} />
+      </ListItem>
+      <Divider component="p" />
+      <ListItem>
         <ListItemText
-          primary={`Produção Anual Permeado: ${AnnualAverageProdutic}`}
+          primary={`Porcentagem Anual Permeado:   ${AnnualAverageProdutic} L/min`}
         />
       </ListItem>
       <Divider component="p" />
       <ListItem>
         <ListItemText
-          primary={`Produção Anual Rejeito:  ${AnnualAverageReject}`}
+          primary={`Porcentagem Anual Rejeito:   ${AnnualAverageReject} L/min`}
         />
-      </ListItem>
-      <Divider component="p" />
-      <ListItem>
-        <ListItemText primary={`Porcentagem Anual Permeado:   ${produtic}`} />
-      </ListItem>
-      <Divider component="p" />
-      <ListItem>
-        <ListItemText primary={`Porcentagem Anual Rejeito:   ${reject}`} />
       </ListItem>
     </div>
   );

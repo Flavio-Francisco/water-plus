@@ -54,11 +54,18 @@ export default function Production() {
       </div>
 
       {data === undefined ? (
-        <div className="justify-center  h-56 gap-3">
-          <h3 className="text-center mt-8 mb-8 text-2xl font-bold max-sm:text-2xl">
-            Carregando...
-          </h3>
-          <Loader />
+        <div className=" justify-center items-center h-96 gap-5">
+          <div className=" mt-8">
+            <h3
+              style={{ color: "rgb(30, 146, 255)" }}
+              className="text-center  text-2xl font-bold max-sm:text-2xl"
+            >
+              Carregando...
+            </h3>
+          </div>
+          <div className=" h-1/4 mt-7">
+            <Loader />
+          </div>
         </div>
       ) : (
         <>

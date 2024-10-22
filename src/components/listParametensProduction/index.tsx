@@ -24,7 +24,7 @@ export default function ListParametsProduction(data: Props) {
                 <p>{dayItem}</p>
               </td>
               <td style={{ width: "40%", textAlign: "center" }}>
-                {(data?.data || [])[index]} LPM
+                {(data?.data || [])[index]} L/min
               </td>
             </tr>
           ))}

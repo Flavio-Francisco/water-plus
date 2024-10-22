@@ -26,8 +26,6 @@ import Electrogram from "@/components/Electrogram";
 import { getSystemId } from "@/app/fecth/systems";
 import { Systems } from "@/utils/models/analysis";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
-import { getAnalysisApevisa } from "@/app/fecth/apevisa";
-import { ApvisaModel } from "@/utils/models/Apvisa";
 import {
   fetchDataByMonthAndYear,
   fetchMonthYearData,
@@ -80,9 +78,6 @@ export default function DashboardTSX({ icon }: IProps) {
     ...queryOptions,
   });
 
-
-
-  
   const systems = (system as Systems) || [];
 
   const { mutate } = useMutation({
@@ -140,6 +135,7 @@ export default function DashboardTSX({ icon }: IProps) {
   };
   const handlecloseModal5 = () => {
     setOpenModal5(false);
+    setSelectedMonth("");
   };
 
   const handleClose = () => {

@@ -8,10 +8,6 @@ import Image from "next/image";
 import { useUserContext } from "@/context/userContext";
 import { GetBatery } from "@/app/fecth/batery";
 import { useMutation, useQuery } from "@tanstack/react-query";
-
-import { GetAnnual } from "@/app/fecth/annual";
-import { useEventInput } from "@/context/eventContext";
-import { getEventsDB } from "@/app/fecth/events";
 import { getChemical } from "@/app/fecth/chemical";
 import { useChemist } from "@/context/useChermist";
 import { getDoctorDB } from "@/app/fecth/doctor";
@@ -22,7 +18,7 @@ import { fetchWaterParameters } from "@/app/fecth/bataBatery";
 
 const HomeBody: React.FC = () => {
   const { user } = useUserContext();
-  const { getEvents } = useEventInput();
+
   const { getChemist } = useChemist();
   const { getDoctor } = useDoctor();
   const { getOperator } = useOperator();
@@ -49,32 +45,17 @@ const HomeBody: React.FC = () => {
     ...commonQueryOptions,
   });
 
-  const { data: production } = useQuery({
-    queryKey: ["annual", user?.system_id],
-    queryFn: () => GetAnnual(user?.system_id || 0),
-    ...commonQueryOptions,
-  });
-
   const { data: data } = useQuery({
     queryKey: ["batery", user?.system_id],
     queryFn: () => GetBatery(user?.system_id || 0),
     ...commonQueryOptions,
   });
 
-  const { data: events } = useQuery({
-    queryKey: ["events", user?.system_id],
-    queryFn: () => getEventsDB(user?.system_id || 0),
-    ...commonQueryOptions,
-  });
-
   useEffect(() => {
-    //  if (analys) getAnalys(analys);
-    if (events) getEvents(events);
     if (operator) getOperator(operator);
-    // if (production) getProduction(production);
     if (doctor) getDoctor(doctor);
     if (chemist) getChemist(chemist);
-  }, [events, operator, production, doctor, chemist]);
+  }, [operator, doctor, chemist]);
 
   const [selectData, setSelectData] = useState<Props>();
 

@@ -1,16 +1,18 @@
 import React from 'react'
 import { Roboto } from 'next/font/google'
+
+import type { Metadata } from "next";
 import "./globals.css";
-// import Provider from "@/components/Providers";
-// import { UserProvider } from "@/context/userContext";
 
 const roboto = Roboto({
   weight: "400",
   subsets: ["latin"],
 });
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "Login",
+
+  icons: [{ rel: "icon", url: "/logo.jpg", sizes: "16x16" }],
 };
 
 export default function Layout({ children }: { children: React.ReactNode }) {
