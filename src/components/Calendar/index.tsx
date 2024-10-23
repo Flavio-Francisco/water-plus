@@ -396,7 +396,7 @@ export default function Calendar({ events: initialEvents }: CalendarProps) {
         </DialogContent>
         <div className="flex justify-around items-center flex-row mb-2">
           <Button variant="contained" color="error" onClick={handleDelete}>
-            Exluir
+            Excluir
           </Button>
           <Button
             variant="contained"
