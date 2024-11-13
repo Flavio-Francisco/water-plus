@@ -66,6 +66,8 @@ const HomeBody: React.FC = () => {
       fetchWaterParameters(user?.system_id || 0, name),
     onSuccess(data) {
       if (data) {
+        console.log(data);
+        
         setSelectData(data);
       } else {
         alert("dados não encontrados!!");

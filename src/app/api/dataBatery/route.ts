@@ -41,6 +41,10 @@ export async function POST(req: NextRequest) {
           CarbonOutputPressure: data.name === "carvão" ? true : false,
           date: true, // Adicionando a data no resultado
         },
+        orderBy: {
+          date: "asc", // Ordenando os resultados por data
+        },
+       
       });
 
       // Processa os dados para retornar no formato desejado
@@ -48,9 +52,11 @@ export async function POST(req: NextRequest) {
         .filter((key) => point[0][key as keyof typeof point[0]] !== undefined) // Filtra campos válidos
         .map((key) => ({
           title: fieldTranslations[key],
-          day: point.map((p) => new Date(p.date || 0).getDate()), // Convertendo a data para timestamp
+          day: point.map((p) => new Date(p.date || 0).getUTCDate()), // Convertendo a data para timestamp
           data: point.map((p) => p[key as keyof typeof point[0]] as number), // Valores dos campos
+         
         }));
+
 
       return NextResponse.json(result[0]);
     } else {
