@@ -73,21 +73,21 @@ model control {
   start           Boolean?
   start1          Boolean?
   start2          Boolean?
-  id_system       Int?
-  system          Boolean?
-  lowPressureOr1  Boolean?
-  lowPressureOr2  Boolean?
-  pumpOr1         Boolean?
-  pumpOr2         Boolean?
   conductivityOr1 Boolean?
   conductivityOr2 Boolean?
   loopingPump1    Boolean?
   loopingPump2    Boolean?
   criticalLevel   Boolean?
+  lowPressureOr1  Boolean?
+  lowPressureOr2  Boolean?
+  pumpOr1         Boolean?
+  pumpOr2         Boolean?
   off             Boolean?
   state           Boolean?
   status          Boolean?
- 
+  system          Boolean?
+  automatic       Boolean?
+  id_system       Int?
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
@@ -260,6 +260,7 @@ model systems {
   zipCode                   String?
   number                    Int?
   Level                     Level[]
+  ParametersData            ParametersData[]
   Reservoir_cleaning        Reservoir_cleaning[]
   Token                     Token[]
   acid                      acid[]
@@ -275,6 +276,7 @@ model systems {
   reservoir_analysis        reservoir_analysis[]
   reservoir_cleaning_report reservoir_cleaning_report[]
   user                      user[]
+  whatsApp                  whatsApp[]
 }
 
 /// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
@@ -292,4 +294,35 @@ model Token {
   token     String   @id
   system_id Int?
   systems   systems? @relation(fields: [system_id], references: [id], onDelete: Cascade)
+}
+
+model ParametersData {
+  id                    Int      @id @default(autoincrement())
+  inletConductivityOr1  Float?
+  inletConductivityOr2  Float?
+  outletConductivityOr1 Float?
+  outletConductivityOr2 Float?
+  inletPressureOr1      Float?
+  inletPressureOr2      Float?
+  outletPressureOr1     Float?
+  outletPressureOr2     Float?
+  system_id             Int?
+  systems               systems? @relation(fields: [system_id], references: [id], onDelete: Cascade)
+}
+
+model whatsApp {
+  id                  Int      @id @default(autoincrement())
+  name                String?
+  number              String?
+  lowLevel            Boolean?
+  criticaLevel        Boolean?
+  Fueling             Boolean?
+  SendLowLevel        Boolean?
+  SendCriticaLevel    Boolean?
+  SendFueling         Boolean?
+  system_id           Int
+  messageLowLevel     String?
+  messageCriticaLevel String?
+  messageFueling      String?
+  systems             systems  @relation(fields: [system_id], references: [id], onDelete: Cascade)
 }
