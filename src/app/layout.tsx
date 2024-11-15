@@ -18,6 +18,9 @@ export const metadata: Metadata = {
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="pt-br">
+      <head>
+        <meta name="google-adsense-account" content="ca-pub-8456313061598996" />
+      </head>
       <body className={roboto.className}>{children}</body>
     </html>
   );
