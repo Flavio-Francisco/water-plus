@@ -22,9 +22,9 @@ export async function POST(req: NextRequest) {
   const id = url.searchParams.get("id");
   const data: Iprops = await req.json();
 
-  // Definindo a data limite para os últimos 30 dias
+  // Definindo a data limite para os últimos 10 dias
   const thirtyDaysAgo = new Date();
-  thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 20);
+  thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 10);
 
   try {
     if (data.name) {
