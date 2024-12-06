@@ -24,7 +24,7 @@ export async function POST(req: NextRequest) {
 
   // Definindo a data limite para os últimos 30 dias
   const thirtyDaysAgo = new Date();
-  thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+  thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 20);
 
   try {
     if (data.name) {
