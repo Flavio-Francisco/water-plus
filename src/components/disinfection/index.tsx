@@ -19,6 +19,7 @@ const Desinfection = ({ onSucess, id, refetch }: Iprops) => {
     mutationFn: (desinfection: DesinfectionModel) =>
       createDesinfection(id, desinfection),
     onSuccess: () => {
+      alert("Dados da desinfecção salvos com sucesso !!!");
       onSucess(true);
       refetch();
     },
@@ -56,7 +57,6 @@ const Desinfection = ({ onSucess, id, refetch }: Iprops) => {
         }}
         validationSchema={validationSchema}
         onSubmit={(values: DesinfectionModel) => {
-          console.log(values);
           if (values) {
             mutate(values);
           }
@@ -207,12 +207,7 @@ const Desinfection = ({ onSucess, id, refetch }: Iprops) => {
             </Form.Group>
 
             <Form.Group controlId="quantity">
-              <Form.Label>
-                Quantidade
-                <p style={{ marginLeft: 15, fontSize: 12, color: "red" }}>
-                  (balde com 5 Lts.)
-                </p>
-              </Form.Label>
+              <Form.Label>Quantidade</Form.Label>
               <Form.Control
                 type="number"
                 name="quantity"
