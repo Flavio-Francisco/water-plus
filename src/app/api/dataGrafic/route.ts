@@ -17,7 +17,7 @@ const fieldTranslations: { [key: string]: string } = {
     MultimediaFilterDisplayTime: "Hora do Multimeios",
     SoftenerDisplayTime: "Hora do Abrandador",
     CarbonDisplayTime: "Hora do Carvão",
-    SaltReservoirLevel: "Nível do Sal",
+    // SaltReservoirLevel: "Nível do Sal",
     ROInputPressure1: "Pressão de E. 1º Passo",
     ROInputPressure2: "Pressão de E. 2º Passo",
     MembraneInputPressure1: "P. Membrana 1º Passo",

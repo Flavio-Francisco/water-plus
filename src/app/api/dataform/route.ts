@@ -60,7 +60,7 @@ export async function GET(req: NextRequest) {
             const fieldNames = Object.keys(data[0]);
 
             // Remove os campos "id" e "system_id"
-            const filteredFields = fieldNames.filter(field => field !== "id" && field !== "system_id" && field !== "date");
+            const filteredFields = fieldNames.filter(field => field !== "id" && field !== "system_id" && field !== "date" && field !== "SaltReservoirLevel");
 
             // Traduz os nomes dos campos
             const translatedFields = filteredFields.map((field) => fieldTranslations[field] || field);
