@@ -11,7 +11,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { GetAnalys, GetAnalysPoint } from "@/app/fecth/analys";
 import { useUserContext } from "@/context/userContext";
 
-export default function AnalysList() {
+export default function AnalysisReservoirList() {
   const { user } = useUserContext();
   const [selectedAnalys, setSelectedAnalys] =
     React.useState<UnifiedData | null>(null);

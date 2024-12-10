@@ -6,11 +6,13 @@ import { NextRequest, NextResponse } from "next/server";
 export async function GET(req: NextRequest) {
     const url = new URL(req.nextUrl.href);
     const id = url.searchParams.get("id");
+    const name = await req.json()
   
     try {
         const data = await prisma.reservoir_analysis.findMany({
             where: {
-                system_id:Number(id)
+                system_id: Number(id),
+                sampleMatrixAndOrigin:name
             }
         })
 

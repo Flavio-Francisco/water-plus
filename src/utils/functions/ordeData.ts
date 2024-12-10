@@ -29,4 +29,7 @@ export function ordeData(dados: Dados): Dados {
     data: dataOrdenado
   };
 }
-
+export function formatDate(dateString: string): string {
+  const [year, month, day] = dateString.split("-");
+  return `${day}/${month}/${year}`;
+}

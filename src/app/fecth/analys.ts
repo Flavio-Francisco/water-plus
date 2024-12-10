@@ -31,3 +31,24 @@ export async function GetAnalysPoint(system_id:number|null) {
    
 
 }
+
+export async function GetPointName(system_id:number|null) {
+    
+    const data = await axios.get(`api/reservoir/getName?id=${system_id}`)
+   
+
+   return data.data
+   
+
+}
+export async function GetAnalysResevatory(system_id: number | null, sampleMatrixAndOrigin: string) {
+   
+    
+    const data = await axios.post(`api/reservoir/getName?id=${system_id}`,{sampleMatrixAndOrigin})
+   
+
+
+   return data.data
+   
+
+}
