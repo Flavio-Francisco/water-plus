@@ -12,7 +12,10 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { WaterAnalysis } from "@/utils/models/AnalysisResevatori";
-import { getTranslatedFields } from "@/utils/functions/formateNameResevatory";
+import {
+  colorClassification,
+  getTranslatedFields,
+} from "@/utils/functions/formateNameResevatory";
 import { formatDate } from "@/utils/functions/ordeData";
 
 // const mockData: WaterAnalysis[] = [
@@ -128,6 +131,8 @@ import { formatDate } from "@/utils/functions/ordeData";
 
 export default function AnalysList() {
   const { user } = useUserContext();
+  console.log(user);
+
   const [selectedAnalys, setSelectedAnalys] = React.useState<
     WaterAnalysis[] | null
   >(null);
@@ -224,8 +229,8 @@ export default function AnalysList() {
                           ([fieldKey]) =>
                             fieldKey !== "id" &&
                             fieldKey !== "system_id" &&
-                            fieldKey !== "Data da Coleta" &&
-                            fieldKey !== "Origem da Amostra"
+                            fieldKey !== "samplingDate" &&
+                            fieldKey !== "sampleMatrixAndOrigin"
                         )
                         .map(([fieldKey, fieldName]) => (
                           <TableRow key={fieldKey} hover>
@@ -237,6 +242,24 @@ export default function AnalysList() {
                                 align="right"
                                 key={`${fieldKey}-${index}`}
                                 className="border-l "
+                                style={{
+                                  color:
+                                    colorClassification(fieldName, item) ===
+                                    "Verde"
+                                      ? "green"
+                                      : colorClassification(fieldName, item) ===
+                                        "Amarelo"
+                                      ? "yellow"
+                                      : "red",
+                                  backgroundColor:
+                                    colorClassification(fieldName, item) ===
+                                    "Verde"
+                                      ? "#e5f9e7"
+                                      : colorClassification(fieldName, item) ===
+                                        "Amarelo"
+                                      ? "#f6f9e5"
+                                      : "#f9e5ea",
+                                }}
                               >
                                 {(
                                   item as unknown as Record<

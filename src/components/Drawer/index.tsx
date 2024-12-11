@@ -23,6 +23,7 @@ import HubOutlinedIcon from "@mui/icons-material/HubOutlined";
 import AssignmentOutlinedIcon from "@mui/icons-material/AssignmentOutlined";
 import WaterOutlinedIcon from "@mui/icons-material/WaterOutlined";
 import ChecklistRtlOutlinedIcon from "@mui/icons-material/ChecklistRtlOutlined";
+import BiotechIcon from "@mui/icons-material/Biotech";
 import { useRouter } from "next/navigation";
 import Dashboard from "./Dashboard/index";
 import WaterParametersForm from "../waterParametersForm";
@@ -317,6 +318,35 @@ export default function Drawer({
             </ListItemButton>
           </ListItem>
         </List>
+        <Divider />
+        <List>
+          <ListItem disablePadding sx={{ display: "block" }}>
+            <ListItemButton
+              sx={{
+                minHeight: 48,
+                justifyContent: open ? "initial" : "center",
+                px: 2.5,
+              }}
+              onClick={() => push("/analysisReservoir")}
+            >
+              <ListItemIcon
+                title="Analíses do Reservatório "
+                sx={{
+                  minWidth: 0,
+                  mr: open ? 3 : "auto",
+                  justifyContent: "center",
+                }}
+              >
+                <BiotechIcon />
+              </ListItemIcon>
+              <ListItemText
+                primary={"Analíses do Reservatório "}
+                sx={{ opacity: open ? 1 : 0 }}
+              />
+            </ListItemButton>
+          </ListItem>
+        </List>
+
         <Divider />
         <List>
           <ListItem disablePadding sx={{ display: "block" }}>
