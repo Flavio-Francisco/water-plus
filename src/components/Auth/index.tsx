@@ -9,38 +9,69 @@ import { getSystems } from "@/app/fecth/systems";
 import { Systems } from "@/utils/models/analysis";
 import { auth } from "@/app/fecth/auth";
 import { useUserContext } from "@/context/userContext";
-
 import Loader from "../loader/page";
-import { signIn } from "next-auth/react";
-import { AxiosError } from "axios";
+import { useRouter } from "next/navigation";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+//import { UserModel } from "@/utils/models/userModel";
 
 export default function Auth() {
   const { getUser, clearCache } = useUserContext();
-  const [selectedValue, setSelectedValue] = useState<Systems | null>(null);
-  const [selectedPassword, setSelectPassword] = useState<string>("");
-  const [selectedName, setSelectName] = useState<string>("");
-  const [isSubmitting, setSubmitting] = useState<boolean>(false);
-  const resetForm = () => {
-    setSelectedValue(null);
-    setSelectPassword("");
-    setSelectName("");
-    setSubmitting(false);
-  };
+  const { push } = useRouter();
+  const [isPending, setIsPending] = useState(false);
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ["systems"],
     queryFn: () => getSystems(),
   });
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const config: any = data || [];
+
   const systems = (data as Systems[]) || [];
 
   useEffect(() => {
-    if (isLoading === true) {
-      resetForm();
+    if (isLoading) {
       clearCache();
     }
-  }, [isLoading]);
+  }, [isLoading, clearCache]);
+
+  const formik = useFormik({
+    initialValues: {
+      name: "",
+      password: "",
+      system_id: 0,
+    },
+    validationSchema: Yup.object({
+      name: Yup.string().required("Nome é obrigatório"),
+      password: Yup.string().required("Senha é obrigatória"),
+      system_id: Yup.number()
+        .required("Selecione um sistema")
+        .min(1, "Seleção inválida"),
+    }),
+    onSubmit: async (values, { resetForm }) => {
+      setIsPending(true);
+      try {
+        const response = await auth(values);
+        if (response.name) {
+          getUser({
+            name: response.name,
+            password: response.password,
+            adm: response.adm,
+            id: response.id,
+            system_id: response.system_id,
+          });
+          push("/Home");
+        } else {
+          alert(response.message || "Erro desconhecido.");
+        }
+      } catch (error) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+
+        alert("Usuário não encontrado!!!");
+      } finally {
+        resetForm();
+        setIsPending(false);
+      }
+    },
+  });
 
   if (isError) {
     return (
@@ -51,11 +82,12 @@ export default function Auth() {
             "linear-gradient(to bottom, rgba(25,118,210,1), rgba(255,255,255,1))",
         }}
       >
-        <h1>Erro ao carregar dados!!! </h1>
+        <h1>Erro ao carregar dados!!!</h1>
       </div>
     );
   }
-  if ((isLoading && systems.length === 0) || config.status === 500) {
+
+  if (isLoading || !data) {
     return (
       <div
         className="flex justify-center items-center h-screen"
@@ -64,63 +96,10 @@ export default function Auth() {
             "linear-gradient(to bottom, rgba(25,118,210,1), rgba(255,255,255,1))",
         }}
       >
-        <h1>
-          <Loader />
-        </h1>
+        <Loader />
       </div>
     );
   }
-
-  const handleSubmit = async () => {
-    setSubmitting(true);
-
-    if (selectedName === "" && selectedPassword === "") {
-      alert("campos não podem ser vazios");
-      setSubmitting(false);
-    } else {
-      const dados = await auth({
-        name: selectedName || "",
-        password: selectedPassword || "",
-        system_id: selectedValue?.id || 0,
-      });
-      const status: AxiosError = dados;
-
-      if (status.status != 500 && status.status === undefined) {
-        if (dados) {
-          getUser(dados);
-          signIn("credentials", {
-            ...dados,
-
-            callbackUrl: "/Home",
-          });
-          setSubmitting(false);
-          resetForm();
-        } else {
-          alert("Erro de Conexão");
-          setSubmitting(false);
-        }
-      } else {
-        alert("Dados não Encontrados!!!");
-        setSubmitting(false);
-        resetForm();
-      }
-    }
-  };
-
-  const handleSelectName = (value: string) => {
-    setSelectName(value);
-    console.log(selectedName);
-  };
-
-  const handleSelectPassword = (value: string) => {
-    setSelectPassword(value);
-    console.log(selectedPassword);
-  };
-
-  const handleSelectChange = (value: Systems | null) => {
-    setSelectedValue(value);
-    console.log(selectedValue?.id);
-  };
 
   return (
     <div
@@ -130,61 +109,86 @@ export default function Auth() {
           "linear-gradient(to bottom, rgba(25,118,210,1), rgba(255,255,255,1))",
       }}
     >
-      <div className="max-md:hidden w-full max-w-md ">
+      <div className="max-md:hidden w-full max-w-md">
         <Image priority src={Logo} alt="Logo" />
       </div>
       <div className="w-full max-w-md">
-        <form className="bg-white shadow-md rounded max-md:m-auto  max-md:w-10/12  px-8 pt-6 pb-8 mb-4">
-          <div className="md:hidden  w-full max-w-md flex justify-center items-center">
+        <form
+          onSubmit={formik.handleSubmit}
+          className="bg-white shadow-md rounded max-md:m-auto max-md:w-10/12 px-8 pt-6 pb-8 mb-4"
+        >
+          <div className="md:hidden w-full max-w-md flex justify-center items-center">
             <Image priority src={Logo} alt="Logo" height={200} width={200} />
           </div>
           <h1 className="my-2 text-2xl font-bold">Login</h1>
+
           <div className="mb-4">
             <TextField
               InputProps={{ autoComplete: "false" }}
-              id="outlined-basic"
+              id="name"
               name="name"
-              type="text"
               label="Usuário"
-              value={selectedName}
-              onChange={(event) => handleSelectName(event.target.value)}
-              autoComplete="current"
-              className="w-full p-2 "
+              value={formik.values.name}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.name && Boolean(formik.errors.name)}
+              helperText={formik.touched.name && formik.errors.name}
+              className="w-full p-2"
             />
           </div>
+
           <div className="mb-4">
             <TextField
               InputProps={{ autoComplete: "false" }}
+              id="password"
               name="password"
               type="password"
-              autoComplete="senha-atual"
-              value={selectedPassword}
-              onChange={(event) => handleSelectPassword(event.target.value)}
               label="Senha"
-              className="w-full p-2 "
+              value={formik.values.password}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.password && Boolean(formik.errors.password)}
+              helperText={formik.touched.password && formik.errors.password}
+              className="w-full p-2"
             />
           </div>
-          <div className="mb-4 w-full flex justify-center ">
+
+          <div className="mb-4 w-full flex justify-center">
             <Autocomplete
-              className="w-full  rounded"
-              id="combo-box-demo"
+              id="system_id"
+              className="w-full"
               options={systems}
-              value={selectedValue}
-              onChange={(event, value) => handleSelectChange(value)}
               getOptionLabel={(option) => option.name || ""}
+              value={
+                systems.find(
+                  (system) => system.id === formik.values.system_id
+                ) || null
+              }
+              onChange={(event, value) =>
+                formik.setFieldValue("system_id", value?.id || 0)
+              }
               renderInput={(params) => (
-                <TextField {...params} label="Seleção do Sistema" />
+                <TextField
+                  {...params}
+                  label="Seleção do Sistema"
+                  error={
+                    formik.touched.system_id && Boolean(formik.errors.system_id)
+                  }
+                  helperText={
+                    formik.touched.system_id && formik.errors.system_id
+                  }
+                />
               )}
             />
           </div>
+
           <div className="flex items-center justify-between">
             <button
-              onClick={handleSubmit}
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               type="submit"
-              disabled={isSubmitting}
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              disabled={isPending}
             >
-              {isSubmitting ? "Entrando..." : "Entrar"}
+              {isPending ? "Entrando..." : "Entrar"}
             </button>
           </div>
         </form>
