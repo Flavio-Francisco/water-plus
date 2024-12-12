@@ -15,7 +15,7 @@ const UserCard: React.FC = () => {
       </p>
 
       <p className="text-sm text-center text-white">
-        {message} {user?.name}
+        {message}, {user?.name}
       </p>
     </div>
   );

@@ -10,6 +10,7 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import PictureAsPdfOutlinedIcon from "@mui/icons-material/PictureAsPdfOutlined";
 import Paper from "@mui/material/Paper";
 import { WaterAnalysis } from "@/utils/models/AnalysisResevatori";
 import {
@@ -17,6 +18,9 @@ import {
   getTranslatedFields,
 } from "@/utils/functions/formateNameResevatory";
 import { formatDate } from "@/utils/functions/ordeData";
+import ModalTsx from "../Drawer/DashboardTSX/ModalTsx";
+import PdfTable from "../pdfTable";
+import { PDFViewer } from "@react-pdf/renderer";
 
 // const mockData: WaterAnalysis[] = [
 //   {
@@ -131,8 +135,7 @@ import { formatDate } from "@/utils/functions/ordeData";
 
 export default function AnalysList() {
   const { user } = useUserContext();
-  console.log(user);
-
+  const [open, setOpen] = React.useState(false);
   const [selectedAnalys, setSelectedAnalys] = React.useState<
     WaterAnalysis[] | null
   >(null);
@@ -140,7 +143,13 @@ export default function AnalysList() {
     keyof WaterAnalysis,
     string
   > | null>();
-  //getTranslatedFields
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
   const { mutate, isPending } = useMutation({
     mutationKey: ["updateAnalys"],
     mutationFn: (point: string) =>
@@ -148,8 +157,6 @@ export default function AnalysList() {
     onSuccess(response) {
       setSelectedAnalys(response);
       setSelectedNames(getTranslatedFields(response[0]));
-      console.log(getTranslatedFields(response));
-      console.log(response);
     },
   });
 
@@ -200,80 +207,115 @@ export default function AnalysList() {
                   <CircularProgress size="8rem" />
                 </div>
               ) : (
-                <TableContainer component={Paper} className="mt-5">
-                  <Table sx={{ minWidth: 650 }} aria-label="Tabela de Análise">
-                    <TableHead>
-                      <TableRow>
-                        <TableCell
-                          className="text-center "
-                          style={{ fontSize: 16, fontWeight: "bold" }}
-                        >
-                          Parâmetro
-                        </TableCell>
-                        {selectedAnalys.map((item, index) => (
+                <>
+                  <div className="w-full flex justify-end mt-3">
+                    <button
+                      onClick={handleOpen}
+                      className="p-2 hover:bg-slate-200 rounded"
+                      style={{
+                        display: open === true ? "none" : "",
+                      }}
+                    >
+                      <PictureAsPdfOutlinedIcon
+                        color="action"
+                        style={{ fontSize: 28 }}
+                      />
+                    </button>
+                    <ModalTsx
+                      maxWidth={"lg"}
+                      fullWidth={true}
+                      onClose={handleClose}
+                      open={open}
+                    >
+                      <div className="w-full h-screen">
+                        <PDFViewer className="w-full h-full">
+                          <PdfTable selectedAnalys={selectedAnalys || []} />
+                        </PDFViewer>
+                      </div>
+                    </ModalTsx>
+                  </div>
+                  <TableContainer component={Paper} className="mt-3">
+                    <Table
+                      sx={{ minWidth: 650 }}
+                      aria-label="Tabela de Análise"
+                    >
+                      <TableHead>
+                        <TableRow>
                           <TableCell
-                            align="right"
-                            key={`header-${index}`}
                             className="text-center "
                             style={{ fontSize: 16, fontWeight: "bold" }}
                           >
-                            {formatDate(item.samplingDate) ||
-                              `Data ${index + 1}`}
+                            Parâmetro
                           </TableCell>
-                        ))}
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {Object.entries(selectedNames || {})
-                        .filter(
-                          ([fieldKey]) =>
-                            fieldKey !== "id" &&
-                            fieldKey !== "system_id" &&
-                            fieldKey !== "samplingDate" &&
-                            fieldKey !== "sampleMatrixAndOrigin"
-                        )
-                        .map(([fieldKey, fieldName]) => (
-                          <TableRow key={fieldKey} hover>
-                            <TableCell component="th" scope="row">
-                              {fieldName}
+                          {selectedAnalys.map((item, index) => (
+                            <TableCell
+                              align="right"
+                              key={`header-${index}`}
+                              className="text-center "
+                              style={{ fontSize: 16, fontWeight: "bold" }}
+                            >
+                              {formatDate(item.samplingDate) ||
+                                `Data ${index + 1}`}
                             </TableCell>
-                            {selectedAnalys.map((item, index) => (
-                              <TableCell
-                                align="right"
-                                key={`${fieldKey}-${index}`}
-                                className="border-l "
-                                style={{
-                                  color:
-                                    colorClassification(fieldName, item) ===
-                                    "Verde"
-                                      ? "green"
-                                      : colorClassification(fieldName, item) ===
-                                        "Amarelo"
-                                      ? "yellow"
-                                      : "red",
-                                  backgroundColor:
-                                    colorClassification(fieldName, item) ===
-                                    "Verde"
-                                      ? "#e5f9e7"
-                                      : colorClassification(fieldName, item) ===
-                                        "Amarelo"
-                                      ? "#f6f9e5"
-                                      : "#f9e5ea",
-                                }}
-                              >
-                                {(
-                                  item as unknown as Record<
-                                    string,
-                                    string | number
-                                  >
-                                )[fieldKey] || "-"}
+                          ))}
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        {Object.entries(selectedNames || {})
+                          .filter(
+                            ([fieldKey]) =>
+                              fieldKey !== "id" &&
+                              fieldKey !== "system_id" &&
+                              fieldKey !== "samplingDate" &&
+                              fieldKey !== "sampleMatrixAndOrigin"
+                          )
+                          .map(([fieldKey, fieldName]) => (
+                            <TableRow key={fieldKey} hover>
+                              <TableCell component="th" scope="row">
+                                {fieldName}
                               </TableCell>
-                            ))}
-                          </TableRow>
-                        ))}
-                    </TableBody>
-                  </Table>
-                </TableContainer>
+                              {selectedAnalys.map((item, index) => (
+                                <TableCell
+                                  align="right"
+                                  key={`${fieldKey}-${index}`}
+                                  className="border-l "
+                                  style={{
+                                    color:
+                                      colorClassification(fieldName, item) ===
+                                      "Verde"
+                                        ? "green"
+                                        : colorClassification(
+                                            fieldName,
+                                            item
+                                          ) === "Amarelo"
+                                        ? "#89a100"
+                                        : "red",
+                                    backgroundColor:
+                                      colorClassification(fieldName, item) ===
+                                      "Verde"
+                                        ? "#e5f9e7"
+                                        : colorClassification(
+                                            fieldName,
+                                            item
+                                          ) === "Amarelo"
+                                        ? "#f0f894"
+                                        : "#f9e5ea",
+                                  }}
+                                >
+                                  {(
+                                    item as unknown as Record<
+                                      string,
+                                      string | number
+                                    >
+                                  )[fieldKey] || "-"}
+                                </TableCell>
+                              ))}
+                            </TableRow>
+                          ))}
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                </>
               )}
             </div>
           )}

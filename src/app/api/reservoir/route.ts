@@ -13,6 +13,9 @@ export async function GET(req: NextRequest) {
             where: {
                 system_id: Number(id),
                 sampleMatrixAndOrigin:name
+            },
+            orderBy: {
+                samplingDate:'asc'
             }
         })
 
@@ -43,7 +46,8 @@ export async function POST(req: NextRequest) {
                 system_id: Number(id)
                 
             
-          }
+            },
+            
 
         });
 

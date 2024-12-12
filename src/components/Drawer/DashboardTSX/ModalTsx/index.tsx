@@ -12,8 +12,8 @@ interface Iprops {
   onClose: () => void;
 
   children: React.ReactNode;
-  maxWidth: false | Breakpoint | undefined;
-  fullWidth: boolean | undefined;
+  maxWidth?: false | Breakpoint | undefined;
+  fullWidth?: boolean | undefined;
 }
 
 const Transition = React.forwardRef(function Transition(

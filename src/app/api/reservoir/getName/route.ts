@@ -1,8 +1,5 @@
-
-
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "../../../../../lib/db";
-
 
 export async function GET(req: NextRequest) {
     const url = new URL(req.nextUrl.href);
@@ -11,23 +8,28 @@ export async function GET(req: NextRequest) {
     try {
         const data = await prisma.reservoir_analysis.findMany({
             where: {
-                system_id:Number(id)
+                system_id: Number(id)
             },
             select: {
-                sampleMatrixAndOrigin:true
+                sampleMatrixAndOrigin: true
             }
-        })
-        const names = data.map((item) => item.sampleMatrixAndOrigin);
-        return NextResponse.json(names );
+        });
+
+        // Removendo duplicatas com filter
+        const uniqueNames = data
+            .map(item => item.sampleMatrixAndOrigin)
+            .filter((value, index, self) => value && self.indexOf(value) === index);
+
+        return NextResponse.json(uniqueNames);
     } catch (error) {
         return NextResponse.json({
-            message: "erro ao Buscar Dados!!"
-        },
-        {
+            message: "Erro ao buscar dados!"
+        }, {
             status: 500
         });
     }
 }
+
 
 
 export async function POST(req: NextRequest) {
