@@ -25,11 +25,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   tableCell: {
-    padding: 5,
+    padding: 2,
     borderRightWidth: 1,
     borderBottomWidth: 1,
     textAlign: "center",
-    fontSize: 12,
+    fontSize: 10,
   },
   tableHeader: {
     fontWeight: "bold",
@@ -60,20 +60,31 @@ const PdfTable = ({ selectedAnalys, poitName }: IProps) => {
   return (
     <Document title={poitName}>
       <Page size="A4" orientation="landscape" style={styles.page}>
+        <View
+          style={{
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
+            padding: 1,
+          }}
+        >
+          <Text style={{ fontSize: 13, fontWeight: "bold" }}>
+            Dados das Análises do {poitName}
+          </Text>
+        </View>
         <View style={styles.table}>
-          {/* Cabeçalho da Tabela */}
           <View style={[styles.tableRow, styles.tableHeader]}>
             <Text style={{ ...styles.tableCell, width: "25%" }}>Parâmetro</Text>
             {selectedAnalys.map((item, index) => (
               <Text
                 key={`header-${index}`}
                 style={{
-                  padding: 4,
+                  padding: 2,
                   borderRightWidth: 1,
                   borderBottomWidth: 1,
-                  fontSize: 12,
+                  fontSize: 10,
                   width: "6.25%",
-                  textAlign: "left",
+                  textAlign: "center",
                 }}
               >
                 {formatDatePdf(item.samplingDate) || `Data ${index + 1}`}
@@ -96,10 +107,6 @@ const PdfTable = ({ selectedAnalys, poitName }: IProps) => {
                   style={{
                     ...styles.tableCell,
                     width: "25%",
-                    fontSize:
-                      fieldName === "Contagem de Bactérias Heterotróficas"
-                        ? 10
-                        : 12,
                   }}
                 >
                   {fieldName}
