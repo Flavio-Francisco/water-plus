@@ -136,6 +136,7 @@ import { PDFViewer } from "@react-pdf/renderer";
 export default function AnalysList() {
   const { user } = useUserContext();
   const [open, setOpen] = React.useState(false);
+  const [poitName, setPointName] = React.useState("");
   const [selectedAnalys, setSelectedAnalys] = React.useState<
     WaterAnalysis[] | null
   >(null);
@@ -173,6 +174,7 @@ export default function AnalysList() {
           onChange={(event, value) => {
             if (value) {
               mutate(value);
+              setPointName(value);
             } else {
               console.log("Nenhum ponto de coleta selecionado");
             }
@@ -229,7 +231,10 @@ export default function AnalysList() {
                     >
                       <div className="w-full h-screen">
                         <PDFViewer className="w-full h-full">
-                          <PdfTable selectedAnalys={selectedAnalys || []} />
+                          <PdfTable
+                            selectedAnalys={selectedAnalys || []}
+                            poitName={poitName}
+                          />
                         </PDFViewer>
                       </div>
                     </ModalTsx>

@@ -51,13 +51,14 @@ const styles = StyleSheet.create({
 
 interface IProps {
   selectedAnalys: WaterAnalysis[];
+  poitName: string;
 }
 
-const PdfTable = ({ selectedAnalys }: IProps) => {
+const PdfTable = ({ selectedAnalys, poitName }: IProps) => {
   const selectedNames = getTranslatedFields(selectedAnalys[0]);
 
   return (
-    <Document>
+    <Document title={poitName}>
       <Page size="A4" orientation="landscape" style={styles.page}>
         <View style={styles.table}>
           {/* Cabeçalho da Tabela */}
