@@ -1,4 +1,5 @@
-import { ReservoirAnalysisResults } from "@/components/analysis/resevoirForm";
+
+import { ReservoirAnalysisInitialValuesEdite } from "@/components/analysis/resevoirFormEdit/validation";
 import { CredentialsOperator } from "@/utils/models/Credentials"
 import axios from "axios"
 
@@ -16,10 +17,21 @@ export async function createReservoir(system_id:number|null, data:string) {
    
 
 }
-export async function createReservoirAnalisys(system_id:number|null, data:ReservoirAnalysisResults) {
+export async function createReservoirAnalisys(system_id:number|null, data: ReservoirAnalysisInitialValuesEdite) {
     console.log("dados ",data);
     
     const resevatorir = await axios.post(`api/reservoir/analysis?id=${system_id}`,data)
+   
+
+   return resevatorir.data
+   
+
+}
+
+export async function editReservoirAnalisys(system_id:number|null, data: ReservoirAnalysisInitialValuesEdite) {
+    console.log("dados ",data);
+    
+    const resevatorir = await axios.patch(`api/reservoir/analysis?id=${system_id}`,data)
    
 
    return resevatorir.data

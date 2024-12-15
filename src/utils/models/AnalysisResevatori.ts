@@ -1,5 +1,6 @@
 export interface WaterAnalysis {
-    id: number;
+  id?: number;
+  date:string;
     bicarbonateAlkalinity: string;
     carbonateAlkalinity: string;
     hydroxideAlkalinity: string;
@@ -30,8 +31,8 @@ export interface WaterAnalysis {
     totalColiforms: string;
     heterotrophicBacteriaCount: string;
     endotoxins: string;
-    samplingDate: string; // Formato ISO 8601: "YYYY-MM-DD"
+    samplingDate: string; 
     sampleMatrixAndOrigin: string;
-    system_id: number;
+    system_id?: number;
   }
   

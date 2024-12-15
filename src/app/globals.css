@@ -5,3 +5,8 @@
 
 
 
+/* No seu CSS global ou no arquivo CSS do Next.js */
+.hover:hover {
+    background-color: var(--hover-color);
+  }
+  

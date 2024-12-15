@@ -11,6 +11,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import PictureAsPdfOutlinedIcon from "@mui/icons-material/PictureAsPdfOutlined";
+import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import Paper from "@mui/material/Paper";
 import { WaterAnalysis } from "@/utils/models/AnalysisResevatori";
 import {
@@ -21,117 +22,7 @@ import { formatDate } from "@/utils/functions/ordeData";
 import ModalTsx from "../Drawer/DashboardTSX/ModalTsx";
 import PdfTable from "../pdfTable";
 import { PDFViewer } from "@react-pdf/renderer";
-
-// const mockData: WaterAnalysis[] = [
-//   {
-//     id: 1,
-//     bicarbonateAlkalinity: "30",
-//     carbonateAlkalinity: "0",
-//     hydroxideAlkalinity: "0",
-//     totalAlkalinity: "30",
-//     aluminum: "0.1",
-//     ammonia: "0.2",
-//     calcium: "8",
-//     chlorides: "30",
-//     freeResidualChlorine: "0",
-//     electricalConductivity: "107",
-//     apparentColor: "0",
-//     carbonateHardness: "20",
-//     nonCarbonateHardness: "20",
-//     totalHardness: "40",
-//     totalIron: "0.12",
-//     magnesium: "0",
-//     manganese: "0",
-//     nitrate: "2.34",
-//     nitrite: "0",
-//     dissolvedOxygen: "8.28",
-//     pH: "7.5",
-//     potassium: "4.01",
-//     sodium: "4.01",
-//     totalDissolvedSolids: "53.50",
-//     sulfate: "0",
-//     hydrogenSulfide: "0",
-//     surfactants: "0.5",
-//     totalColiforms: "8",
-//     heterotrophicBacteriaCount: "1215",
-//     endotoxins: "0",
-//     samplingDate: "2024-12-01",
-//     sampleMatrixAndOrigin: "Reservatório 1",
-//     system_id: 1,
-//   },
-//   {
-//     id: 2,
-//     bicarbonateAlkalinity: "28",
-//     carbonateAlkalinity: "0",
-//     hydroxideAlkalinity: "0",
-//     totalAlkalinity: "28",
-//     aluminum: "0.2",
-//     ammonia: "0.1",
-//     calcium: "9",
-//     chlorides: "32",
-//     freeResidualChlorine: "0.1",
-//     electricalConductivity: "110",
-//     apparentColor: "1",
-//     carbonateHardness: "21",
-//     nonCarbonateHardness: "19",
-//     totalHardness: "40",
-//     totalIron: "0.10",
-//     magnesium: "1",
-//     manganese: "0",
-//     nitrate: "2.50",
-//     nitrite: "0",
-//     dissolvedOxygen: "8.00",
-//     pH: "7.4",
-//     potassium: "4.00",
-//     sodium: "4.02",
-//     totalDissolvedSolids: "54.00",
-//     sulfate: "0",
-//     hydrogenSulfide: "0",
-//     surfactants: "0.4",
-//     totalColiforms: "10",
-//     heterotrophicBacteriaCount: "1200",
-//     endotoxins: "0",
-//     samplingDate: "2024-12-02",
-//     sampleMatrixAndOrigin: "Reservatório 1",
-//     system_id: 1,
-//   },
-//   {
-//     id: 3,
-//     bicarbonateAlkalinity: "31",
-//     carbonateAlkalinity: "0",
-//     hydroxideAlkalinity: "0",
-//     totalAlkalinity: "31",
-//     aluminum: "0.15",
-//     ammonia: "0.25",
-//     calcium: "10",
-//     chlorides: "33",
-//     freeResidualChlorine: "0",
-//     electricalConductivity: "112",
-//     apparentColor: "2",
-//     carbonateHardness: "22",
-//     nonCarbonateHardness: "18",
-//     totalHardness: "40",
-//     totalIron: "0.11",
-//     magnesium: "0",
-//     manganese: "0",
-//     nitrate: "2.60",
-//     nitrite: "0",
-//     dissolvedOxygen: "7.90",
-//     pH: "7.6",
-//     potassium: "4.03",
-//     sodium: "4.04",
-//     totalDissolvedSolids: "55.00",
-//     sulfate: "0",
-//     hydrogenSulfide: "0",
-//     surfactants: "0.3",
-//     totalColiforms: "9",
-//     heterotrophicBacteriaCount: "1210",
-//     endotoxins: "0",
-//     samplingDate: "2024-12-03",
-//     sampleMatrixAndOrigin: "Reservatório 1",
-//     system_id: 1,
-//   },
-// ];
+import DashboardReservoir from "./DashboardReservoir";
 
 export default function AnalysList() {
   const { user } = useUserContext();
@@ -140,6 +31,15 @@ export default function AnalysList() {
   const [selectedAnalys, setSelectedAnalys] = React.useState<
     WaterAnalysis[] | null
   >(null);
+  const [selected, setSelected] = React.useState<WaterAnalysis>();
+  const [sucess, setSucess] = React.useState<boolean>(false);
+
+  const onSucess = (sucess: boolean) => {
+    if (sucess === true) {
+      setSucess(sucess);
+    }
+  };
+
   const [selectedNames, setSelectedNames] = React.useState<Record<
     keyof WaterAnalysis,
     string
@@ -151,6 +51,7 @@ export default function AnalysList() {
   const handleClose = () => {
     setOpen(false);
   };
+
   const { mutate, isPending } = useMutation({
     mutationKey: ["updateAnalys"],
     mutationFn: (point: string) =>
@@ -161,11 +62,24 @@ export default function AnalysList() {
     },
   });
 
-  const { data: analys, isLoading } = useQuery<string[]>({
+  const {
+    data: analys,
+    isLoading,
+    refetch,
+  } = useQuery<string[]>({
     queryKey: ["pointName"],
     queryFn: () => GetPointName(user?.system_id || 0),
   });
-
+  const getById = (id: number | undefined) => {
+    const result = (selectedAnalys || []).find((item) => item.id === id);
+    setSelected(result);
+  };
+  React.useEffect(() => {
+    if (sucess === true) {
+      mutate(poitName);
+      setSucess(false);
+    }
+  }, [sucess]);
   return (
     <div className="flex flex-col justify-center items-center mt-4 w-11/12 max-sm:w-[390px] max-sm:left-10 absolute">
       <div className="container w-11/12">
@@ -256,11 +170,28 @@ export default function AnalysList() {
                             <TableCell
                               align="right"
                               key={`header-${index}`}
-                              className="text-center "
-                              style={{ fontSize: 16, fontWeight: "bold" }}
+                              className="text-center relative "
+                              style={{
+                                fontSize: 16,
+                                fontWeight: "bold",
+                              }}
+                              onClick={() => getById(item.id)}
                             >
-                              {formatDate(item.samplingDate) ||
-                                `Data ${index + 1}`}
+                              <DashboardReservoir
+                                refetch={refetch}
+                                className=" hover:bg-slate-200 absolute top-0 right-0 rounded-sm"
+                                icon={<EditOutlinedIcon fontSize="small" />}
+                                values={{
+                                  ...item,
+                                  sampleName: item.sampleMatrixAndOrigin,
+                                }}
+                                onSucess={onSucess}
+                              />
+
+                              <p>
+                                {formatDate(item.samplingDate) ||
+                                  `Data ${index + 1}`}
+                              </p>
                             </TableCell>
                           ))}
                         </TableRow>
@@ -275,7 +206,7 @@ export default function AnalysList() {
                               fieldKey !== "sampleMatrixAndOrigin"
                           )
                           .map(([fieldKey, fieldName]) => (
-                            <TableRow key={fieldKey} hover>
+                            <TableRow key={fieldKey}>
                               <TableCell component="th" scope="row">
                                 {fieldName}
                               </TableCell>
@@ -283,7 +214,7 @@ export default function AnalysList() {
                                 <TableCell
                                   align="right"
                                   key={`${fieldKey}-${index}`}
-                                  className="border-l "
+                                  className="border-l"
                                   style={{
                                     color:
                                       colorClassification(fieldName, item) ===
@@ -305,6 +236,34 @@ export default function AnalysList() {
                                           ) === "Amarelo"
                                         ? "#f0f894"
                                         : "#f9e5ea",
+                                  }}
+                                  onMouseMove={(e) => {
+                                    const target = e.target as HTMLElement;
+
+                                    target.style.backgroundColor =
+                                      colorClassification(fieldName, item) ===
+                                      "Verde"
+                                        ? "#a3f1ab"
+                                        : colorClassification(
+                                            fieldName,
+                                            item
+                                          ) === "Amarelo"
+                                        ? "#e0ec5e"
+                                        : "#f8c0ce";
+                                  }}
+                                  onMouseLeave={(e) => {
+                                    const target = e.target as HTMLElement;
+
+                                    target.style.backgroundColor =
+                                      colorClassification(fieldName, item) ===
+                                      "Verde"
+                                        ? "#e5f9e7"
+                                        : colorClassification(
+                                            fieldName,
+                                            item
+                                          ) === "Amarelo"
+                                        ? "#f0f894"
+                                        : "#f9e5ea";
                                   }}
                                 >
                                   {(
