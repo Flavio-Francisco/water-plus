@@ -151,3 +151,32 @@ export async function PATCH(req: NextRequest) {
         });
     }
 }
+
+export async function DELETE(req: NextRequest) {
+    // const url = new URL(req.nextUrl.href);
+    // const id = url.searchParams.get("id");
+    const analysis= await req.json();
+    
+    
+    try {
+      const data =   await prisma.reservoir_analysis.delete({
+        
+            where: {
+                id: Number(analysis.id),
+                system_id: Number(analysis.system_id)
+            }
+         
+      });
+        console.log(data);
+        
+
+        return NextResponse.json({message:"Dados deletados com sucesso!!!"});
+    } catch (error) {
+        return NextResponse.json({
+            message: "Erro ao deletar dados"
+        },
+        {
+            status: 500
+        });
+    }
+}

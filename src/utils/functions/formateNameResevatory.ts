@@ -2,8 +2,8 @@ import { WaterAnalysis } from "../models/AnalysisResevatori";
 
 
 
-export function getTranslatedFields(data: WaterAnalysis): Record<string, string> {
-    const translations: Record<keyof WaterAnalysis, string> = {
+export function getTranslatedFields(data: WaterAnalysis): Record<string, string> |void{
+ if(data) {  const translations: Record<keyof WaterAnalysis, string> = {
       id: "ID",
       bicarbonateAlkalinity: "Alcalinidade Bicarbonato",
       carbonateAlkalinity: "Alcalinidade Carbonato",
@@ -38,6 +38,7 @@ export function getTranslatedFields(data: WaterAnalysis): Record<string, string>
       samplingDate: "Data da Coleta",
       sampleMatrixAndOrigin: "Origem da Amostra",
       system_id: "ID do Sistema",
+      date: "Data da Amostra"
     };
   
     // Retorna um objeto com os campos originais e suas traduções
@@ -46,13 +47,13 @@ export function getTranslatedFields(data: WaterAnalysis): Record<string, string>
       translatedObject[key] = translations[key as keyof WaterAnalysis];
     });
   
-    return translatedObject;
+    return translatedObject;}
   }
   
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function colorClassification(name: string, data:  WaterAnalysis) {
-  console.log(data);
+
   
   const translations: Record<keyof WaterAnalysis, string> = {
     id: "ID",
@@ -89,6 +90,7 @@ export function colorClassification(name: string, data:  WaterAnalysis) {
     samplingDate: "Data da Coleta",
     sampleMatrixAndOrigin: "Origem da Amostra",
     system_id: "ID do Sistema",
+      date: "Data da Amostra"
   };
   if (name == translations.bicarbonateAlkalinity) {
  

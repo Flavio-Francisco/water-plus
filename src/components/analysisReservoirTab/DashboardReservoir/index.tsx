@@ -6,6 +6,9 @@ import MenuItem from "@mui/material/MenuItem";
 import ModalTsx from "@/components/Drawer/DashboardTSX/ModalTsx";
 import ReservoirAnalysisFormEdit from "@/components/analysis/resevoirFormEdit";
 import { ReservoirAnalysisInitialValuesEdite } from "@/components/analysis/resevoirFormEdit/validation";
+import { useMutation } from "@tanstack/react-query";
+import { deleteReservoir } from "@/app/fecth/resevatorir";
+import { useUserContext } from "@/context/userContext";
 
 interface IProps {
   icon: React.ReactNode;
@@ -26,6 +29,23 @@ export default function DashboardReservoir({
   const open = Boolean(anchorEl);
   const [openModal1, setOpenModal1] = React.useState(false);
   const [openModal2, setOpenModal2] = React.useState(false);
+  const { user } = useUserContext();
+  const { mutate, isPending } = useMutation({
+    mutationKey: ["resevatorirForm"],
+    mutationFn: () => deleteReservoir(user?.system_id || 0, values),
+    onSuccess: (data) => {
+      alert(data.message);
+      setOpenModal1(false);
+      onSucess(true);
+    },
+    onError: () => {
+      alert("Erro ao deletar dados");
+      setOpenModal1(false);
+    },
+  });
+  const handleDelete = () => {
+    mutate();
+  };
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -118,7 +138,26 @@ export default function DashboardReservoir({
           maxWidth="xs"
         >
           <div className="w-full">
-            <h1 className="text-center font-bold">Excluir</h1>
+            <h1 className=" text-xl text-center font-bold mb-3">Excluir</h1>
+            <p>
+              Tem certeza de que deseja excluir essa ánalise? Esta ação não
+              poderá ser desfeita.
+            </p>
+            <div className="flex justify-around items-center mt-4">
+              <button
+                className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-400"
+                onClick={handleDelete}
+                disabled={isPending}
+              >
+                {isPending ? "Excluindo..." : "Excluir"}
+              </button>
+              <button
+                className="px-4 py-2 ml-4 bg-gray-300 text-white rounded-md hover:bg-gray-400"
+                onClick={handlecloseModal2}
+              >
+                Cancelar
+              </button>
+            </div>
           </div>
         </ModalTsx>
       </div>

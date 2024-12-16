@@ -31,7 +31,7 @@ export default function AnalysList() {
   const [selectedAnalys, setSelectedAnalys] = React.useState<
     WaterAnalysis[] | null
   >(null);
-  const [selected, setSelected] = React.useState<WaterAnalysis>();
+
   const [sucess, setSucess] = React.useState<boolean>(false);
 
   const onSucess = (sucess: boolean) => {
@@ -43,7 +43,7 @@ export default function AnalysList() {
   const [selectedNames, setSelectedNames] = React.useState<Record<
     keyof WaterAnalysis,
     string
-  > | null>();
+  > | null | void>();
 
   const handleOpen = () => {
     setOpen(true);
@@ -58,7 +58,7 @@ export default function AnalysList() {
       GetAnalysResevatory(user?.system_id || 0, point),
     onSuccess(response) {
       setSelectedAnalys(response);
-      setSelectedNames(getTranslatedFields(response[0]));
+      setSelectedNames(getTranslatedFields(response[0] || []));
     },
   });
 
@@ -70,10 +70,7 @@ export default function AnalysList() {
     queryKey: ["pointName"],
     queryFn: () => GetPointName(user?.system_id || 0),
   });
-  const getById = (id: number | undefined) => {
-    const result = (selectedAnalys || []).find((item) => item.id === id);
-    setSelected(result);
-  };
+
   React.useEffect(() => {
     if (sucess === true) {
       mutate(poitName);
@@ -125,18 +122,20 @@ export default function AnalysList() {
               ) : (
                 <>
                   <div className="w-full flex justify-end mt-3">
-                    <button
-                      onClick={handleOpen}
-                      className="p-2 hover:bg-slate-200 rounded"
-                      style={{
-                        display: open === true ? "none" : "",
-                      }}
-                    >
-                      <PictureAsPdfOutlinedIcon
-                        color="action"
-                        style={{ fontSize: 28 }}
-                      />
-                    </button>
+                    {selectedAnalys.length >= 1 ? (
+                      <button
+                        onClick={handleOpen}
+                        className="p-2 hover:bg-slate-200 rounded"
+                        style={{
+                          display: open === true ? "none" : "",
+                        }}
+                      >
+                        <PictureAsPdfOutlinedIcon
+                          color="action"
+                          style={{ fontSize: 28 }}
+                        />
+                      </button>
+                    ) : null}
                     <ModalTsx
                       maxWidth={"lg"}
                       fullWidth={true}
@@ -144,141 +143,150 @@ export default function AnalysList() {
                       open={open}
                     >
                       <div className="w-full h-screen">
-                        <PDFViewer className="w-full h-full">
-                          <PdfTable
-                            selectedAnalys={selectedAnalys || []}
-                            poitName={poitName}
-                          />
-                        </PDFViewer>
+                        {selectedAnalys.length >= 1 ? (
+                          <PDFViewer className="w-full h-full">
+                            <PdfTable
+                              selectedAnalys={selectedAnalys || []}
+                              poitName={poitName}
+                            />
+                          </PDFViewer>
+                        ) : null}
                       </div>
                     </ModalTsx>
                   </div>
-                  <TableContainer component={Paper} className="mt-3">
-                    <Table
-                      sx={{ minWidth: 650 }}
-                      aria-label="Tabela de Análise"
-                    >
-                      <TableHead>
-                        <TableRow>
-                          <TableCell
-                            className="text-center "
-                            style={{ fontSize: 16, fontWeight: "bold" }}
-                          >
-                            Parâmetro
-                          </TableCell>
-                          {selectedAnalys.map((item, index) => (
+                  {selectedAnalys.length >= 1 ? (
+                    <TableContainer component={Paper} className="mt-3">
+                      <Table
+                        sx={{ minWidth: 650 }}
+                        aria-label="Tabela de Análise"
+                      >
+                        <TableHead>
+                          <TableRow>
                             <TableCell
-                              align="right"
-                              key={`header-${index}`}
-                              className="text-center relative "
-                              style={{
-                                fontSize: 16,
-                                fontWeight: "bold",
-                              }}
-                              onClick={() => getById(item.id)}
+                              className="text-center "
+                              style={{ fontSize: 16, fontWeight: "bold" }}
                             >
-                              <DashboardReservoir
-                                refetch={refetch}
-                                className=" hover:bg-slate-200 absolute top-0 right-0 rounded-sm"
-                                icon={<EditOutlinedIcon fontSize="small" />}
-                                values={{
-                                  ...item,
-                                  sampleName: item.sampleMatrixAndOrigin,
-                                }}
-                                onSucess={onSucess}
-                              />
-
-                              <p>
-                                {formatDate(item.samplingDate) ||
-                                  `Data ${index + 1}`}
-                              </p>
+                              Parâmetro
                             </TableCell>
-                          ))}
-                        </TableRow>
-                      </TableHead>
-                      <TableBody>
-                        {Object.entries(selectedNames || {})
-                          .filter(
-                            ([fieldKey]) =>
-                              fieldKey !== "id" &&
-                              fieldKey !== "system_id" &&
-                              fieldKey !== "samplingDate" &&
-                              fieldKey !== "sampleMatrixAndOrigin"
-                          )
-                          .map(([fieldKey, fieldName]) => (
-                            <TableRow key={fieldKey}>
-                              <TableCell component="th" scope="row">
-                                {fieldName}
+                            {selectedAnalys.map((item, index) => (
+                              <TableCell
+                                align="right"
+                                key={`header-${index}`}
+                                className="text-center relative "
+                                style={{
+                                  fontSize: 16,
+                                  fontWeight: "bold",
+                                }}
+                              >
+                                <DashboardReservoir
+                                  refetch={refetch}
+                                  className=" hover:bg-slate-200 absolute top-0 right-0 rounded-sm"
+                                  icon={<EditOutlinedIcon fontSize="small" />}
+                                  values={{
+                                    ...item,
+                                    sampleName: item.sampleMatrixAndOrigin,
+                                  }}
+                                  onSucess={onSucess}
+                                />
+
+                                <p>
+                                  {formatDate(item.samplingDate) ||
+                                    `Data ${index + 1}`}
+                                </p>
                               </TableCell>
-                              {selectedAnalys.map((item, index) => (
-                                <TableCell
-                                  align="right"
-                                  key={`${fieldKey}-${index}`}
-                                  className="border-l"
-                                  style={{
-                                    color:
-                                      colorClassification(fieldName, item) ===
-                                      "Verde"
-                                        ? "green"
-                                        : colorClassification(
-                                            fieldName,
-                                            item
-                                          ) === "Amarelo"
-                                        ? "#89a100"
-                                        : "red",
-                                    backgroundColor:
-                                      colorClassification(fieldName, item) ===
-                                      "Verde"
-                                        ? "#e5f9e7"
-                                        : colorClassification(
-                                            fieldName,
-                                            item
-                                          ) === "Amarelo"
-                                        ? "#f0f894"
-                                        : "#f9e5ea",
-                                  }}
-                                  onMouseMove={(e) => {
-                                    const target = e.target as HTMLElement;
-
-                                    target.style.backgroundColor =
-                                      colorClassification(fieldName, item) ===
-                                      "Verde"
-                                        ? "#a3f1ab"
-                                        : colorClassification(
-                                            fieldName,
-                                            item
-                                          ) === "Amarelo"
-                                        ? "#e0ec5e"
-                                        : "#f8c0ce";
-                                  }}
-                                  onMouseLeave={(e) => {
-                                    const target = e.target as HTMLElement;
-
-                                    target.style.backgroundColor =
-                                      colorClassification(fieldName, item) ===
-                                      "Verde"
-                                        ? "#e5f9e7"
-                                        : colorClassification(
-                                            fieldName,
-                                            item
-                                          ) === "Amarelo"
-                                        ? "#f0f894"
-                                        : "#f9e5ea";
-                                  }}
-                                >
-                                  {(
-                                    item as unknown as Record<
-                                      string,
-                                      string | number
-                                    >
-                                  )[fieldKey] || "-"}
+                            ))}
+                          </TableRow>
+                        </TableHead>
+                        <TableBody>
+                          {Object.entries(selectedNames || {})
+                            .filter(
+                              ([fieldKey]) =>
+                                fieldKey !== "id" &&
+                                fieldKey !== "system_id" &&
+                                fieldKey !== "samplingDate" &&
+                                fieldKey !== "sampleMatrixAndOrigin"
+                            )
+                            .map(([fieldKey, fieldName]) => (
+                              <TableRow key={fieldKey}>
+                                <TableCell component="th" scope="row">
+                                  {fieldName}
                                 </TableCell>
-                              ))}
-                            </TableRow>
-                          ))}
-                      </TableBody>
-                    </Table>
-                  </TableContainer>
+                                {selectedAnalys.map((item, index) => (
+                                  <TableCell
+                                    align="right"
+                                    key={`${fieldKey}-${index}`}
+                                    className="border-l"
+                                    style={{
+                                      color:
+                                        colorClassification(fieldName, item) ===
+                                        "Verde"
+                                          ? "green"
+                                          : colorClassification(
+                                              fieldName,
+                                              item
+                                            ) === "Amarelo"
+                                          ? "#89a100"
+                                          : "red",
+                                      backgroundColor:
+                                        colorClassification(fieldName, item) ===
+                                        "Verde"
+                                          ? "#e5f9e7"
+                                          : colorClassification(
+                                              fieldName,
+                                              item
+                                            ) === "Amarelo"
+                                          ? "#f0f894"
+                                          : "#f9e5ea",
+                                    }}
+                                    onMouseMove={(e) => {
+                                      const target = e.target as HTMLElement;
+
+                                      target.style.backgroundColor =
+                                        colorClassification(fieldName, item) ===
+                                        "Verde"
+                                          ? "#a3f1ab"
+                                          : colorClassification(
+                                              fieldName,
+                                              item
+                                            ) === "Amarelo"
+                                          ? "#e0ec5e"
+                                          : "#f8c0ce";
+                                    }}
+                                    onMouseLeave={(e) => {
+                                      const target = e.target as HTMLElement;
+
+                                      target.style.backgroundColor =
+                                        colorClassification(fieldName, item) ===
+                                        "Verde"
+                                          ? "#e5f9e7"
+                                          : colorClassification(
+                                              fieldName,
+                                              item
+                                            ) === "Amarelo"
+                                          ? "#f0f894"
+                                          : "#f9e5ea";
+                                    }}
+                                  >
+                                    {(
+                                      item as unknown as Record<
+                                        string,
+                                        string | number
+                                      >
+                                    )[fieldKey] || "-"}
+                                  </TableCell>
+                                ))}
+                              </TableRow>
+                            ))}
+                        </TableBody>
+                      </Table>
+                    </TableContainer>
+                  ) : (
+                    <div className="flex justify-center items-center h-32 ">
+                      <h1 className="font-bold text-center text-3xl">
+                        Não há dados de ponto
+                      </h1>
+                    </div>
+                  )}
                 </>
               )}
             </div>

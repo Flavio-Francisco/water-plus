@@ -47,6 +47,17 @@ export async function updateReservoir(system_id:number|null, data:CredentialsOpe
    
 
 }
+export async function deleteReservoir(system_id:number|null, data:ReservoirAnalysisInitialValuesEdite) {
+    console.log("dados ", data);
+    const Reservoir = await axios.delete(`api/reservoir/analysis?id=${system_id}`, {
+        data:data
+    })
+   
+
+   return Reservoir.data
+   
+
+}
 
 
 export async function getReservatorir(system_id: number | null) {
