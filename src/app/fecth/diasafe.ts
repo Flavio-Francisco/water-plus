@@ -14,12 +14,7 @@ interface Machines{
 export async function getMachines(system_id:number) {
     
     
-    const data:Machines[]= await axios.get(`api/diasafe?id=${system_id}` ).then(res => {
-        return res.data
-    })
-        .catch(error => {
-      return   error
-   })
+    const{ data}= await axios.get(`api/diasafe?id=${system_id}` )
 console.log("rota de diasafe",data);
 
    return data
@@ -27,9 +22,11 @@ console.log("rota de diasafe",data);
 
 } 
 
-export async function updateMachines(system_id: number, machine:MachineData) {
+export async function updateMachines(system_id: number, machine: Machines) {
+    console.log(machine);
+    
     try {
-        const data = await axios.patch(`api/diasafe?id=${system_id}`,machine);
+        const data = await axios.patch(`api/diasafe/upset?id=${system_id}`,machine);
         console.log("retorno da rota events ", data);
         return data.data;
     } catch (error) {
@@ -37,7 +34,20 @@ export async function updateMachines(system_id: number, machine:MachineData) {
         throw error;
     }
 }
-
+export async function deleteMachines(system_id: number,machine:string) {
+    console.log(machine);
+    
+    try {
+        const data = await axios.delete(`api/diasafe/upset`, {
+            data:{machine: machine,system_id: system_id}
+        });
+        console.log("retorno da rota events ", data);
+        return data.data;
+    } catch (error) {
+        console.error("Erro ao atualizar events:", error);
+        throw error;
+    }
+}
 
 export async function createMachines(system_id: number, machine:MachineData) {
     try {

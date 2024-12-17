@@ -26,6 +26,8 @@
     "@mui/lab": "^5.0.0-alpha.167",
     "@mui/material": "^5.15.16",
     "@mui/x-charts": "^7.3.2",
+    "@mui/x-data-grid": "^7.23.2",
+    "@mui/x-data-grid-generator": "^7.23.2",
     "@mui/x-date-pickers": "^7.5.0",
     "@popperjs/core": "^2.11.8",
     "@prisma/client": "^5.13.0",
