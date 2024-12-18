@@ -55,8 +55,16 @@ export default function FilterReplacement({ onSucess, id }: Iprops) {
       };
       setRows(() => [...(rows || []), newMachine]);
     }
-
-    // Adiciona a nova máquina ao estado
+  };
+  const addNewMachineNew = () => {
+    const newMachine = {
+      id: (rows?.length || cachedData) + 2,
+      machine: "",
+      date: "",
+      system_id: id,
+      editable: true,
+    };
+    setRows(() => [...(rows || []), newMachine]);
   };
 
   const handleSaveClick = (id: GridRowId) => () => {
@@ -106,20 +114,20 @@ export default function FilterReplacement({ onSucess, id }: Iprops) {
       field: "machine",
       headerName: "Número de Seríe",
       editable: true,
-      width: 180,
+      flex: 1,
     },
     {
       field: "date",
       headerName: "Data da Troca",
-      width: 150,
       editable: true,
+      flex: 1,
     },
     {
       field: "actions",
       headerName: "Ações",
       type: "actions",
       flex: 1,
-      width: 160,
+
       cellClassName: "actions",
       getActions: ({ id }) => {
         const isInEditMode = rowModesModel[id]?.mode === GridRowModes.Edit;
@@ -195,15 +203,19 @@ export default function FilterReplacement({ onSucess, id }: Iprops) {
 
   useEffect(() => {
     setRows(cachedData);
+
+    if (cachedData?.length < 1) {
+      addNewMachineNew();
+    }
   }, [cachedData]);
   return (
-    <Box sx={{ height: 400, width: "100%" }}>
+    <Box>
       {isLoading || rows === undefined ? (
         <div className="w-[400px] h-full">
           <Loader />
         </div>
       ) : (
-        <div className="relative">
+        <div className="relative ">
           <DataGrid
             rows={rows}
             loading={isLoading}

@@ -5,15 +5,17 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import Slide from "@mui/material/Slide";
 import { TransitionProps } from "@mui/material/transitions";
-import { Breakpoint } from "@mui/material";
+import { Breakpoint, SxProps, Theme } from "@mui/material";
 
 interface Iprops {
   open: boolean;
   onClose: () => void;
-
+  className?: string;
   children: React.ReactNode;
   maxWidth?: false | Breakpoint | undefined;
   fullWidth?: boolean | undefined;
+  keepMounted?: boolean | undefined;
+  sx?: SxProps<Theme> | undefined;
 }
 
 const Transition = React.forwardRef(function Transition(
@@ -32,17 +34,22 @@ const ModalTsx: React.FC<Iprops> = ({
   children,
   maxWidth,
   fullWidth,
+  className,
+  keepMounted,
+  sx,
 }) => {
   return (
     <React.Fragment>
       <Dialog
+        className={className}
         fullWidth={fullWidth}
         maxWidth={maxWidth}
         open={open}
         TransitionComponent={Transition}
-        keepMounted
+        keepMounted={keepMounted}
         onClose={onClose}
         aria-describedby="alert-dialog-slide-description"
+        sx={sx}
       >
         <DialogContent>{children}</DialogContent>
         <DialogActions>

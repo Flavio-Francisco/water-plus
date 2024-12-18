@@ -148,7 +148,16 @@ export default function ModalForms({ icon }: IProps) {
           fullWidth={false}
           open={openModal3}
           onClose={handlecloseModal3}
+          keepMounted={false}
           maxWidth="md"
+          sx={{
+            "& .MuiDialog-paper": {
+              "@media (max-width: 600px)": {
+                maxWidth: "100%", // Define um tamanho fixo em telas maiores
+                margin: 0.5,
+              },
+            },
+          }}
         >
           <FilterReplacement onSucess={onSucess3} id={user?.system_id || 0} />
         </ModalTsx>
@@ -156,3 +165,4 @@ export default function ModalForms({ icon }: IProps) {
     </div>
   );
 }
+
