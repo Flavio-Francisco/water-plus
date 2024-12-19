@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Machines } from "../reportDiasafe";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import Line from "../line";
+
 import { getReservatorir } from "@/app/fecth/resevatorir";
 import { useUserContext } from "@/context/userContext";
 interface Desinfection {
@@ -27,8 +27,6 @@ const CounteResevation: React.FC = () => {
   });
 
   useEffect(() => {
-    console.log(data);
-
     if (data != undefined) {
       const interval = setInterval(() => {
         const hoje = new Date();
@@ -57,14 +55,15 @@ const CounteResevation: React.FC = () => {
   }, [date]);
 
   return (
-    <div className="flex flex-col justify-center items-center ">
-      <p className="text-center p-3 font-bold text-xl">
-        Tempo Para Próxima Limpeza do Reservatório
-      </p>
-      <Line />
-      <div className="flex flex-row justify-center items-center mt-4">
+    <div className="flex flex-row justify-center items-center w-full  gap-3 border-b">
+      <div className="flex justify-center items-center  h-full">
+        <p className="text-center p-2 font-bold text-sm">
+          Próxima limpeza do reservatório
+        </p>
+      </div>
+      <div className="flex flex-row items-center mt-4">
         <div className="flex flex-col items-center">
-          <div className="bg-gray-800 p-3 rounded-full text-white  text-base font-bold mb-2">
+          <div className="p-2 rounded border   text-base font-bold ">
             {tempoRestante.dias <= 0
               ? "Por favor Efetuar a Troca"
               : tempoRestante.dias}
@@ -74,31 +73,24 @@ const CounteResevation: React.FC = () => {
           )}
         </div>
         {tempoRestante.dias <= 0 ? null : (
-          <div className="flex flex-col items-center mx-4">
-            <div className="bg-gray-800 p-3 rounded-full text-white text-base font-bold mb-2">
-              {tempoRestante.horas}
+          <div>
+            <div className="flex flex-row w-2/4 items-center mx-4">
+              <div className=" pl-2 pb-2 pt-2  flex flex-row justify-end rounded-s border-l border-t border-b border-collapse  text-base font-bold  ">
+                <p className=""> {tempoRestante.horas}</p>
+                <p className="">:</p>
+              </div>
+              <div className="pb-2 pt-2 flex flex-row  border-t border-b border-collapse  text-base font-bold  gap-1">
+                <p className=""> {tempoRestante.minutos}</p>
+                <p className="">:</p>
+              </div>
+              <div className="pr-2 pb-2 pt-2  flex flex-row rounded-e border-r border-t border-b border-collapse  text-base font-bold  ">
+                <p> {tempoRestante.segundos}</p>
+              </div>
             </div>
             <p className="text-center mb-2">horas</p>
           </div>
         )}
-        {tempoRestante.dias <= 0 ? null : (
-          <div className="flex flex-col items-center mx-2">
-            <div className="bg-gray-800 p-3 rounded-full text-white text-base font-bold mb-2">
-              {tempoRestante.minutos}
-            </div>
-            <p className="text-center mb-2">minutos</p>
-          </div>
-        )}
-        {tempoRestante.dias <= 0 ? null : (
-          <div className="flex flex-col items-center">
-            <div className="bg-gray-800 p-3 rounded-full text-white text-base font-bold mb-2">
-              {tempoRestante.segundos}
-            </div>
-            <p className="text-center mb-2">segundos</p>
-          </div>
-        )}
       </div>
-      <Line />
     </div>
   );
 };

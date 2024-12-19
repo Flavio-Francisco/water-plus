@@ -110,3 +110,12 @@ export function organizeData(data: ParametersDB[]) {
 
   return dadosOrganizados;
 }
+
+export function formatDatefilter(date :Date) {
+    
+  const day = String(date.getUTCDate()).padStart(2, '0');
+  const month = String(date.getUTCMonth() + 1).padStart(2, '0'); // January is 0!
+  const year = date.getUTCFullYear();
+const resul = `${day}/${month}/${year}` as unknown as Date;
+  return resul;
+}

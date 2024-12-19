@@ -152,8 +152,9 @@ export default function ModalForms({ icon }: IProps) {
           maxWidth="md"
           sx={{
             "& .MuiDialog-paper": {
-              "@media (max-width: 600px)": {
-                maxWidth: "100%", // Define um tamanho fixo em telas maiores
+              "@media (max-width: 700px)": {
+                maxWidth: "100%",
+                width: "100%",
                 margin: 0.5,
               },
             },

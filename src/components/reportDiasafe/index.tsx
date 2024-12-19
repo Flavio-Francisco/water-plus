@@ -7,7 +7,7 @@ import TableData from "../tableData";
 
 export interface Machines {
   id: number;
-  date: string;
+  date: string | Date;
   machine: string;
   system_id: number;
 }

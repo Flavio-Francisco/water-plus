@@ -5,7 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import React, { useState } from "react";
 import { Modal } from "react-bootstrap";
 import WarningIcon from "@mui/icons-material/Warning";
-import ModalForm from "@/components/waterParametersForm/ModalForm";
+import ModalTsx from "@/components/Drawer/DashboardTSX/ModalTsx";
 
 function Maintenance() {
   const [show, setShow] = useState(false);
@@ -30,19 +30,18 @@ function Maintenance() {
       >
         <WarningIcon />
       </button>
-      <ModalForm
-        handleCloseModalParm={handleClose}
-        showModalParm={show}
-        title="Procedimentos Agendados"
-      >
+      <ModalTsx onClose={handleClose} open={show}>
         <Modal.Body>
+          <div className="flex justify-center items-center">
+            <p className="font-bold text-2xl">Procedimentos</p>
+          </div>
           <div>
             <Counter />
             <CounteDisinfection />
             <CounteResevation />
           </div>
         </Modal.Body>
-      </ModalForm>
+      </ModalTsx>
     </>
   );
 }

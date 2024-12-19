@@ -3,6 +3,8 @@
 import React, { useEffect, useState } from "react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { Machines } from "../reportDiasafe";
+
+
 import {
   deleteMachines,
   getMachines,
@@ -24,6 +26,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CancelIcon from "@mui/icons-material/Close";
 import Loader from "../loader/page";
+import { formatDatefilter } from "@/utils/functions/FormateDate";
 interface Iprops {
   onSucess: (sucess: boolean) => void;
   id: number;
@@ -70,8 +73,6 @@ export default function FilterReplacement({ onSucess, id }: Iprops) {
   const handleSaveClick = (id: GridRowId) => () => {
     const rowToSave = rows?.find((row) => row.id === id); // Busca os dados atualizados no estado
     if (rowToSave) {
-      console.log(rowToSave);
-
       mutate(rowToSave); // Chama a mutação para salvar no banco
       setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
     }
@@ -118,10 +119,17 @@ export default function FilterReplacement({ onSucess, id }: Iprops) {
     },
     {
       field: "date",
+      type: "date",
       headerName: "Data da Troca",
       editable: true,
       flex: 1,
+      valueFormatter: (params: Date) => {
+        const date = formatDatefilter(params);
+
+        return date;
+      },
     },
+
     {
       field: "actions",
       headerName: "Ações",
@@ -202,7 +210,15 @@ export default function FilterReplacement({ onSucess, id }: Iprops) {
   };
 
   useEffect(() => {
-    setRows(cachedData);
+    if (cachedData) {
+      const formattedData = cachedData.map(
+        (row: { date: string | number | Date }) => ({
+          ...row,
+          date: row.date ? new Date(row.date) : null,
+        })
+      );
+      setRows(formattedData);
+    }
 
     if (cachedData?.length < 1) {
       addNewMachineNew();

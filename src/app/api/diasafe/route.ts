@@ -1,4 +1,5 @@
 
+import { formatDateResevatorir } from "@/utils/functions/FormateDate";
 import prisma from "../../../../lib/db";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -19,7 +20,7 @@ export async function GET(req: NextRequest) {
                 system_id:Number(id)
             }
         })
-console.log(data);
+
 
         return NextResponse.json(data);
     } catch (error) {
@@ -44,7 +45,7 @@ export async function PATCH(req: NextRequest) {
       const machineKey = i === 0 ? 'numeroMaquina' : `numeroMaquina${i}`;
       if (requestData[dateKey] && requestData[machineKey]) {
         events.push({
-          date: requestData[dateKey],
+          date: formatDateResevatorir(new Date(requestData.date[dateKey])),
           machine: requestData[machineKey]
         });
       }

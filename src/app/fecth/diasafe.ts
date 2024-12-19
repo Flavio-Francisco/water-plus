@@ -5,7 +5,7 @@ import axios from "axios";
 
 interface Machines{
     id: number;
-    date: string;
+    date: string|Date;
     machine: string;
     system_id: number;
   }
@@ -15,7 +15,6 @@ export async function getMachines(system_id:number) {
     
     
     const{ data}= await axios.get(`api/diasafe?id=${system_id}` )
-console.log("rota de diasafe",data);
 
    return data
    

@@ -1,4 +1,5 @@
 
+import { formatDateResevatorir } from "@/utils/functions/FormateDate";
 import prisma from "../../../../../lib/db";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -25,11 +26,11 @@ export async function PATCH(req: NextRequest) {
               machine: requestData.machine,
             },
             update: {
-              date: requestData.date,
+              date: formatDateResevatorir(new Date(requestData.date)),
               system_id: Number(id) || null,
             },
             create: {
-              date: requestData.date,
+              date: formatDateResevatorir(new Date(requestData.date)),
               machine: requestData.machine,
               system_id: Number(id) || null,
             },
