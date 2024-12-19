@@ -62,37 +62,38 @@ export default function AcidReplacement({ onSucess, id }: Iprops) {
           initialValues={{
             numeroMaquina:
               cachedData === undefined ? "" : cachedData[0]?.machine,
-            data: cachedData === undefined ? "" : cachedData[0]?.date,
+            data: cachedData === undefined ? "" : String(cachedData[0]?.date),
             numeroMaquina1:
               cachedData === undefined ? "" : cachedData[1]?.machine,
-            data1: cachedData === undefined ? "" : cachedData[1]?.date,
+            data1: cachedData === undefined ? "" : String(cachedData[1]?.date),
             numeroMaquina2:
               cachedData === undefined ? "" : cachedData[2]?.machine,
-            data2: cachedData === undefined ? "" : cachedData[2]?.date,
+            data2: cachedData === undefined ? "" : String(cachedData[2]?.date),
             numeroMaquina3:
               cachedData === undefined ? "" : cachedData[3]?.machine,
-            data3: cachedData === undefined ? "" : cachedData[4]?.date,
+            data3: cachedData === undefined ? "" : String(cachedData[4]?.date),
             numeroMaquina4:
               cachedData === undefined ? "" : cachedData[4]?.machine,
-            data4: cachedData === undefined ? "" : cachedData[4]?.date,
+            data4: cachedData === undefined ? "" : String(cachedData[4]?.date),
             numeroMaquina5:
               cachedData === undefined ? "" : cachedData[5]?.machine,
-            data5: cachedData === undefined ? "" : cachedData[5]?.date,
+            data5: cachedData === undefined ? "" : String(cachedData[5]?.date),
             numeroMaquina6:
               cachedData === undefined ? "" : cachedData[6]?.machine,
-            data6: cachedData === undefined ? "" : cachedData[6]?.date,
+            data6: cachedData === undefined ? "" : String(cachedData[6]?.date),
             numeroMaquina7:
               cachedData === undefined ? "" : cachedData[7]?.machine,
-            data7: cachedData === undefined ? "" : cachedData[7]?.date,
+            data7: cachedData === undefined ? "" : String(cachedData[7]?.date),
             numeroMaquina8:
               cachedData === undefined ? "" : cachedData[8]?.machine,
-            data8: cachedData === undefined ? "" : cachedData[8]?.date,
+            data8: cachedData === undefined ? "" : String(cachedData[8]?.date),
             numeroMaquina9:
               cachedData === undefined ? "" : cachedData[9]?.machine,
-            data9: cachedData === undefined ? "" : cachedData[9]?.date,
+            data9: cachedData === undefined ? "" : String(cachedData[9]?.date),
             numeroMaquina10:
               cachedData === undefined ? "" : cachedData[10]?.machine,
-            data10: cachedData === undefined ? "" : cachedData[10]?.date,
+            data10:
+              cachedData === undefined ? "" : String(cachedData[10]?.date),
           }}
           validationSchema={validationSchema}
           onSubmit={(values: MachineData) => {
