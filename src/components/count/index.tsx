@@ -17,6 +17,8 @@ const Counter: React.FC = () => {
     segundos: 0,
   });
 
+
+
   useEffect(() => {
     if (date?.[0]?.date) {
       const interval = setInterval(() => {
@@ -67,15 +69,15 @@ const Counter: React.FC = () => {
         {tempoRestante.dias <= 0 ? null : (
           <div>
             <div className="flex flex-row w-2/4 items-center mx-4">
-              <div className=" pl-2 pb-2 pt-2  flex flex-row justify-end rounded-s border-l border-t border-b border-collapse  text-base font-bold  ">
+              <div className=" pl-2 pb-0 pt-2  flex flex-row justify-end rounded-s border-l border-t border-b border-collapse  text-base font-bold  ">
                 <p className=""> {tempoRestante.horas}</p>
                 <p className="">:</p>
               </div>
-              <div className="pb-2 pt-2 flex flex-row  border-t border-b border-collapse  text-base font-bold  gap-1">
+              <div className="pb-0 pt-2 flex flex-row  border-t border-b border-collapse  text-base font-bold  gap-1">
                 <p className=""> {tempoRestante.minutos}</p>
                 <p className="">:</p>
               </div>
-              <div className="pr-2 pb-2 pt-2  flex flex-row rounded-e border-r border-t border-b border-collapse  text-base font-bold  ">
+              <div className="pr-2 pb-0 pt-2  flex flex-row rounded-e border-r border-t border-b border-collapse  text-base font-bold  ">
                 <p> {tempoRestante.segundos}</p>
               </div>
             </div>
