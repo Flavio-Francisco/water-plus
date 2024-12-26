@@ -48,6 +48,8 @@ export default function DashboardTSX({ icon }: IProps) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const [selectedMonth, setSelectedMonth] = React.useState<string>("");
+  console.log(selectedMonth);
+
   const [selected, setSelected] = React.useState<ParametersDB[]>();
   const [openModal1, setOpenModal1] = React.useState(false);
   const [openModal2, setOpenModal2] = React.useState(false);
@@ -71,6 +73,7 @@ export default function DashboardTSX({ icon }: IProps) {
     queryFn: () => fetchMonthYearData(user?.system_id || 0),
     ...queryOptions,
   });
+  console.log(uniqueMonths);
 
   const { data: system } = useQuery({
     queryKey: ["systemId"],
@@ -89,6 +92,8 @@ export default function DashboardTSX({ icon }: IProps) {
     mutationFn: (month: string) =>
       fetchDataByMonthAndYear(user?.system_id || 0, month),
     onSuccess(data) {
+      console.log(data);
+
       setSelected(data);
     },
   });
