@@ -33,7 +33,7 @@ export function getTranslatedFields(data: WaterAnalysis): Record<string, string>
     hydrogenSulfide: "Sulfeto de Hidrogênio",
     surfactants: "Surfactantes",
     totalColiforms: "Coliformes Totais",
-    heterotrophicBacteriaCount: "Contagem de Bactérias Heterotróficas",
+    heterotrophicBacteriaCount: " Bactérias Heterotróficas",
     endotoxins: "Endotoxinas",
     samplingDate: "Data da Coleta",
     sampleMatrixAndOrigin: "Origem da Amostra",

@@ -78,7 +78,7 @@ export default function AnalysList() {
     }
   }, [sucess]);
   return (
-    <div className="flex flex-col justify-center items-center mt-4 w-11/12 max-sm:w-[390px] max-sm:left-10 absolute">
+    <div className="flex  justify-center items-center mt-4 w-11/12 max-sm:w-full max-sm:left-9 absolute">
       <div className="container w-11/12">
         <Autocomplete
           className="m-auto mt-5 max-md:w-4/5 w-2/5"
@@ -155,15 +155,15 @@ export default function AnalysList() {
                     </ModalTsx>
                   </div>
                   {selectedAnalys.length >= 1 ? (
-                    <TableContainer component={Paper} className="mt-3">
+                    <TableContainer component={Paper} className="mt-3 ">
                       <Table
-                        sx={{ minWidth: 650 }}
+                        sx={{ flex: 1, justifyContent: "center" }}
                         aria-label="Tabela de Análise"
                       >
-                        <TableHead>
-                          <TableRow>
+                        <TableHead className="max-sm:p-0">
+                          <TableRow className="max-sm:h-28  ">
                             <TableCell
-                              className="text-center "
+                              className="text-center max-sm:text-left  max-sm:h-full "
                               style={{ fontSize: 16, fontWeight: "bold" }}
                             >
                               Parâmetro
@@ -172,7 +172,7 @@ export default function AnalysList() {
                               <TableCell
                                 align="right"
                                 key={`header-${index}`}
-                                className="text-center relative "
+                                className="text-center sm:relative max-sm:-rotate-90 "
                                 style={{
                                   fontSize: 16,
                                   fontWeight: "bold",
@@ -180,7 +180,7 @@ export default function AnalysList() {
                               >
                                 <DashboardReservoir
                                   refetch={refetch}
-                                  className=" hover:bg-slate-200 absolute top-0 right-0 rounded-sm"
+                                  className=" hover:bg-slate-200 absolute top-0 right-0 rounded-sm "
                                   icon={<EditOutlinedIcon fontSize="small" />}
                                   values={{
                                     ...item,
@@ -189,7 +189,7 @@ export default function AnalysList() {
                                   onSucess={onSucess}
                                 />
 
-                                <p>
+                                <p className="bg-white">
                                   {formatDate(item.samplingDate) ||
                                     `Data ${index + 1}`}
                                 </p>
@@ -213,9 +213,12 @@ export default function AnalysList() {
                                 </TableCell>
                                 {selectedAnalys.map((item, index) => (
                                   <TableCell
+                                    sx={{
+                                      flex: 1,
+                                    }}
                                     align="right"
                                     key={`${fieldKey}-${index}`}
-                                    className="border-l"
+                                    className="border-l flex"
                                     style={{
                                       color:
                                         colorClassification(fieldName, item) ===
