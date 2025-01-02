@@ -170,7 +170,11 @@ export default function FilterReplacement({ onSucess, id }: Iprops) {
           >
             <DeleteIcon />
           </IconButton>,
-          <IconButton key="add" color="primary" onClick={addNewMachine}>
+          <IconButton
+            key="add"
+            style={{ color: "#22c55e" }}
+            onClick={addNewMachine}
+          >
             <AddIcon />
           </IconButton>,
         ];
@@ -232,6 +236,9 @@ export default function FilterReplacement({ onSucess, id }: Iprops) {
         </div>
       ) : (
         <div className="relative ">
+          <div className="flex justify-center items-center p-1">
+            <h1 className=" text-xl text-[#1976D2]">Diasafe</h1>
+          </div>
           <DataGrid
             rows={rows}
             loading={isLoading}

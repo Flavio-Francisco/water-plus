@@ -1,492 +1,268 @@
-"use client"
-import React from "react";
-import { Modal, Form, Row, Col } from "react-bootstrap";
-import { Formik } from "formik";
-import "./styles.css";
-import * as Yup from "yup";
-import { Button } from "@mui/material";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+"use client";
+import React, { useEffect, useState } from "react";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { Machines } from "../reportDiasafe";
-import { createAcid } from "@/app/fecth/acid";
-import { MachineData } from "@/utils/models/diasafe";
+
+import Box from "@mui/material/Box";
+import {
+  DataGrid,
+  GridColDef,
+  GridRowId,
+  GridRowModes,
+  GridRowModesModel,
+} from "@mui/x-data-grid";
+import { CircularProgress, IconButton } from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
+import SaveIcon from "@mui/icons-material/Save";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
+import CancelIcon from "@mui/icons-material/Close";
+import Loader from "../loader/page";
+import { formatDatefilter } from "@/utils/functions/FormateDate";
+import { deleteAcid, getAcid, updateAcid } from "@/app/fecth/acid";
 interface Iprops {
   onSucess: (sucess: boolean) => void;
   id: number;
 }
 
 export default function AcidReplacement({ onSucess, id }: Iprops) {
-  const queryClient = useQueryClient();
-  const cachedData: Machines[] | undefined = queryClient.getQueryData(["acid"]);
-  const { mutate } = useMutation({
+  const {
+    data: cachedData,
+    isLoading,
+    refetch,
+  } = useQuery({
+    queryKey: ["acidDB"],
+    queryFn: () => getAcid(id || 0),
+  });
+  const [rowModesModel, setRowModesModel] = React.useState<GridRowModesModel>(
+    {}
+  );
+
+  const [rows, setRows] = useState<Machines[] | undefined>(cachedData);
+  const addNewMachine = () => {
+    // Certifica-se de que rows é um array e cachedData é um número
+    const rowsLength = Array.isArray(rows) ? rows.length : 0;
+    const cachedLength = typeof cachedData === "number" ? cachedData : 0;
+
+    // Verifica se rows tem ao menos um item ou cachedData não é nulo
+    if (rowsLength >= 1 || cachedData !== null) {
+      const newMachine = {
+        id: rowsLength + cachedLength + 2,
+        machine: "",
+        date: "",
+        system_id: id,
+        editable: true,
+      };
+      setRows((prevRows) => [...(prevRows || []), newMachine]);
+    }
+  };
+
+  const addNewMachineNew = () => {
+    // Certifica-se de que rows é um array e cachedData é um número
+    const rowsLength = Array.isArray(rows) ? rows.length : 0;
+    const cachedLength = typeof cachedData === "number" ? cachedData : 0;
+
+    // Verifica se rows tem ao menos um item ou cachedData não é nulo
+    if (rowsLength >= 1 || cachedData !== null) {
+      const newMachine = {
+        id: rowsLength + cachedLength + 2,
+        machine: "",
+        date: "",
+        system_id: id,
+        editable: true,
+      };
+      setRows((prevRows) => [...(prevRows || []), newMachine]);
+    }
+  };
+
+  const handleSaveClick = (id: GridRowId) => () => {
+    const rowToSave = rows?.find((row) => row.id === id); // Busca os dados atualizados no estado
+    if (rowToSave) {
+      mutate(rowToSave); // Chama a mutação para salvar no banco
+      setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
+    }
+  };
+
+  // Lidar com edição das linhas
+  const handleEditClick = (id: any) => () => {
+    setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
+  };
+
+  // Lidar com o cancelamento
+  const handleCancelClick = (id: any) => () => {
+    setRowModesModel({
+      ...rowModesModel,
+      [id]: { mode: GridRowModes.View, ignoreModifications: true },
+    });
+  };
+  const { mutate, isPending } = useMutation({
     mutationKey: ["acidForm"],
-    mutationFn: (acid: MachineData) => createAcid(id, acid),
+    mutationFn: (machine: Machines) => updateAcid(id, machine),
+
     onSuccess: () => {
-      onSucess(true);
-      alert("Dados Salvos com Sucesso!!!");
+      onSucess(false);
     },
     onError: () => {
-      onSucess(true);
-      alert("ERRO ao Salvar  Dados !!!");
+      // onSucess(true);
+    },
+  });
+  const { mutate: handleDeleteMachines } = useMutation({
+    mutationKey: ["deleteacid"],
+    mutationFn: (machine: string) => deleteAcid(id, machine),
+    onSuccess() {
+      // onSucess(true);
+      refetch();
     },
   });
 
-  const validationSchema = Yup.object().shape({
-    numeroMaquina: Yup.string().required("Campo obrigatório"),
-    data: Yup.date().required("Campo obrigatório"),
-    numeroMaquina1: Yup.string().required("Campo obrigatório"),
-    data1: Yup.date().required("Campo obrigatório"),
-    numeroMaquina2: Yup.string().required("Campo obrigatório"),
-    data2: Yup.date().required("Campo obrigatório"),
-    numeroMaquina3: Yup.string().required("Campo obrigatório"),
-    data3: Yup.date().required("Campo obrigatório"),
-    numeroMaquina4: Yup.string().required("Campo obrigatório"),
-    data4: Yup.date().required("Campo obrigatório"),
-    numeroMaquina5: Yup.string().required("Campo obrigatório"),
-    data5: Yup.date().required("Campo obrigatório"),
-    numeroMaquina6: Yup.string().required("Campo obrigatório"),
-    data6: Yup.date().required("Campo obrigatório"),
-    numeroMaquina7: Yup.string().required("Campo obrigatório"),
-    data7: Yup.date().required("Campo obrigatório"),
-    numeroMaquina8: Yup.string().required("Campo obrigatório"),
-    data8: Yup.date().required("Campo obrigatório"),
-    numeroMaquina9: Yup.string().required("Campo obrigatório"),
-    data9: Yup.date().required("Campo obrigatório"),
-    numeroMaquina10: Yup.string().required("Campo obrigatório"),
-    data10: Yup.date().required("Campo obrigatório"),
-  });
+  const columns: GridColDef[] = [
+    {
+      field: "machine",
+      headerName: "Número de Seríe",
+      editable: true,
+      flex: 1,
+    },
+    {
+      field: "date",
+      type: "date",
+      headerName: "Data da Troca",
+      editable: true,
+      flex: 1,
+      valueFormatter: (params: Date) => {
+        if (params) {
+          const date = formatDatefilter(params);
 
+          return date;
+        }
+      },
+    },
+
+    {
+      field: "actions",
+      headerName: "Ações",
+      type: "actions",
+      flex: 1,
+
+      cellClassName: "actions",
+      getActions: ({ id }) => {
+        const isInEditMode = rowModesModel[id]?.mode === GridRowModes.Edit;
+
+        if (isInEditMode) {
+          return [
+            <IconButton
+              key="save"
+              onClick={handleSaveClick(id)}
+              color="primary"
+            >
+              {isPending ? <CircularProgress size="20px" /> : <SaveIcon />}
+            </IconButton>,
+            <IconButton
+              key="cancel"
+              onClick={handleCancelClick(id)}
+              color="inherit"
+            >
+              <CancelIcon />
+            </IconButton>,
+          ];
+        }
+
+        return [
+          <IconButton key="edit" onClick={handleEditClick(id)} color="primary">
+            <EditIcon />
+          </IconButton>,
+          <IconButton
+            key="delete"
+            onClick={handleDeleteClick(id)}
+            color="error"
+          >
+            <DeleteIcon />
+          </IconButton>,
+          <IconButton
+            key="add"
+            style={{ color: "#22c55e" }}
+            onClick={addNewMachine}
+          >
+            <AddIcon />
+          </IconButton>,
+        ];
+      },
+    },
+  ];
+
+  const handleDeleteClick = (id: GridRowId) => () => {
+    setRows((prevRows) => prevRows?.filter((row) => row.id !== id));
+    const delet = rows?.filter((row) => row.id === id);
+    if (delet) {
+      handleDeleteMachines((delet[0] || []).machine);
+    }
+
+    setRowModesModel((prevModel) => {
+      const updatedModes = { ...prevModel };
+
+      delete updatedModes[id];
+      return updatedModes;
+    });
+  };
+
+  const processRowUpdate = (updatedRow: Machines) => {
+    // Envie a linha atualizada para o backend usando a mutação
+    mutate(updatedRow, {});
+
+    // Atualiza o estado local (frontend) também
+    setRows(() =>
+      rows?.map((row) => (row.id === updatedRow.id ? updatedRow : row))
+    );
+
+    return updatedRow; // Retorna a linha processada
+  };
+
+  const handleRowModesModelChange = (newModel: GridRowModesModel) => {
+    setRowModesModel(newModel);
+  };
+
+  useEffect(() => {
+    if (cachedData) {
+      const formattedData = cachedData.map(
+        (row: {
+          date: string | number | Date;
+          id: number;
+          machine: string;
+          system_id: number;
+        }) => ({
+          ...row,
+          date: row.date ? new Date(row.date) : new Date(),
+        })
+      );
+      setRows(formattedData);
+    }
+
+    if (cachedData !== undefined && cachedData.length < 1) {
+      addNewMachineNew();
+    }
+  }, [cachedData]);
   return (
-    <>
-      <Modal.Body>
-        <Formik
-          initialValues={{
-            numeroMaquina:
-              cachedData === undefined ? "" : cachedData[0]?.machine,
-            data: cachedData === undefined ? "" : String(cachedData[0]?.date),
-            numeroMaquina1:
-              cachedData === undefined ? "" : cachedData[1]?.machine,
-            data1: cachedData === undefined ? "" : String(cachedData[1]?.date),
-            numeroMaquina2:
-              cachedData === undefined ? "" : cachedData[2]?.machine,
-            data2: cachedData === undefined ? "" : String(cachedData[2]?.date),
-            numeroMaquina3:
-              cachedData === undefined ? "" : cachedData[3]?.machine,
-            data3: cachedData === undefined ? "" : String(cachedData[4]?.date),
-            numeroMaquina4:
-              cachedData === undefined ? "" : cachedData[4]?.machine,
-            data4: cachedData === undefined ? "" : String(cachedData[4]?.date),
-            numeroMaquina5:
-              cachedData === undefined ? "" : cachedData[5]?.machine,
-            data5: cachedData === undefined ? "" : String(cachedData[5]?.date),
-            numeroMaquina6:
-              cachedData === undefined ? "" : cachedData[6]?.machine,
-            data6: cachedData === undefined ? "" : String(cachedData[6]?.date),
-            numeroMaquina7:
-              cachedData === undefined ? "" : cachedData[7]?.machine,
-            data7: cachedData === undefined ? "" : String(cachedData[7]?.date),
-            numeroMaquina8:
-              cachedData === undefined ? "" : cachedData[8]?.machine,
-            data8: cachedData === undefined ? "" : String(cachedData[8]?.date),
-            numeroMaquina9:
-              cachedData === undefined ? "" : cachedData[9]?.machine,
-            data9: cachedData === undefined ? "" : String(cachedData[9]?.date),
-            numeroMaquina10:
-              cachedData === undefined ? "" : cachedData[10]?.machine,
-            data10:
-              cachedData === undefined ? "" : String(cachedData[10]?.date),
-          }}
-          validationSchema={validationSchema}
-          onSubmit={(values: MachineData) => {
-            mutate(values);
-          }}
-        >
-          {({ handleSubmit, handleChange, values, errors }) => (
-            <Form noValidate onSubmit={handleSubmit}>
-              <div className="flex justify-center items-center mb-2">
-                <h1 className="text-lg font-semibold">
-                  Troca de Ácido Peracético
-                </h1>
-              </div>
-              <Row>
-                <Col>
-                  <Form.Group controlId="numeroMaquina">
-                    <Form.Label>Número da Máquina</Form.Label>
-                    <Form.Control
-                      type="text"
-                      name="numeroMaquina"
-                      value={values.numeroMaquina}
-                      onChange={handleChange}
-                      isInvalid={!!errors.numeroMaquina}
-                    />
-                    <Form.Control.Feedback type="invalid">
-                      {errors.numeroMaquina}
-                    </Form.Control.Feedback>
-                  </Form.Group>
-                </Col>
-
-                <Col>
-                  <Form.Group controlId="data">
-                    <Form.Label>Data</Form.Label>
-                    <Form.Control
-                      type="date"
-                      name="data"
-                      value={values.data}
-                      onChange={handleChange}
-                      isInvalid={!!errors.data}
-                    />
-                    <Form.Control.Feedback type="invalid">
-                      {errors.data}
-                    </Form.Control.Feedback>
-                  </Form.Group>
-                </Col>
-              </Row>
-              <Row>
-                <Col>
-                  <Form.Group controlId="numeroMaquina1">
-                    <Form.Label>Número da Máquina</Form.Label>
-                    <Form.Control
-                      type="text"
-                      name="numeroMaquina1"
-                      value={values.numeroMaquina1}
-                      onChange={handleChange}
-                      isInvalid={!!errors.numeroMaquina1}
-                    />
-                    <Form.Control.Feedback type="invalid">
-                      {errors.numeroMaquina1}
-                    </Form.Control.Feedback>
-                  </Form.Group>
-                </Col>
-
-                <Col>
-                  <Form.Group controlId="data1">
-                    <Form.Label>Data</Form.Label>
-                    <Form.Control
-                      type="date"
-                      name="data1"
-                      value={values.data1}
-                      onChange={handleChange}
-                      isInvalid={!!errors.data1}
-                    />
-                    <Form.Control.Feedback type="invalid">
-                      {errors.data1}
-                    </Form.Control.Feedback>
-                  </Form.Group>
-                </Col>
-              </Row>
-              <Row>
-                <Col>
-                  <Form.Group controlId="numeroMaquina2">
-                    <Form.Label>Número da Máquina</Form.Label>
-                    <Form.Control
-                      type="text"
-                      name="numeroMaquina2"
-                      value={values.numeroMaquina2}
-                      onChange={handleChange}
-                      isInvalid={!!errors.numeroMaquina2}
-                    />
-                    <Form.Control.Feedback type="invalid">
-                      {errors.numeroMaquina2}
-                    </Form.Control.Feedback>
-                  </Form.Group>
-                </Col>
-
-                <Col>
-                  <Form.Group controlId="data2">
-                    <Form.Label>Data</Form.Label>
-                    <Form.Control
-                      type="date"
-                      name="data2"
-                      value={values.data2}
-                      onChange={handleChange}
-                      isInvalid={!!errors.data2}
-                    />
-                    <Form.Control.Feedback type="invalid">
-                      {errors.data2}
-                    </Form.Control.Feedback>
-                  </Form.Group>
-                </Col>
-              </Row>
-
-              <Row>
-                <Col>
-                  <Form.Group controlId="numeroMaquina3">
-                    <Form.Label>Número da Máquina</Form.Label>
-                    <Form.Control
-                      type="text"
-                      name="numeroMaquina3"
-                      value={values.numeroMaquina3}
-                      onChange={handleChange}
-                      isInvalid={!!errors.numeroMaquina3}
-                    />
-                    <Form.Control.Feedback type="invalid">
-                      {errors.numeroMaquina3}
-                    </Form.Control.Feedback>
-                  </Form.Group>
-                </Col>
-
-                <Col>
-                  <Form.Group controlId="data3">
-                    <Form.Label>Data</Form.Label>
-                    <Form.Control
-                      type="date"
-                      name="data3"
-                      value={values.data3}
-                      onChange={handleChange}
-                      isInvalid={!!errors.data3}
-                    />
-                    <Form.Control.Feedback type="invalid">
-                      {errors.data3}
-                    </Form.Control.Feedback>
-                  </Form.Group>
-                </Col>
-              </Row>
-              <Row>
-                <Col>
-                  <Form.Group controlId="numeroMaquina4">
-                    <Form.Label>Número da Máquina</Form.Label>
-                    <Form.Control
-                      type="text"
-                      name="numeroMaquina4"
-                      value={values.numeroMaquina4}
-                      onChange={handleChange}
-                      isInvalid={!!errors.numeroMaquina4}
-                    />
-                    <Form.Control.Feedback type="invalid">
-                      {errors.numeroMaquina4}
-                    </Form.Control.Feedback>
-                  </Form.Group>
-                </Col>
-
-                <Col>
-                  <Form.Group controlId="data4">
-                    <Form.Label>Data</Form.Label>
-                    <Form.Control
-                      type="date"
-                      name="data4"
-                      value={values.data4}
-                      onChange={handleChange}
-                      isInvalid={!!errors.data4}
-                    />
-                    <Form.Control.Feedback type="invalid">
-                      {errors.data4}
-                    </Form.Control.Feedback>
-                  </Form.Group>
-                </Col>
-              </Row>
-              <Row>
-                <Col>
-                  <Form.Group controlId="numeroMaquina5">
-                    <Form.Label>Número da Máquina</Form.Label>
-                    <Form.Control
-                      type="text"
-                      name="numeroMaquina5"
-                      value={values.numeroMaquina5}
-                      onChange={handleChange}
-                      isInvalid={!!errors.numeroMaquina5}
-                    />
-                    <Form.Control.Feedback type="invalid">
-                      {errors.numeroMaquina5}
-                    </Form.Control.Feedback>
-                  </Form.Group>
-                </Col>
-
-                <Col>
-                  <Form.Group controlId="data5">
-                    <Form.Label>Data</Form.Label>
-                    <Form.Control
-                      type="date"
-                      name="data5"
-                      value={values.data5}
-                      onChange={handleChange}
-                      isInvalid={!!errors.data5}
-                    />
-                    <Form.Control.Feedback type="invalid">
-                      {errors.data5}
-                    </Form.Control.Feedback>
-                  </Form.Group>
-                </Col>
-              </Row>
-              <Row>
-                <Col>
-                  <Form.Group controlId="numeroMaquina6">
-                    <Form.Label>Número da Máquina</Form.Label>
-                    <Form.Control
-                      type="text"
-                      name="numeroMaquina6"
-                      value={values.numeroMaquina6}
-                      onChange={handleChange}
-                      isInvalid={!!errors.numeroMaquina6}
-                    />
-                    <Form.Control.Feedback type="invalid">
-                      {errors.numeroMaquina6}
-                    </Form.Control.Feedback>
-                  </Form.Group>
-                </Col>
-
-                <Col>
-                  <Form.Group controlId="data6">
-                    <Form.Label>Data</Form.Label>
-                    <Form.Control
-                      type="date"
-                      name="data6"
-                      value={values.data6}
-                      onChange={handleChange}
-                      isInvalid={!!errors.data6}
-                    />
-                    <Form.Control.Feedback type="invalid">
-                      {errors.data6}
-                    </Form.Control.Feedback>
-                  </Form.Group>
-                </Col>
-              </Row>
-              <Row>
-                <Col>
-                  <Form.Group controlId="numeroMaquina7">
-                    <Form.Label>Número da Máquina</Form.Label>
-                    <Form.Control
-                      type="text"
-                      name="numeroMaquina7"
-                      value={values.numeroMaquina7}
-                      onChange={handleChange}
-                      isInvalid={!!errors.numeroMaquina7}
-                    />
-                    <Form.Control.Feedback type="invalid">
-                      {errors.numeroMaquina7}
-                    </Form.Control.Feedback>
-                  </Form.Group>
-                </Col>
-
-                <Col>
-                  <Form.Group controlId="data7">
-                    <Form.Label>Data</Form.Label>
-                    <Form.Control
-                      type="date"
-                      name="data7"
-                      value={values.data7}
-                      onChange={handleChange}
-                      isInvalid={!!errors.data7}
-                    />
-                    <Form.Control.Feedback type="invalid">
-                      {errors.data7}
-                    </Form.Control.Feedback>
-                  </Form.Group>
-                </Col>
-              </Row>
-              <Row>
-                <Col>
-                  <Form.Group controlId="numeroMaquina8">
-                    <Form.Label>Número da Máquina</Form.Label>
-                    <Form.Control
-                      type="text"
-                      name="numeroMaquina8"
-                      value={values.numeroMaquina8}
-                      onChange={handleChange}
-                      isInvalid={!!errors.numeroMaquina8}
-                    />
-                    <Form.Control.Feedback type="invalid">
-                      {errors.numeroMaquina8}
-                    </Form.Control.Feedback>
-                  </Form.Group>
-                </Col>
-
-                <Col>
-                  <Form.Group controlId="data8a">
-                    <Form.Label>Data</Form.Label>
-                    <Form.Control
-                      type="date"
-                      name="data8"
-                      value={values.data8}
-                      onChange={handleChange}
-                      isInvalid={!!errors.data8}
-                    />
-                    <Form.Control.Feedback type="invalid">
-                      {errors.data8}
-                    </Form.Control.Feedback>
-                  </Form.Group>
-                </Col>
-              </Row>
-              <Row>
-                <Col>
-                  <Form.Group controlId="numeroMaquina9">
-                    <Form.Label>Número da Máquina</Form.Label>
-                    <Form.Control
-                      type="text"
-                      name="numeroMaquina9"
-                      value={values.numeroMaquina9}
-                      onChange={handleChange}
-                      isInvalid={!!errors.numeroMaquina9}
-                    />
-                    <Form.Control.Feedback type="invalid">
-                      {errors.numeroMaquina9}
-                    </Form.Control.Feedback>
-                  </Form.Group>
-                </Col>
-
-                <Col>
-                  <Form.Group controlId="data9">
-                    <Form.Label>Data</Form.Label>
-                    <Form.Control
-                      type="date"
-                      name="data9"
-                      value={values.data9}
-                      onChange={handleChange}
-                      isInvalid={!!errors.data9}
-                    />
-                    <Form.Control.Feedback type="invalid">
-                      {errors.data9}
-                    </Form.Control.Feedback>
-                  </Form.Group>
-                </Col>
-              </Row>
-              <Row>
-                <Col>
-                  <Form.Group controlId="numeroMaquina10">
-                    <Form.Label>Número da Máquina</Form.Label>
-                    <Form.Control
-                      type="text"
-                      name="numeroMaquina10"
-                      value={values.numeroMaquina10}
-                      onChange={handleChange}
-                      isInvalid={!!errors.numeroMaquina10}
-                    />
-                    <Form.Control.Feedback type="invalid">
-                      {errors.numeroMaquina10}
-                    </Form.Control.Feedback>
-                  </Form.Group>
-                </Col>
-
-                <Col>
-                  <Form.Group controlId="data10">
-                    <Form.Label>Data</Form.Label>
-                    <Form.Control
-                      type="date"
-                      name="data10"
-                      value={values.data10}
-                      onChange={handleChange}
-                      isInvalid={!!errors.data10}
-                    />
-                    <Form.Control.Feedback type="invalid">
-                      {errors.data10}
-                    </Form.Control.Feedback>
-                  </Form.Group>
-                </Col>
-              </Row>
-
-              <div className="flex justify-center items-center">
-                <Button
-                  type="submit"
-                  variant="contained"
-                  onClick={() => handleSubmit}
-                  style={{ marginTop: 20, width: 150 }}
-                >
-                  Salvar
-                </Button>
-              </div>
-            </Form>
-          )}
-        </Formik>
-      </Modal.Body>
-    </>
+    <Box>
+      {isLoading || rows === undefined ? (
+        <div className="w-[400px] h-full">
+          <Loader />
+        </div>
+      ) : (
+        <div className="relative ">
+          <div className="flex justify-center items-center p-1">
+            <h1 className=" text-xl text-[#1976D2]">Ácido Peracético</h1>
+          </div>
+          <DataGrid
+            rows={rows}
+            loading={isLoading}
+            columns={columns}
+            editMode="row"
+            rowModesModel={rowModesModel}
+            onRowModesModelChange={handleRowModesModelChange}
+            processRowUpdate={processRowUpdate}
+          />
+        </div>
+      )}
+    </Box>
   );
 }
-
