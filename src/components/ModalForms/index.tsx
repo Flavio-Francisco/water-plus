@@ -141,6 +141,15 @@ export default function ModalForms({ icon }: IProps) {
           open={openModal2}
           onClose={handlecloseModal2}
           maxWidth="md"
+          sx={{
+            "& .MuiDialog-paper": {
+              "@media (max-width: 700px)": {
+                maxWidth: "100%",
+                width: "100%",
+                margin: 0.5,
+              },
+            },
+          }}
         >
           <AcidReplacement onSucess={onSucess2} id={user?.system_id || 0} />
         </ModalTsx>
