@@ -76,7 +76,7 @@ export function  getYear(monthNumber: number): string {
 
     // Verifica se o número do mês é 12
     if (monthNumber === 12) {
-        return (currentYear + 1).toString(); // Retorna o próximo ano como string
+        return (currentYear ).toString(); // Retorna o próximo ano como string
     }
 
     return currentYear.toString(); // Retorna o ano atual como string

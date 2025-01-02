@@ -76,8 +76,8 @@ export async function POST(req: NextRequest) {
 
         const monthNumber = returnNumber(monthName)
        
-        
-
+ 
+    
       
         if (!monthNumber) {
             return NextResponse.json({ message: "Mês inválido." }, { status: 400 });
@@ -90,13 +90,12 @@ export async function POST(req: NextRequest) {
                 system_id: Number(id),
                 date: {
                     gte: new Date(`${year}-${returnNumber(monthName)}-01`),  // Data de início do mês
-                    lt: new Date(`${getYear(returnNumber(monthName)||0)}-${(returnPosNumber(monthName)||0 )}-01`) // Data de início do próximo mês
+                    lt: new Date(`${returnNumber(monthName)===12? getYear(returnNumber(monthName)||0):year}-${(returnPosNumber(monthName)||0 )}-01`) // Data de início do próximo mês
                 }
             },
         });
 
 
-        // Retorna os dados encontrados
         return NextResponse.json(data);
     } catch (error) {
         console.error("Erro ao buscar os dados:", error);
