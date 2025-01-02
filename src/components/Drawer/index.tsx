@@ -164,7 +164,7 @@ export default function Drawer({
           >
             <MenuIcon />
           </IconButton>
-          <div className="flex flex-row items-center gap-2">
+          <div className="flex flex-row items-center gap-2 max-sm:hidden">
             <Typography variant="h6" noWrap component="div">
               <Image
                 style={{ borderRadius: 15 }}
