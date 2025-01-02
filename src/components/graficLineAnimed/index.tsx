@@ -11,10 +11,7 @@ interface Props {
 }
 
 const GraficLineAnimed = ({ title, data, day }: Props) => {
-  useEffect(() => {
-    console.log(day);
-  }, [data, day]);
-
+  useEffect(() => {}, [data, day]);
 
   return (
     <div className="w-full">
@@ -23,7 +20,7 @@ const GraficLineAnimed = ({ title, data, day }: Props) => {
           <Image priority src={Logo} alt="Logo" height={75} width={150} />
         </div>
       ) : (
-        <div className=" mb-4 w-full">
+        <div className=" mb-4 w-full ">
           <LineChart
             margin={{ left: 40, right: 70 }}
             xAxis={[
@@ -42,8 +39,9 @@ const GraficLineAnimed = ({ title, data, day }: Props) => {
             ]}
             grid={{ vertical: true, horizontal: true }}
             colors={["rgba(25,118,210,255)"]}
-            width={500}
+            //width={500}
             height={250}
+            sx={{}}
           />
         </div>
       )}

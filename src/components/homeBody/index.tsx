@@ -66,8 +66,6 @@ const HomeBody: React.FC = () => {
       fetchWaterParameters(user?.system_id || 0, name),
     onSuccess(data) {
       if (data) {
-        console.log(data);
-        
         setSelectData(data);
       } else {
         alert("dados não encontrados!!");
@@ -129,7 +127,7 @@ const HomeBody: React.FC = () => {
               <CircularProgress size={"3em"} />
             </div>
           ) : (
-            <div className="flex justify-center items-center">
+            <div className="flex justify-center items-center ">
               <GraficLineAnimed
                 day={selectData?.day}
                 title={selectData?.title}
