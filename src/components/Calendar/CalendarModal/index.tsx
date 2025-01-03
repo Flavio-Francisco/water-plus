@@ -10,8 +10,11 @@ import { useQuery } from "@tanstack/react-query";
 import Loader from "@/components/loader/page";
 import { getEventsDB } from "@/app/fecth/events";
 import { useUserContext } from "@/context/userContext";
+interface Iprops {
+  openModal: boolean;
+}
 
-function CalendarModal() {
+function CalendarModal({ openModal }: Iprops) {
   const [show, setShow] = useState(false);
   const [isActive, setActive] = useState(false);
   const { user } = useUserContext();
@@ -44,13 +47,19 @@ function CalendarModal() {
     <>
       <div>
         <button
-          className={isActive ? "active" : "sidebar-nav"}
+          className="flex flex-row "
           onClick={() => {
             handleShow();
             active();
           }}
         >
           <CalendarMonthOutlinedIcon />
+          <p
+            style={{ display: openModal ? "" : "none" }}
+            className="text-black ml-6"
+          >
+            Obsevações
+          </p>
         </button>
       </div>
       <Dialog

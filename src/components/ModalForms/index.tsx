@@ -14,9 +14,10 @@ import { useUserContext } from "@/context/userContext";
 
 interface IProps {
   icon: React.ReactNode;
+  openModal: boolean;
 }
 
-export default function ModalForms({ icon }: IProps) {
+export default function ModalForms({ icon, openModal }: IProps) {
   const { user } = useUserContext();
 
   const { refetch } = useQuery({
@@ -80,6 +81,7 @@ export default function ModalForms({ icon }: IProps) {
   return (
     <div>
       <button
+        className="flex flex-row "
         id="basic-button"
         aria-controls={open === true ? "basic-menu" : undefined}
         aria-haspopup="true"
@@ -87,7 +89,14 @@ export default function ModalForms({ icon }: IProps) {
         onClick={handleClick}
       >
         {icon}
+        <p
+          style={{ display: openModal ? "" : "none" }}
+          className="text-black ml-6"
+        >
+          Formulários
+        </p>
       </button>
+
       <Menu
         id="basic-menu"
         anchorEl={anchorEl}

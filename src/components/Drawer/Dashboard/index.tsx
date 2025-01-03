@@ -9,9 +9,10 @@ import FormApvisa from "@/components/formApvisa";
 
 interface IProps {
   icon: React.ReactNode;
+  openModal: boolean;
 }
 
-export default function Dashboard({ icon }: IProps) {
+export default function Dashboard({ icon, openModal }: IProps) {
   //const { user } = useUserContext();
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -19,8 +20,6 @@ export default function Dashboard({ icon }: IProps) {
   const [openModal1, setOpenModal1] = React.useState(false);
   const [openModal2, setOpenModal2] = React.useState(false);
   const [openModal3, setOpenModal3] = React.useState(false);
-
-
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -67,13 +66,20 @@ export default function Dashboard({ icon }: IProps) {
   return (
     <div>
       <button
+        className="flex flex-row"
         id="basic-button"
         aria-controls={open === true ? "basic-menu" : undefined}
         aria-haspopup="true"
         aria-expanded={open === true ? "true" : undefined}
         onClick={handleClick}
       >
-        {icon}
+        {icon}{" "}
+        <p
+          style={{ display: openModal ? "" : "none" }}
+          className="text-black ml-6"
+        >
+          Análises
+        </p>
       </button>
       <Menu
         id="basic-menu"

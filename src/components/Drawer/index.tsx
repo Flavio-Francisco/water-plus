@@ -164,7 +164,7 @@ export default function Drawer({
           >
             <MenuIcon />
           </IconButton>
-          <div className="flex flex-row items-center gap-2 max-sm:hidden">
+          <div className="flex flex-row items-center justify-center gap-2 max-sm:hidden">
             <Typography variant="h6" noWrap component="div">
               <Image
                 style={{ borderRadius: 15 }}
@@ -279,14 +279,17 @@ export default function Drawer({
                   minWidth: 0,
                   mr: open ? 3 : "auto",
                   justifyContent: "center",
+                  flexDirection: "row",
                 }}
               >
                 <WaterDropOutlinedIcon />
               </ListItemIcon>
-              <ListItemText
-                primary={"Parametros"}
-                sx={{ opacity: open ? 1 : 0 }}
-              />
+              <p
+                className="text-black ml-0 "
+                style={{ display: open ? "" : "none" }}
+              >
+                Parametros
+              </p>
             </ListItemButton>
           </ListItem>
         </List>
@@ -335,14 +338,17 @@ export default function Drawer({
                   minWidth: 0,
                   mr: open ? 3 : "auto",
                   justifyContent: "center",
+                  flexDirection: "row",
                 }}
               >
                 <BiotechIcon />
+                <p
+                  className="text-black ml-6 "
+                  style={{ display: open ? "" : "none" }}
+                >
+                  A. do Reservatório
+                </p>
               </ListItemIcon>
-              <ListItemText
-                primary={"Analíses do Reservatório "}
-                sx={{ opacity: open ? 1 : 0 }}
-              />
             </ListItemButton>
           </ListItem>
         </List>
@@ -364,14 +370,18 @@ export default function Drawer({
                   minWidth: 0,
                   mr: open ? 3 : "auto",
                   justifyContent: "center",
+                  flexDirection: "row",
                 }}
               >
                 <WaterOutlinedIcon />
               </ListItemIcon>
-              <ListItemText
-                primary={"Consumo de Água"}
-                sx={{ opacity: open ? 1 : 0 }}
-              />
+
+              <p
+                className="text-black  "
+                style={{ display: open ? "" : "none" }}
+              >
+                Consumo de Água
+              </p>
             </ListItemButton>
           </ListItem>
         </List>
@@ -394,12 +404,11 @@ export default function Drawer({
                   justifyContent: "center",
                 }}
               >
-                <DashboardTSX icon={<AssignmentOutlinedIcon />} />
+                <DashboardTSX
+                  openModal={open}
+                  icon={<AssignmentOutlinedIcon />}
+                />
               </ListItemIcon>
-              <ListItemText
-                primary={"Relatórios"}
-                sx={{ opacity: open ? 1 : 0 }}
-              />
             </ListItemButton>
           </ListItem>
         </List>
@@ -421,12 +430,8 @@ export default function Drawer({
                   justifyContent: "center",
                 }}
               >
-                <Dashboard icon={<HubOutlinedIcon />} />
+                <Dashboard openModal={open} icon={<HubOutlinedIcon />} />
               </ListItemIcon>
-              <ListItemText
-                primary={"Análises"}
-                sx={{ opacity: open ? 1 : 0 }}
-              />
             </ListItemButton>
           </ListItem>
         </List>
@@ -449,12 +454,8 @@ export default function Drawer({
                   justifyContent: "center",
                 }}
               >
-                <CalendarModal />
+                <CalendarModal openModal={open} />
               </ListItemIcon>
-              <ListItemText
-                primary={"Obsevações"}
-                sx={{ opacity: open ? 1 : 0 }}
-              />
             </ListItemButton>
           </ListItem>
         </List>
@@ -477,12 +478,11 @@ export default function Drawer({
                   justifyContent: "center",
                 }}
               >
-                <ModalForms icon={<ChecklistRtlOutlinedIcon />} />
+                <ModalForms
+                  openModal={open}
+                  icon={<ChecklistRtlOutlinedIcon />}
+                />
               </ListItemIcon>
-              <ListItemText
-                primary={"Formulários"}
-                sx={{ opacity: open ? 1 : 0 }}
-              />
             </ListItemButton>
           </ListItem>
         </List>

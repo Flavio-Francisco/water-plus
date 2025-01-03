@@ -35,9 +35,10 @@ import { ParametersDB } from "@/utils/models/WaterParametersModel";
 
 interface IProps {
   icon: React.ReactNode;
+  openModal: boolean;
 }
 
-export default function DashboardTSX({ icon }: IProps) {
+export default function DashboardTSX({ icon, openModal }: IProps) {
   const { user } = useUserContext();
   const { operator } = useOperator();
   const { doctor } = useDoctor();
@@ -48,7 +49,6 @@ export default function DashboardTSX({ icon }: IProps) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const [selectedMonth, setSelectedMonth] = React.useState<string>("");
- 
 
   const [selected, setSelected] = React.useState<ParametersDB[]>();
   const [openModal1, setOpenModal1] = React.useState(false);
@@ -156,13 +156,21 @@ export default function DashboardTSX({ icon }: IProps) {
     <div>
       <button
         id="basic-button"
+        className="flex flex-row"
         aria-controls={open === true ? "basic-menu" : undefined}
         aria-haspopup="true"
         aria-expanded={open === true ? "true" : undefined}
         onClick={handleClick}
       >
         {icon}
+        <p
+          className="ml-6 text-black"
+          style={{ display: openModal ? "" : "none" }}
+        >
+          Relatórios
+        </p>
       </button>
+
       <Menu
         id="basic-menu"
         anchorEl={anchorEl}
