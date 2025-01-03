@@ -119,7 +119,7 @@ export default function AcidReplacement({ onSucess, id }: Iprops) {
   const columns: GridColDef[] = [
     {
       field: "machine",
-      headerName: "Número de Seríe",
+      headerName: "Nº de Seríe",
       editable: true,
       flex: 1,
     },
@@ -152,6 +152,7 @@ export default function AcidReplacement({ onSucess, id }: Iprops) {
           return [
             <IconButton
               key="save"
+              title="salvar"
               onClick={handleSaveClick(id)}
               color="primary"
             >
@@ -159,6 +160,7 @@ export default function AcidReplacement({ onSucess, id }: Iprops) {
             </IconButton>,
             <IconButton
               key="cancel"
+              title="cancelar"
               onClick={handleCancelClick(id)}
               color="inherit"
             >
@@ -168,22 +170,21 @@ export default function AcidReplacement({ onSucess, id }: Iprops) {
         }
 
         return [
-          <IconButton key="edit" onClick={handleEditClick(id)} color="primary">
+          <IconButton
+            key="edit"
+            title="editar"
+            onClick={handleEditClick(id)}
+            color="primary"
+          >
             <EditIcon />
           </IconButton>,
           <IconButton
             key="delete"
+            title="excluir"
             onClick={handleDeleteClick(id)}
             color="error"
           >
             <DeleteIcon />
-          </IconButton>,
-          <IconButton
-            key="add"
-            style={{ color: "#22c55e" }}
-            onClick={addNewMachine}
-          >
-            <AddIcon />
           </IconButton>,
         ];
       },
@@ -249,8 +250,27 @@ export default function AcidReplacement({ onSucess, id }: Iprops) {
         </div>
       ) : (
         <div className="relative ">
-          <div className="flex justify-center items-center p-1">
+          <div className="flex justify-center items-center p-3">
             <h1 className=" text-xl text-[#1976D2]">Ácido Peracético</h1>
+            <div
+              className="absolute right-0 top-0 "
+              style={{
+                border: "0.3px solid #22c55e",
+                borderColor: "#22c55e",
+                borderRadius: "100px",
+              }}
+            >
+              <IconButton
+                title="adicionar"
+                key="add"
+                style={{
+                  color: "#22c55e",
+                }}
+                onClick={addNewMachine}
+              >
+                <AddIcon />
+              </IconButton>
+            </div>
           </div>
           <DataGrid
             rows={rows}

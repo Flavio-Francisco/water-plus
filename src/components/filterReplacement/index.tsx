@@ -48,26 +48,38 @@ export default function FilterReplacement({ onSucess, id }: Iprops) {
   const [rows, setRows] = useState<Machines[] | undefined>(cachedData);
 
   const addNewMachine = () => {
-    if (rows?.length || 0 >= 1) {
+    // Certifica-se de que rows é um array e cachedData é um número
+    const rowsLength = Array.isArray(rows) ? rows.length : 0;
+    const cachedLength = typeof cachedData === "number" ? cachedData : 0;
+
+    // Verifica se rows tem ao menos um item ou cachedData não é nulo
+    if (rowsLength >= 1 || cachedData !== null) {
       const newMachine = {
-        id: (rows?.length || cachedData) + 2,
+        id: rowsLength + cachedLength + 2,
         machine: "",
         date: "",
         system_id: id,
         editable: true,
       };
-      setRows(() => [...(rows || []), newMachine]);
+      setRows((prevRows) => [...(prevRows || []), newMachine]);
     }
   };
   const addNewMachineNew = () => {
-    const newMachine = {
-      id: (rows?.length || cachedData) + 2,
-      machine: "",
-      date: "",
-      system_id: id,
-      editable: true,
-    };
-    setRows(() => [...(rows || []), newMachine]);
+    // Certifica-se de que rows é um array e cachedData é um número
+    const rowsLength = Array.isArray(rows) ? rows.length : 0;
+    const cachedLength = typeof cachedData === "number" ? cachedData : 0;
+
+    // Verifica se rows tem ao menos um item ou cachedData não é nulo
+    if (rowsLength >= 1 || cachedData !== null) {
+      const newMachine = {
+        id: rowsLength + cachedLength + 2,
+        machine: "",
+        date: "",
+        system_id: id,
+        editable: true,
+      };
+      setRows((prevRows) => [...(prevRows || []), newMachine]);
+    }
   };
 
   const handleSaveClick = (id: GridRowId) => () => {
@@ -124,9 +136,11 @@ export default function FilterReplacement({ onSucess, id }: Iprops) {
       editable: true,
       flex: 1,
       valueFormatter: (params: Date) => {
-        const date = formatDatefilter(params);
+        if (params) {
+          const date = formatDatefilter(params);
 
-        return date;
+          return date;
+        }
       },
     },
 
@@ -143,6 +157,7 @@ export default function FilterReplacement({ onSucess, id }: Iprops) {
         if (isInEditMode) {
           return [
             <IconButton
+              title="salvar"
               key="save"
               onClick={handleSaveClick(id)}
               color="primary"
@@ -150,6 +165,7 @@ export default function FilterReplacement({ onSucess, id }: Iprops) {
               {isPending ? <CircularProgress size="20px" /> : <SaveIcon />}
             </IconButton>,
             <IconButton
+              title="cancelar"
               key="cancel"
               onClick={handleCancelClick(id)}
               color="inherit"
@@ -160,22 +176,21 @@ export default function FilterReplacement({ onSucess, id }: Iprops) {
         }
 
         return [
-          <IconButton key="edit" onClick={handleEditClick(id)} color="primary">
+          <IconButton
+            title="editar"
+            key="edit"
+            onClick={handleEditClick(id)}
+            color="primary"
+          >
             <EditIcon />
           </IconButton>,
           <IconButton
             key="delete"
+            title="excluir"
             onClick={handleDeleteClick(id)}
             color="error"
           >
             <DeleteIcon />
-          </IconButton>,
-          <IconButton
-            key="add"
-            style={{ color: "#22c55e" }}
-            onClick={addNewMachine}
-          >
-            <AddIcon />
           </IconButton>,
         ];
       },
@@ -236,8 +251,27 @@ export default function FilterReplacement({ onSucess, id }: Iprops) {
         </div>
       ) : (
         <div className="relative ">
-          <div className="flex justify-center items-center p-1">
+          <div className="flex justify-center items-center p-3">
             <h1 className=" text-xl text-[#1976D2]">Diasafe</h1>
+            <div
+              className="absolute right-0 top-0 "
+              style={{
+                border: "0.3px solid #22c55e",
+                borderColor: "#22c55e",
+                borderRadius: "100px",
+              }}
+            >
+              <IconButton
+                title="adicionar"
+                key="add"
+                style={{
+                  color: "#22c55e",
+                }}
+                onClick={addNewMachine}
+              >
+                <AddIcon />
+              </IconButton>
+            </div>
           </div>
           <DataGrid
             rows={rows}

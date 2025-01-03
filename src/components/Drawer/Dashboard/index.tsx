@@ -20,11 +20,7 @@ export default function Dashboard({ icon }: IProps) {
   const [openModal2, setOpenModal2] = React.useState(false);
   const [openModal3, setOpenModal3] = React.useState(false);
 
-  // const { mutate, data: i } = useMutation({
-  //   mutationKey: ["resevatorirForm"],
-  //   mutationFn: (date: string) => createReservoir(user?.system_id || 0, date),
-  // });
-  // const queryClient = useQueryClient();
+
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -136,10 +132,6 @@ export default function Dashboard({ icon }: IProps) {
           maxWidth="xs"
         >
           <div className="w-full">
-            <h1 className="text-center font-bold">
-              Resultados das Amostras dos ETA
-            </h1>
-
             <ResultForm onSucess={onSucess2} />
           </div>
         </ModalTsx>
