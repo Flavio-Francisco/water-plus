@@ -10,6 +10,7 @@ import ListAnalys from "../listAnalys";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { GetAnalys, GetAnalysPoint } from "@/app/fecth/analys";
 import { useUserContext } from "@/context/userContext";
+import FileListEta from "../selectPdf/eta";
 
 export default function AnalysisReservoirList() {
   const { user } = useUserContext();
@@ -73,6 +74,9 @@ export default function AnalysisReservoirList() {
                 <>
                   {" "}
                   <div className="w-11/12 ">
+                    <div className=" absolute top-2 right-5">
+                      <FileListEta />
+                    </div>
                     <GraficAnalys
                       samplingDate={selectedAnalys?.date}
                       sampleMatrixAndOrigin={selectedAnalys?.sampleName}

@@ -15,6 +15,7 @@ import { Button } from "@mui/material";
 import { useUserContext } from "@/context/userContext";
 import { useMutation } from "@tanstack/react-query";
 import { createAnalisysEta } from "@/app/fecth/analys";
+import SavePdfEta from "../savePdfEta";
 
 interface Iprops {
   onSucess: (sucess: boolean) => void;
@@ -74,6 +75,9 @@ const ResultForm = ({ onSucess }: Iprops) => {
 
   return (
     <div className="flex justify-center items-center">
+      <div className="absolute top-32 right-8">
+        <SavePdfEta />
+      </div>
       <Formik
         initialValues={FormInitialValues}
         validationSchema={FormAnalysis}

@@ -23,6 +23,7 @@ import ModalTsx from "../Drawer/DashboardTSX/ModalTsx";
 import PdfTable from "../pdfTable";
 import { PDFViewer } from "@react-pdf/renderer";
 import DashboardReservoir from "./DashboardReservoir";
+import FileListReservoir from "../selectPdf/reservoir";
 
 export default function AnalysList() {
   const { user } = useUserContext();
@@ -122,6 +123,9 @@ export default function AnalysList() {
               ) : (
                 <>
                   <div className="w-full flex justify-end mt-3">
+                    <div className="flex justify-center">
+                      <FileListReservoir />
+                    </div>
                     {selectedAnalys.length >= 1 ? (
                       <button
                         onClick={handleOpen}

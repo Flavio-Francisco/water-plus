@@ -16,6 +16,7 @@ import { Button } from "@mui/material";
 import { useUserContext } from "@/context/userContext";
 import { useMutation } from "@tanstack/react-query";
 import { createAnalysisApevisa } from "@/app/fecth/apevisa";
+import SavePdf from "../savePdf";
 
 const initialValues: ApvisaModel = {
   name: "",
@@ -62,6 +63,9 @@ const FormApvisa: React.FC<Iprops> = ({ onSucess }) => {
       }}
       className=" sm:p-5 max-sm:p-0 max-sm:w-full sm:w-11/12 "
     >
+      <div className="flex justify-center items-center w-1/6 absolute right-8 top-24 p-3">
+        <SavePdf />
+      </div>
       <Row className="mb-5 d-flex justify-content-center align-items-center">
         <h1 className="text-center text-lg font-bold whitespace-nowrap">
           Coleta Apevisa
