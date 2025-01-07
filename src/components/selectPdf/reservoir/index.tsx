@@ -57,7 +57,7 @@ const FileListReservoir = () => {
             {isPending ? (
               <CircularProgress size="20px" />
             ) : (
-              <FindInPageOutlinedIcon color="action" sx={{ fontSize: 36 }} />
+              <FindInPageOutlinedIcon color="action" sx={{ fontSize: 30 }} />
             )}
           </button>
         </div>
