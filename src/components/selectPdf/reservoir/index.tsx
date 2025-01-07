@@ -10,14 +10,17 @@ import {
   CircularProgress,
 } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
+import { useUserContext } from "@/context/userContext";
 
 const FileListReservoir = () => {
+  const { user } = useUserContext();
   const [files, setFiles] = useState<string[]>([]); // Lista de arquivos
-
   const [selectedFile, setSelectedFile] = useState<string>(""); // Arquivo selecionado
   const fetchFiles = async () => {
     try {
-      const response = await axios.get("/api/uploads/reservoir"); // Altere o caminho conforme necessário
+      const response = await axios.get(`/api/uploads/reservoir`, {
+        data: user?.system_id,
+      }); // Altere o caminho conforme necessário
       const files = response.data.files as Array<string>;
       if (files.length < 1) {
         alert("ainda não dados salvos!!!");

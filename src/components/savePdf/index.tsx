@@ -4,12 +4,15 @@ import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUpload
 import { useMutation } from "@tanstack/react-query";
 import { handleFileUpload } from "@/app/fecth/uploads";
 import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
+import { useUserContext } from "@/context/userContext";
 const SavePdf = () => {
+  const { user } = useUserContext();
   const [selectedFile, setSelectedFile] =
     useState<React.ChangeEvent<HTMLInputElement> | null>(null);
   const { mutate, isPending } = useMutation({
     mutationKey: ["savePdf"],
-    mutationFn: handleFileUpload,
+    mutationFn: (event: React.ChangeEvent<HTMLInputElement>) =>
+      handleFileUpload(event, user?.system_id),
     onSuccess: () => {
       setSelectedFile(null);
     },

@@ -1,17 +1,26 @@
 import axios from "axios";
 
-export async function handleFileUpload(event: React.ChangeEvent<HTMLInputElement>) {
+export async function handleFileUpload(
+  event: React.ChangeEvent<HTMLInputElement>,
+  system_id: number | null | undefined
+) {
   if (event.target.files && event.target.files[0]) {
     const formData = new FormData();
     formData.append("file", event.target.files[0]);
+    if (system_id) {
+      formData.append("system_id", system_id?.toString());
+    }
+  
 
     try {
       const response = await axios.post("/api/uploads/reservoir", formData, {
         headers: {
           "Content-Type": "multipart/form-data", // Define o tipo do conteúdo
         },
+     
+        
       });
-
+      console.log(response);
       if (response.status === 200) {
         alert(`Arquivo salvo em análise do Reservatório`);
       } else {
@@ -23,6 +32,7 @@ export async function handleFileUpload(event: React.ChangeEvent<HTMLInputElement
     }
   }
 }
+
 
 export async function handleFileUploadEta(event: React.ChangeEvent<HTMLInputElement>) {
     if (event.target.files && event.target.files[0]) {
