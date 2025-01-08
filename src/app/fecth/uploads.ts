@@ -1,60 +1,77 @@
-import axios from "axios";
+
+import { supabase } from "../../../lib/supabase";
+
+
 
 export async function handleFileUpload(
   event: React.ChangeEvent<HTMLInputElement>,
   system_id: number | null | undefined
 ) {
   if (event.target.files && event.target.files[0]) {
-    const formData = new FormData();
-    formData.append("file", event.target.files[0]);
-    if (system_id) {
-      formData.append("system_id", system_id?.toString());
-    }
-  
+    const file = event.target.files[0];
 
     try {
-      const response = await axios.post("/api/uploads/reservoir", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data", // Define o tipo do conteúdo
-        },
-     
-        
-      });
-      console.log(response);
-      if (response.status === 200) {
-        alert(`Arquivo salvo em análise do Reservatório`);
-      } else {
-        alert("Erro ao salvar o arquivo.");
+      // Nome do arquivo no Supabase Storage
+      const fileName = system_id
+        ? `${system_id}/${file.name}`
+        : `default/${file.name}`;
+
+      // Enviar para o Supabase Storage
+      const { data, error } = await supabase.storage
+        .from("reservoir-files") // Nome do bucket configurado no Supabase
+        .upload(fileName, file);
+
+      if (error) {
+        console.error("Erro ao fazer o upload do arquivo:", error.message);
+        alert("Erro ao fazer o upload do arquivo.");
+        return;
       }
+
+      console.log("Arquivo enviado com sucesso:", data);
+      alert(`Arquivo salvo com sucesso: ${data.path}`);
     } catch (error) {
-      console.error("Erro ao fazer o upload do arquivo:", error);
-      alert("Erro ao fazer o upload do arquivo.");
+      console.error("Erro inesperado ao fazer o upload do arquivo:", error);
+      alert("Erro inesperado ao fazer o upload do arquivo.");
     }
   }
 }
 
 
-export async function handleFileUploadEta(event: React.ChangeEvent<HTMLInputElement>) {
-    if (event.target.files && event.target.files[0]) {
-      const formData = new FormData();
-      formData.append("file", event.target.files[0]);
-  
-      try {
-        const response = await axios.post("/api/uploads/eta", formData, {
-          headers: {
-            "Content-Type": "multipart/form-data", // Define o tipo do conteúdo
-          },
-        });
-  
-        if (response.status === 200) {
-          alert(`Arquivo salvo em dados de análise`);
-        } else {
-          alert("Erro ao salvar o arquivo.");
-        }
-      } catch (error) {
-        console.error("Erro ao fazer o upload do arquivo:", error);
+
+export async function handleFileUploadEta(
+  event: React.ChangeEvent<HTMLInputElement>,
+  system_id: number | null | undefined
+) {
+  if (event.target.files && event.target.files[0]) {
+    const file = event.target.files[0];
+
+    try {
+      // Sanitizar o nome do arquivo
+      const sanitizedFileName = file.name.replace(/[^a-zA-Z0-9.-]/g, "_");
+
+      // Nome do arquivo no Supabase Storage
+      const fileName = system_id
+        ? `${system_id}/${sanitizedFileName}`
+        : `default/${sanitizedFileName}`;
+
+      // Enviar para o Supabase Storage
+      const { data, error } = await supabase.storage
+        .from("reservoir-eta") // Nome do bucket configurado no Supabase
+        .upload(fileName, file);
+
+      if (error) {
+        console.error("Erro ao fazer o upload do arquivo:", error.message);
         alert("Erro ao fazer o upload do arquivo.");
+        return;
       }
+
+      console.log("Arquivo enviado com sucesso:", data);
+      alert(`Arquivo salvo com sucesso: ${data.path}`);
+    } catch (error) {
+      console.error("Erro inesperado ao fazer o upload do arquivo:", error);
+      alert("Erro inesperado ao fazer o upload do arquivo.");
     }
   }
+}
+
 

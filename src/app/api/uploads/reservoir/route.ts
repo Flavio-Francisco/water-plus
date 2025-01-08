@@ -1,57 +1,72 @@
-import { NextResponse } from "next/server";
-import fs from "fs";
-import path from "path";
+import { NextRequest, NextResponse } from "next/server";
+import prisma from "../../../../../lib/db";
+import { supabase } from "../../../../../lib/supabase";
+
 
 
 export async function POST(req: Request) {
-  const formData = await req.formData();
-  const file = formData.get("file") as File;
-  const system_id = formData.get("system_id") as string;
-
-  if (!file) {
-    return NextResponse.json({ error: "Arquivo não encontrado" }, { status: 400 });
-  }
-
-  if (!system_id) {
-    return NextResponse.json({ error: "ID do sistema não fornecido" }, { status: 400 });
-  }
-
-  // Define o caminho onde o arquivo será salvo
-  const uploadsDir = path.join(process.cwd(), `uploads/reservoir/${system_id}`);
-
-  if (!fs.existsSync(uploadsDir)) {
-    fs.mkdirSync(uploadsDir, { recursive: true }); // recursive garante que todas as subpastas sejam criadas
-  }
-
-  const filePath = path.join(uploadsDir, file.name);
-
-  // Converte o ArrayBuffer para Uint8Array
-  const buffer = Buffer.from(await file.arrayBuffer());
-  const uint8Array = new Uint8Array(buffer);
-
-  // Escreve o arquivo no sistema
-  fs.writeFileSync(filePath, uint8Array);
-
-  return NextResponse.json({ message: "Arquivo salvo no servidor!", filePath });
-}
-
-
-export async function GET(req: Request) {
-  const system_id = req.json();
   try {
-    // Caminho para a pasta 'uploads'
-    const uploadsDir = path.join(process.cwd(), `uploads/reservoir/${system_id}`);
+    const formData = await req.formData();
+    const file = formData.get("file") as File;
+    const system_id = formData.get("system_id") as string;
 
-    // Verifica se a pasta 'uploads' existe
-    if (!fs.existsSync(uploadsDir)) {
-      return NextResponse.json({ error: "A pasta de uploads não existe." }, { status: 404 });
+    if (!file) {
+      return new Response(JSON.stringify({ error: "Arquivo não encontrado" }), { status: 400 });
     }
 
-    // Lê os arquivos da pasta 'uploads'
-    const files = fs.readdirSync(uploadsDir);
+    const filePath = `${system_id}/${file.name}`;
 
-    // Retorna a lista de arquivos
-    return NextResponse.json({ files });
+    // Upload para o Supabase Storage
+    const { data, error } = await supabase.storage
+      .from("reservoir-uploads")
+      .upload(filePath, file, { upsert: true });
+
+    if (error) {
+      throw error;
+    }
+console.log(data);
+
+    // Salva no banco de dados usando Prisma
+    const savedFile = await prisma.file.create({
+      data: {
+        name: file.name,
+        path: filePath,
+        system_id: Number(system_id),
+      },
+    });
+
+    return new Response(
+      JSON.stringify({ message: "Arquivo salvo!", file: savedFile }),
+      { status: 200 }
+    );
+  } catch (error) {
+    console.error("Erro ao salvar arquivo:", error);
+    return new Response(JSON.stringify({ error: error }), { status: 500 });
+  }
+}
+
+export async function GET(request: NextRequest) {
+  try {
+    // Obtém o system_id da query string
+    const { searchParams } = new URL(request.url);
+    const system_id = searchParams.get("system_id");
+
+    if (!system_id) {
+      return NextResponse.json({ error: "system_id não fornecido" }, { status: 400 });
+    }
+
+    // Acessa o bucket para listar os arquivos filtrando pelo system_id
+    const { data, error } = await supabase.storage
+      .from("reservoir-files") // Nome do seu bucket
+      .list(`${system_id}/`, { limit: 100 }); // Filtra os arquivos pelo system_id no caminho
+
+    if (error) {
+      console.error("Erro ao listar arquivos:", error.message);
+      return NextResponse.json({ error: "Erro ao listar arquivos." }, { status: 500 });
+    }
+
+    // Retorna a lista de arquivos encontrados
+    return NextResponse.json({ files: data.map((file) => file.name) });
   } catch (error) {
     console.error("Erro ao listar arquivos:", error);
     return NextResponse.json({ error: "Erro ao listar arquivos." }, { status: 500 });

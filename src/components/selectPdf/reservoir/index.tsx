@@ -18,20 +18,24 @@ const FileListReservoir = () => {
   const [selectedFile, setSelectedFile] = useState<string>(""); // Arquivo selecionado
   const fetchFiles = async () => {
     try {
-      const response = await axios.get(`/api/uploads/reservoir`, {
-        data: user?.system_id,
-      }); // Altere o caminho conforme necessário
+      // Faz a requisição GET passando o system_id como query string
+      const response = await axios.get(
+        `/api/uploads/reservoir?system_id=${user?.system_id}`
+      );
+
       const files = response.data.files as Array<string>;
       if (files.length < 1) {
-        alert("ainda não dados salvos!!!");
+        alert("Ainda não há dados salvos para este sistema!");
       }
-      setFiles(response.data.files);
+
+      // Atualiza o estado com os arquivos obtidos
+      setFiles(files);
     } catch (error) {
       console.error("Erro ao obter arquivos:", error);
     }
   };
   const handleDownload = async (pdf: string) => {
-    const fileUrl = `/api/uploads/reservoir/get?file=${pdf}`;
+    const fileUrl = `/api/uploads/reservoir/get?file=${pdf}&system_id=${user?.system_id}`;
     window.open(fileUrl, "_blank"); // Abre o PDF em uma nova aba
   };
 

@@ -10,25 +10,54 @@ import {
   CircularProgress,
 } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
+import { useUserContext } from "@/context/userContext";
+interface FileMetadata {
+  eTag: string;
+  size: number;
+  mimetype: string;
+  cacheControl: string;
+  lastModified: string;
+  contentLength: number;
+  httpStatusCode: number;
+}
+
+interface FileData {
+  name: string;
+  id: string;
+  updated_at: string;
+  created_at: string;
+  last_accessed_at: string;
+  metadata: FileMetadata;
+}
 
 const FileListEta = () => {
+  const { user } = useUserContext();
   const [files, setFiles] = useState<string[]>([]); // Lista de arquivos
-
   const [selectedFile, setSelectedFile] = useState<string>(""); // Arquivo selecionado
   const fetchFiles = async () => {
     try {
-      const response = await axios.get("/api/uploads/eta"); // Altere o caminho conforme necessário
-      setFiles(response.data.files);
-      const files = response.data.files as Array<string>;
-      if (files.length < 1) {
-        alert("ainda não dados salvos!!!");
+      // Faz a requisição GET passando o system_id como query string
+      const response = await axios.get(
+        `/api/uploads/eta?system_id=${user?.system_id}`
+      );
+      console.log(response);
+
+      const file = response.data.files as Array<FileData>;
+      const files = file.map((file) => file.name);
+      console.log(files);
+
+      if (response.data.files < 1) {
+        alert("Ainda não há dados salvos para este sistema!");
       }
+
+      // Atualiza o estado com os arquivos obtidos
+      setFiles(files);
     } catch (error) {
       console.error("Erro ao obter arquivos:", error);
     }
   };
   const handleDownload = async (pdf: string) => {
-    const fileUrl = `/api/uploads/eta/get?file=${pdf}`;
+    const fileUrl = `/api/uploads/eta/get?file=${pdf}&system_id=${user?.system_id}`;
 
     window.open(fileUrl, "_blank"); // Abre o PDF em uma nova aba
   };
@@ -36,11 +65,6 @@ const FileListEta = () => {
   const { mutate, isPending } = useMutation({
     mutationKey: ["uploadFile"],
     mutationFn: fetchFiles,
-    onSuccess: (data) => {
-      if (data === undefined) {
-        alert("ainda não há arquivos salvos!");
-      }
-    },
   });
 
   const handleChange = (event: SelectChangeEvent<string>) => {
