@@ -15,8 +15,8 @@ interface UnifiedData {
 }
 const GraficAnalys = (data: UnifiedData) => {
   useEffect(() => {
-    console.log(formatDateGrafic(new Date(data.samplingDate[0])));
-    console.log(data.samplingDate[0]);
+    // console.log(formatDateGrafic(new Date(data.samplingDate[0])));
+    // console.log(data.samplingDate[0]);
   }, [data]);
   const customize = {
     legend: { hidden: true },
