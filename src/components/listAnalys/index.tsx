@@ -43,53 +43,57 @@ const ListAnalys = (data: UnifiedData) => {
 
   return (
     <div className="">
-      <h1 className="text-center mt-8 mb-8 text-base font-bold">
+      <h1 className="text-center mt-8 mb-6 text-lg font-bold">
         Valores das Análises
       </h1>
-      <TableContainer component={Paper}>
-        <Table aria-label="customized table">
-          <TableHead>
-            <TableRow className="flex flex-row justify-center">
-              <StyledTableCell className="whitespace-nowrap max-sm:w-8/12">
-                {"    "} Dia
-              </StyledTableCell>
-              <StyledTableCell className="whitespace-nowrap">
-                Bactérias heterotróficas
-              </StyledTableCell>
-              <StyledTableCell className="whitespace-nowrap">
-                Escherichia coli
-              </StyledTableCell>
-              <StyledTableCell className="whitespace-nowrap">
-                Coliformes Totais
-              </StyledTableCell>
-              <StyledTableCell className="whitespace-nowrap">
-                Endotoxinas
-              </StyledTableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {samplingDates.map((dayItem, index) => (
-              <StyledTableRow key={index}>
-                <StyledTableCell
-                  component="th"
-                  scope="row"
-                  className="max-sm:w-50"
-                >
-                  {formatDate(new Date(dayItem))}
+      <Paper sx={{ width: "105%", overflow: "hidden" }}>
+        <TableContainer sx={{ maxHeight: 360 }}>
+          <Table stickyHeader aria-label="sticky table">
+            <TableHead>
+              <TableRow className="flex flex-row justify-center ">
+                <StyledTableCell className="border-l border-r max-sm:w-8/12 sm:w-1/12">
+                  Data
                 </StyledTableCell>
-                <StyledTableCell>{data.eColiPresence[index]}</StyledTableCell>
-                <StyledTableCell>
-                  {data.totalColiformsPresence[index]}
+                <StyledTableCell className="whitespace-nowrap border-r sm:w-1/5">
+                  Heterotróficas
                 </StyledTableCell>
-                <StyledTableCell>
-                  {data.heterotrophicBacteriaCount[index]}
+                <StyledTableCell className="whitespace-nowrap border-r  sm:w-1/5">
+                  Escherichia c.
                 </StyledTableCell>
-                <StyledTableCell>{data.endotoxins[index]}</StyledTableCell>
-              </StyledTableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+                <StyledTableCell className="whitespace-nowrap border-r sm:w-1/5">
+                  Coliformes T.
+                </StyledTableCell>
+                <StyledTableCell className="whitespace-nowrap border-r sm:w-1/5">
+                  Endotoxinas
+                </StyledTableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {samplingDates.map((dayItem, index) => (
+                <StyledTableRow key={index}>
+                  <StyledTableCell
+                    component="th"
+                    scope="row"
+                    className="max-sm:w-36 border-r "
+                  >
+                    {formatDate(new Date(dayItem))}
+                  </StyledTableCell>
+                  <StyledTableCell className="border-r">
+                    {data.heterotrophicBacteriaCount[index]}
+                  </StyledTableCell>
+                  <StyledTableCell className="border-r">
+                    {data.totalColiformsPresence[index]}
+                  </StyledTableCell>
+                  <StyledTableCell className="border-r">
+                    {data.eColiPresence[index]}
+                  </StyledTableCell>
+                  <StyledTableCell>{data.endotoxins[index]}</StyledTableCell>
+                </StyledTableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Paper>
     </div>
   );
 };

@@ -23,19 +23,21 @@ const GraficAnalys = (data: UnifiedData) => {
     stackingOrder: "descending",
   };
   return (
-    <div className="conteiner mt-5 h-full">
-      <hr />
+    <div className="conteiner  h-full ">
+      <h1 className="text-center mt-4 mb-2 text-lg font-bold">
+        {data.sampleMatrixAndOrigin}
+      </h1>
       <LineChart
         topAxis={{
-          label: data.sampleMatrixAndOrigin || "",
           labelStyle: {
-            fontSize: 22,
+            fontSize: "18px",
             fontWeight: "bold",
-            marginBottom: 150,
-            padding: 10,
+            marginBottom: 250,
+            padding: 2,
+            backgroundColor: "red",
           },
         }}
-        margin={{ left: 30, right: 30, top: 100 }}
+        margin={{ left: 30, right: 30, top: 80 }}
         xAxis={[
           {
             data: data.samplingDate,
@@ -70,7 +72,6 @@ const GraficAnalys = (data: UnifiedData) => {
         }}
         {...customize}
       />
-      <hr />
     </div>
   );
 };

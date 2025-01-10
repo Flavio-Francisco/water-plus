@@ -31,7 +31,7 @@ export default function AnalysisReservoirList() {
 
   return (
     <div className=" flex flex-col justify-center items-center mt-4 w-11/12  max-sm:w-[390px] max-sm:left-10 absolute">
-      <div className="container w-11/12  ">
+      <div className="container w-full  ">
         <Autocomplete
           className="m-auto mt-5 max-md:w-4/5 w-2/5"
           onChange={(event, value) => {
@@ -63,7 +63,7 @@ export default function AnalysisReservoirList() {
             />
           )}
         />
-        <div className="container w-full">
+        <div className="w-full">
           {selectedAnalys && (
             <div>
               {isPending ? (
@@ -71,9 +71,8 @@ export default function AnalysisReservoirList() {
                   <CircularProgress size="8rem" />
                 </div>
               ) : (
-                <>
-                  {" "}
-                  <div className="w-11/12 ">
+                <div className="w-full flex flex-row max-sm:flex-col  gap-4 max-sm:gap-0">
+                  <div className="max-sm:w-11/12 sm:w-6/12">
                     <div className=" absolute top-2 right-5">
                       <FileListEta />
                     </div>
@@ -91,7 +90,7 @@ export default function AnalysisReservoirList() {
                       system_id={selectedAnalys?.system_id || 0}
                     />
                   </div>
-                  <div className=" w-11/12">
+                  <div className="max-sm:w-11/12 sm:w-5/12">
                     <ListAnalys
                       samplingDate={selectedAnalys?.date}
                       sampleMatrixAndOrigin={selectedAnalys?.sampleName}
@@ -106,7 +105,7 @@ export default function AnalysisReservoirList() {
                       system_id={selectedAnalys?.system_id || 0}
                     />
                   </div>
-                </>
+                </div>
               )}
             </div>
           )}
