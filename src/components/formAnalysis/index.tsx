@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { AnalysisResult } from "@/utils/models/analysis";
 import { FormAnalysis } from "@/utils/validation/FormAnalysisReselt";
 import { Formik, Field, ErrorMessage, FieldProps } from "formik";
@@ -11,16 +11,21 @@ import {
   Row,
   Col,
 } from "react-bootstrap";
-import { Button } from "@mui/material";
+import { Button, CircularProgress } from "@mui/material";
 import { useUserContext } from "@/context/userContext";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { createAnalisysEta } from "@/app/fecth/analys";
 import SavePdfEta from "../savePdfEta";
+import { getNameMachine } from "@/app/fecth/diasafe";
 
 interface Iprops {
   onSucess: (sucess: boolean) => void;
 }
-const options = [
+interface IProp {
+  value: string;
+  label: string;
+}
+const option: IProp[] = [
   { value: "", label: "Selecione um ponto " },
   { value: "Pré-Tratamento", label: "Pré-Tratamento" },
   { value: "Pós Carvão", label: "Pós Carvão" },
@@ -29,24 +34,6 @@ const options = [
   { value: "Entrata do Looping", label: "Entrata do Looping" },
   { value: "Saída do Looping", label: "Saída do Looping" },
   { value: "Retorno do Looping", label: "Retorno do Looping" },
-  { value: "Máquina HD 1", label: "Máquina HD 1" },
-  { value: "Máquina HD 2", label: "Máquina HD 2" },
-  { value: "Máquina HD 3", label: "Máquina HD 3" },
-  { value: "Máquina HD 4", label: "Máquina HD 4" },
-  { value: "Máquina HD 5", label: "Máquina HD 5" },
-  { value: "Máquina HD 6", label: "Máquina HD 6" },
-  { value: "Máquina HD 7", label: "Máquina HD 7" },
-  { value: "Máquina HD 8", label: "Máquina HD 8" },
-  { value: "Máquina HD 9", label: "Máquina HD 9" },
-  { value: "Máquina HD 10", label: "Máquina HD 10" },
-  { value: "Máquina HD 11", label: "Máquina HD 11" },
-  { value: "Máquina HD 12", label: "Máquina HD 12" },
-  { value: "Máquina HD 13", label: "Máquina HD 13" },
-  { value: "Máquina HD 14", label: "Máquina HD 14" },
-  { value: "Osmose Port 1", label: "Osmose Port 1" },
-  { value: "Osmose Port 2", label: "Osmose Port 2" },
-  { value: "Osmose Port 3", label: "Osmose Port 3" },
-  { value: "Osmose Port 4", label: "Osmose Port 4" },
 ];
 export const FormInitialValues: AnalysisResult = {
   date: "",
@@ -59,6 +46,15 @@ export const FormInitialValues: AnalysisResult = {
 
 const ResultForm = ({ onSucess }: Iprops) => {
   const { user } = useUserContext();
+  const [options, setOpition] = useState<IProp[]>([]);
+  const { data, isLoading } = useQuery({
+    queryKey: ["pontos"],
+    queryFn: () => getNameMachine(user?.system_id || 0),
+  });
+
+  console.log(data);
+
+  console.log(options);
   const { mutate } = useMutation({
     mutationKey: ["AnalyseForm"],
     mutationFn: (values: AnalysisResult) =>
@@ -72,6 +68,17 @@ const ResultForm = ({ onSucess }: Iprops) => {
       alert("ERRO ao Salvar  Dados !!!");
     },
   });
+  useEffect(() => {
+    if (data) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const machine = data.map((data: any, index: number) => ({
+        value: "Máquina HD",
+        label: `Máquina HD ${index + 1} - ${data.machine}`,
+      }));
+      const options: IProp[] = option.concat(machine);
+      setOpition(options);
+    }
+  }, [data]);
 
   return (
     <div className="flex justify-center items-center">
@@ -114,22 +121,28 @@ const ResultForm = ({ onSucess }: Iprops) => {
             <Col xs={12} md={10}>
               <FormGroup>
                 <FormLabel htmlFor="sampleName">Ponto da Coleta:</FormLabel>
-                <Field name="sampleName">
-                  {({ field }: FieldProps) => (
-                    <FormControl
-                      as="select"
-                      id="sampleName"
-                      {...field}
-                      isInvalid={!!errors.sampleName && touched.sampleName}
-                    >
-                      {options.map((option) => (
-                        <option key={option.value} value={option.value}>
-                          {option.label}
-                        </option>
-                      ))}
-                    </FormControl>
-                  )}
-                </Field>
+                {isLoading ? (
+                  <div className="flex justify-center items-center border rounded p-2">
+                    <CircularProgress size={"20px"} />
+                  </div>
+                ) : (
+                  <Field name="sampleName">
+                    {({ field }: FieldProps) => (
+                      <FormControl
+                        as="select"
+                        id="sampleName"
+                        {...field}
+                        isInvalid={!!errors.sampleName && touched.sampleName}
+                      >
+                        {options.map((option) => (
+                          <option key={option.value} value={option.value}>
+                            {option.label}
+                          </option>
+                        ))}
+                      </FormControl>
+                    )}
+                  </Field>
+                )}
                 <ErrorMessage
                   name="sampleName"
                   component="div"

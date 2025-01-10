@@ -75,4 +75,36 @@ export async function DELETE(req: NextRequest) {
         }
       );
     }
+}
+  
+export async function GET(req: NextRequest) {
+  const url = new URL(req.nextUrl.href);
+  const system_id = url.searchParams.get("system_id");
+
+
+  console.log(system_id);
+  
+  try {
+      const data = await prisma.diasefe.findMany({
+          where: {
+             
+              system_id: Number(system_id) || null,
+          },
+        select: {
+       machine:true
+     }
+        });
+console.log(data);
+
+    return NextResponse.json(data);
+  } catch (error) {
+    return NextResponse.json(
+      {
+        message: "erro ao registrar"
+      },
+      {
+        status: 500
+      }
+    );
   }
+}

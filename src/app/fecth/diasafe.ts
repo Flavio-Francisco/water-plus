@@ -69,3 +69,18 @@ export async function deleteEvents(id: number) {
     }
 }
 
+export async function getNameMachine(system_id: number) {
+  console.log(system_id );
+  
+    
+    try {
+        const data = await axios.get(`api/diasafe/upset?system_id=${system_id}`, {
+            data:{system_id: system_id}
+        });
+        console.log("retorno da rota events ", data);
+        return data.data;
+    } catch (error) {
+        console.error( error);
+        throw error;
+    }
+}
