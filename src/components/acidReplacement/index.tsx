@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
+import { Document, Page, PDFViewer } from "@react-pdf/renderer";
 import React, { useEffect, useState } from "react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { Machines } from "../reportDiasafe";
-
+import { FaRegFilePdf } from "react-icons/fa";
 import Box from "@mui/material/Box";
 import {
   DataGrid,
@@ -20,13 +21,16 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import CancelIcon from "@mui/icons-material/Close";
 import Loader from "../loader/page";
 import { formatDatefilter } from "@/utils/functions/FormateDate";
-import { deleteAcid, getAcid, updateAcid } from "@/app/fecth/acid";
+import { createAcid, deleteAcid, getAcid, updateAcid } from "@/app/fecth/acid";
+import ModalTsx from "../Drawer/DashboardTSX/ModalTsx";
+import ReportAcid from "../reportAcid";
 interface Iprops {
   onSucess: (sucess: boolean) => void;
   id: number;
 }
 
 export default function AcidReplacement({ onSucess, id }: Iprops) {
+  const [open, setOpen] = React.useState(false);
   const {
     data: cachedData,
     isLoading,
@@ -57,7 +61,12 @@ export default function AcidReplacement({ onSucess, id }: Iprops) {
       setRows((prevRows) => [...(prevRows || []), newMachine]);
     }
   };
-
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  const onclose = () => {
+    setOpen(false);
+  };
   const addNewMachineNew = () => {
     // Certifica-se de que rows é um array e cachedData é um número
     const rowsLength = Array.isArray(rows) ? rows.length : 0;
@@ -77,9 +86,10 @@ export default function AcidReplacement({ onSucess, id }: Iprops) {
   };
 
   const handleSaveClick = (id: GridRowId) => () => {
+    console.log(GridRowModes.View);
     const rowToSave = rows?.find((row) => row.id === id); // Busca os dados atualizados no estado
     if (rowToSave) {
-      mutate(rowToSave); // Chama a mutação para salvar no banco
+      newAcid(rowToSave); // Chama a mutação para salvar no banco
       setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
     }
   };
@@ -107,6 +117,19 @@ export default function AcidReplacement({ onSucess, id }: Iprops) {
       // onSucess(true);
     },
   });
+  const { mutate: newAcid } = useMutation({
+    mutationKey: ["acidForm"],
+    mutationFn: (machine: Machines) => createAcid(id, machine),
+
+    onSuccess: () => {
+      onSucess(false);
+      refetch();
+    },
+    onError: () => {
+      // onSucess(true);
+    },
+  });
+
   const { mutate: handleDeleteMachines } = useMutation({
     mutationKey: ["deleteacid"],
     mutationFn: (machine: string) => deleteAcid(id, machine),
@@ -252,6 +275,11 @@ export default function AcidReplacement({ onSucess, id }: Iprops) {
         <div className="relative ">
           <div className="flex justify-center items-center p-3">
             <h1 className=" text-xl text-[#1976D2]">Ácido Peracético</h1>
+            <div className="absolute left-0 top-0 p-0 ">
+              <button className="ml-2" onClick={handleOpen}>
+                <FaRegFilePdf size={25} style={{ color: "#1976D2" }} />
+              </button>
+            </div>
             <div
               className="absolute right-0 top-0 "
               style={{
@@ -283,6 +311,23 @@ export default function AcidReplacement({ onSucess, id }: Iprops) {
           />
         </div>
       )}
+      <ModalTsx
+        open={open}
+        onClose={onclose}
+        fullWidth={true}
+        maxWidth={"xl"}
+        sx={{ height: "100%" }}
+      >
+        <div className="w-full h-screen">
+          <PDFViewer className="w-full h-full">
+            <Document title="Troca de Ácido Peracético">
+              <Page size="A4">
+                <ReportAcid data={cachedData || []} />
+              </Page>
+            </Document>
+          </PDFViewer>
+        </div>
+      </ModalTsx>
     </Box>
   );
 }
