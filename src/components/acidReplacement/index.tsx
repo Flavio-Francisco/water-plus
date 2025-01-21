@@ -323,7 +323,7 @@ export default function AcidReplacement({ onSucess, id, name }: Iprops) {
           <PDFViewer className="w-full h-full">
             <Document title="Troca de Ácido Peracético">
               <Page size="A4" orientation="landscape">
-                <ReportAcid data={cachedData || []} name={name} />
+                <ReportAcid data={cachedData || []} name={name} id={id} />
               </Page>
             </Document>
           </PDFViewer>

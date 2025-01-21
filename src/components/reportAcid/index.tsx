@@ -14,14 +14,15 @@ export interface Machines {
 interface IProps {
   data: Machines[];
   name: string;
+  id: number;
 }
 
-const ReportAcidDocument = ({ data, name }: IProps) => {
+const ReportAcidDocument = ({ data, name, id }: IProps) => {
   const date = new Date();
 
   // Divide os dados em grupos de 20
   const groupedData = data.reduce((acc: Machines[][], item, index) => {
-    const groupIndex = Math.floor(index / 20); // Cada grupo tem 20 itens
+    const groupIndex = Math.floor(index / 11); // Cada grupo tem 20 itens
     if (!acc[groupIndex]) acc[groupIndex] = [];
     acc[groupIndex].push(item);
     return acc;
@@ -50,7 +51,7 @@ const ReportAcidDocument = ({ data, name }: IProps) => {
             >
               <Text style={styles.title}>Relatório de Troca dos Ácido</Text>
             </View>
-            <TableAcid data={group} name={name} />
+            <TableAcid data={group} name={name} id={id} />
           </View>
         </View>
       ))}

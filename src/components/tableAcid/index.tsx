@@ -3,6 +3,7 @@ import React from "@react-pdf/renderer";
 import { FC } from "react";
 import { Machines } from "../reportDiasafe";
 import { formatDate } from "@/utils/functions/FormateDate";
+import { color } from "../../../thema";
 
 const { View, Text, StyleSheet } = React;
 
@@ -57,15 +58,17 @@ const styles = StyleSheet.create({
     fontSize: 12,
     textAlign: "center",
     fontWeight: "bold",
+    color: "white",
   },
 });
 
 interface IProps {
   data: Machines[];
   name: string;
+  id: number;
 }
 
-const TableAcid: FC<IProps> = ({ data, name }) => {
+const TableAcid: FC<IProps> = ({ data, name, id }) => {
   if (!Array.isArray(data)) {
     return <Text>Dados inválidos, esperava-se um array.</Text>;
   }
@@ -73,7 +76,9 @@ const TableAcid: FC<IProps> = ({ data, name }) => {
   return (
     <View style={styles.table}>
       {/* Cabeçalho da tabela */}
-      <View style={[styles.row, styles.headerRow]}>
+      <View
+        style={[styles.row, styles.headerRow, { backgroundColor: color(id) }]}
+      >
         <View style={styles.cell}>
           <Text style={styles.h1}>Data</Text>
         </View>

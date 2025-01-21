@@ -11,7 +11,7 @@ export const Thema = {
 
 export function color(system: number) {
   if (system === 1) {
-    return "#70DB93";
+    return "#1976D2";
   }
   
 }
