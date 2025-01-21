@@ -1,3 +1,4 @@
+"use client";
 import React from "@react-pdf/renderer";
 import { FC } from "react";
 import { Machines } from "../reportDiasafe";
@@ -9,7 +10,6 @@ const styles = StyleSheet.create({
   table: {
     width: "100%",
     marginLeft: 25,
-
     padding: 5,
     marginBottom: 10, // Adicionando um pouco de espaçamento
   },
@@ -33,6 +33,16 @@ const styles = StyleSheet.create({
     borderLeftWidth: 1,
     borderColor: "#000",
   },
+  cellL: {
+    flex: 1,
+    padding: 5,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRightWidth: 1,
+    borderLeftWidth: 0,
+    borderr: "solid",
+    borderColor: "#000",
+  },
   headerCell: {
     backgroundColor: "#EEE",
     fontWeight: "bold",
@@ -44,7 +54,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   h1: {
-    fontSize: 10,
+    fontSize: 12,
     textAlign: "center",
     fontWeight: "bold",
   },
@@ -52,9 +62,10 @@ const styles = StyleSheet.create({
 
 interface IProps {
   data: Machines[];
+  name: string;
 }
 
-const TableAcid: FC<IProps> = ({ data }) => {
+const TableAcid: FC<IProps> = ({ data, name }) => {
   if (!Array.isArray(data)) {
     return <Text>Dados inválidos, esperava-se um array.</Text>;
   }
@@ -66,7 +77,7 @@ const TableAcid: FC<IProps> = ({ data }) => {
         <View style={styles.cell}>
           <Text style={styles.h1}>Data</Text>
         </View>
-        <View style={styles.cell}>
+        <View style={styles.cellL}>
           <Text style={styles.h1}>Máquina</Text>
         </View>
       </View>
@@ -76,11 +87,15 @@ const TableAcid: FC<IProps> = ({ data }) => {
           <View style={styles.cell}>
             <Text style={styles.text}>{formatDate(new Date(item.date))}</Text>
           </View>
-          <View style={styles.cell}>
+          <View style={styles.cellL}>
             <Text style={styles.text}>{item.machine}</Text>
           </View>
         </View>
       ))}
+      <View style={{ flex: 1, flexDirection: "row", gap: 3, marginTop: 5 }}>
+        <Text style={{ fontSize: 13 }}>Responsável pela troca:</Text>
+        <Text style={{ fontSize: 13 }}>{name}</Text>
+      </View>
     </View>
   );
 };

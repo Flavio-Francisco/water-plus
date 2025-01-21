@@ -8,3 +8,10 @@ export const Thema = {
     black: "#000000",
   },
 };
+
+export function color(system: number) {
+  if (system === 1) {
+    return "#70DB93";
+  }
+  
+}

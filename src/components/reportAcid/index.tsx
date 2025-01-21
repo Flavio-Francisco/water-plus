@@ -13,9 +13,10 @@ export interface Machines {
 
 interface IProps {
   data: Machines[];
+  name: string;
 }
 
-const ReportAcidDocument = ({ data }: IProps) => {
+const ReportAcidDocument = ({ data, name }: IProps) => {
   const date = new Date();
 
   // Divide os dados em grupos de 20
@@ -35,13 +36,21 @@ const ReportAcidDocument = ({ data }: IProps) => {
               Caruaru, {date.toLocaleDateString()}
             </Text>
           </View>
-          <View style={styles.h1}>
-            <Text style={styles.title}>Relatório de Troca dos Ácido</Text>
-            <View style={styles.line} />
-            <Text style={styles.text}>Relação dos Ácidos</Text>
-          </View>
-          <View style={{ width: "90%", height: "80%" }}>
-            <TableAcid data={group} />
+
+          <View style={{ width: "90%", height: "95%", marginTop: 0 }}>
+            <View
+              style={{
+                flex: 1,
+                justifyContent: "center",
+                alignItems: "center",
+                fontSize: 22,
+
+                marginLeft: 10,
+              }}
+            >
+              <Text style={styles.title}>Relatório de Troca dos Ácido</Text>
+            </View>
+            <TableAcid data={group} name={name} />
           </View>
         </View>
       ))}

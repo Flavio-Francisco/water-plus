@@ -27,9 +27,10 @@ import ReportAcid from "../reportAcid";
 interface Iprops {
   onSucess: (sucess: boolean) => void;
   id: number;
+  name: string;
 }
 
-export default function AcidReplacement({ onSucess, id }: Iprops) {
+export default function AcidReplacement({ onSucess, id, name }: Iprops) {
   const [open, setOpen] = React.useState(false);
   const {
     data: cachedData,
@@ -321,8 +322,8 @@ export default function AcidReplacement({ onSucess, id }: Iprops) {
         <div className="w-full h-screen">
           <PDFViewer className="w-full h-full">
             <Document title="Troca de Ácido Peracético">
-              <Page size="A4">
-                <ReportAcid data={cachedData || []} />
+              <Page size="A4" orientation="landscape">
+                <ReportAcid data={cachedData || []} name={name} />
               </Page>
             </Document>
           </PDFViewer>

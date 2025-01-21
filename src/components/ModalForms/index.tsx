@@ -160,7 +160,11 @@ export default function ModalForms({ icon, openModal }: IProps) {
             },
           }}
         >
-          <AcidReplacement onSucess={onSucess2} id={user?.system_id || 0} />
+          <AcidReplacement
+            onSucess={onSucess2}
+            id={user?.system_id || 0}
+            name={user?.name || ""}
+          />
         </ModalTsx>
         <ModalTsx
           fullWidth={false}

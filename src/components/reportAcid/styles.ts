@@ -17,9 +17,9 @@ export const styles = StyleSheet.create({
     padding: 50,
   },
   title: {
-    fontSize: 12,
+    fontSize: 16,
     fontWeight: "bold",
-    marginBottom: 10,
+   
   },
   subtitle: {
     fontSize: 12,
@@ -36,7 +36,9 @@ export const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   header: {
-    flexDirection: "row",
+    position: "absolute",
+    right: 1,
+    top: 5,
   },
   logo: {
     width: 40,
@@ -44,25 +46,14 @@ export const styles = StyleSheet.create({
     marginRight: 10,
   },
   h1: {
+    flex:1,
     alignItems: "center",
     justifyContent: "center",
     marginTop: 20,
-    marginBottom: 20,
+    marginBottom: 0,
+    borderWidth:1
   },
 
-  line: {
-    width: "35%",
-    height: 1,
-    marginTop: -10,
-    backgroundColor: Thema.Colors.black,
-    marginBottom: 30,
-  },
-  line1: {
-    width: "60%",
-    height: 1,
-    marginTop: -10,
-    backgroundColor: Thema.Colors.black,
-  },
   lineSignature: {
     width: "60%",
     height: 1,
