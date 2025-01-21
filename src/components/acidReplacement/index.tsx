@@ -276,8 +276,16 @@ export default function AcidReplacement({ onSucess, id, name }: Iprops) {
         <div className="relative ">
           <div className="flex justify-center items-center p-3">
             <h1 className=" text-xl text-[#1976D2]">Ácido Peracético</h1>
-            <div className="absolute left-0 top-0 p-0 ">
-              <button className="ml-2" onClick={handleOpen}>
+            <div className="absolute left-0 top-1 p-0 ">
+              <button
+                className="ml-2 p-2 hover:bg-slate-100"
+                style={{
+                  border: "0.3px solid #1976D2",
+                  borderColor: "#1976D2",
+                  borderRadius: "100px",
+                }}
+                onClick={handleOpen}
+              >
                 <FaRegFilePdf size={25} style={{ color: "#1976D2" }} />
               </button>
             </div>

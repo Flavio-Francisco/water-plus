@@ -49,7 +49,9 @@ const ReportAcidDocument = ({ data, name, id }: IProps) => {
                 marginLeft: 10,
               }}
             >
-              <Text style={styles.title}>Relatório de Troca dos Ácido</Text>
+              <Text style={styles.title}>
+                Relatório de Troca dos Ácido Peracético
+              </Text>
             </View>
             <TableAcid data={group} name={name} id={id} />
           </View>
