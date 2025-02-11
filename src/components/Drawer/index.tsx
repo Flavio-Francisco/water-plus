@@ -209,6 +209,7 @@ export default function Drawer({
                 mr: open ? 3 : "auto",
                 justifyContent: "center",
                 color: "white",
+                display: user.adm === false ? "none" : "",
               }}
             >
               <ModalSetting icon={<SettingsIcon />} />
