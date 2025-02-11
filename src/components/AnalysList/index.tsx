@@ -71,7 +71,7 @@ export default function AnalysisReservoirList() {
                   <CircularProgress size="8rem" />
                 </div>
               ) : (
-                <div className="w-full flex flex-row max-sm:flex-col  gap-4 max-sm:gap-0">
+                <div className="w-full flex sm:flex-row max-sm:flex-col  gap-4 max-sm:gap-0">
                   <div className="max-sm:w-11/12 sm:w-6/12">
                     <div className=" absolute top-2 right-5">
                       <FileListEta />
