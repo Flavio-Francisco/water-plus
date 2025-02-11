@@ -2,23 +2,24 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Logo from "../../app/logo-Transparente.png";
-import TextField from "@mui/material/TextField";
-import Autocomplete from "@mui/material/Autocomplete";
 import { useQuery } from "@tanstack/react-query";
 import { getSystems } from "@/app/fecth/systems";
 import { Systems } from "@/utils/models/analysis";
 import { auth } from "@/app/fecth/auth";
 import { useUserContext } from "@/context/userContext";
+import { RxEyeClosed } from "react-icons/rx";
+import { PiEyeLight } from "react-icons/pi";
 import Loader from "../loader/page";
 import { useRouter } from "next/navigation";
 import { useFormik } from "formik";
+
 import * as Yup from "yup";
-//import { UserModel } from "@/utils/models/userModel";
 
 export default function Auth() {
   const { getUser, clearCache } = useUserContext();
   const { push } = useRouter();
   const [isPending, setIsPending] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ["systems"],
@@ -48,8 +49,12 @@ export default function Auth() {
     }),
     onSubmit: async (values, { resetForm }) => {
       setIsPending(true);
+
       try {
-        const response = await auth(values);
+        const response = await auth({
+          ...values,
+          system_id: Number(values.system_id),
+        });
         if (response.name) {
           getUser({
             name: response.name,
@@ -63,8 +68,6 @@ export default function Auth() {
           alert(response.message || "Erro desconhecido.");
         }
       } catch (error) {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-
         alert("Usuário não encontrado!!!");
       } finally {
         resetForm();
@@ -75,13 +78,7 @@ export default function Auth() {
 
   if (isError) {
     return (
-      <div
-        className="flex justify-center items-center h-screen"
-        style={{
-          background:
-            "linear-gradient(to bottom, rgba(25,118,210,1), rgba(255,255,255,1))",
-        }}
-      >
+      <div className="flex justify-center items-center h-screen bg-gradient-to-b from-blue-600 to-white">
         <h1>Erro ao carregar dados!!!</h1>
       </div>
     );
@@ -89,26 +86,14 @@ export default function Auth() {
 
   if (isLoading || !data) {
     return (
-      <div
-        className="flex justify-center items-center h-screen"
-        style={{
-          background:
-            "linear-gradient(to bottom, rgba(25,118,210,1), rgba(255,255,255,1))",
-        }}
-      >
+      <div className="flex justify-center items-center h-screen bg-gradient-to-b from-blue-600 to-white">
         <Loader />
       </div>
     );
   }
 
   return (
-    <div
-      className="flex justify-center items-center h-screen"
-      style={{
-        background:
-          "linear-gradient(to bottom, rgba(25,118,210,1), rgba(255,255,255,1))",
-      }}
-    >
+    <div className="flex justify-center items-center h-screen bg-gradient-to-b from-blue-600 to-white">
       <div className="max-md:hidden w-full max-w-md">
         <Image priority src={Logo} alt="Logo" />
       </div>
@@ -120,66 +105,72 @@ export default function Auth() {
           <div className="md:hidden w-full max-w-md flex justify-center items-center">
             <Image priority src={Logo} alt="Logo" height={200} width={200} />
           </div>
-          <h1 className="my-2 text-2xl font-bold">Login</h1>
+          <h1 className="my-3 text-2xl font-bold">Login</h1>
 
           <div className="mb-4">
-            <TextField
-              InputProps={{ autoComplete: "false" }}
+            <input
+              type="text"
               id="name"
               name="name"
-              label="Usuário"
+              placeholder="Usuário"
               value={formik.values.name}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              error={formik.touched.name && Boolean(formik.errors.name)}
-              helperText={formik.touched.name && formik.errors.name}
-              className="w-full p-2"
+              className="w-full p-3 border rounded border-gray-400"
             />
+            {formik.touched.name && formik.errors.name && (
+              <p className="text-red-500 text-sm">{formik.errors.name}</p>
+            )}
           </div>
 
-          <div className="mb-4">
-            <TextField
-              InputProps={{ autoComplete: "false" }}
+          <div className="mb-4 relative">
+            <input
               id="password"
               name="password"
-              type="password"
-              label="Senha"
+              type={showPassword ? "text" : "password"}
+              placeholder="Senha"
               value={formik.values.password}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              error={formik.touched.password && Boolean(formik.errors.password)}
-              helperText={formik.touched.password && formik.errors.password}
-              className="w-full p-2"
+              className="w-full  p-3 border rounded border-gray-400"
             />
+            <button
+              type="button"
+              className="absolute inset-y-0 right-3 flex items-center"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? (
+                <RxEyeClosed className="w-5 h-5" />
+              ) : (
+                <PiEyeLight className="w-5 h-5" />
+              )}
+            </button>
+            {formik.touched.password && formik.errors.password && (
+              <p className="text-red-500 text-xs mt-1">
+                {formik.errors.password}
+              </p>
+            )}
           </div>
 
-          <div className="mb-4 w-full flex justify-center">
-            <Autocomplete
+          <div className="mb-4 w-full flex flex-col justify-center">
+            <select
               id="system_id"
-              className="w-full"
-              options={systems}
-              getOptionLabel={(option) => option.name || ""}
-              value={
-                systems.find(
-                  (system) => system.id === formik.values.system_id
-                ) || null
-              }
-              onChange={(event, value) =>
-                formik.setFieldValue("system_id", value?.id || 0)
-              }
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  label="Seleção do Sistema"
-                  error={
-                    formik.touched.system_id && Boolean(formik.errors.system_id)
-                  }
-                  helperText={
-                    formik.touched.system_id && formik.errors.system_id
-                  }
-                />
-              )}
-            />
+              name="system_id"
+              value={formik.values.system_id}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              className="w-full  p-3 border rounded border-gray-400"
+            >
+              <option value={0}>Selecione um sistema</option>
+              {systems.map((system) => (
+                <option className="p-5" key={system.id} value={system.id || []}>
+                  {system.name}
+                </option>
+              ))}
+            </select>
+            {formik.touched.system_id && formik.errors.system_id && (
+              <p className="text-red-500 text-sm">{formik.errors.system_id}</p>
+            )}
           </div>
 
           <div className="flex items-center justify-between">
