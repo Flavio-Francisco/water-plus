@@ -28,9 +28,14 @@ export const SchemaOperator = Yup.object().shape({
   }),
 });
 
-export const SchemaUser = Yup.object().shape({
 
-    name: Yup.string().required("Nome é obrigatório"),
-    password: Yup.string().required("senha é obrigatório"),
-    adm:Yup.string().required()
+export const SchemaUser = Yup.object().shape({
+  name: Yup.string().required("Nome é obrigatório"),
+  password: Yup.string()
+    .min(6, "A senha deve ter no mínimo 6 caracteres")
+    .matches(/[A-Z]/, "A senha deve conter pelo menos uma letra maiúscula")
+    .matches(/[!@#$%^&*(),.?":{}|<>]/, "A senha deve conter pelo menos um caractere especial")
+    .required("Senha é obrigatória"),
+  adm: Yup.boolean().required("Seleção obrigatória"),
 });
+

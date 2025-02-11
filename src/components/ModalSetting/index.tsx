@@ -10,7 +10,6 @@ import LabTabs from "../modals/modalUI";
 import OperatorFormNew from "../modals/modalOperator/editFrom";
 import OperatorFormEdit from "../modals/modalOperator/newForm";
 import ModalLabUser from "../modals/modalUser/modalLabUser";
-import { useUserContext } from "@/context/userContext";
 import { useOperator } from "@/context/useOperator";
 
 interface IProps {
@@ -19,7 +18,7 @@ interface IProps {
 
 export default function ModalSetting({ icon }: IProps) {
   const { Chemist, refetch } = useChemist();
-  const { user } = useUserContext();
+
   const { operator, refetchOpetor } = useOperator();
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -184,7 +183,7 @@ export default function ModalSetting({ icon }: IProps) {
           onClose={handlecloseModal4}
           maxWidth="sm"
         >
-          {user?.adm === true && <ModalLabUser onUpdate={onUpdate} />}
+          <ModalLabUser onUpdate={onUpdate} />
         </ModalTsx>
       </div>
     </div>
