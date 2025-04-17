@@ -31,9 +31,10 @@ export async function POST(req: NextRequest) {
       const point = await prisma.parameters.findMany({
         where: {
           system_id: Number(id),
-          date: {
-            gte: thirtyDaysAgo, // Filtra apenas os registros dos últimos 30 dias
-          },
+          // date: {
+            
+          //   gte: thirtyDaysAgo, // Filtra apenas os registros dos últimos 30 dias
+          // },
         },
         select: {
           SoftenerInputPressure: data.name === "abrandador" ? true : false,
@@ -44,8 +45,9 @@ export async function POST(req: NextRequest) {
         orderBy: {
           date: "asc", // Ordenando os resultados por data
         },
-       
+       take:10
       });
+
 
       // Processa os dados para retornar no formato desejado
       const result: Props[] = Object.keys(fieldTranslations)
