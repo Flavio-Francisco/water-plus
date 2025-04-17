@@ -96,12 +96,12 @@ export function colorClassification(name: string, data:  WaterAnalysis) {
     hydrogenSulfide: "Sulfeto de Hidrogênio",
     surfactants: "Surfactantes",
     totalColiforms: "Coliformes Totais",
-    heterotrophicBacteriaCount: "Contagem de Bactérias Heterotróficas",
+    heterotrophicBacteriaCount: " Bactérias Heterotróficas",
     endotoxins: "Endotoxinas",
     samplingDate: "Data da Coleta",
     sampleMatrixAndOrigin: "Origem da Amostra",
     system_id: "ID do Sistema",
-      date: "Data da Amostra"
+    date: "Data da Amostra"
   };
   if (name == translations.bicarbonateAlkalinity) {
  
