@@ -114,7 +114,7 @@ export async function POST(req: NextRequest) {
                 RejectPressur2: parameters.REVERSE_OSMOSIS_2ND_STEP.RejectPressure,
                 ReturnPressure: parameters.LOOP.ReturnPressure,
                 ROInputConductivity1: parameters.REVERSE_OSMOSIS_1ST_STEP.ROInputConductivity,
-                ROInputConductivity2: parameters.REVERSE_OSMOSIS_2ND_STEP.ROOutputConductivity,
+                ROInputConductivity2: parameters.REVERSE_OSMOSIS_2ND_STEP.ROInputConductivity,
                 ROInputPressure1: parameters.REVERSE_OSMOSIS_1ST_STEP.ROInputPressure,
                 ROInputPressure2: parameters.REVERSE_OSMOSIS_2ND_STEP.ROInputPressure,
                 ROOutputConductivity1: parameters.REVERSE_OSMOSIS_1ST_STEP.ROOutputConductivity,
