@@ -46,7 +46,17 @@ export interface WaterTreatmentParameters {
     Conductivity: number|undefined;
   };
 }
-
+export type Reservoir = {
+  id: number | null;
+  date: Date | null;
+  Color: string | null;
+  Turbidity: string | null;
+  Taste: string | null;
+  Odor: string | null;
+  TotalChlorine: number | null;
+  FreeChlorine: number | null;
+  ph: number | null;
+};
 
 export interface ParametersDB {
  

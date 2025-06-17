@@ -32,6 +32,7 @@ import {
 } from "@/app/fecth/dateEletrograma";
 import { CircularProgress } from "@mui/material";
 import { ParametersDB } from "@/utils/models/WaterParametersModel";
+import ParametersProhibited from "@/components/parametersProhibited";
 
 interface IProps {
   icon: React.ReactNode;
@@ -56,6 +57,7 @@ export default function DashboardTSX({ icon, openModal }: IProps) {
   const [openModal3, setOpenModal3] = React.useState(false);
   const [openModal4, setOpenModal4] = React.useState(false);
   const [openModal5, setOpenModal5] = React.useState(false);
+  const [openModal6, setOpenModal6] = React.useState(false);
 
   const queryOptions = {
     enabled: !!user,
@@ -122,6 +124,9 @@ export default function DashboardTSX({ icon, openModal }: IProps) {
   const handleOpenModal5 = () => {
     setOpenModal5(true);
   };
+  const handleOpenModal6 = () => {
+    setOpenModal6(true);
+  };
 
   const handlecloseModal1 = () => {
     setOpenModal1(false);
@@ -137,6 +142,10 @@ export default function DashboardTSX({ icon, openModal }: IProps) {
   };
   const handlecloseModal5 = () => {
     setOpenModal5(false);
+    setSelectedMonth("");
+  };
+  const handlecloseModal6 = () => {
+    setOpenModal6(false);
     setSelectedMonth("");
   };
 
@@ -219,6 +228,14 @@ export default function DashboardTSX({ icon, openModal }: IProps) {
           }}
         >
           Eletrograma
+        </MenuItem>
+        <MenuItem
+          onClick={() => {
+            handleClose();
+            handleOpenModal6();
+          }}
+        >
+          Parametros de Entrada
         </MenuItem>
       </Menu>
 
@@ -328,6 +345,47 @@ export default function DashboardTSX({ icon, openModal }: IProps) {
             <div className="w-full h-screen">
               <PDFViewer className="w-full h-full">
                 <Electrogram
+                  data={selected || []}
+                  system={systems.name || ""}
+                />
+              </PDFViewer>
+            </div>
+          )}
+        </ModalTsx>
+        <ModalTsx
+          fullWidth={selectedMonth ? true : false}
+          open={openModal6}
+          onClose={handlecloseModal6}
+          maxWidth="xl"
+        >
+          <div className="p-4" style={{ display: selectedMonth && "none" }}>
+            <Select
+              value={selectedMonth}
+              onChange={handleChange}
+              displayEmpty
+              className="w-full mb-4"
+            >
+              <MenuItem value="">
+                <p>Selecione o Mês</p>
+              </MenuItem>
+              {isLoading ? (
+                <MenuItem value="">
+                  <CircularProgress />
+                </MenuItem>
+              ) : (
+                (uniqueMonths || [])?.map((month) => (
+                  <MenuItem key={month} value={month}>
+                    {month}
+                  </MenuItem>
+                ))
+              )}
+            </Select>
+          </div>
+
+          {selectedMonth && (
+            <div className="w-full h-screen">
+              <PDFViewer className="w-full h-full">
+                <ParametersProhibited
                   data={selected || []}
                   system={systems.name || ""}
                 />
