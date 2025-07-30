@@ -100,7 +100,7 @@ const ResultForm = ({ onSucess }: Iprops) => {
             className="flex flex-col justify-center items-center w-full"
           >
             <Row className="m-5 mb-5 d-flex justify-content-center align-items-center ">
-              <h3 className="text-center"> Resultados das Amostras dos ETA</h3>
+              <h3 className="text-center"> Resultados das Amostras da ETA</h3>
             </Row>
 
             <div className="flex flex-row max-sm:flex-col justify-center items-center max-sm:w-full  mb-2 gap-2">

@@ -35,7 +35,6 @@ const ParametersProhibited: React.FC<Iprops> = ({ data, system }) => {
       return newItem;
     });
     setDatas(organizeDataReservoir(reducedData));
-    console.log("reducedData", reducedData);
   }, [data]);
 
   if (data.length === 0) {
