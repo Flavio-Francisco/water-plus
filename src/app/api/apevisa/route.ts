@@ -2,8 +2,6 @@ import { ApvisaModel } from "@/utils/models/Apvisa";
 import prisma from "../../../../lib/db";
 import { NextRequest, NextResponse } from "next/server";
 
-
-
 export async function GET(req: NextRequest) { 
     const url = new URL(req.nextUrl.href);
     const system_id = url.searchParams.get("id");
@@ -30,18 +28,12 @@ try{
 
 }
 
-
-
-
-
-
 export async function POST(req: NextRequest) {
     const url = new URL(req.nextUrl.href);
     const id = url.searchParams.get("id");
-    const apevisa: ApvisaModel = await req.json();
-    console.log(apevisa);
-    
-    try {
+    const apevisa: ApvisaModel = await req.json()
+
+     try {
         const data = await prisma.apevisa.create({
            
             data: {

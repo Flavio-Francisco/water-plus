@@ -31,8 +31,7 @@ export async function POST(req: NextRequest) {
     const url = new URL(req.nextUrl.href);
     const id = url.searchParams.get("id");
     const doctor : Doctor = await req.json();
-    console.log(doctor);
-    
+
     try {
         const data= await prisma.doctor.create({
             data: {
@@ -41,13 +40,10 @@ export async function POST(req: NextRequest) {
                 name: doctor.name,
                 postGraduation: doctor.postGraduation,
                 postGraduation2: doctor.postGraduation2,
-                system_id:Number(id)
-            
+                system_id:Number(id)     
           }
 
         });
-
-      
 
         return NextResponse.json(data);
     } catch (error) {
@@ -64,8 +60,7 @@ export async function PATCH(req: NextRequest) {
     const url = new URL(req.nextUrl.href);
     const id = url.searchParams.get("id");
     const doctor : Doctor = await req.json();
-    console.log(doctor);
-    
+
     try {
         const data = await prisma.doctor.update({
             

@@ -2,13 +2,10 @@ import { UserModel } from "@/utils/models/userModel";
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "../../../../../lib/db";
 
-
-
 export async function GET(req: NextRequest) {
     const url = new URL(req.nextUrl.href);
     const id = url.searchParams.get("id");
-    
-    
+
     try {
         const data: UserModel[]  = await prisma.user.findMany({
             where: {
@@ -35,19 +32,14 @@ export async function GET(req: NextRequest) {
             status:500
         })
     }
-  
 
-
-    
 }
 
 export async function PATCH(req: NextRequest) {
     const url = new URL(req.nextUrl.href);
     const id = url.searchParams.get("id");
     const user: UserModel = await req.json();
-    console.log(user);
-    
-    
+
     try {
         const data = await prisma.user.update({
             
@@ -67,9 +59,6 @@ export async function PATCH(req: NextRequest) {
 
         });
 
-      console.log("retorno da rota update",data);
-      
-
         return NextResponse.json(data);
     } catch (error) {
         return NextResponse.json({
@@ -81,14 +70,11 @@ export async function PATCH(req: NextRequest) {
     }
 }
 
-
 export async function POST(req: NextRequest) {
     const url = new URL(req.nextUrl.href);
     const id = url.searchParams.get("id");
     const user: UserModel = await req.json();
-    console.log(user);
-    
-    
+
     try {
         const data = await prisma.user.create({
             
@@ -97,14 +83,10 @@ export async function POST(req: NextRequest) {
                 name: user.name,
                 adm: user.adm,
                 password: user.password,              
-                system_id:Number(id)
-            
+                system_id: Number(id)      
           }
 
         });
-
-      console.log("retorno da rota create user",data);
-      
 
         return NextResponse.json(data);
     } catch (error) {

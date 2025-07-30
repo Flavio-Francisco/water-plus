@@ -31,8 +31,7 @@ export async function POST(req: NextRequest) {
     const url = new URL(req.nextUrl.href);
     const id = url.searchParams.get("id");
     const { Chemist }: CredentialsChemist = await req.json();
-    console.log(Chemist);
-    
+
     try {
         const data= await prisma.chemical.create({
             data: {
@@ -47,8 +46,6 @@ export async function POST(req: NextRequest) {
 
         });
 
-      
-
         return NextResponse.json(data);
     } catch (error) {
         return NextResponse.json({
@@ -58,14 +55,12 @@ export async function POST(req: NextRequest) {
             status: 500
         });
     }
-}
+} 
 
 export async function PATCH(req: NextRequest) {
     const url = new URL(req.nextUrl.href);
     const id = url.searchParams.get("id");
     const { Chemist }: CredentialsChemist = await req.json();
-    console.log(Chemist);
-    
     try {
         const data = await prisma.chemical.update({
             
@@ -84,9 +79,7 @@ export async function PATCH(req: NextRequest) {
             
           }
 
-        });
-
-      
+        }); 
 
         return NextResponse.json(data);
     } catch (error) {

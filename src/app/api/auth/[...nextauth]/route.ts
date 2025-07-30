@@ -23,7 +23,6 @@ const handler = NextAuth({
           },
 
           async authorize(credentials) {
-            console.log(credentials?.name.toString());
             
             const user= await axios.post("api/auth", {
                 name: credentials?.name,

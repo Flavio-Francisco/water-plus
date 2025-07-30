@@ -5,7 +5,6 @@ import prisma from "../../../../lib/db";
 
 export async function POST(req: NextRequest) {
     const user: UserAuth = await req.json()
-    console.log("Formulario",user);
     
     if (user.system_id == 0 ) {
         return NextResponse.json({
@@ -41,12 +40,10 @@ export async function POST(req: NextRequest) {
                 
             }
         })
-        console.log("resposta", data);
         
-    
       return  NextResponse.json(data)
     } catch (error) {
-        console.log(error);
+        console.error(error);
         
         return  NextResponse.json({
             error:"Usuário não encontado"

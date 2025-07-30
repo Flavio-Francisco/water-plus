@@ -1,25 +1,20 @@
-
 import { formatDateResevatorir } from "@/utils/functions/FormateDate";
 import prisma from "../../../../../lib/db";
 import { NextRequest, NextResponse } from "next/server";
 
-
 interface ReportDiasafe{
-    id: number,
-    machine: string,
-    date: string,
-    system_id:  number,
-    editable: boolean
+  id: number,
+  machine: string,
+  date: string,
+  system_id: number,
+  editable: boolean
 }
-
 
 export async function PATCH(req: NextRequest) {
     const url = new URL(req.nextUrl.href);
     const id = url.searchParams.get("id");
     const requestData:ReportDiasafe = await req.json();
 
-
-    
     try {
         const data = await prisma.diasefe.upsert({
             where: {
@@ -53,8 +48,6 @@ export async function DELETE(req: NextRequest) {
 
     const {machine ,system_id}= await req.json();
 
-
-    
     try {
         const data = await prisma.diasefe.delete({
             where: {
@@ -81,9 +74,6 @@ export async function GET(req: NextRequest) {
   const url = new URL(req.nextUrl.href);
   const system_id = url.searchParams.get("system_id");
 
-
-  console.log(system_id);
-  
   try {
       const data = await prisma.diasefe.findMany({
           where: {
@@ -93,8 +83,7 @@ export async function GET(req: NextRequest) {
         select: {
        machine:true
      }
-        });
-console.log(data);
+      });
 
     return NextResponse.json(data);
   } catch (error) {

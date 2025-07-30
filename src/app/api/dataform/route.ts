@@ -86,9 +86,6 @@ export async function POST(req: NextRequest) {
     const url = new URL(req.nextUrl.href);
     const id = url.searchParams.get("id");
     const parameters: WaterTreatmentParameters = await req.json()
-
-    console.log(parameters);
-    
     try {
         const data = await prisma.parameters.create({
             data: {
@@ -128,12 +125,9 @@ export async function POST(req: NextRequest) {
                 Taste: parameters.WATER_FEED.Taste,
                 TotalChlorine: parameters.WATER_FEED.TotalChlorine,
                 Turbidity: parameters.WATER_FEED.Turbidity,
-                system_id: Number(id)
-            
-            
+                system_id: Number(id)           
             }
-         
-     
+
         });
         return NextResponse.json(data)
     } catch (error) {
